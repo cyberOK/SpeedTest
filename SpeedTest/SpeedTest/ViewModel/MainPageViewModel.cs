@@ -11,10 +11,10 @@ namespace SpeedTest.ViewModel
     {
         #region Fields
 
-        private string _providerName;
-        private string _ipAdress;
-        private string _serverName;
-        private string _serverLocation;
+        private string _providerName = "ProviderName";
+        private string _ipAdress = "IpAdress";
+        private string _serverName = "ServerName";
+        private string _serverLocation = "ServerLocation";
         private bool _isServerLoaded;
 
         #endregion
@@ -55,7 +55,11 @@ namespace SpeedTest.ViewModel
 
         #region Property commands
 
-        public SpeedTestCommands StartCommand { get; private set; }
+        public SpeedTestCommands StartButtonPressed { get; private set; }
+        public SpeedTestCommands BackButtonPressed { get; private set; }
+        public SpeedTestCommands HistoryButtonPressed { get; private set; }
+        public SpeedTestCommands SettingsButtonPressed { get; private set; }
+        public SpeedTestCommands ChangeServerButtonPressed { get; private set; }
 
         #endregion
 
@@ -63,16 +67,40 @@ namespace SpeedTest.ViewModel
 
         public MainPageViewModel()
         {
-            this.StartCommand = new SpeedTestCommands(new Action(StartSpeedTest));
+            this.StartButtonPressed = new SpeedTestCommands(new Action(StartSpeedTest));
+            this.BackButtonPressed = new SpeedTestCommands(new Action(BackCalling));
+            this.HistoryButtonPressed = new SpeedTestCommands(new Action(HistoryCalling));
+            this.SettingsButtonPressed = new SpeedTestCommands(new Action(SettingsCalling));
+            this.ChangeServerButtonPressed = new SpeedTestCommands(new Action(ChangeServerCalling));
         }
 
         #endregion
 
         #region Comands
-
-        public void StartSpeedTest() // need realisation
+        // need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation
+        public async void StartSpeedTest() 
         {
-            throw new NotImplementedException();
+            await new Windows.UI.Popups.MessageDialog("StartSpeedTest()").ShowAsync();
+        }
+
+        public async void BackCalling()
+        {
+            await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
+        }
+
+        public async void HistoryCalling()
+        {
+            await new Windows.UI.Popups.MessageDialog("HistoryCalling()").ShowAsync();
+        }
+
+        public async void SettingsCalling()
+        {
+            await new Windows.UI.Popups.MessageDialog("SettingsCalling()").ShowAsync();
+        }
+
+        public async void ChangeServerCalling()
+        {
+            await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
         }
 
         #endregion

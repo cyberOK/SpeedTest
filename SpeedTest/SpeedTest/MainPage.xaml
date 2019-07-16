@@ -9,7 +9,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
+    <Page.DataContext>
+        <vm:MainPageViewModel/>
+    </Page.DataContext>
     
     <Page.Resources>
         <ControlTemplate TargetType="Button" x:Key="btTemplate">
@@ -19,7 +21,7 @@
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid Background="#FFD3D0D0" Opacity="1">
+    <Grid Background="#FFD3D0D0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.4*"/>
@@ -35,17 +37,20 @@
                 Background="Transparent"
                 FontFamily="Segoe MDL2 Assets" 
                 FontSize="36"                
-                Content="&#xE713;" />
+                Content="&#xE713;" 
+                Command="{Binding SettingsButtonPressed}"/>
             <Button x:Name="historyButton" 
                 Background="Transparent"
                 FontFamily="Segoe MDL2 Assets" 
                 FontSize="36"                
-                Content="&#xE81C;" />
+                Content="&#xE81C;" 
+                Command="{Binding HistoryButtonPressed}"/>
             <Button x:Name="backButton" 
                 Background="Transparent"
                 FontFamily="Segoe MDL2 Assets" 
                 FontSize="36"                
-                Content="&#xE72D;" />
+                Content="&#xE72D;"
+                Command="{Binding BackButtonPressed}"/>
         </StackPanel>
 
         <Button x:Name="startButton" 
@@ -53,7 +58,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Grid.Column="1" FontSize="80"
-                Command="{x:Bind Path=vm:MainPageViewModel}">
+                Command="{Binding StartButtonPressed}">
         </Button>
 
         <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="1000" Margin="0,0,0,307">
@@ -81,28 +86,28 @@
                        Width="300"
                        Height="60"
                        FontSize="30"
-                       Text="{}"
+                       Text="{Binding ProviderName}"
                        TextAlignment="Center"
                        RelativePanel.AlignLeftWithPanel="True"/>
             <TextBlock x:Name="ipAdress"
                        Width="300"
                        Height="60"
                        FontSize="30"
-                       Text="ipAdress"
+                       Text="{Binding IpAdress}"
                        TextAlignment="Center"                       
                        RelativePanel.Below="providerName"/>
             <TextBlock x:Name="serverName"
                        Width="300"
                        Height="60"
                        FontSize="30"
-                       Text="serverName"
+                       Text="{Binding ServerName}"
                        TextAlignment="Center"
                        RelativePanel.RightOf="providerName"/>
             <TextBlock x:Name="serverLocation"
                        Width="300"
                        Height="60"
                        FontSize="30"
-                       Text="serverLocation"
+                       Text="{Binding ServerLocation}"
                        TextAlignment="Center"
                        RelativePanel.Below="serverName"
                        RelativePanel.RightOf="ipAdress"/>
@@ -115,7 +120,8 @@
                     RelativePanel.RightOf="providerName" 
                     Foreground="White" 
                     FontWeight="Normal"
-                    Opacity="1">
+                    Opacity="1"
+                    Command="{Binding ChangeServerButtonPressed}">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
                         <GradientStop Color="#FF14CEEC" Offset="1"/>
