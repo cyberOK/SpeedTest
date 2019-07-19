@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpeedTest.ViewModel.Helpers;
+using Windows.UI.Xaml.Controls;
 
 namespace SpeedTest.ViewModel
 {
@@ -16,11 +17,14 @@ namespace SpeedTest.ViewModel
         private string _serverName = "ServerName";
         private string _serverLocation = "ServerLocation";
         private bool _isServerLoaded;
+        private bool _isPaneOpen;
 
         #endregion
 
         #region Property binding
 
+        // Main data panel properties
+ 
         public string ProviderName
         {
             get { return _providerName; }
@@ -51,6 +55,14 @@ namespace SpeedTest.ViewModel
             set { Set(ref _isServerLoaded, value); }
         }
 
+        // Settings panel properties
+
+        public bool IsPaneOpen
+        {
+            get { return _isPaneOpen; }
+            set { Set(ref _isPaneOpen, value); }
+        }
+
         #endregion
 
         #region Property commands
@@ -60,6 +72,10 @@ namespace SpeedTest.ViewModel
         public SpeedTestCommands HistoryButtonPressed { get; private set; }
         public SpeedTestCommands SettingsButtonPressed { get; private set; }
         public SpeedTestCommands ChangeServerButtonPressed { get; private set; }
+
+        // Settings panel Properties commands
+
+        public SpeedTestCommands SettingSplitViewClosing { get; private set; }
 
         #endregion
 
@@ -72,6 +88,7 @@ namespace SpeedTest.ViewModel
             this.HistoryButtonPressed = new SpeedTestCommands(new Action(HistoryCalling));
             this.SettingsButtonPressed = new SpeedTestCommands(new Action(SettingsCalling));
             this.ChangeServerButtonPressed = new SpeedTestCommands(new Action(ChangeServerCalling));
+            
         }
 
         #endregion
@@ -93,12 +110,18 @@ namespace SpeedTest.ViewModel
             await new Windows.UI.Popups.MessageDialog("HistoryCalling()").ShowAsync();
         }
 
-        public async void SettingsCalling()
+        public void SettingsCalling()
         {
-            await new Windows.UI.Popups.MessageDialog("SettingsCalling()").ShowAsync();
+            this.IsPaneOpen = !this.IsPaneOpen;
         }
 
         public async void ChangeServerCalling()
+        {
+            await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
+        }
+        // Setting Split View Commands
+
+        public async void SettingSplitViewDontClosing(object sender, EventArgs e)
         {
             await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
         }
