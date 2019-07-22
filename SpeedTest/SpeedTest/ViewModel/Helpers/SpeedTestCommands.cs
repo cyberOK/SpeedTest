@@ -9,16 +9,16 @@ namespace SpeedTest.ViewModel.Helpers
 {
     public class SpeedTestCommands : ICommand
     {
-        private readonly Action _execute;
+        private readonly Action<object> _execute;
         private readonly Func<bool> _canExecute;
 
         public event EventHandler CanExecuteChanged;
 
-        public SpeedTestCommands(Action execute) : this(execute, null)
+        public SpeedTestCommands(Action<object> execute) : this(execute, null)
         {
         }
 
-        public SpeedTestCommands(Action execute, Func<bool> canExecute)
+        public SpeedTestCommands(Action<object> execute, Func<bool> canExecute)
         {
             this._execute = execute ?? throw new ArgumentException("execute");
             this._canExecute = canExecute;
@@ -26,7 +26,7 @@ namespace SpeedTest.ViewModel.Helpers
 
         public bool CanExecute(object parameter) => this._canExecute == null ? true : this._canExecute();
 
-        public void Execute(object parameter) => this._execute();
+        public void Execute(object parameter) => this._execute(parameter);
 
         public void RaiseCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }

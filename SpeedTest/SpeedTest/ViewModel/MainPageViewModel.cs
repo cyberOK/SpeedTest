@@ -83,47 +83,49 @@ namespace SpeedTest.ViewModel
 
         public MainPageViewModel()
         {
-            this.StartButtonPressed = new SpeedTestCommands(new Action(StartSpeedTest));
-            this.BackButtonPressed = new SpeedTestCommands(new Action(BackCalling));
-            this.HistoryButtonPressed = new SpeedTestCommands(new Action(HistoryCalling));
-            this.SettingsButtonPressed = new SpeedTestCommands(new Action(SettingsCalling));
-            this.ChangeServerButtonPressed = new SpeedTestCommands(new Action(ChangeServerCalling));
-            
+            this.StartButtonPressed = new SpeedTestCommands(new Action<object>(StartSpeedTest));
+            this.BackButtonPressed = new SpeedTestCommands(new Action<object>(BackCalling));
+            this.HistoryButtonPressed = new SpeedTestCommands(new Action<object>(HistoryCalling));
+            this.SettingsButtonPressed = new SpeedTestCommands(new Action<object>(SettingsCalling));
+            this.ChangeServerButtonPressed = new SpeedTestCommands(new Action<object>(ChangeServerCalling));
+            this.ChangeServerButtonPressed = new SpeedTestCommands(new Action<object>(SettingSplitViewDontClosing));
         }
 
         #endregion
 
         #region Comands
         // need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation
-        public async void StartSpeedTest() 
+        public async void StartSpeedTest(object param) 
         {
             await new Windows.UI.Popups.MessageDialog("StartSpeedTest()").ShowAsync();
         }
 
-        public async void BackCalling()
+        public async void BackCalling(object param)
         {
             await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
         }
 
-        public async void HistoryCalling()
+        public async void HistoryCalling(object param)
         {
             await new Windows.UI.Popups.MessageDialog("HistoryCalling()").ShowAsync();
         }
 
-        public void SettingsCalling()
+        public void SettingsCalling(object param)
         {
             this.IsPaneOpen = !this.IsPaneOpen;
         }
 
-        public async void ChangeServerCalling()
+        public async void ChangeServerCalling(object param)
         {
             await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
         }
+
         // Setting Split View Commands
 
-        public async void SettingSplitViewDontClosing(object sender, EventArgs e)
+        public async void SettingSplitViewDontClosing(object sender)
         {
-            await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
+            this.IsPaneOpen = true;
+            await new Windows.UI.Popups.MessageDialog("SettingSplitViewDontClosing()").ShowAsync();
         }
 
         #endregion

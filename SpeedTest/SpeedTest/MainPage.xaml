@@ -143,7 +143,7 @@
         </RelativePanel>
 
         <!-- Gamburger Settings Panel -->
-        <SplitView x:Name="SettingSplitView" IsPaneOpen="{Binding IsPaneOpen}"  FlowDirection="RightToLeft" OpenPaneLength="450" Grid.Column="1" Margin="1258,50,52,154" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <SplitView x:Name="SettingSplitView" IsPaneOpen="{Binding IsPaneOpen}" FlowDirection="RightToLeft" OpenPaneLength="450" Grid.Column="1" Margin="1258,50,52,154" Grid.RowSpan="2" Grid.ColumnSpan="2">
             
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="PaneClosing" SourceObject="{Binding ElementName=SettingSplitView}">
