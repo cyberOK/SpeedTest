@@ -23,7 +23,7 @@
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid>
+    <Grid Background="#FFCFE6E6">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.4*"/>
@@ -40,7 +40,7 @@
         <local:Arc Grid.Column="1" Fill="DarkBlue" Thickness="30" Radius="171" PercentValue="97"/>
         <local:Arc Grid.Column="1" Fill="Gray" Thickness="30" Radius="171" PercentValue="400" Opacity="0.2"/>
 
-        <!-- Settings Panel -->
+        <!-- Settings Panel Buttons -->
         <StackPanel Grid.Column="2" HorizontalAlignment="Center" Margin="0,50">
             <Button x:Name="setingsButton" 
                 Background="Transparent"
@@ -143,59 +143,69 @@
         </RelativePanel>
 
         <!-- Gamburger Settings Panel -->
-        <SplitView x:Name="SettingSplitView" IsPaneOpen="{Binding IsPaneOpen}" FlowDirection="RightToLeft" OpenPaneLength="450" Grid.Column="1" Margin="1258,50,52,154" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            
+        <SplitView x:Name="SettingSplitView" 
+                   IsPaneOpen="{Binding IsPaneOpen}" 
+                   FlowDirection="RightToLeft"                    
+                   OpenPaneLength="450" Grid.Column="1" 
+                   Margin="1263,50,50,155" 
+                   Grid.RowSpan="2"
+                   Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+
             <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="PaneClosing" SourceObject="{Binding ElementName=SettingSplitView}">
+                <Core:EventTriggerBehavior EventName="PaneClosing">
                     <Core:InvokeCommandAction Command="{Binding SettingSplitViewClosing}"/>
                 </Core:EventTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
 
             <SplitView.Pane>
-                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    
-                    <RelativePanel Background="White">
-                        <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan"  Padding="30,10" FocusVisualPrimaryBrush="White" RelativePanel.AlignRightWithPanel="True"/>
-                        <Button Height="60" Width="60" Background="Transparent" Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"/> 
+                <Grid>
+                    <RelativePanel HorizontalAlignment="Left" VerticalAlignment="Stretch">
+
+                        <RelativePanel x:Name="SettingsPanel" Background="White" Width="450" IsHoldingEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FlowDirection="RightToLeft">
+                            <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan"  Padding="40,10" RelativePanel.AlignRightWithPanel="True" Margin="30,0,0,0"/>
+                            <Button x:Name="CloseSettingButton" Command="{Binding SettingSplitViewClosing}" Height="60" Width="60" Background="Transparent" Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignLeftWithPanel="True"/>
+                        </RelativePanel>
+
+
+                        <ListView Margin="-30,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RelativePanel.Below="SettingsPanel">
+                            <ScrollViewer x:Name="ScrollForSettings" ScrollViewer.IsVerticalRailEnabled="True" VerticalScrollBarVisibility="Auto">
+                                <RelativePanel x:Name="ContentPanel"  Background="LightGray" Width="454" >
+                                    <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="30,10" TextAlignment="Left" HorizontalAlignment="Left" RelativePanel.AlignRightWithPanel="True"/>
+                                    <ComboBox x:Name="LanguageComboBox" ItemsSource="{Binding Settings.Languages}" PlaceholderText="Choose language" Width="320" Margin="30,0" HorizontalContentAlignment="Left" FlowDirection="LeftToRight" RelativePanel.Below="LanguageBlock" RelativePanel.AlignRightWithPanel="True">
+
+                                        <Interactivity:Interaction.Behaviors>
+                                            <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                                <Core:InvokeCommandAction Command="{Binding LanguageComboBoxChanged}" CommandParameter="{Binding ElementName=LanguageComboBox,Path=SelectedItem}"/>
+                                            </Core:EventTriggerBehavior>
+                                        </Interactivity:Interaction.Behaviors>
+                                        
+                                        <ComboBoxItem x:Name="EnglixhComboBoxItem"></ComboBoxItem>
+                                        <ComboBoxItem x:Name="RussianComboBoxItem"></ComboBoxItem>
+                                    </ComboBox>
+
+                                    <TextBlock x:Name="ModeBlock" Text="Mode" FontSize="30" Foreground="DarkCyan" Padding="30,10" TextAlignment="Right" RelativePanel.Below="LanguageComboBox" RelativePanel.AlignRightWithPanel="True"/>
+                                    <RadioButton x:Name="LightRadioButton" GroupName="Theme" Content="Light" Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" Margin="0,0,-30,0" Width="90" IsChecked="True" RelativePanel.Below="ModeBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                    <RadioButton x:Name="DarkRadioButton" GroupName="Theme" Content="Dark" Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Content}" Margin="0,0,-30,0" Width="90" RelativePanel.Below="LightRadioButton" RelativePanel.AlignRightWithPanel="True"/>
+
+                                    <TextBlock x:Name="AboutBlock" Text="About" FontSize="30" Foreground="DarkCyan" Padding="30,10" TextAlignment="Right" RelativePanel.Below="DarkRadioButton" RelativePanel.AlignRightWithPanel="True"/>
+                                    <TextBlock x:Name="ProgramNameBlock" Text="{Binding ProgramNameBlock}" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" TextAlignment="Right" RelativePanel.Below="AboutBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                    <TextBlock x:Name="VersionBlock" Text="{Binding VersionBlock}" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" TextAlignment="Right" RelativePanel.Below="ProgramNameBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                    <TextBlock x:Name="MicrosoftResearchBlock" Text="Microsoft Research" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" TextAlignment="Right" RelativePanel.Below="VersionBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                    <RichTextBlock x:Name="AboutStoryBlock" Margin="50,30,30,30" RelativePanel.Below="MicrosoftResearchBlock">
+                                        <Paragraph   TextAlignment="Right">
+                                            <Run Text="{Binding AboutRichTextBlock}"/>
+                                            
+                                        </Paragraph>
+                                    </RichTextBlock>
+
+                                    <HyperlinkButton  x:Name="FeedBackLink" NavigateUri="{Binding FeedBackLinkButton}" HorizontalAlignment="Right" Margin="30,0" FontSize="16" RelativePanel.Below="AboutStoryBlock" RelativePanel.AlignRightWithPanel="True">Send feedback</HyperlinkButton>
+                                    <HyperlinkButton x:Name="RateLink" NavigateUri="{Binding RateLinkLinkButton}" HorizontalAlignment="Right" Margin="30,0" FontSize="16" RelativePanel.Below="FeedBackLink" RelativePanel.AlignRightWithPanel="True">Rate us</HyperlinkButton>
+                                </RelativePanel>
+                            </ScrollViewer>
+                        </ListView>
+
                     </RelativePanel>
-                    
-                    
-                    <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="30,10" TextAlignment="Right"/>
-                    <ComboBox x:Name="LanguageComboBox" PlaceholderText="Choose language" Width="390" Margin="30,0,30,10" HorizontalContentAlignment="Left" FlowDirection="LeftToRight">
-                        <x:String>English</x:String>
-                        <x:String>Russian</x:String>
-                        <x:String>Ukranian</x:String>
-                    </ComboBox>
-                    
-                    <TextBlock x:Name="ModeBlock" Text="Mode" FontSize="30" Foreground="DarkCyan" Padding="30,10" TextAlignment="Right"/>
-                    <RadioButton GroupName="Theme" Content="Light" HorizontalAlignment="Left" Margin="330,0,0,0" Width="90" IsChecked="True"/>
-                    <RadioButton GroupName="Theme" Content="Dark" HorizontalAlignment="Left" Margin="330,0,0,0" Width="120"/>
-
-                    <TextBlock x:Name="AboutBlock" Text="About" FontSize="30" Foreground="DarkCyan" Padding="30,10" TextAlignment="Right"/>
-                    <TextBlock x:Name="ProgramNameBlock" Text="Network Speed Test" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" TextAlignment="Right"/>
-                    <TextBlock x:Name="VersionBlock" Text="Version №" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" TextAlignment="Right"/>
-                    <TextBlock x:Name="MicrosoftResearchBlock" Text="Microsoft Research" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" TextAlignment="Right"/>
-                    <RichTextBlock x:Name="AboutStoryBlock" Margin="50,30,30,30">
-                        <Paragraph  TextAlignment="Right">
-                            Although the RichTextBlock stores plain text, you can apply various formatting options to customize how the text is rendered in your app.
-                            You can set standard control properties like FontFamily, FontSize, FontStyle, Foreground, and CharacterSpacing to change the look of the text.
-                            You can also use inline text elements and Typography attached properties to format your text. These options affect only how the RichTextBlock displays the text locally,
-                            so if you copy and paste the text into a rich text control, for example, no formatting is applied.
-                            Although the RichTextBlock stores plain text, you can apply various formatting options to customize how the text is rendered in your app.
-                            You can set standard control properties like FontFamily, FontSize, FontStyle, Foreground, and CharacterSpacing to change the look of the text.
-                            You can also use inline text elements and Typography attached properties to format your text. These options affect only how the RichTextBlock displays the text locally,
-                            so if you copy and paste the text into a rich text control, for example, no formatting is applied.
-                            Although the RichTextBlock stores plain text, you can apply various formatting options to customize how the text is rendered in your app.
-                            You can set standard control properties like FontFamily, FontSize, FontStyle, Foreground, and CharacterSpacing to change the look of the text.
-                            You can also use inline text elements and Typography attached properties to format your text. These options affect only how the RichTextBlock displays the text locally,
-                            so if you copy and paste the text into a rich text control, for example, no formatting is applied.
-                        </Paragraph>
-                    </RichTextBlock>
-
-                    <HyperlinkButton NavigateUri="https://docs.microsoft.com" HorizontalAlignment="Right" Margin="30,0" FontSize="16">Send feedback</HyperlinkButton>
-                    <HyperlinkButton NavigateUri="https://docs.microsoft.com" HorizontalAlignment="Right" Margin="30,0" FontSize="16">Rate us</HyperlinkButton>
-
-                </StackPanel>
+                </Grid>
             </SplitView.Pane>
         </SplitView>
 

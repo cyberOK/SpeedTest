@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,18 +8,18 @@ using System.Windows.Input;
 
 namespace SpeedTest.ViewModel.Helpers
 {
-    public class SpeedTestCommands : ICommand
+    public class SpeedTestCommand : ICommand
     {
         private readonly Action<object> _execute;
         private readonly Func<bool> _canExecute;
 
         public event EventHandler CanExecuteChanged;
 
-        public SpeedTestCommands(Action<object> execute) : this(execute, null)
+        public SpeedTestCommand(Action<object> execute) : this(execute, null)
         {
         }
 
-        public SpeedTestCommands(Action<object> execute, Func<bool> canExecute)
+        public SpeedTestCommand(Action<object> execute, Func<bool> canExecute)
         {
             this._execute = execute ?? throw new ArgumentException("execute");
             this._canExecute = canExecute;
@@ -28,6 +29,6 @@ namespace SpeedTest.ViewModel.Helpers
 
         public void Execute(object parameter) => this._execute(parameter);
 
-        public void RaiseCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public void RaiseCanExecuteChanged(string propertyName) => this.CanExecuteChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

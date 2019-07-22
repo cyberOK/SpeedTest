@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SpeedTest.ViewModel.Helpers;
+using SpeedTest.ViewModel.HelpfullCollections;
 using Windows.UI.Xaml.Controls;
 
 namespace SpeedTest.ViewModel
@@ -18,6 +20,7 @@ namespace SpeedTest.ViewModel
         private string _serverLocation = "ServerLocation";
         private bool _isServerLoaded;
         private bool _isPaneOpen;
+        private SettingSplitViewCollection _settings;
 
         #endregion
 
@@ -63,19 +66,30 @@ namespace SpeedTest.ViewModel
             set { Set(ref _isPaneOpen, value); }
         }
 
+        public SettingSplitViewCollection Settings
+        {
+            get { return this._settings; }
+            set { Set(ref this._settings, value); }
+        }
+
         #endregion
 
         #region Property commands
 
-        public SpeedTestCommands StartButtonPressed { get; private set; }
-        public SpeedTestCommands BackButtonPressed { get; private set; }
-        public SpeedTestCommands HistoryButtonPressed { get; private set; }
-        public SpeedTestCommands SettingsButtonPressed { get; private set; }
-        public SpeedTestCommands ChangeServerButtonPressed { get; private set; }
+        // Mainboard properties commands
 
-        // Settings panel Properties commands
+        public SpeedTestCommand StartButtonPressed { get; private set; }
+        public SpeedTestCommand BackButtonPressed { get; private set; }
+        public SpeedTestCommand HistoryButtonPressed { get; private set; }
+        public SpeedTestCommand SettingsButtonPressed { get; private set; }
+        public SpeedTestCommand ChangeServerButtonPressed { get; private set; }
 
-        public SpeedTestCommands SettingSplitViewClosing { get; private set; }
+        // Settings panel properties commands
+
+        public SpeedTestCommand SettingSplitViewClosing { get; private set; }
+        public SpeedTestCommand LanguageComboBoxChanged { get; private set; }
+        public SpeedTestCommand SelectedItemRadioButtonChanged { get; private set; }
+
 
         #endregion
 
@@ -83,18 +97,23 @@ namespace SpeedTest.ViewModel
 
         public MainPageViewModel()
         {
-            this.StartButtonPressed = new SpeedTestCommands(new Action<object>(StartSpeedTest));
-            this.BackButtonPressed = new SpeedTestCommands(new Action<object>(BackCalling));
-            this.HistoryButtonPressed = new SpeedTestCommands(new Action<object>(HistoryCalling));
-            this.SettingsButtonPressed = new SpeedTestCommands(new Action<object>(SettingsCalling));
-            this.ChangeServerButtonPressed = new SpeedTestCommands(new Action<object>(ChangeServerCalling));
-            this.ChangeServerButtonPressed = new SpeedTestCommands(new Action<object>(SettingSplitViewDontClosing));
+            this.StartButtonPressed = new SpeedTestCommand(new Action<object>(StartSpeedTest));
+            this.BackButtonPressed = new SpeedTestCommand(new Action<object>(BackCalling));
+            this.HistoryButtonPressed = new SpeedTestCommand(new Action<object>(HistoryCalling));
+            this.SettingsButtonPressed = new SpeedTestCommand(new Action<object>(SettingsCalling));
+            this.ChangeServerButtonPressed = new SpeedTestCommand(new Action<object>(ChangeServerCalling));
+
+            this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingSplitViewDontClosing));
+            this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
+            this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
+            
+            //this.Settings = 
         }
 
         #endregion
 
-        #region Comands
-        // need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation// need realisation
+        #region Mainboard Comands
+        
         public async void StartSpeedTest(object param) 
         {
             await new Windows.UI.Popups.MessageDialog("StartSpeedTest()").ShowAsync();
@@ -112,7 +131,7 @@ namespace SpeedTest.ViewModel
 
         public void SettingsCalling(object param)
         {
-            this.IsPaneOpen = !this.IsPaneOpen;
+            this.IsPaneOpen = true;
         }
 
         public async void ChangeServerCalling(object param)
@@ -120,12 +139,26 @@ namespace SpeedTest.ViewModel
             await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
         }
 
-        // Setting Split View Commands
+        #endregion
 
-        public async void SettingSplitViewDontClosing(object sender)
+        #region Setting Split View Commands
+
+
+        public void SettingSplitViewDontClosing(object sender)
+        {           
+            this.IsPaneOpen = false;            
+        }
+
+        public async void LanguageChange(object param)
         {
-            this.IsPaneOpen = true;
-            await new Windows.UI.Popups.MessageDialog("SettingSplitViewDontClosing()").ShowAsync();
+            ComboBoxItem lang = (ComboBoxItem)param;
+            await new Windows.UI.Popups.MessageDialog(lang.Content.ToString()).ShowAsync();
+        }
+
+        public async void ModeChanged(object param)
+        {
+            string par = (string)param;
+            await new Windows.UI.Popups.MessageDialog(par.ToString()).ShowAsync();
         }
 
         #endregion
