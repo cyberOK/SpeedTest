@@ -124,6 +124,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Converters\RadioModeSelectedIntToBooltConverter.cs" />
     <Compile Include="ViewModel\Helpers\SpeedTestCommand.cs" />
     <Compile Include="ViewModel\Helpers\ObservableObject.cs" />
     <Compile Include="ViewModel\HelpfullCollections\SettingSplitViewCollection.cs" />

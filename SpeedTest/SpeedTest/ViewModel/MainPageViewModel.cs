@@ -19,15 +19,16 @@ namespace SpeedTest.ViewModel
         private string _serverName = "ServerName";
         private string _serverLocation = "ServerLocation";
         private bool _isServerLoaded;
-        private bool _isPaneOpen;
+        private bool _isSettingsPaneOpen;
         private SettingSplitViewCollection _settings;
+        private int _selectedMode;
 
         #endregion
 
         #region Property binding
 
         // Main data panel properties
- 
+
         public string ProviderName
         {
             get { return _providerName; }
@@ -60,16 +61,22 @@ namespace SpeedTest.ViewModel
 
         // Settings panel properties
 
-        public bool IsPaneOpen
+        public bool IsSettingsPaneOpen
         {
-            get { return _isPaneOpen; }
-            set { Set(ref _isPaneOpen, value); }
-        }
+            get { return _isSettingsPaneOpen; }
+            set { Set(ref _isSettingsPaneOpen, value); }
+        }       
 
         public SettingSplitViewCollection Settings
         {
             get { return this._settings; }
-            set { Set(ref this._settings, value); }
+            private set { Set(ref _settings, value ); }
+        }
+
+        public int SelectedMode
+        {
+            get { return this._selectedMode; }
+            private set { Set(ref _selectedMode, value); }
         }
 
         #endregion
@@ -106,8 +113,9 @@ namespace SpeedTest.ViewModel
             this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingSplitViewDontClosing));
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
-            
-            //this.Settings = 
+
+            this.Settings = SettingSplitViewCollection.GetInstance();
+            this.SelectedMode = (int)Mode.Light;
         }
 
         #endregion
@@ -131,7 +139,7 @@ namespace SpeedTest.ViewModel
 
         public void SettingsCalling(object param)
         {
-            this.IsPaneOpen = true;
+            this.IsSettingsPaneOpen = true;
         }
 
         public async void ChangeServerCalling(object param)
@@ -146,19 +154,17 @@ namespace SpeedTest.ViewModel
 
         public void SettingSplitViewDontClosing(object sender)
         {           
-            this.IsPaneOpen = false;            
+            this.IsSettingsPaneOpen = false;            
         }
 
         public async void LanguageChange(object param)
         {
-            ComboBoxItem lang = (ComboBoxItem)param;
-            await new Windows.UI.Popups.MessageDialog(lang.Content.ToString()).ShowAsync();
+            await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
         }
 
         public async void ModeChanged(object param)
         {
-            string par = (string)param;
-            await new Windows.UI.Popups.MessageDialog(par.ToString()).ShowAsync();
+            await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
         }
 
         #endregion

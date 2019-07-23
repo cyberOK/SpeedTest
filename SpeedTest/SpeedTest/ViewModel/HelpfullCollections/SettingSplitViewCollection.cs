@@ -20,12 +20,13 @@ namespace SpeedTest.ViewModel.HelpfullCollections
     }
 
     public class SettingSplitViewCollection
-    {        
-        public SettingSplitViewCollection Settings { get; private set; }
-        public List<Language> Languages { get; } = new List<Language> { Language.English, Language.Russian };
-        public List<Mode> Modes { get; set; } = new List<Mode> { Mode.Light, Mode.Dark };
-        public string ProgramName { get;  set; } = typeof(App).GetTypeInfo().Assembly.GetName().Name;
-        public string Version { get;  set; } = typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
+    {
+        private static SettingSplitViewCollection instance;
+
+        public List<Language> Languages { get; private set; }
+        public List<Mode> Modes { get; private set; }
+        public string ProgramName { get; private set; } 
+        public string Version { get; private set; }  
         public string AboutArticle { get;  set; } = $"Also, since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline," +
                                                     $" again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing." +
                                                     $" (This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also," +
@@ -45,14 +46,23 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         public string FeedBackLink { get;  set; } = $"https://docs.microsoft.com";
         public string RateLink { get;  set; } = $"https://docs.microsoft.com";
 
-        static SettingSplitViewCollection()
+        private SettingSplitViewCollection()
         {
-            
+            this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
+            this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
+            this.Languages = Enum.GetValues(typeof(Language)).Cast<Language>().ToList();
+            this.Modes = Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList();
         }
+        
+        public static SettingSplitViewCollection GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new SettingSplitViewCollection();
+            }
 
-        public SettingSplitViewCollection()
-        {
-            this.Settings = new SettingSplitViewCollection();
+            return instance;
         }
+       
     }
 }
