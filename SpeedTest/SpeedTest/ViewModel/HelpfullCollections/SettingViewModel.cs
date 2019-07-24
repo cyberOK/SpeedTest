@@ -19,9 +19,9 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         Dark
     }
 
-    public class SettingSplitViewCollection
+    public class SettingViewModel
     {
-        private static SettingSplitViewCollection instance;
+        private static SettingViewModel instance;
 
         public List<Language> Languages { get; private set; }
         public List<Mode> Modes { get; private set; }
@@ -46,7 +46,7 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         public string FeedBackLink { get;  set; } = $"https://docs.microsoft.com";
         public string RateLink { get;  set; } = $"https://docs.microsoft.com";
 
-        private SettingSplitViewCollection()
+        private SettingViewModel()
         {
             this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
             this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
@@ -54,11 +54,11 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             this.Modes = Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList();
         }
         
-        public static SettingSplitViewCollection GetInstance()
+        public static SettingViewModel GetInstance()
         {
             if (instance == null)
             {
-                instance = new SettingSplitViewCollection();
+                instance = new SettingViewModel();
             }
 
             return instance;

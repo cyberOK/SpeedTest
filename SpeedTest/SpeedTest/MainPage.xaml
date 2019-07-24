@@ -6,11 +6,13 @@
     xmlns:vm="using:SpeedTest.ViewModel" 
     xmlns:arcControl="using:SpeedTest.ArcControl"
     xmlns:converter="using:SpeedTest.ViewModel.Converters"
+    xmlns:speedDate="using:SpeedTest.ViewModel.HelpfullCollections"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
+    
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
@@ -230,9 +232,7 @@
             </SplitView.Pane>
         </SplitView>
 
-        <!-- History Panel -->
-        <!--Width="700" Height="700"
-                   HorizontalAlignment="Center" Margin="0,175,0,238" Grid.RowSpan="2" VerticalAlignment="Stretch"-->
+        <!-- History Panel -->        
         <Grid Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <RelativePanel Height="700" Width="700" Background="Aqua">
 
@@ -245,8 +245,33 @@
                                     Foreground="DarkCyan" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
                     <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButton}" Height="60" Width="60" Background="Transparent" FontSize="30"
                                     Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
-
                 </RelativePanel>
+                
+                
+                <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedData}" IsItemClickEnabled="True" SelectionMode="Single"
+                           RelativePanel.Below="HistoryPanel">
+
+                    <!--<Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="ItemClick">
+                            <Core:InvokeCommandAction Command="{Binding SingleHistorySelected}"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>-->
+
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="speedDate:SpeedDataViewModel">
+                            <StackPanel Width="700" Height="50" Orientation="Horizontal">
+                                <Button x:Name="SingleHistoryRemoveButton" Visibility="{Binding HistorySelected}" Height="50" Width="50" Background="Transparent" FontSize="30"
+                                      FontFamily="Segoe MDL2 Assets" Content="&#xE711;"  />
+                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Server}"/>
+                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Date}"/>
+                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Ping}"/>
+                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding DownloadSpeed}"/>
+                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding UploadSpeed}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                
             </RelativePanel>
 
         </Grid>

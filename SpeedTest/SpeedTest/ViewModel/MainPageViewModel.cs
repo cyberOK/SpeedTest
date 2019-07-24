@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -20,7 +21,7 @@ namespace SpeedTest.ViewModel
         private string _serverLocation = "ServerLocation";
         private bool _isServerLoaded;
         private bool _isSettingsPaneOpen;
-        private SettingSplitViewCollection _settings;
+        private SettingViewModel _settings;
         private int _selectedMode;
 
         #endregion
@@ -67,7 +68,7 @@ namespace SpeedTest.ViewModel
             set { Set(ref _isSettingsPaneOpen, value); }
         }       
 
-        public SettingSplitViewCollection Settings
+        public SettingViewModel Settings
         {
             get { return this._settings; }
             private set { Set(ref _settings, value ); }
@@ -78,6 +79,10 @@ namespace SpeedTest.ViewModel
             get { return this._selectedMode; }
             private set { Set(ref _selectedMode, value); }
         }
+
+        // History panel properties
+
+            public ObservableCollection<SpeedDataViewModel> SpeedData { get; private set; }
 
         #endregion
 
@@ -114,8 +119,14 @@ namespace SpeedTest.ViewModel
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
 
-            this.Settings = SettingSplitViewCollection.GetInstance();
+            this.Settings = SettingViewModel.GetInstance();
             this.SelectedMode = (int)Mode.Light;
+
+            ///////////////
+            ///
+            SpeedDataCollectionViewModel sd = new SpeedDataCollectionViewModel();
+            this.SpeedData = sd.DataColection;
+            ///////////////
         }
 
         #endregion
