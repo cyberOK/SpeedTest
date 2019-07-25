@@ -7,7 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using SpeedTest.ViewModel.Helpers;
 using SpeedTest.ViewModel.HelpfullCollections;
+using Windows.Foundation;
+using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace SpeedTest.ViewModel
 {
@@ -23,6 +27,7 @@ namespace SpeedTest.ViewModel
         private bool _isSettingsPaneOpen;
         private SettingViewModel _settings;
         private int _selectedMode;
+        private bool _isHistoryPanelOpen;
 
         #endregion
 
@@ -82,7 +87,13 @@ namespace SpeedTest.ViewModel
 
         // History panel properties
 
-            public ObservableCollection<SpeedDataViewModel> SpeedData { get; private set; }
+        public bool IsHistoryPanelOpen
+        {
+            get { return this._isHistoryPanelOpen; }
+            private set { Set(ref _isHistoryPanelOpen, value); }
+        }
+
+        public ObservableCollection<SpeedDataViewModel> SpeedData { get; private set; }
 
         #endregion
 
@@ -102,6 +113,11 @@ namespace SpeedTest.ViewModel
         public SpeedTestCommand LanguageComboBoxChanged { get; private set; }
         public SpeedTestCommand SelectedItemRadioButtonChanged { get; private set; }
 
+        // History panel properties commands
+
+        public SpeedTestCommand DeleteHistoryButtonPressed { get; private set; }       
+        public SpeedTestCommand CloseHistoryButtonPressed { get; private set; }
+        
 
         #endregion
 
@@ -119,8 +135,13 @@ namespace SpeedTest.ViewModel
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
 
+            this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
+            this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
+           
+
             this.Settings = SettingViewModel.GetInstance();
             this.SelectedMode = (int)Mode.Light;
+            this.IsHistoryPanelOpen = false;
 
             ///////////////
             ///
@@ -143,9 +164,16 @@ namespace SpeedTest.ViewModel
             await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
         }
 
-        public async void HistoryCalling(object param)
+        public void HistoryCalling(object param)
         {
-            await new Windows.UI.Popups.MessageDialog("HistoryCalling()").ShowAsync();
+            if (this.IsHistoryPanelOpen)
+            {
+                this.IsHistoryPanelOpen = false;
+            }
+            else
+            {
+                this.IsHistoryPanelOpen = true;
+            }                    
         }
 
         public void SettingsCalling(object param)
@@ -162,7 +190,6 @@ namespace SpeedTest.ViewModel
 
         #region Setting Split View Commands
 
-
         public void SettingSplitViewDontClosing(object sender)
         {           
             this.IsSettingsPaneOpen = false;            
@@ -176,6 +203,63 @@ namespace SpeedTest.ViewModel
         public async void ModeChanged(object param)
         {
             await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
+        }
+
+        #endregion
+
+        #region History view commands
+
+        private async void DeleteHistory(object param)
+        {
+            Style primaryButtonStyle = new Style();
+            LinearGradientBrush gradientBrush = new LinearGradientBrush();
+            GradientStop firstGradient = new GradientStop();
+            GradientStop secondGradient = new GradientStop();
+
+            firstGradient.Color = Color.FromArgb(255, 20, 206, 236);
+            firstGradient.Offset = 1;
+            secondGradient.Color = Color.FromArgb(255, 16, 23, 87);
+            secondGradient.Offset = 0;
+
+            gradientBrush.GradientStops.Add(firstGradient);
+            gradientBrush.GradientStops.Add(secondGradient);
+            gradientBrush.EndPoint = new Point(0, 1);
+            gradientBrush.StartPoint = new Point(0.6, 0);
+
+            primaryButtonStyle.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = gradientBrush });
+
+            var bst = new Style(typeof(Button));
+            bst.Setters.Add(new Setter(Button.BackgroundProperty, gradientBrush));
+            bst.Setters.Add(new Setter(Button.ForegroundProperty, Colors.White));
+
+            ContentDialog deleteFileDialog = new ContentDialog
+            {
+                Title = "Clear Application history?",
+                Content = "Do you really want to delete the history?" + "\n" + "To Continue press 'Clear history', this may take a while.",
+                PrimaryButtonText = "Clear history",
+                CloseButtonText = "Cancel",
+                PrimaryButtonStyle = bst
+            };
+
+            ContentDialogResult result = await deleteFileDialog.ShowAsync();
+
+                // Delete the file if the user clicked the primary button.
+                /// Otherwise, do nothing.
+            if (result == ContentDialogResult.Primary)
+                {
+                    // Delete the file.
+                }
+            else
+                {
+                    // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                    // Do nothing.
+                }
+            
+        }
+        
+        private void CloseHistory(object param)
+        {
+            this.IsHistoryPanelOpen = false;
         }
 
         #endregion

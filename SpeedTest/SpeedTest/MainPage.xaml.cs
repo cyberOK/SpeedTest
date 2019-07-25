@@ -18,6 +18,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.ServiceModel;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -30,7 +33,31 @@ namespace SpeedTest
     {
         public MainPage()
         {
-            this.InitializeComponent();           
+            this.InitializeComponent();
+            ApplicationView.PreferredLaunchViewSize = new Size(1920, 1080);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
+
+        //private async void BackButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //this.IsEnabled = false;
+        //    CoreApplicationView newView = CoreApplication.CreateNewView();
+        //    int newViewId = 0;
+        //    await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+        //    {
+
+        //        Frame frame = new Frame();
+        //        //frame.Height = 300;
+        //        //frame.Width = 300;
+        //        frame.Navigate(typeof(BlankPage1), null);
+        //        Window.Current.Content = frame;
+                
+        //        Window.Current.Activate();
+                
+        //        newViewId = ApplicationView.GetForCurrentView().Id;
+        //    });
+
+        //    bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId,ViewSizePreference.UseMinimum);
+        //}
     }
 }

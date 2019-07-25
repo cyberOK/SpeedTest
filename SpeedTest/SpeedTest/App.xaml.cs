@@ -40,6 +40,7 @@ namespace SpeedTest
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+            
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -69,7 +70,7 @@ namespace SpeedTest
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
-                Window.Current.Activate();
+                Window.Current.Activate();                
             }
         }
 

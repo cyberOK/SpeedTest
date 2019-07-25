@@ -19,7 +19,11 @@
         <vm:MainPageViewModel/>
     </Page.DataContext>
 
+    
     <Page.Resources>
+
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
         <converter:RadioModeSelectedIntToBooltConverter x:Key="RadioModeSelectedIntToBooltConverter"/>
 
         <ControlTemplate TargetType="Button" x:Key="btTemplate">
@@ -63,7 +67,7 @@
             <Button x:Name="backButton" 
                 Background="Transparent"
                 FontFamily="Segoe MDL2 Assets" 
-                FontSize="36"                
+                FontSize="36" 
                 Content="&#xE72D;"
                 Command="{Binding BackButtonPressed}"/>
         </StackPanel>
@@ -232,48 +236,59 @@
             </SplitView.Pane>
         </SplitView>
 
+
+        <!--{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}-->
         <!-- History Panel -->        
         <Grid Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <RelativePanel Height="700" Width="700" Background="Aqua">
+            <RelativePanel Visibility="Visible" Height="700" Width="700" Background="Aqua">
 
                 <RelativePanel x:Name="HistoryPanel"  Background="White" IsHoldingEnabled="True" 
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                Width="700">
                     <TextBlock x:Name="HistoryBlock" Text="History" FontSize="30" Foreground="DarkCyan" Padding="30,10" 
                                        RelativePanel.AlignLeftWithPanel="True"/>
-                    <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButton}" Height="60" Width="60"  Background="Transparent" 
+                    <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Height="60" Width="60"  Background="Transparent" 
                                     Foreground="DarkCyan" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
-                    <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButton}" Height="60" Width="60" Background="Transparent" FontSize="30"
+                    <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Height="60" Width="60" Background="Transparent" FontSize="30"
                                     Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                 </RelativePanel>
-                
-                
-                <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedData}" IsItemClickEnabled="True" SelectionMode="Single"
-                           RelativePanel.Below="HistoryPanel">
 
-                    <!--<Interactivity:Interaction.Behaviors>
+
+                <Grid RelativePanel.Below="HistoryPanel" Height="640" Width="700">
+                    <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedData}" IsItemClickEnabled="True" SelectionMode="Single">
+
+                        <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="ItemClick">
-                            <Core:InvokeCommandAction Command="{Binding SingleHistorySelected}"/>
+                            <Core:InvokeCommandAction Command="{Binding SingleHistorySelected}"
+                                                      CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
                         </Core:EventTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>-->
+                        </Interactivity:Interaction.Behaviors>
 
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="speedDate:SpeedDataViewModel">
-                            <StackPanel Width="700" Height="50" Orientation="Horizontal">
-                                <Button x:Name="SingleHistoryRemoveButton" Visibility="{Binding HistorySelected}" Height="50" Width="50" Background="Transparent" FontSize="30"
-                                      FontFamily="Segoe MDL2 Assets" Content="&#xE711;"  />
-                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Server}"/>
-                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Date}"/>
-                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Ping}"/>
-                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding DownloadSpeed}"/>
-                                <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding UploadSpeed}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-                
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Height="50" Width="700" Orientation="Horizontal">
+                                    <Button x:Name="SingleHistoryRemoveButton" Visibility="{Binding HistorySelected}" 
+                                            Height="50" Width="50" Background="Transparent" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE711;">
+
+                                        <Interactivity:Interaction.Behaviors>
+                                            <Core:EventTriggerBehavior EventName="Click">
+                                                <Core:InvokeCommandAction Command="{Binding SingleHistoryDeletedButtonPressed}" />
+                                            </Core:EventTriggerBehavior>
+                                        </Interactivity:Interaction.Behaviors>
+
+                                    </Button>
+                                    <TextBlock FontSize="30" Padding="10,0,0,0" Text="{Binding Server}"/>
+                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Date}"/>
+                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Ping}"/>
+                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding DownloadSpeed}"/>
+                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding UploadSpeed}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
             </RelativePanel>
-
         </Grid>
+        
     </Grid>
 </Page>
