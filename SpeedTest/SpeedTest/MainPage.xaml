@@ -12,16 +12,14 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
-    
+
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
-        <vm:MainPageViewModel/>
+        <StaticResource ResourceKey="mainViewModel"/>
     </Page.DataContext>
-
     
     <Page.Resources>
-
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <converter:RadioModeSelectedIntToBooltConverter x:Key="RadioModeSelectedIntToBooltConverter"/>
@@ -239,12 +237,12 @@
 
         <!--{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}-->
         <!-- History Panel -->        
-        <Grid Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <RelativePanel Visibility="Visible" Height="700" Width="700" Background="Aqua">
+        <Grid Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <RelativePanel Visibility="Visible" Height="700" Width="700" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Cyan">
 
                 <RelativePanel x:Name="HistoryPanel"  Background="White" IsHoldingEnabled="True" 
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                               Width="700">
+                               Width="700" >
                     <TextBlock x:Name="HistoryBlock" Text="History" FontSize="30" Foreground="DarkCyan" Padding="30,10" 
                                        RelativePanel.AlignLeftWithPanel="True"/>
                     <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Height="60" Width="60"  Background="Transparent" 
@@ -253,36 +251,75 @@
                                     Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                 </RelativePanel>
 
+                <Grid x:Name="HistoryHeader" Width="700" Height="70"  Margin="0,0,0,10" RelativePanel.Below="HistoryPanel" RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid RelativePanel.Below="HistoryPanel" Height="640" Width="700">
+                    <TextBlock Grid.Column="1" Text="Server" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" Text="Date" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="3" Text="Ping" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="4" Text="Download" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="5" Text="Upload" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="3" Text="(Ms)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Column="4" Text="(Mbps)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Column="5" Text="(Mbps)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                </Grid>
+
+                <Grid RelativePanel.Below="HistoryHeader" Height="580" Width="700">
                     <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedData}" IsItemClickEnabled="True" SelectionMode="Single">
 
                         <Interactivity:Interaction.Behaviors>
-                        <Core:EventTriggerBehavior EventName="ItemClick">
-                            <Core:InvokeCommandAction Command="{Binding SingleHistorySelected}"
-                                                      CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
-                        </Core:EventTriggerBehavior>
+                            <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                <Core:InvokeCommandAction Command="{Binding SingleHistorySelected, Source={StaticResource mainViewModel}}"
+                                                          CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}" />
+                                <Core:ChangePropertyAction PropertyName="Background>">
+                                    <Core:ChangePropertyAction.Value>
+                                        <SolidColorBrush Color="Aqua"/>
+                                    </Core:ChangePropertyAction.Value>
+                                </Core:ChangePropertyAction>
+                            </Core:EventTriggerBehavior>
                         </Interactivity:Interaction.Behaviors>
 
                         <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Height="50" Width="700" Orientation="Horizontal">
-                                    <Button x:Name="SingleHistoryRemoveButton" Visibility="{Binding HistorySelected}" 
-                                            Height="50" Width="50" Background="Transparent" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE711;">
+                            <DataTemplate x:DataType="speedDate:SpeedDataViewModel">
+                                <Grid Width="700" Height="50">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="0.8*"/>
+                                        <ColumnDefinition Width="0.8*"/>
+                                        <ColumnDefinition Width="0.8*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                        <Interactivity:Interaction.Behaviors>
-                                            <Core:EventTriggerBehavior EventName="Click">
-                                                <Core:InvokeCommandAction Command="{Binding SingleHistoryDeletedButtonPressed}" />
-                                            </Core:EventTriggerBehavior>
-                                        </Interactivity:Interaction.Behaviors>
-
-                                    </Button>
+                                    <Button x:Name="SingleHistoryRemoveButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                            Height="50" Width="50" Background="Transparent" FontSize="20" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
+                                            Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Server}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Date}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Ping}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding DownloadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="5" Text="{Binding UploadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <!--<StackPanel Height="50" Width="700" Orientation="Horizontal">
+                                    
+                                    <Button x:Name="SingleHistoryRemoveButton" 
+                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                            Height="50" Width="50" Background="Transparent" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
+                                            Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
                                     <TextBlock FontSize="30" Padding="10,0,0,0" Text="{Binding Server}"/>
                                     <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Date}"/>
                                     <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Ping}"/>
                                     <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding DownloadSpeed}"/>
                                     <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding UploadSpeed}"/>
-                                </StackPanel>
+                                </StackPanel>-->
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>

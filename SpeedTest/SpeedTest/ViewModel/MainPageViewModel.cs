@@ -19,6 +19,8 @@ namespace SpeedTest.ViewModel
     {
         #region Fields
 
+        private SpeedDataViewModel _oldHistoryValue = null;
+
         private string _providerName = "ProviderName";
         private string _ipAdress = "IpAdress";
         private string _serverName = "ServerName";
@@ -28,6 +30,8 @@ namespace SpeedTest.ViewModel
         private SettingViewModel _settings;
         private int _selectedMode;
         private bool _isHistoryPanelOpen;
+        private bool _isHistorySelected;
+        private ObservableCollection<SpeedDataViewModel> _speedData;
 
         #endregion
 
@@ -93,7 +97,18 @@ namespace SpeedTest.ViewModel
             private set { Set(ref _isHistoryPanelOpen, value); }
         }
 
-        public ObservableCollection<SpeedDataViewModel> SpeedData { get; private set; }
+        
+        public bool IsHistorySelected
+        {
+            get { return this._isHistorySelected; }
+            private set { Set(ref _isHistorySelected, value); }
+        }
+
+        public ObservableCollection<SpeedDataViewModel> SpeedData
+        {
+            get { return this._speedData; }
+            private set { Set(ref _speedData, value); }
+        }
 
         #endregion
 
@@ -117,7 +132,8 @@ namespace SpeedTest.ViewModel
 
         public SpeedTestCommand DeleteHistoryButtonPressed { get; private set; }       
         public SpeedTestCommand CloseHistoryButtonPressed { get; private set; }
-        
+        public SpeedTestCommand SingleHistoryDeletedButtonPressed { get; private set; }
+        public SpeedTestCommand SingleHistorySelected { get; private set; }
 
         #endregion
 
@@ -137,11 +153,15 @@ namespace SpeedTest.ViewModel
 
             this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
-           
+            this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleted));
+            this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
+
+
 
             this.Settings = SettingViewModel.GetInstance();
             this.SelectedMode = (int)Mode.Light;
             this.IsHistoryPanelOpen = false;
+            this.IsHistorySelected = false;
 
             ///////////////
             ///
@@ -228,6 +248,8 @@ namespace SpeedTest.ViewModel
 
             primaryButtonStyle.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = gradientBrush });
 
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             var bst = new Style(typeof(Button));
             bst.Setters.Add(new Setter(Button.BackgroundProperty, gradientBrush));
             bst.Setters.Add(new Setter(Button.ForegroundProperty, Colors.White));
@@ -238,7 +260,8 @@ namespace SpeedTest.ViewModel
                 Content = "Do you really want to delete the history?" + "\n" + "To Continue press 'Clear history', this may take a while.",
                 PrimaryButtonText = "Clear history",
                 CloseButtonText = "Cancel",
-                PrimaryButtonStyle = bst
+                PrimaryButtonStyle = bst,
+                
             };
 
             ContentDialogResult result = await deleteFileDialog.ShowAsync();
@@ -262,6 +285,30 @@ namespace SpeedTest.ViewModel
             this.IsHistoryPanelOpen = false;
         }
 
+        private async void SingleHistoryDeleted(object param)
+        {
+            await new Windows.UI.Popups.MessageDialog("SingleHistoryDeleted()").ShowAsync();
+        }
+
+        private void SingleHistorySelecting(object param)
+        {
+            SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
+                        
+            SpeedDataViewModel filteredHistory = SpeedData.FirstOrDefault(h => h.Id == newSingleHistorySelected.Id);
+            
+            filteredHistory.IsSelected = true;
+
+            if (this._oldHistoryValue == null)
+            {
+                this._oldHistoryValue = filteredHistory;
+            }
+            else
+            {
+                this._oldHistoryValue.IsSelected = false;
+                this._oldHistoryValue = filteredHistory;
+            }
+        }
+        
         #endregion
     }
 }
