@@ -18,20 +18,206 @@
     <Page.DataContext>
         <StaticResource ResourceKey="mainViewModel"/>
     </Page.DataContext>
-    
+
     <Page.Resources>
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-
         <converter:RadioModeSelectedIntToBooltConverter x:Key="RadioModeSelectedIntToBooltConverter"/>
+        <converter:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+        <converter:DateToStringConverter x:Key="DateToStringConverter"/>
 
         <ControlTemplate TargetType="Button" x:Key="btTemplate">
             <Border CornerRadius="200" BorderBrush="CadetBlue" BorderThickness="3" Height="400" Width="400" >
                 <ContentPresenter  HorizontalAlignment="Center" VerticalAlignment="Center" Content="Start" Height="120"/>
             </Border>
         </ControlTemplate>
+
+        <Style x:Key="GridViewItemRevealStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}"/>
+            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,4,4"/>
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}"/>
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}"/>
+            <Setter Property="AllowDrop" Value="False"/>
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+            <Setter Property="FocusVisualMargin" Value="-2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <ListViewItemPresenter x:Name="Root" 
+                                               CheckBrush="{ThemeResource GridViewItemCheckBrush}" 
+                                               ContentMargin="{TemplateBinding Padding}" 
+                                               CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}" 
+                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                               CheckMode="{ThemeResource GridViewItemCheckMode}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                               DragBackground="{ThemeResource GridViewItemDragBackground}" 
+                                               DragForeground="{ThemeResource GridViewItemDragForeground}" 
+                                               FocusBorderBrush="Transparent" 
+                                               FocusVisualMargin="{TemplateBinding FocusVisualMargin}" 
+                                               FocusSecondaryBorderBrush="Transparent" 
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               Control.IsTemplateFocusTarget="True" 
+                                               PressedBackground="{ThemeResource GridViewItemBackgroundPressed}" 
+                                               PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}" 
+                                               PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
+                                               PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
+                                               ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
+                                               SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
+                                               SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" 
+                                               SelectedBackground="Transparent" 
+                                               SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}" 
+                                               SelectedPointerOverBackground="Transparent" 
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Selected"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOverSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOverPressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PressedSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="DisabledStates">
+                                    <VisualState x:Name="Enabled"/>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.RevealBorderThickness" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ListViewItemPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="GridViewItemContainerStyle1" BasedOn="{StaticResource GridViewItemRevealStyle}" TargetType="GridViewItem"/>
+        
+        <Style x:Key="ListViewItemRevealStyle" TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="{ThemeResource ListViewItemBackground}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Padding" Value="12,0,12,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
+            <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+            <Setter Property="AllowDrop" Value="False"/>
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+            <Setter Property="FocusVisualMargin" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter x:Name="Root" 
+                                               CheckBrush="{ThemeResource ListViewItemCheckBrush}" 
+                                               ContentMargin="{TemplateBinding Padding}" 
+                                               CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}" 
+                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                               CheckMode="{ThemeResource ListViewItemCheckMode}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                               DragBackground="{ThemeResource ListViewItemDragBackground}" 
+                                               DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                               FocusVisualMargin="{TemplateBinding FocusVisualMargin}" 
+                                               FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}" 
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               Control.IsTemplateFocusTarget="True" 
+                                               PressedBackground="{ThemeResource ListViewItemBackgroundPressed}"
+                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                               PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                               PointerOverBackground="{ThemeResource ListViewItemBackgroundPointerOver}" 
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                               SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                               SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
+                                               SelectedBackground="LightGray" 
+                                               SelectedPressedBackground="{ThemeResource ListViewItemBackgroundSelectedPressed}"
+                                               SelectedPointerOverBackground="Gray"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Selected"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
+                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPointerOver}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOverSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
+                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPointerOver}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOverPressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPressed}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPressed}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PressedSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPressed}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="DisabledStates">
+                                    <VisualState x:Name="Enabled"/>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.RevealBorderThickness" Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ListViewItemPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListViewItemContainerStyle1" BasedOn="{StaticResource ListViewItemRevealStyle}" TargetType="ListViewItem"/>
     </Page.Resources>
 
-    <Grid  Background="#FFCFE6E6">
+    <Grid  x:Name="MainGrid" Background="#FFCFE6E6">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.4*"/>
@@ -79,34 +265,35 @@
                 Command="{Binding StartButtonPressed}"/>
 
         <!-- Split Line -->
-        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="1000" Margin="0,0,0,307">
+        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="1000">
             <Line Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" StrokeThickness="3" X1="0"  X2="499">
                 <Line.Stroke>
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="0.8,1" ColorInterpolationMode="ScRgbLinearInterpolation">
                         <GradientStop Color="#FFBDEAEC" Offset="0" />
-                        <GradientStop Color="#FF104364" Offset="1" />
+                        <GradientStop Color="#FF104368" Offset="1" />
                     </LinearGradientBrush>
                 </Line.Stroke>
             </Line>
 
             <Line Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" StrokeThickness="3" X1="0"  X2="499">
                 <Line.Stroke>
-                    <LinearGradientBrush StartPoint="0.1,1" EndPoint="0.8,1" ColorInterpolationMode="ScRgbLinearInterpolation">
+                    <LinearGradientBrush StartPoint="0.2,0.4" EndPoint="0.9,0.1" ColorInterpolationMode="ScRgbLinearInterpolation">
                         <GradientStop Color="#FFBDEAEC" Offset="1" />
                         <GradientStop Color="#FF104364" Offset="0" />
                     </LinearGradientBrush>
                 </Line.Stroke>
             </Line>
         </Grid>
-
+        
         <!-- Main Board -->
-        <RelativePanel Grid.Column="1" Grid.Row="1" Width="600">
+        <RelativePanel Grid.Column="1" Grid.Row="1" Width="600" Margin="0,30,0,0">
             <TextBlock x:Name="providerName"
                        Width="300"
                        Height="60"
                        FontSize="30"
                        Text="{Binding ProviderName}"
                        TextAlignment="Center"
+                       Foreground="DarkCyan"
                        RelativePanel.AlignLeftWithPanel="True"/>
             <TextBlock x:Name="ipAdress"
                        Width="300"
@@ -119,14 +306,15 @@
                        Width="300"
                        Height="60"
                        FontSize="30"
-                       Text="{Binding ServerName}"
+                       Text="{Binding ServerName, Source={StaticResource mainViewModel}}"
                        TextAlignment="Center"
+                       Foreground="DarkCyan" 
                        RelativePanel.RightOf="providerName"/>
             <TextBlock x:Name="serverLocation"
                        Width="300"
                        Height="60"
                        FontSize="30"
-                       Text="{Binding ServerLocation}"
+                       Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}"
                        TextAlignment="Center"
                        RelativePanel.Below="serverName"
                        RelativePanel.RightOf="ipAdress"/>
@@ -157,8 +345,10 @@
                    OpenPaneLength="450" Grid.Column="1" 
                    Margin="1263,50,50,155" 
                    Grid.RowSpan="2"
-                   Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Stretch">
-
+                   Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                   BorderThickness="1" 
+                   BorderBrush="DarkCyan">
+            
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="PaneClosing">
                     <Core:InvokeCommandAction Command="{Binding SettingSplitViewClosing}"/>
@@ -234,11 +424,9 @@
             </SplitView.Pane>
         </SplitView>
 
-
-        <!--{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}-->
-        <!-- History Panel -->        
+        <!-- History Panel -->
         <Grid Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <RelativePanel Visibility="Visible" Height="700" Width="700" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Cyan">
+            <RelativePanel Visibility="{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}" Height="700" Width="700" Background="WhiteSmoke" BorderThickness="1" BorderBrush="DarkCyan">
 
                 <RelativePanel x:Name="HistoryPanel"  Background="White" IsHoldingEnabled="True" 
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -250,6 +438,16 @@
                     <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Height="60" Width="60" Background="Transparent" FontSize="30"
                                     Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                 </RelativePanel>
+
+
+                <Line x:Name="ShadeLine" StrokeThickness="20" X1="0" X2="700" RelativePanel.Below="HistoryPanel">
+                    <Line.Stroke>
+                        <LinearGradientBrush StartPoint="0.5,0.3" EndPoint="0.5,1">
+                            <GradientStop Color="WhiteSmoke" Offset="1" />
+                            <GradientStop Color="LightGray" Offset="0.5" />
+                        </LinearGradientBrush>
+                    </Line.Stroke>
+                </Line>
 
                 <Grid x:Name="HistoryHeader" Width="700" Height="70"  Margin="0,0,0,10" RelativePanel.Below="HistoryPanel" RelativePanel.AlignRightWithPanel="True">
                     <Grid.ColumnDefinitions>
@@ -271,61 +469,110 @@
                     <TextBlock Grid.Column="5" Text="(Mbps)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                 </Grid>
 
-                <Grid RelativePanel.Below="HistoryHeader" Height="580" Width="700">
-                    <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedData}" IsItemClickEnabled="True" SelectionMode="Single">
+                <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" Height="560" Width="700">
+                    <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" IsItemClickEnabled="True" SelectionMode="Single">
 
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="SelectionChanged">
                                 <Core:InvokeCommandAction Command="{Binding SingleHistorySelected, Source={StaticResource mainViewModel}}"
                                                           CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}" />
-                                <Core:ChangePropertyAction PropertyName="Background>">
-                                    <Core:ChangePropertyAction.Value>
-                                        <SolidColorBrush Color="Aqua"/>
-                                    </Core:ChangePropertyAction.Value>
-                                </Core:ChangePropertyAction>
                             </Core:EventTriggerBehavior>
                         </Interactivity:Interaction.Behaviors>
 
                         <GridView.ItemTemplate>
-                            <DataTemplate x:DataType="speedDate:SpeedDataViewModel">
+                            <DataTemplate>
+
                                 <Grid Width="700" Height="50">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition Width="0.4*"/>
                                         <ColumnDefinition Width="1.5*"/>
                                         <ColumnDefinition Width="1.2*"/>
                                         <ColumnDefinition Width="0.8*"/>
                                         <ColumnDefinition Width="0.8*"/>
                                         <ColumnDefinition Width="0.8*"/>
                                     </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
 
                                     <Button x:Name="SingleHistoryRemoveButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
                                             Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                            Height="50" Width="50" Background="Transparent" FontSize="20" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
+                                            Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}"
+                                            Height="50" Width="50" FontSize="20" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
                                             Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Server}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="2" Text="{Binding Date}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="{Binding Ping}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="4" Text="{Binding DownloadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="5" Text="{Binding UploadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Grid Grid.Column="1" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                        <TextBlock   Text="{Binding Server}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Grid Grid.Column="2" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                        <TextBlock Grid.Column="2" Text="{Binding Date, Converter={StaticResource DateToStringConverter}}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Grid Grid.Column="3" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                        <TextBlock Grid.Column="3" Text="{Binding Ping}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Grid Grid.Column="4" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                        <TextBlock Grid.Column="4" Text="{Binding DownloadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Grid Grid.Column="5" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                        <TextBlock Grid.Column="5" Text="{Binding UploadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
                                 </Grid>
-                                <!--<StackPanel Height="50" Width="700" Orientation="Horizontal">
-                                    
-                                    <Button x:Name="SingleHistoryRemoveButton" 
-                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                            Height="50" Width="50" Background="Transparent" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
-                                            Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
-                                    <TextBlock FontSize="30" Padding="10,0,0,0" Text="{Binding Server}"/>
-                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Date}"/>
-                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding Ping}"/>
-                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding DownloadSpeed}"/>
-                                    <TextBlock FontSize="30" Padding="10,0,10,0" Text="{Binding UploadSpeed}"/>
-                                </StackPanel>-->
+
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
                 </Grid>
             </RelativePanel>
         </Grid>
-        
+
+        <!-- Servers Panel -->
+        <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,140" >
+            <RelativePanel Visibility="Visible" Height="540" Width="500" Background="WhiteSmoke" BorderThickness="1" BorderBrush="DarkCyan">
+
+                <RelativePanel x:Name="ServersPanel"  Background="White" IsHoldingEnabled="True" 
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                               Width="500" Height="100">
+                    <TextBlock x:Name="Image" Text="&#xE774;" FontSize="40" Foreground="DarkCyan" Height="100" Width="100" TextAlignment="Right" Padding="0,30,10,0"
+                                       FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
+                    <Line X1="100" Y1="25" X2="100" Y2="75" Stroke="DarkCyan" StrokeThickness="2" />
+                    <Grid RelativePanel.RightOf="Image" Height="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="HeaderServerName" Grid.Row="0" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" FontSize="30" Foreground="DarkCyan" Padding="10,15,0,0"/>
+                        <TextBlock x:Name="HeaderServerLocation" Grid.Row="1" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" FontSize="20" Foreground="Black" Padding="10,0,0,0"/>
+                    </Grid>
+                    <Button x:Name="CloseServersPanelButton" Command="{Binding CloseServersPanelButtonPressed}" Height="100" Width="100" Background="Transparent" FontSize="30"
+                                    Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
+                </RelativePanel>
+
+                <AutoSuggestBox x:Name="ServerSuggestBox" PlaceholderText="Search" Width="450" Margin="24,0" FontSize="20"
+                                        QueryIcon="Find" RelativePanel.Below="ServersPanel"/>
+
+                <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Width="450" Margin="24,10,0,10"
+                                        RelativePanel.Below="ServerSuggestBox"/>
+
+                <ListView x:Name="ServersListView" ItemsSource="{Binding ServersCollection, Source={StaticResource mainViewModel}}" 
+                                                   ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Width="500" Height="400" RelativePanel.Below="AvailableServers">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding ProviderName}" FontSize="20" Foreground="DarkCyan" VerticalAlignment="Center" Padding="14,0,0,0"/>
+                                <TextBlock x:Name="Splitter" Grid.Column="1" Text=" - " FontSize="20" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="ProviderName" Grid.Column="2" Text="{Binding IPerf3Server}" FontSize="20" TextAlignment="Left" VerticalAlignment="Center" Padding="10,0,0,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </RelativePanel>
+        </Grid>
+
     </Grid>
 </Page>

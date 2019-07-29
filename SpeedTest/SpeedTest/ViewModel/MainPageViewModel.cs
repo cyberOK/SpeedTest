@@ -23,15 +23,16 @@ namespace SpeedTest.ViewModel
 
         private string _providerName = "ProviderName";
         private string _ipAdress = "IpAdress";
-        private string _serverName = "ServerName";
-        private string _serverLocation = "ServerLocation";
+        private string _serverName;
+        private string _serverLocation;
         private bool _isServerLoaded;
         private bool _isSettingsPaneOpen;
         private SettingViewModel _settings;
         private int _selectedMode;
         private bool _isHistoryPanelOpen;
         private bool _isHistorySelected;
-        private ObservableCollection<SpeedDataViewModel> _speedData;
+        private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
+        private ObservableCollection<ServerViewModel> _serversCollection;
 
         #endregion
 
@@ -104,10 +105,18 @@ namespace SpeedTest.ViewModel
             private set { Set(ref _isHistorySelected, value); }
         }
 
-        public ObservableCollection<SpeedDataViewModel> SpeedData
+        public ObservableCollection<SpeedDataViewModel> SpeedDataCollection
         {
-            get { return this._speedData; }
-            private set { Set(ref _speedData, value); }
+            get { return this._speedDataCollection; }
+            private set { Set(ref _speedDataCollection, value); }
+        }
+
+        // Server panel properties
+
+        public ObservableCollection<ServerViewModel> ServersCollection
+        {
+            get { return this._serversCollection; }
+            private set { Set(ref _serversCollection, value); }
         }
 
         #endregion
@@ -165,8 +174,13 @@ namespace SpeedTest.ViewModel
 
             ///////////////
             ///
-            SpeedDataCollectionViewModel sd = new SpeedDataCollectionViewModel();
-            this.SpeedData = sd.DataColection;
+            SpeedDataCollectionViewModel speedData = new SpeedDataCollectionViewModel();
+            this.SpeedDataCollection = speedData.SpeedDataCollection;
+
+            ServerCollectionViewModel servers = new ServerCollectionViewModel();
+            this.ServersCollection = servers.ServerDataCollection;
+            this.ServerName = ServersCollection.FirstOrDefault(s => s.IsCurrent == true).ProviderName;
+            this.ServerLocation = ServersCollection.FirstOrDefault(s => s.IsCurrent == true).Location;
             ///////////////
         }
 
@@ -230,40 +244,9 @@ namespace SpeedTest.ViewModel
         #region History view commands
 
         private async void DeleteHistory(object param)
-        {
-            Style primaryButtonStyle = new Style();
-            LinearGradientBrush gradientBrush = new LinearGradientBrush();
-            GradientStop firstGradient = new GradientStop();
-            GradientStop secondGradient = new GradientStop();
-
-            firstGradient.Color = Color.FromArgb(255, 20, 206, 236);
-            firstGradient.Offset = 1;
-            secondGradient.Color = Color.FromArgb(255, 16, 23, 87);
-            secondGradient.Offset = 0;
-
-            gradientBrush.GradientStops.Add(firstGradient);
-            gradientBrush.GradientStops.Add(secondGradient);
-            gradientBrush.EndPoint = new Point(0, 1);
-            gradientBrush.StartPoint = new Point(0.6, 0);
-
-            primaryButtonStyle.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = gradientBrush });
-
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            var bst = new Style(typeof(Button));
-            bst.Setters.Add(new Setter(Button.BackgroundProperty, gradientBrush));
-            bst.Setters.Add(new Setter(Button.ForegroundProperty, Colors.White));
-
-            ContentDialog deleteFileDialog = new ContentDialog
-            {
-                Title = "Clear Application history?",
-                Content = "Do you really want to delete the history?" + "\n" + "To Continue press 'Clear history', this may take a while.",
-                PrimaryButtonText = "Clear history",
-                CloseButtonText = "Cancel",
-                PrimaryButtonStyle = bst,
-                
-            };
-
+        {                                   
+            Style buttonStyle = CreateButtonStyle();
+            ContentDialog deleteFileDialog = CreateContentDialog(buttonStyle);
             ContentDialogResult result = await deleteFileDialog.ShowAsync();
 
                 // Delete the file if the user clicked the primary button.
@@ -294,7 +277,7 @@ namespace SpeedTest.ViewModel
         {
             SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
                         
-            SpeedDataViewModel filteredHistory = SpeedData.FirstOrDefault(h => h.Id == newSingleHistorySelected.Id);
+            SpeedDataViewModel filteredHistory = SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected.Id);
             
             filteredHistory.IsSelected = true;
 
@@ -308,7 +291,47 @@ namespace SpeedTest.ViewModel
                 this._oldHistoryValue = filteredHistory;
             }
         }
-        
+
+        #endregion
+
+        #region Helpful methods
+
+        private Style CreateButtonStyle()
+        {
+            LinearGradientBrush gradientBrush = new LinearGradientBrush();
+            GradientStop firstGradient = new GradientStop();
+            GradientStop secondGradient = new GradientStop();
+            firstGradient.Color = Color.FromArgb(255, 20, 206, 236);
+            firstGradient.Offset = 1;
+            secondGradient.Color = Color.FromArgb(255, 16, 23, 87);
+            secondGradient.Offset = 0;
+
+            gradientBrush.GradientStops.Add(firstGradient);
+            gradientBrush.GradientStops.Add(secondGradient);
+            gradientBrush.EndPoint = new Point(0, 1);
+            gradientBrush.StartPoint = new Point(0.6, 0);
+
+            var buttonStyle = new Style(typeof(Button));
+            buttonStyle.Setters.Add(new Setter(Button.BackgroundProperty, gradientBrush));
+            buttonStyle.Setters.Add(new Setter(Button.ForegroundProperty, Colors.White));
+
+            return buttonStyle;
+        }
+
+        private ContentDialog CreateContentDialog(Style buttonStyle)
+        {
+            ContentDialog FileDialog = new ContentDialog
+            {
+                Title = "Clear Application history?",
+                Content = "Do you really want to delete the history?" + "\n" + "To Continue press 'Clear history', this may take a while.",
+                PrimaryButtonText = "Clear history",
+                CloseButtonText = "Cancel",
+                PrimaryButtonStyle = buttonStyle
+            };
+
+            return FileDialog;
+        }
+
         #endregion
     }
 }
