@@ -526,7 +526,7 @@
 
         <!-- Servers Panel -->
         <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,140" >
-            <RelativePanel Visibility="Visible" Height="540" Width="500" Background="WhiteSmoke" BorderThickness="1" BorderBrush="DarkCyan">
+            <RelativePanel x:Name="ServerPanel" Visibility="{Binding IsServerPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}" Height="540" Width="500" Background="WhiteSmoke" BorderThickness="1" BorderBrush="DarkCyan">
 
                 <RelativePanel x:Name="ServersPanel"  Background="White" IsHoldingEnabled="True" 
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -542,18 +542,33 @@
                         <TextBlock x:Name="HeaderServerName" Grid.Row="0" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" FontSize="30" Foreground="DarkCyan" Padding="10,15,0,0"/>
                         <TextBlock x:Name="HeaderServerLocation" Grid.Row="1" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" FontSize="20" Foreground="Black" Padding="10,0,0,0"/>
                     </Grid>
-                    <Button x:Name="CloseServersPanelButton" Command="{Binding CloseServersPanelButtonPressed}" Height="100" Width="100" Background="Transparent" FontSize="30"
+                    <Button x:Name="CloseServersPanelButton" Command="{Binding CloseServerPanelButtonPressed}" Height="100" Width="100" Background="Transparent" FontSize="30"
                                     Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                 </RelativePanel>
 
-                <AutoSuggestBox x:Name="ServerSuggestBox" PlaceholderText="Search" Width="450" Margin="24,0" FontSize="20"
-                                        QueryIcon="Find" RelativePanel.Below="ServersPanel"/>
+                <AutoSuggestBox x:Name="ServerSuggestBox" PlaceholderText="Search" Width="450" Margin="24,0" FontSize="20" QueryIcon="Find" RelativePanel.Below="ServersPanel">
+
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="TextChanged">
+                            <Core:InvokeCommandAction Command="{Binding ServerSuggestBoxTextChanged, Source={StaticResource mainViewModel}}"
+                                                      CommandParameter="{Binding ElementName=ServerSuggestBox, Path=Text}"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </AutoSuggestBox>
 
                 <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Width="450" Margin="24,10,0,10"
                                         RelativePanel.Below="ServerSuggestBox"/>
 
-                <ListView x:Name="ServersListView" ItemsSource="{Binding ServersCollection, Source={StaticResource mainViewModel}}" 
+                <ListView x:Name="ServersListView" ItemsSource="{Binding ServerNamesCollection, Source={StaticResource mainViewModel}}" 
                                                    ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Width="500" Height="400" RelativePanel.Below="AvailableServers">
+
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="SelectionChanged">
+                            <Core:InvokeCommandAction Command="{Binding SingleServerSelected, Source={StaticResource mainViewModel}}"
+                                                      CommandParameter="{Binding ElementName=ServersListView, Path=SelectedItem}"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -563,9 +578,9 @@
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding ProviderName}" FontSize="20" Foreground="DarkCyan" VerticalAlignment="Center" Padding="14,0,0,0"/>
+                                <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding}" FontSize="20" Foreground="DarkCyan" VerticalAlignment="Center" Padding="14,0,0,0"/>
                                 <TextBlock x:Name="Splitter" Grid.Column="1" Text=" - " FontSize="20" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="ProviderName" Grid.Column="2" Text="{Binding IPerf3Server}" FontSize="20" TextAlignment="Left" VerticalAlignment="Center" Padding="10,0,0,0" />
+                                <TextBlock x:Name="ProviderName" Grid.Column="2" Text="Net Holding DDC" FontSize="20" TextAlignment="Left" VerticalAlignment="Center" Padding="10,0,0,0" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

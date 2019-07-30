@@ -9,7 +9,9 @@ namespace SpeedTest.ViewModel.HelpfullCollections
 {
     public class ServerCollectionViewModel
     {
-        public ObservableCollection<ServerViewModel> ServerDataCollection { get; set; }
+        public ObservableCollection<ServerViewModel> ServerDataCollection { get; private set; }
+
+        public ObservableCollection<string> ServerNamesCollection { get; private set; }
 
         public ServerCollectionViewModel()
         {
@@ -24,6 +26,21 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             this.ServerDataCollection.Add(new ServerViewModel { IPerf3Server = "iperf.biznetnetworks.com", Location = "Indonesia", ProviderName = "Biznet", Port = "5201", IsCurrent = false });
             this.ServerDataCollection.Add(new ServerViewModel { IPerf3Server = "iperf.scottlinux.com", Location = "USA, California", ProviderName = "Hurricane Fremont 2", Port = "5201", IsCurrent = false });
             this.ServerDataCollection.Add(new ServerViewModel { IPerf3Server = "iperf.he.net", Location = "USA, California", ProviderName = "Hurricane Fremont 1", Port = "5201", IsCurrent = false });
+
+            this.ServerNamesCollection = GetServerNames(ServerDataCollection);
+        }
+
+        private ObservableCollection<string> GetServerNames(ObservableCollection<ServerViewModel> serversCollection)
+        {
+            ObservableCollection<string> serverNames = new ObservableCollection<string>();
+
+            foreach (ServerViewModel server in serversCollection)
+            {
+                string serverName = server.ProviderName;
+                serverNames.Add(serverName);
+            }
+
+            return serverNames;
         }
     }
 }

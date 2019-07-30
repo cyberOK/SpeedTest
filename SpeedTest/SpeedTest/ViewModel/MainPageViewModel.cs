@@ -33,6 +33,9 @@ namespace SpeedTest.ViewModel
         private bool _isHistorySelected;
         private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
         private ObservableCollection<ServerViewModel> _serversCollection;
+        private ObservableCollection<string> _serverNamesCollection;
+        private ObservableCollection<string> _allServerNamesCollection;
+        public bool _isServerPanelOpen;
 
         #endregion
 
@@ -112,11 +115,23 @@ namespace SpeedTest.ViewModel
         }
 
         // Server panel properties
+        
+        public bool IsServerPanelOpen
+        {
+            get { return this._isServerPanelOpen; }
+            private set { Set(ref _isServerPanelOpen, value); }
+        }
 
         public ObservableCollection<ServerViewModel> ServersCollection
         {
             get { return this._serversCollection; }
             private set { Set(ref _serversCollection, value); }
+        }
+
+        public ObservableCollection<string> ServerNamesCollection
+        {
+            get { return this._serverNamesCollection; }
+            private set { Set(ref _serverNamesCollection, value); }
         }
 
         #endregion
@@ -144,61 +159,83 @@ namespace SpeedTest.ViewModel
         public SpeedTestCommand SingleHistoryDeletedButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistorySelected { get; private set; }
 
+        // Server panel properties commands
+
+        public SpeedTestCommand ServerSuggestBoxTextChanged { get; private set; }
+        public SpeedTestCommand SingleServerSelected { get; private set; }
+        public SpeedTestCommand CloseServerPanelButtonPressed { get; private set; }
+     
         #endregion
 
         #region Constructors
 
         public MainPageViewModel()
         {
+            // Main panel commands assing
+
             this.StartButtonPressed = new SpeedTestCommand(new Action<object>(StartSpeedTest));
             this.BackButtonPressed = new SpeedTestCommand(new Action<object>(BackCalling));
             this.HistoryButtonPressed = new SpeedTestCommand(new Action<object>(HistoryCalling));
             this.SettingsButtonPressed = new SpeedTestCommand(new Action<object>(SettingsCalling));
             this.ChangeServerButtonPressed = new SpeedTestCommand(new Action<object>(ChangeServerCalling));
 
+            // Settings panel commands assing
+
             this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingSplitViewDontClosing));
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
+
+            // History panel commands assing
 
             this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
             this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleted));
             this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
 
+            // Server panel commands assing
 
+            this.ServerSuggestBoxTextChanged = new SpeedTestCommand(new Action<object>(ServerNameTextChanged));
+            this.SingleServerSelected = new SpeedTestCommand(new Action<object>(SingleServerSelecting));
+            this.CloseServerPanelButtonPressed = new SpeedTestCommand(new Action<object>(CloseServerPanel));
+
+            // Initialization MainPageViewModel
 
             this.Settings = SettingViewModel.GetInstance();
             this.SelectedMode = (int)Mode.Light;
             this.IsHistoryPanelOpen = false;
             this.IsHistorySelected = false;
+            this.IsServerPanelOpen = false;
 
             ///////////////
-            ///
+            // Testing data
+
             SpeedDataCollectionViewModel speedData = new SpeedDataCollectionViewModel();
             this.SpeedDataCollection = speedData.SpeedDataCollection;
 
             ServerCollectionViewModel servers = new ServerCollectionViewModel();
             this.ServersCollection = servers.ServerDataCollection;
-            this.ServerName = ServersCollection.FirstOrDefault(s => s.IsCurrent == true).ProviderName;
-            this.ServerLocation = ServersCollection.FirstOrDefault(s => s.IsCurrent == true).Location;
+            this.ServerNamesCollection = servers.ServerNamesCollection;
+            this._allServerNamesCollection = servers.ServerNamesCollection;
+
+            this.NewServerNameLocationAssign();
             ///////////////
         }
 
         #endregion
 
-        #region Mainboard Comands
-        
-        public async void StartSpeedTest(object param) 
+        #region Mainboard Actions from Comands 
+
+        private async void StartSpeedTest(object param) 
         {
             await new Windows.UI.Popups.MessageDialog("StartSpeedTest()").ShowAsync();
         }
 
-        public async void BackCalling(object param)
+        private async void BackCalling(object param)
         {
             await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
         }
 
-        public void HistoryCalling(object param)
+        private void HistoryCalling(object param)
         {
             if (this.IsHistoryPanelOpen)
             {
@@ -210,38 +247,38 @@ namespace SpeedTest.ViewModel
             }                    
         }
 
-        public void SettingsCalling(object param)
+        private void SettingsCalling(object param)
         {
             this.IsSettingsPaneOpen = true;
         }
 
-        public async void ChangeServerCalling(object param)
+        private void ChangeServerCalling(object param)
         {
-            await new Windows.UI.Popups.MessageDialog("ChangeServerCalling()").ShowAsync();
+            this.IsServerPanelOpen = true;
         }
 
         #endregion
 
-        #region Setting Split View Commands
+        #region Settings Actions from Commands
 
-        public void SettingSplitViewDontClosing(object sender)
+        private void SettingSplitViewDontClosing(object sender)
         {           
             this.IsSettingsPaneOpen = false;            
         }
 
-        public async void LanguageChange(object param)
+        private async void LanguageChange(object param)
         {
             await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
         }
 
-        public async void ModeChanged(object param)
+        private async void ModeChanged(object param)
         {
             await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
         }
 
         #endregion
 
-        #region History view commands
+        #region History Actions from Commands
 
         private async void DeleteHistory(object param)
         {                                   
@@ -294,7 +331,79 @@ namespace SpeedTest.ViewModel
 
         #endregion
 
+        #region Server Actions from Commands
+
+        private void ServerNameTextChanged(object param)
+        {
+            string inputText = (string)param;
+
+            ObservableCollection<string> serverResults = FindServerInCollection(inputText);            
+
+            if (serverResults != null)
+            {
+                this.ServerNamesCollection = serverResults;
+            }            
+        }
+
+        private void SingleServerSelecting(object param)
+        {
+            string selectingServer = (string)param;
+
+            this.UnsetCurrentServer();
+            this.SetCurrentServer(selectingServer);
+            this.NewServerNameLocationAssign();
+        }
+
+        private void CloseServerPanel(object param)
+        {
+            this.IsServerPanelOpen = false;
+        }
+
+        #endregion
+
         #region Helpful methods
+
+        private ObservableCollection<string> FindServerInCollection(string inputText)
+        {
+            var serversResults = _allServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower()));
+
+            ObservableCollection<string> castServersResults = new ObservableCollection<string>(serversResults);
+
+            return castServersResults;
+        }
+
+        private void UnsetCurrentServer()
+        {
+            ServerViewModel currentServer = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
+            if (currentServer != null)
+            {
+                currentServer.IsCurrent = false;
+            }
+        }
+
+        private void SetCurrentServer(string selectingServer)
+        {
+            ServerViewModel newCurrentServer = this.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
+            if (newCurrentServer != null)
+            {
+                newCurrentServer.IsCurrent = true;
+            }
+        }
+
+        private void SetCurrentServer(ServerViewModel selectingServer)
+        {
+            ServerViewModel newCurrentServer = this.ServersCollection.FirstOrDefault(s => s == selectingServer);
+            if (newCurrentServer != null)
+            {
+                newCurrentServer.IsCurrent = true;
+            }
+        }
+
+        private void NewServerNameLocationAssign()
+        {
+            this.ServerName = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
+            this.ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
+        }
 
         private Style CreateButtonStyle()
         {

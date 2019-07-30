@@ -12,10 +12,10 @@ namespace SpeedTest.ArcControl
     {
         #region Dependency properties
 
-        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(double), typeof(Arc), new PropertyMetadata(50.0, OnSizePropertyChanged));
-        public static readonly DependencyProperty ThicknessProperty = DependencyProperty.Register("Thickness", typeof(double), typeof(Arc), new PropertyMetadata(2.0, OnSizePropertyChanged));
-        public static readonly DependencyProperty FillProperty = DependencyProperty.Register("Fill", typeof(Color), typeof(Arc), new PropertyMetadata(Color.FromArgb(1, 1, 1, 1)));
-        public static readonly DependencyProperty PercentValueProperty = DependencyProperty.Register("PercentValue", typeof(double), typeof(Arc), new PropertyMetadata(0.0, OnPercentValuePropertyChanged));
+        static readonly DependencyProperty RadiusProperty = DependencyProperty.Register("Radius", typeof(double), typeof(Arc), new PropertyMetadata(50.0, OnSizePropertyChanged));
+        static readonly DependencyProperty ThicknessProperty = DependencyProperty.Register("Thickness", typeof(double), typeof(Arc), new PropertyMetadata(2.0, OnSizePropertyChanged));
+        static readonly DependencyProperty FillProperty = DependencyProperty.Register("Fill", typeof(Color), typeof(Arc), new PropertyMetadata(Color.FromArgb(1, 1, 1, 1)));
+        static readonly DependencyProperty PercentValueProperty = DependencyProperty.Register("PercentValue", typeof(double), typeof(Arc), new PropertyMetadata(0.0, OnPercentValuePropertyChanged));
 
         #endregion
 
