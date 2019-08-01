@@ -28,15 +28,25 @@ namespace SpeedTest.ViewModel
         private bool _isServerLoaded;
         private bool _isSettingsPaneOpen;
         private SettingViewModel _settings;
-        private int _selectedMode;
-        private bool _isHistoryPanelOpen;
-        private bool _isHistorySelected;
+        private int _selectedMode = 0;
+        private bool _isHistoryPanelOpen = false;
+        private bool _isHistorySelected = false;
         private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
         private ObservableCollection<ServerViewModel> _serversCollection;
         private ObservableCollection<string> _serverNamesCollection;
         private ObservableCollection<string> _allServerNamesCollection;
-        public bool _isServerPanelOpen;
+        private bool _isServerPanelOpen;
+        private bool _isStartButtonPressed = false;
+        private bool _tryConnect = false;
+        private bool _isDownloadSpeedDataRecieved = false;
+        private bool _isUploadSpeedDataRecieved = false;
 
+
+            //this.IsHistorySelected = false;
+            //this.IsServerPanelOpen = false;
+            //this.TryConnect = false;
+            //this.IsDownloadSpeedDataRecieved = false;
+            //this.IsUploadSpeedDataRecieved = false;
         #endregion
 
         #region Property binding
@@ -67,10 +77,34 @@ namespace SpeedTest.ViewModel
             set { Set(ref _serverLocation, value); }
         }
 
-        public bool IsServerLoaded
+        //public bool IsServerLoaded
+        //{
+        //    get { return _isServerLoaded; }
+        //    set { Set(ref _isServerLoaded, value); }
+        //}
+
+        public bool IsStartButtonPressed
         {
-            get { return _isServerLoaded; }
-            set { Set(ref _isServerLoaded, value); }
+            get { return _isStartButtonPressed; }
+            set { Set(ref _isStartButtonPressed, value); }
+        }
+
+        public bool TryConnect
+        {
+            get { return _tryConnect; }
+            set { Set(ref _tryConnect, value); }
+        }
+
+        public bool IsDownloadSpeedDataRecieved
+        {
+            get { return _isDownloadSpeedDataRecieved; }
+            set { Set(ref _isDownloadSpeedDataRecieved, value); }
+        }
+
+        public bool IsUploadSpeedDataRecieved
+        {
+            get { return _isUploadSpeedDataRecieved; }
+            set { Set(ref _isUploadSpeedDataRecieved, value); }
         }
 
         // Settings panel properties
@@ -200,11 +234,7 @@ namespace SpeedTest.ViewModel
 
             // Initialization MainPageViewModel
 
-            this.Settings = SettingViewModel.GetInstance();
-            this.SelectedMode = (int)Mode.Light;
-            this.IsHistoryPanelOpen = false;
-            this.IsHistorySelected = false;
-            this.IsServerPanelOpen = false;
+            this.Settings = SettingViewModel.GetInstance();           
 
             ///////////////
             // Testing data
@@ -225,9 +255,10 @@ namespace SpeedTest.ViewModel
 
         #region Mainboard Actions from Comands 
 
-        private async void StartSpeedTest(object param) 
+        private void StartSpeedTest(object param) 
         {
-            await new Windows.UI.Popups.MessageDialog("StartSpeedTest()").ShowAsync();
+            this.IsStartButtonPressed = true;
+            this.TryConnect = true;
         }
 
         private async void BackCalling(object param)
@@ -254,7 +285,14 @@ namespace SpeedTest.ViewModel
 
         private void ChangeServerCalling(object param)
         {
-            this.IsServerPanelOpen = true;
+            if (this.IsServerPanelOpen)
+            {
+                this.IsServerPanelOpen = false;
+            }
+            else
+            {
+                this.IsServerPanelOpen = true;
+            }
         }
 
         #endregion
