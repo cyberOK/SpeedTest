@@ -1,0 +1,15 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SpeedTest">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="MySomeColor">#FF333333</Color>
+            <SolidColorBrush x:Key="MyPageBackgroundThemeBrush" Color="#FF333333" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <Color x:Key="MySomeColor2">#FF000000</Color>
+            <SolidColorBrush x:Key="MyPageBackgroundThemeBrush" Color="#FF000000" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

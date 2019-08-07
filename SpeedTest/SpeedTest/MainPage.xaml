@@ -11,870 +11,412 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    mc:Ignorable="d"
-
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Page.DataContext>
         <StaticResource ResourceKey="mainViewModel"/>
     </Page.DataContext>
 
     <Page.Resources>
-        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converter:RadioModeSelectedIntToBooltConverter x:Key="RadioModeSelectedIntToBooltConverter"/>
-        <converter:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
-        <converter:DateToStringConverter x:Key="DateToStringConverter"/>
-
-        <Style x:Key="GridViewItemRevealStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}"/>
-            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,0,4,4"/>
-            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}"/>
-            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}"/>
-            <Setter Property="AllowDrop" Value="False"/>
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
-            <Setter Property="FocusVisualMargin" Value="-2"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <ListViewItemPresenter x:Name="Root" 
-                                               CheckBrush="{ThemeResource GridViewItemCheckBrush}" 
-                                               ContentMargin="{TemplateBinding Padding}" 
-                                               CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}" 
-                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckMode="{ThemeResource GridViewItemCheckMode}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                               DragBackground="{ThemeResource GridViewItemDragBackground}" 
-                                               DragForeground="{ThemeResource GridViewItemDragForeground}" 
-                                               FocusBorderBrush="Transparent" 
-                                               FocusVisualMargin="{TemplateBinding FocusVisualMargin}" 
-                                               FocusSecondaryBorderBrush="Transparent" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                               Control.IsTemplateFocusTarget="True" 
-                                               PressedBackground="{ThemeResource GridViewItemBackgroundPressed}" 
-                                               PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}" 
-                                               PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
-                                               PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
-                                               ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
-                                               SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
-                                               SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" 
-                                               SelectedBackground="Transparent" 
-                                               SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}" 
-                                               SelectedPointerOverBackground="Transparent" 
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="Selected"/>
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverPressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PressedSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="DisabledStates">
-                                    <VisualState x:Name="Enabled"/>
-                                    <VisualState x:Name="Disabled">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.RevealBorderThickness" Value="0"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </ListViewItemPresenter>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="GridViewItemContainerStyle1" BasedOn="{StaticResource GridViewItemRevealStyle}" TargetType="GridViewItem"/>
-        
-        <Style x:Key="ListViewItemRevealStyle" TargetType="ListViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="{ThemeResource ListViewItemBackground}"/>
-            <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="Padding" Value="12,0,12,0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
-            <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
-            <Setter Property="AllowDrop" Value="False"/>
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
-            <Setter Property="FocusVisualMargin" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter x:Name="Root" 
-                                               CheckBrush="{ThemeResource ListViewItemCheckBrush}" 
-                                               ContentMargin="{TemplateBinding Padding}" 
-                                               CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}" 
-                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckMode="{ThemeResource ListViewItemCheckMode}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                               DragBackground="{ThemeResource ListViewItemDragBackground}" 
-                                               DragForeground="{ThemeResource ListViewItemDragForeground}"
-                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
-                                               FocusVisualMargin="{TemplateBinding FocusVisualMargin}" 
-                                               FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                               Control.IsTemplateFocusTarget="True" 
-                                               PressedBackground="{ThemeResource ListViewItemBackgroundPressed}"
-                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
-                                               PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
-                                               PointerOverBackground="{ThemeResource ListViewItemBackgroundPointerOver}" 
-                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-                                               SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
-                                               SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}"
-                                               SelectedBackground="LightGray" 
-                                               SelectedPressedBackground="{ThemeResource ListViewItemBackgroundSelectedPressed}"
-                                               SelectedPointerOverBackground="Gray"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="Selected"/>
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
-                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPointerOver}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
-                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPointerOver}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverPressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
-                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPressed}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
-                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPressed}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PressedSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
-                                            <Setter Target="Root.RevealBorderBrush" Value="{ThemeResource ListViewItemRevealBorderBrushPressed}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="DisabledStates">
-                                    <VisualState x:Name="Enabled"/>
-                                    <VisualState x:Name="Disabled">
-                                        <VisualState.Setters>
-                                            <Setter Target="Root.RevealBorderThickness" Value="0"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </ListViewItemPresenter>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ListViewItemContainerStyle1" BasedOn="{StaticResource ListViewItemRevealStyle}" TargetType="ListViewItem"/>
-        
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{ThemeResource ButtonBackground}"/>
-            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
-            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
-            <Setter Property="Padding" Value="{StaticResource ButtonPadding}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
-            <Setter Property="FocusVisualMargin" Value="-3"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw"
-                                          Background="Transparent"
-                                          BorderThickness="{TemplateBinding BorderThickness}"
-                                          BorderBrush="{TemplateBinding BorderBrush}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Content="{TemplateBinding Content}"
-                                          CornerRadius="{TemplateBinding CornerRadius}"
-                                          ContentTransitions="{TemplateBinding ContentTransitions}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Padding="{TemplateBinding Padding}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
-                                            <Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="PointerOver">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="DarkCyan"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Pressed">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter"/>
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Disabled">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}"/>
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                            </ContentPresenter>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-       
-        <Style x:Key="RadioButtonStyle1" TargetType="RadioButton">
-            <Setter Property="Background" Value="{ThemeResource RadioButtonBackground}"/>
-            <Setter Property="Foreground" Value="{ThemeResource RadioButtonForeground}"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource RadioButtonBorderBrush}"/>
-            <Setter Property="Padding" Value="8,6,0,0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
-            <Setter Property="FocusVisualMargin" Value="-7,-3,-7,-3"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid x:Name="RootGrid" 
-                              Background="{TemplateBinding Background}" 
-                              BorderThickness="{TemplateBinding BorderThickness}" 
-                              BorderBrush="{TemplateBinding BorderBrush}" 
-                              CornerRadius="{TemplateBinding CornerRadius}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonForegroundPointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonBackgroundPointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonBorderBrushPointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseStrokePointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseFillPointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseCheckedStrokePointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseCheckedFillPointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonCheckGlyphFillPointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonCheckGlyphStrokePointerOver}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonForegroundPressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonBackgroundPressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonBorderBrushPressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseStrokePressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseFillPressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseCheckedStrokePressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseCheckedFillPressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonCheckGlyphFillPressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonCheckGlyphStrokePressed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonForegroundDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonBackgroundDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonBorderBrushDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseStrokeDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseFillDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseCheckedStrokeDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonOuterEllipseCheckedFillDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Fill">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonCheckGlyphFillDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Stroke">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonCheckGlyphStrokeDisabled}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Checked">
-                                        <Storyboard>
-                                            <DoubleAnimation Duration="0" Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Opacity" To="1"/>
-                                            <DoubleAnimation Duration="0" Storyboard.TargetName="OuterEllipse" Storyboard.TargetProperty="Opacity" To="0"/>
-                                            <DoubleAnimation Duration="0" Storyboard.TargetName="CheckOuterEllipse" Storyboard.TargetProperty="Opacity" To="1"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Unchecked"/>
-                                    <VisualState x:Name="Indeterminate"/>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid Height="32" VerticalAlignment="Top">
-                                <Ellipse x:Name="OuterEllipse" Fill="{StaticResource RadioButtonOuterEllipseFill}" Height="20" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" Stroke="{ThemeResource RadioButtonOuterEllipseStroke}" UseLayoutRounding="False" Width="20"/>
-                                <Ellipse x:Name="CheckOuterEllipse" Fill="DarkCyan" Height="20" Opacity="0" StrokeThickness="{ThemeResource RadioButtonBorderThemeThickness}" Stroke="{ThemeResource RadioButtonOuterEllipseCheckedStroke}" UseLayoutRounding="False" Width="20"/>
-                                <Ellipse x:Name="CheckGlyph" Fill="DarkCyan" Height="10" Opacity="0" Stroke="{ThemeResource RadioButtonCheckGlyphStroke}" UseLayoutRounding="False" Width="10"/>
-                            </Grid>
-                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" Grid.Column="1" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" TextWrapping="Wrap" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/MainPageStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary Source="Styles/LightTheme" x:Key="Light"/>
+                <ResourceDictionary Source="Styles/DarkTheme" x:Key="Dark"/>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
+    <!--Height="500" Width="500"-->
+    <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}" RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
 
-    <Grid  x:Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.4*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.1*"/>
-        </Grid.ColumnDefinitions>
+        <!-- Background Image with Grid Above It -->
+        <!--<Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
+        <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}" Opacity="0.9"/>-->
 
-        <!-- Arc Controls -->
-        <arcControl:Arc Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}" 
+        <!-- Main Grid -->
+        <Grid x:Name="MainGrid" Canvas.ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.7*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Settings Panel Buttons -->
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" Margin="0,50">
+                <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" 
+                        Command="{Binding SettingsButtonPressed}"/>
+                <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" 
+                        Command="{Binding HistoryButtonPressed}"/>
+                <Button x:Name="backButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" 
+                        Command="{Binding BackButtonPressed}"/>
+            </StackPanel>
+
+            <!-- Arc Board -->
+            <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                <!-- Arc Controls -->
+                <arcControl:Arc Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}" 
                         Grid.Column="1" Fill="DarkCyan" Thickness="3" Radius="170" PercentValue="400" EnableGradient="False"/>
-        <arcControl:Arc Visibility="{Binding IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
+                <arcControl:Arc Visibility="{Binding IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                         Grid.Column="1" Fill="DarkCyan" Thickness="20" Radius="200" PercentValue="215"/>
-        <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
+                <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
                         Grid.Column="1" Fill="Gray" Thickness="20" Radius="200" PercentValue="400" Opacity="0.4" EnableGradient="False"/>
-        <arcControl:Arc Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
+                <arcControl:Arc Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                         Grid.Column="1" Fill="DarkBlue" Thickness="20" Radius="180" PercentValue="97"/>
-        <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
+                <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
                         Grid.Column="1" Fill="Gray" Thickness="20" Radius="180" PercentValue="400" Opacity="0.2" EnableGradient="False"/>
 
-        <!-- Settings Panel Buttons -->
-        <StackPanel Grid.Column="2" HorizontalAlignment="Center" Margin="0,50">
-            <Button x:Name="setingsButton" 
-                Background="Transparent"
-                FontFamily="Segoe MDL2 Assets" 
-                FontSize="36"                
-                Content="&#xE713;" 
-                Command="{Binding SettingsButtonPressed}"/>
-            <Button x:Name="historyButton" 
-                Background="Transparent"
-                FontFamily="Segoe MDL2 Assets" 
-                FontSize="36"                
-                Content="&#xE81C;" 
-                Command="{Binding HistoryButtonPressed}"/>
-            <Button x:Name="backButton" 
-                Background="Transparent"
-                FontFamily="Segoe MDL2 Assets" 
-                FontSize="36" 
-                Content="&#xE72D;"
-                Command="{Binding BackButtonPressed}"/>
-        </StackPanel>
-
-        <!-- Start Button -->
-        <Button Style="{StaticResource ButtonStyle}" x:Name="startButton"
+                <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
+                <Button Style="{StaticResource ButtonStyle}" x:Name="startButton"
                 Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                 Height="120" Width="200"
                 Content="Start"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Margin="0,0,0,20"
                 Grid.Column="1" FontSize="90"
                 Command="{Binding StartButtonPressed}"/>
 
-        <TextBlock Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"              
+                <TextBlock x:Name="TryConnectTextBlock" Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"              
                    Grid.Column="1" Text="Connecting..." FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        
-        <!-- Test Data Board -->
-        <Grid Grid.Column="1" Height="150" Width="1000" VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal">
-                <!-- Ping Fields -->
-                <Grid Visibility="Visible">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="202"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Ping" FontSize="40" Foreground="DarkCyan" VerticalAlignment="Bottom"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="(ms)" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="1" Grid.RowSpan="2" Text="163" FontSize="80"  FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="SpeedDataNumbersTextBlock" Grid.Column="1" FontSize="40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                   Visibility="{Binding IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
+                   Text="{Binding SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
+
+            </Grid>
+
+            <!-- Bottom Board -->
+            <StackPanel Grid.Row="1" Grid.Column="1">
+
+                <!-- Test Data Board -->
+                <Grid Grid.Column="1" Grid.Row="1" Height="150" Width="1000" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Ping Fields -->
+                        <Grid Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="202"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Grid.RowSpan="2" Text="163" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <!-- Download Speed Fields -->
+                        <Grid Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="230"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Grid.RowSpan="2" Text="121" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <!-- Upload Speed Fields -->
+                        <Grid Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="176"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Grid.RowSpan="2" Text="111" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                    </StackPanel>
                 </Grid>
-                <!-- Download Speed Fields -->
-                <Grid Visibility="Visible">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="180"/>
-                        <ColumnDefinition Width="230"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Download" FontSize="40" Foreground="DarkCyan" VerticalAlignment="Bottom"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="(mbps)" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="1" Grid.RowSpan="2" Text="121" FontSize="80"  FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
-                <!-- Upload Speed Fields -->
-                <Grid Visibility="Visible">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="176"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Column="0" Text="Upload" FontSize="40" Foreground="DarkCyan" VerticalAlignment="Bottom"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="(mbps)" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="1" Grid.RowSpan="2" Text="111" FontSize="80"  FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                </Grid>
-
-            </StackPanel>
-        </Grid>
-        
-        <!-- Split Line -->
-        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="1000">
-            <Line Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" StrokeThickness="3" X1="0"  X2="499">
-                <Line.Stroke>
-                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="0.8,1" ColorInterpolationMode="ScRgbLinearInterpolation">
-                        <GradientStop Color="#FFBDEAEC" Offset="0" />
-                        <GradientStop Color="#FF104368" Offset="1" />
-                    </LinearGradientBrush>
-                </Line.Stroke>
-            </Line>
-
-            <Line Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" StrokeThickness="3" X1="0"  X2="499">
-                <Line.Stroke>
-                    <LinearGradientBrush StartPoint="0.2,0.4" EndPoint="0.9,0.1" ColorInterpolationMode="ScRgbLinearInterpolation">
-                        <GradientStop Color="#FFBDEAEC" Offset="1" />
-                        <GradientStop Color="#FF104364" Offset="0" />
-                    </LinearGradientBrush>
-                </Line.Stroke>
-            </Line>
-        </Grid>
-        
-        <!-- Main Board -->
-        <RelativePanel Grid.Column="1" Grid.Row="1" Width="600" Margin="0,30,0,0">
-            <TextBlock x:Name="providerName"
-                       Width="300"
-                       Height="60"
-                       FontSize="30"
-                       Text="{Binding ProviderName}"
-                       TextAlignment="Center"
-                       Foreground="DarkCyan"
-                       RelativePanel.AlignLeftWithPanel="True"/>
-            <TextBlock x:Name="ipAdress"
-                       Width="300"
-                       Height="60"
-                       FontSize="30"
-                       Text="{Binding IpAdress}"
-                       TextAlignment="Center"                       
-                       RelativePanel.Below="providerName"/>
-            <TextBlock x:Name="serverName"
-                       Width="300"
-                       Height="60"
-                       FontSize="30"
-                       Text="{Binding ServerName, Source={StaticResource mainViewModel}}"
-                       TextAlignment="Center"
-                       Foreground="DarkCyan" 
-                       RelativePanel.RightOf="providerName"/>
-            <TextBlock x:Name="serverLocation"
-                       Width="300"
-                       Height="60"
-                       FontSize="30"
-                       Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}"
-                       TextAlignment="Center"
-                       RelativePanel.Below="serverName"
-                       RelativePanel.RightOf="ipAdress"/>
-            <Button x:Name="changeServerButton"
-                    Width="300"
-                    Height="60"
-                    FontSize="30"
-                    Content="Change server"
-                    RelativePanel.Below="serverLocation"
-                    RelativePanel.RightOf="providerName" 
-                    Foreground="White" 
-                    FontWeight="Normal"
-                    Opacity="1"
-                    Command="{Binding ChangeServerButtonPressed}">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
-                        <GradientStop Color="#FF14CEEC" Offset="1"/>
-                        <GradientStop Color="#FF101757" Offset="0"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-        </RelativePanel>
-
-        <!--{Binding IsSettingsPaneOpen}-->
-        <!-- Settings Panel -->
-        <SplitView x:Name="SettingSplitView" 
-                   IsPaneOpen="True" 
-                   FlowDirection="RightToLeft"                    
-                   OpenPaneLength="450" Grid.Column="1" 
-                   Margin="1263,50,50,155" 
-                   Grid.RowSpan="2"
-                   Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Stretch">
-            
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="PaneClosing">
-                    <Core:InvokeCommandAction Command="{Binding SettingSplitViewClosing}"/>
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
-
-            <SplitView.Pane>
-                <Grid Height="800" Width="444" BorderThickness="1" BorderBrush="DarkCyan">
-                    <RelativePanel HorizontalAlignment="Left" VerticalAlignment="Stretch">
-
-                        <RelativePanel x:Name="SettingsPanel" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="449" IsHoldingEnabled="True" HorizontalAlignment="Stretch" 
-                                       VerticalAlignment="Stretch" FlowDirection="RightToLeft">
-                            <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan"  Padding="40,10"
-                                       RelativePanel.AlignRightWithPanel="True" Margin="30,0,0,0"/>
-                            <Button x:Name="CloseSettingButton" Command="{Binding SettingSplitViewClosing}" Height="60" Width="60" Background="Transparent" 
-                                    Foreground="DarkCyan" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignLeftWithPanel="True"/>
-                        </RelativePanel>
-
-                        <ListView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0" Padding="-30,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RelativePanel.Below="SettingsPanel">
-                            <ScrollViewer x:Name="ScrollForSettings" >
-                                <RelativePanel x:Name="ContentPanel" Width="449" >
-                                    <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="30,10" TextAlignment="Left" HorizontalAlignment="Left" 
-                                               RelativePanel.AlignRightWithPanel="True"/>
-                                    <ComboBox x:Name="LanguageComboBox" ItemsSource="{Binding Settings.Languages}" PlaceholderText="English" Width="320" Margin="30,0" 
-                                              HorizontalContentAlignment="Left" FlowDirection="LeftToRight" RelativePanel.Below="LanguageBlock" RelativePanel.AlignRightWithPanel="True">
-
-                                        <Interactivity:Interaction.Behaviors>
-                                            <Core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <Core:InvokeCommandAction Command="{Binding LanguageComboBoxChanged}" 
-                                                                          CommandParameter="{Binding ElementName=LanguageComboBox,Path=SelectedItem}"/>
-                                            </Core:EventTriggerBehavior>
-                                        </Interactivity:Interaction.Behaviors>
-
-                                        <ComboBoxItem x:Name="EnglixhComboBoxItem"></ComboBoxItem>
-                                        <ComboBoxItem x:Name="RussianComboBoxItem"></ComboBoxItem>
-                                    </ComboBox>
-
-                                    <TextBlock x:Name="ModeBlock" Text="Mode" FontSize="30" Foreground="DarkCyan" Padding="30,10" TextAlignment="Right"
-                                               RelativePanel.Below="LanguageComboBox" RelativePanel.AlignRightWithPanel="True"/>
-                                    <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme"  Content="Light" 
-                                                 Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" 
-                                                 IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"
-                                                 Margin="0,0,-30,0" Width="90" RelativePanel.Below="ModeBlock" RelativePanel.AlignRightWithPanel="True"/>
-                                    <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="DarkRadioButton" GroupName="Theme" Content="Dark" 
-                                                 Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Content}" 
-                                                 IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"
-                                                 Margin="0,0,-30,0" Width="90" RelativePanel.Below="LightRadioButton" RelativePanel.AlignRightWithPanel="True"/>
-
-                                    <TextBlock x:Name="AboutBlock" Text="About" FontSize="30" Foreground="DarkCyan" Padding="30,10" TextAlignment="Right" 
-                                               RelativePanel.Below="DarkRadioButton" RelativePanel.AlignRightWithPanel="True"/>
-                                    <TextBlock x:Name="ProgramNameBlock" Text="{Binding Settings.ProgramName}" FontSize="15" Foreground="Gray"  Padding="0,00,30,0"
-                                               TextAlignment="Right" RelativePanel.Below="AboutBlock" RelativePanel.AlignRightWithPanel="True"/>
-                                    <TextBlock x:Name="VersionBlock" Text="{Binding Settings.Version}" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" 
-                                               TextAlignment="Right" RelativePanel.Below="ProgramNameBlock" RelativePanel.AlignRightWithPanel="True"/>
-                                    <TextBlock x:Name="MicrosoftResearchBlock" Text="Microsoft Research" FontSize="15" Foreground="Gray"  Padding="0,00,30,0" 
-                                               TextAlignment="Right" RelativePanel.Below="VersionBlock" RelativePanel.AlignRightWithPanel="True"/>
-                                    <RichTextBlock x:Name="AboutStoryBlock" Margin="50,30,30,30" RelativePanel.Below="MicrosoftResearchBlock">
-                                        <Paragraph   TextAlignment="Right">
-                                            <Run Text="{Binding Settings.AboutArticle}"/>
-                                        </Paragraph>
-                                    </RichTextBlock>
-
-                                    <HyperlinkButton  x:Name="FeedBackLink" NavigateUri="{Binding Settings.FeedBackLink}" HorizontalAlignment="Right" Margin="30,0"
-                                                      FontSize="16" RelativePanel.Below="AboutStoryBlock" RelativePanel.AlignRightWithPanel="True">Feedback</HyperlinkButton>
-                                    <HyperlinkButton x:Name="RateLink" NavigateUri="{Binding Settings.RateLink}" HorizontalAlignment="Right" Margin="30,0" FontSize="16"
-                                                     RelativePanel.Below="FeedBackLink" RelativePanel.AlignRightWithPanel="True">Rate us</HyperlinkButton>
-                                </RelativePanel>
-                            </ScrollViewer>
-                        </ListView>
-
+                <!-- Split Line -->
+                <Grid Grid.Column="1" Grid.Row="1" Width="1000" Height="10" Margin="0,30">
+                    <RelativePanel>
+                        <Line Stroke="{ThemeResource LinearGradientBrush1}" StrokeThickness="3" X1="0"  X2="500" RelativePanel.AlignLeftWithPanel="True"/>
+                        <Line Stroke="{ThemeResource LinearGradientBrush2}" StrokeThickness="3" X1="0"  X2="500" RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
                 </Grid>
-            </SplitView.Pane>
-        </SplitView>
 
-        <!-- History Panel -->
-        <Grid Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <RelativePanel Visibility="{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}" Height="700" Width="700" Background="WhiteSmoke" BorderThickness="1" BorderBrush="DarkCyan">
-
-                <RelativePanel x:Name="HistoryPanel"  Background="White" IsHoldingEnabled="True" 
-                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                               Width="700" >
-                    <TextBlock x:Name="HistoryBlock" Text="History" FontSize="30" Foreground="DarkCyan" Padding="30,10" 
-                                       RelativePanel.AlignLeftWithPanel="True"/>
-                    <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Height="60" Width="60"  Background="Transparent" 
-                                    Foreground="DarkCyan" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
-                    <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Height="60" Width="60" Background="Transparent" FontSize="30"
-                                    Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
+                <!-- Main Bottom Board Information -->
+                <RelativePanel Grid.Column="1" Grid.Row="1" Width="500" >
+                    <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
+                               Text="{Binding ProviderName}" RelativePanel.AlignLeftWithPanel="True"/>
+                    <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
+                               Text="{Binding IpAdress}" RelativePanel.Below="providerName"/>
+                    <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
+                               Text="{Binding ServerName, Source={StaticResource mainViewModel}}" RelativePanel.RightOf="providerName"/>
+                    <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
+                               Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}"
+                               RelativePanel.Below="serverName" RelativePanel.RightOf="ipAdress"/>
+                    <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server"
+                            RelativePanel.Below="serverLocation" RelativePanel.RightOf="providerName" 
+                            Command="{Binding ChangeServerButtonPressed}">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
+                                <GradientStop Color="#FF14CEEC" Offset="1"/>
+                                <GradientStop Color="#FF101757" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                 </RelativePanel>
 
+            </StackPanel>
 
-                <Line x:Name="ShadeLine" StrokeThickness="20" X1="0" X2="700" RelativePanel.Below="HistoryPanel">
-                    <Line.Stroke>
-                        <LinearGradientBrush StartPoint="0.5,0.3" EndPoint="0.5,1">
-                            <GradientStop Color="WhiteSmoke" Offset="1" />
-                            <GradientStop Color="LightGray" Offset="0.5" />
-                        </LinearGradientBrush>
-                    </Line.Stroke>
-                </Line>
+        </Grid>
 
-                <Grid x:Name="HistoryHeader" Width="700" Height="70"  Margin="0,0,0,10" RelativePanel.Below="HistoryPanel" RelativePanel.AlignRightWithPanel="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1.2*"/>
-                        <ColumnDefinition Width="0.8*"/>
-                        <ColumnDefinition Width="0.8*"/>
-                        <ColumnDefinition Width="0.8*"/>
-                    </Grid.ColumnDefinitions>
+        <!-- Popup Grid with Helpful Panels -->
+        <Grid x:Name="PopupGrid" Canvas.ZIndex="1" 
+              Visibility="{Binding IsPopupGridRaise, Source={StaticResource mainViewModel},Converter={StaticResource BooleanToVisibilityConverter}}"
+              Background="{StaticResource BackgroundPopupGrid}">
 
-                    <TextBlock Grid.Column="1" Text="Server" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="2" Text="Date" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="3" Text="Ping" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="4" Text="Download" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="5" Text="Upload" FontSize="20" Foreground="DarkCyan" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="3" Text="(Ms)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                    <TextBlock Grid.Column="4" Text="(Mbps)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                    <TextBlock Grid.Column="5" Text="(Mbps)" FontSize="20" Foreground="DarkGray" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                </Grid>
+            <!-- Settings Panel -->
+            <Grid x:Name="SettingsPanel" Canvas.ZIndex="2" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Visibility="{Binding IsSettingsPaneOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" Height="560" Width="700">
-                    <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" IsItemClickEnabled="True" SelectionMode="Single">
+                <RelativePanel Style="{StaticResource Border}" Height="900" Width="450" Margin="0,0,60,70" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+
+                    <RelativePanel x:Name="SettingsTopBar" Background="{ThemeResource BackgroundPanelTitle}"  Width="450" IsHoldingEnabled="True">
+                        <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan" Padding="20,10"
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                        <Button x:Name="CloseSettingButton" Style="{StaticResource ButtonClose}" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"
+                                Command="{Binding SettingSplitViewClosing}"/>
+                    </RelativePanel>
+
+                    <Line Stroke="{ThemeResource LinearGradientBrushShade}" StrokeThickness="20" X1="0" X2="450" RelativePanel.Below="SettingsTopBar" Opacity="0.3" Canvas.ZIndex="1"/>
+
+                    <Grid Background="{ThemeResource BackgroundPanelContent}" RelativePanel.Below="SettingsTopBar">
+                        <ScrollViewer x:Name="ScrollForSettings" Width="450">
+
+                            <RelativePanel x:Name="ContentPanel" Width="450" Padding="20,10,0,0">
+                                <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
+                                <ComboBox x:Name="LanguageComboBox" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
+                                          PlaceholderText="English" Width="410" FlowDirection="LeftToRight" RelativePanel.Below="LanguageBlock">
+                                    <Interactivity:Interaction.Behaviors>
+                                        <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <Core:InvokeCommandAction Command="{Binding LanguageComboBoxChanged}" 
+                                                                      CommandParameter="{Binding ElementName=LanguageComboBox,Path=SelectedItem}"/>
+                                        </Core:EventTriggerBehavior>
+                                    </Interactivity:Interaction.Behaviors>
+                                </ComboBox>
+
+                                <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
+                                <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme"  Content="Light" Width="90" RelativePanel.Below="ModeBlock"
+                                                 Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" 
+                                                 IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
+                                <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="DarkRadioButton" GroupName="Theme" Content="Dark" Width="90" RelativePanel.Below="LightRadioButton"
+                                                 Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Content}" 
+                                                 IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
+
+                                <TextBlock x:Name="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="About" RelativePanel.Below="DarkRadioButton"/>
+                                <TextBlock x:Name="ProgramNameBlock" Text="{Binding Settings.ProgramName}" Style="{StaticResource TextBlockAboutProgram}"
+                                               RelativePanel.Below="AboutBlock"/>
+                                <TextBlock x:Name="VersionBlock" Text="{Binding Settings.Version}" Style="{StaticResource TextBlockAboutProgram}" 
+                                               RelativePanel.Below="ProgramNameBlock"/>
+                                <TextBlock x:Name="MicrosoftResearchBlock" Text="Microsoft Research" Style="{StaticResource TextBlockAboutProgram}"  
+                                               TextAlignment="Right" RelativePanel.Below="VersionBlock"/>
+                                <RichTextBlock x:Name="AboutStoryBlock" Margin="0,30,30,30" RelativePanel.Below="MicrosoftResearchBlock">
+                                    <Paragraph>
+                                        <Run Text="{Binding Settings.AboutArticle}"/>
+                                    </Paragraph>
+                                </RichTextBlock>
+
+                                <HyperlinkButton x:Name="FeedBackLink" NavigateUri="{Binding Settings.FeedBackLink}" Style="{StaticResource HyperlinkButtonSettingsPanel}" 
+                                                 RelativePanel.Below="AboutStoryBlock">Feedback</HyperlinkButton>
+                                <HyperlinkButton x:Name="RateLink" NavigateUri="{Binding Settings.RateLink}" Style="{StaticResource HyperlinkButtonSettingsPanel}"
+                                                 Margin="0,0,0,30" RelativePanel.Below="FeedBackLink">Rate us</HyperlinkButton>
+                            </RelativePanel>
+                        </ScrollViewer>
+                    </Grid>
+
+                </RelativePanel>
+            </Grid>
+
+            <!-- History Panel -->
+            <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <RelativePanel  Style="{StaticResource Border}" Height="700" Width="700" Background="{ThemeResource BackgroundPanelContent}"
+                                Visibility="{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <RelativePanel x:Name="HistoryPanel" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True" 
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="700">
+                        <TextBlock x:Name="HistoryBlock" Text="History" FontSize="30" Foreground="DarkCyan" Padding="30,10" 
+                                       RelativePanel.AlignLeftWithPanel="True"/>
+                        <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Height="60" Width="60"  Background="Transparent" 
+                                    Foreground="DarkCyan" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
+                        <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Height="60" Width="60" Background="Transparent" FontSize="30"
+                                    Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
+                    </RelativePanel>
+
+                    <Line Stroke="{ThemeResource LinearGradientBrushShade}" StrokeThickness="20" X1="0" X2="700" Opacity="0.3" RelativePanel.Below="HistoryPanel"/>
+
+                    <Grid x:Name="HistoryHeader" Width="700" Height="70" Margin="0,0,0,10" RelativePanel.Below="HistoryPanel" RelativePanel.AlignRightWithPanel="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                            <ColumnDefinition Width="0.8*"/>
+                            <ColumnDefinition Width="0.8*"/>
+                            <ColumnDefinition Width="0.8*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="Server" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock Grid.Column="2" Text="Date" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock Grid.Column="3" Text="Ping" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock Grid.Column="4" Text="Download" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock Grid.Column="5" Text="Upload" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock Grid.Column="3" Text="(Ms)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
+                        <TextBlock Grid.Column="4" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
+                        <TextBlock Grid.Column="5" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
+                    </Grid>
+
+                    <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" Height="560" Width="700">
+                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" IsItemClickEnabled="True" SelectionMode="Single">
+
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                    <Core:InvokeCommandAction Command="{Binding SingleHistorySelected, Source={StaticResource mainViewModel}}"
+                                                              CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Grid Width="700" Height="50">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.4*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="1.2*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Button x:Name="SingleHistoryRemoveButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                            Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}"
+                                            Height="50" Width="50" FontSize="20" FontFamily="Segoe MDL2 Assets" Content="&#xE711;">
+
+                                            <Interactivity:Interaction.Behaviors>
+                                                <Core:EventTriggerBehavior EventName="Click">
+                                                    <Core:InvokeCommandAction Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"
+                                                              CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
+                                                </Core:EventTriggerBehavior>
+                                            </Interactivity:Interaction.Behaviors>
+
+                                        </Button>
+                                        <Grid Grid.Column="1" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                            <TextBlock Text="{Binding Server}" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"/>
+                                        </Grid>
+                                        <Grid Grid.Column="2" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                            <TextBlock Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                       Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
+                                        </Grid>
+                                        <Grid Grid.Column="3" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                            <TextBlock Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                       Text="{Binding Ping}"/>
+                                        </Grid>
+                                        <Grid Grid.Column="4" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                            <TextBlock Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                       Text="{Binding DownloadSpeed}"/>
+                                        </Grid>
+                                        <Grid Grid.Column="5" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                            <TextBlock Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                       Text="{Binding UploadSpeed}"/>
+                                        </Grid>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </Grid>
+                </RelativePanel>
+            </Grid>
+
+            <!-- Servers Panel -->
+            <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,140" >
+                <RelativePanel x:Name="ServerPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}" Height="550" Width="500" 
+                               Visibility="{Binding IsServerPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <Button x:Name="CloseServersPanelButton" Style="{StaticResource ButtonClose}"  Content="&#xE711;"
+                            Command="{Binding CloseServerPanelButtonPressed}" RelativePanel.AlignRightWithPanel="True"/>
+                    <RelativePanel x:Name="ServersTopBar" IsHoldingEnabled="True" Width="500" Height="60" Margin="0,20">
+                        <TextBlock x:Name="ImageGlobe" Text="&#xE774;" FontSize="40" Foreground="DarkCyan" Height="60" Width="100" TextAlignment="Right" Padding="0,10,10,0"
+                                       FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
+                        <Line X1="100" Y1="5" X2="100" Y2="55" Stroke="DarkCyan" StrokeThickness="2" />
+                        <Grid RelativePanel.RightOf="ImageGlobe" Height="60">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="0.7*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="HeaderServerName" Grid.Row="0" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" FontSize="30" Foreground="DarkCyan" Padding="10,0,0,0" VerticalAlignment="Bottom"/>
+                            <TextBlock x:Name="HeaderServerLocation" Grid.Row="1" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" FontSize="20" Padding="10,0,0,0" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </RelativePanel>
+
+                    <AutoSuggestBox  x:Name="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}"  PlaceholderText="Search" Width="450" Height="40" Margin="24,0" QueryIcon="Find" RelativePanel.Below="ServersTopBar">
+                        <Interactivity:Interaction.Behaviors>
+                            <Core:EventTriggerBehavior EventName="TextChanged">
+                                <Core:InvokeCommandAction Command="{Binding ServerSuggestBoxTextChanged, Source={StaticResource mainViewModel}}"
+                                                          CommandParameter="{Binding ElementName=ServerSuggestBox, Path=Text}"/>
+                            </Core:EventTriggerBehavior>
+                        </Interactivity:Interaction.Behaviors>
+                    </AutoSuggestBox>
+
+                    <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Width="450" Margin="24,10,0,10"
+                                        RelativePanel.Below="ServerSuggestBox"/>
+
+                    <ListView x:Name="ServersListView" ItemsSource="{Binding ServerNamesCollection, Source={StaticResource mainViewModel}}" 
+                              ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" 
+                              Width="500" Height="400" RelativePanel.Below="AvailableServers">
 
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="SelectionChanged">
-                                <Core:InvokeCommandAction Command="{Binding SingleHistorySelected, Source={StaticResource mainViewModel}}"
-                                                          CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}" />
+                                <Core:InvokeCommandAction Command="{Binding SingleServerSelected, Source={StaticResource mainViewModel}}"
+                                                          CommandParameter="{Binding ElementName=ServersListView, Path=SelectedItem}"/>
                             </Core:EventTriggerBehavior>
                         </Interactivity:Interaction.Behaviors>
 
-                        <GridView.ItemTemplate>
+                        <ListView.ItemTemplate>
                             <DataTemplate>
-
-                                <Grid Width="700" Height="50">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.4*"/>
-                                        <ColumnDefinition Width="1.5*"/>
-                                        <ColumnDefinition Width="1.2*"/>
-                                        <ColumnDefinition Width="0.8*"/>
-                                        <ColumnDefinition Width="0.8*"/>
-                                        <ColumnDefinition Width="0.8*"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
 
-                                    <Button x:Name="SingleHistoryRemoveButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                            Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}"
-                                            Height="50" Width="50" FontSize="20" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
-                                            Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
-                                    <Grid Grid.Column="1" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                        <TextBlock   Text="{Binding Server}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid Grid.Column="2" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                        <TextBlock Grid.Column="2" Text="{Binding Date, Converter={StaticResource DateToStringConverter}}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid Grid.Column="3" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                        <TextBlock Grid.Column="3" Text="{Binding Ping}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid Grid.Column="4" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                        <TextBlock Grid.Column="4" Text="{Binding DownloadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid Grid.Column="5" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                        <TextBlock Grid.Column="5" Text="{Binding UploadSpeed}" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
+                                    <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding}" FontSize="20" Foreground="DarkCyan" VerticalAlignment="Center" Padding="14,0,0,0"/>
+                                    <TextBlock x:Name="Splitter" Grid.Column="1" Text=" - " FontSize="20" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="ProviderName" Grid.Column="2" Text="Net Holding DDC" FontSize="20" TextAlignment="Left" VerticalAlignment="Center" Padding="10,0,0,0" />
                                 </Grid>
-
                             </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
-                </Grid>
-            </RelativePanel>
-        </Grid>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
-        <!-- Servers Panel -->
-        <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,140" >
-            <RelativePanel x:Name="ServerPanel" Visibility="{Binding IsServerPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}" Height="540" Width="500" Background="WhiteSmoke" BorderThickness="1" BorderBrush="DarkCyan">
-
-                <RelativePanel x:Name="ServersPanel"  Background="White" IsHoldingEnabled="True" 
-                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                               Width="500" Height="100">
-                    <TextBlock x:Name="Image" Text="&#xE774;" FontSize="40" Foreground="DarkCyan" Height="100" Width="100" TextAlignment="Right" Padding="0,30,10,0"
-                                       FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
-                    <Line X1="100" Y1="25" X2="100" Y2="75" Stroke="DarkCyan" StrokeThickness="2" />
-                    <Grid RelativePanel.RightOf="Image" Height="100">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock x:Name="HeaderServerName" Grid.Row="0" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" FontSize="30" Foreground="DarkCyan" Padding="10,15,0,0"/>
-                        <TextBlock x:Name="HeaderServerLocation" Grid.Row="1" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" FontSize="20" Foreground="Black" Padding="10,0,0,0"/>
-                    </Grid>
-                    <Button x:Name="CloseServersPanelButton" Command="{Binding CloseServerPanelButtonPressed}" Height="100" Width="100" Background="Transparent" FontSize="30"
-                                    Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                 </RelativePanel>
+            </Grid>
 
-                <AutoSuggestBox x:Name="ServerSuggestBox" PlaceholderText="Search" Width="450" Margin="24,0" FontSize="20" QueryIcon="Find" RelativePanel.Below="ServersPanel">
-
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:EventTriggerBehavior EventName="TextChanged">
-                            <Core:InvokeCommandAction Command="{Binding ServerSuggestBoxTextChanged, Source={StaticResource mainViewModel}}"
-                                                      CommandParameter="{Binding ElementName=ServerSuggestBox, Path=Text}"/>
-                        </Core:EventTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                </AutoSuggestBox>
-
-                <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Width="450" Margin="24,10,0,10"
-                                        RelativePanel.Below="ServerSuggestBox"/>
-
-                <ListView x:Name="ServersListView" ItemsSource="{Binding ServerNamesCollection, Source={StaticResource mainViewModel}}" 
-                                                   ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Width="500" Height="400" RelativePanel.Below="AvailableServers">
-
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:EventTriggerBehavior EventName="SelectionChanged">
-                            <Core:InvokeCommandAction Command="{Binding SingleServerSelected, Source={StaticResource mainViewModel}}"
-                                                      CommandParameter="{Binding ElementName=ServersListView, Path=SelectedItem}"/>
-                        </Core:EventTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                    
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding}" FontSize="20" Foreground="DarkCyan" VerticalAlignment="Center" Padding="14,0,0,0"/>
-                                <TextBlock x:Name="Splitter" Grid.Column="1" Text=" - " FontSize="20" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="ProviderName" Grid.Column="2" Text="Net Holding DDC" FontSize="20" TextAlignment="Left" VerticalAlignment="Center" Padding="10,0,0,0" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-            </RelativePanel>
         </Grid>
-
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpeedTest.ViewModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,8 +20,9 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         Dark
     }
 
-    public class SettingViewModel
+    public class SettingViewModel : ObservableObject
     {
+        private string _theme = "Light";
         private static SettingViewModel instance;
 
         public List<Language> Languages { get; private set; }
@@ -45,6 +47,12 @@ namespace SpeedTest.ViewModel.HelpfullCollections
                                                     $"(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)";
         public string FeedBackLink { get;  set; } = $"https://docs.microsoft.com";
         public string RateLink { get;  set; } = $"https://docs.microsoft.com";
+
+        public string Theme
+        {
+            get { return _theme; }
+            set { Set(ref _theme, value); }
+        }
 
         private SettingViewModel()
         {

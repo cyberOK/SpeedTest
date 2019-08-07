@@ -13,10 +13,10 @@ namespace SpeedTest.ViewModel.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if ((bool)value)
-            {
-                return "LightGray";
+            {              
+                return "#77777777";
             }
-            return "WhiteSmoke";
+            return "{ThemeResource BackgroundPanelContent}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

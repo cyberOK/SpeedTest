@@ -4,8 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SpeedTest"
     xmlns:vm="using:SpeedTest.ViewModel"
-    RequestedTheme="Dark">
+    xmlns:converter="using:SpeedTest.ViewModel.Converters">
     <Application.Resources>
         <vm:MainPageViewModel x:Key="mainViewModel"/>
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converter:RadioModeSelectedIntToBooltConverter x:Key="RadioModeSelectedIntToBooltConverter"/>
+        <converter:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+        <converter:DateToStringConverter x:Key="DateToStringConverter"/>
     </Application.Resources>
 </Application>
