@@ -25,7 +25,6 @@ namespace SpeedTest.ViewModel
         private string _ipAdress = "IpAdress";
         private string _serverName;
         private string _serverLocation;
-        private bool _isServerLoaded;
         private bool _isSettingsPaneOpen;
         private SettingViewModel _settings;
         private int _selectedMode = 0;
@@ -40,13 +39,8 @@ namespace SpeedTest.ViewModel
         private bool _tryConnect = false;
         private bool _isDownloadSpeedDataRecieved = false;
         private bool _isUploadSpeedDataRecieved = false;
-
-
-            //this.IsHistorySelected = false;
-            //this.IsServerPanelOpen = false;
-            //this.TryConnect = false;
-            //this.IsDownloadSpeedDataRecieved = false;
-            //this.IsUploadSpeedDataRecieved = false;
+        private bool _isPopupGridRaise = false;
+        
         #endregion
 
         #region Property binding
@@ -77,34 +71,10 @@ namespace SpeedTest.ViewModel
             set { Set(ref _serverLocation, value); }
         }
 
-        //public bool IsServerLoaded
-        //{
-        //    get { return _isServerLoaded; }
-        //    set { Set(ref _isServerLoaded, value); }
-        //}
-
         public bool IsStartButtonPressed
         {
             get { return _isStartButtonPressed; }
             set { Set(ref _isStartButtonPressed, value); }
-        }
-
-        public bool TryConnect
-        {
-            get { return _tryConnect; }
-            set { Set(ref _tryConnect, value); }
-        }
-
-        public bool IsDownloadSpeedDataRecieved
-        {
-            get { return _isDownloadSpeedDataRecieved; }
-            set { Set(ref _isDownloadSpeedDataRecieved, value); }
-        }
-
-        public bool IsUploadSpeedDataRecieved
-        {
-            get { return _isUploadSpeedDataRecieved; }
-            set { Set(ref _isUploadSpeedDataRecieved, value); }
         }
 
         // Settings panel properties
@@ -134,7 +104,6 @@ namespace SpeedTest.ViewModel
             get { return this._isHistoryPanelOpen; }
             private set { Set(ref _isHistoryPanelOpen, value); }
         }
-
         
         public bool IsHistorySelected
         {
@@ -166,6 +135,32 @@ namespace SpeedTest.ViewModel
         {
             get { return this._serverNamesCollection; }
             private set { Set(ref _serverNamesCollection, value); }
+        }
+
+        // Helpful properties
+        
+        public bool IsPopupGridRaise
+        {
+            get { return this._isPopupGridRaise; }
+            private set { Set(ref _isPopupGridRaise, value); }
+        }
+
+        public bool TryConnect
+        {
+            get { return _tryConnect; }
+            set { Set(ref _tryConnect, value); }
+        }
+
+        public bool IsDownloadSpeedDataRecieved
+        {
+            get { return _isDownloadSpeedDataRecieved; }
+            set { Set(ref _isDownloadSpeedDataRecieved, value); }
+        }
+
+        public bool IsUploadSpeedDataRecieved
+        {
+            get { return _isUploadSpeedDataRecieved; }
+            set { Set(ref _isUploadSpeedDataRecieved, value); }
         }
 
         #endregion
@@ -215,7 +210,7 @@ namespace SpeedTest.ViewModel
 
             // Settings panel commands assing
 
-            this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingSplitViewDontClosing));
+            this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingsClosing));
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
 
@@ -223,7 +218,7 @@ namespace SpeedTest.ViewModel
 
             this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
-            this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleted));
+            this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleting));
             this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
 
             // Server panel commands assing
@@ -253,7 +248,7 @@ namespace SpeedTest.ViewModel
 
         #endregion
 
-        #region Mainboard Actions from Comands 
+        #region Mainboard Actions for Delegates
 
         private void StartSpeedTest(object param) 
         {
@@ -268,93 +263,94 @@ namespace SpeedTest.ViewModel
 
         private void HistoryCalling(object param)
         {
-            if (this.IsHistoryPanelOpen)
-            {
-                this.IsHistoryPanelOpen = false;
-            }
-            else
-            {
-                this.IsHistoryPanelOpen = true;
-            }                    
+            this.IsPopupGridRaise = true;
+            this.IsHistoryPanelOpen = true;                 
         }
 
         private void SettingsCalling(object param)
         {
+            this.IsPopupGridRaise = true;
             this.IsSettingsPaneOpen = true;
         }
 
         private void ChangeServerCalling(object param)
         {
-            if (this.IsServerPanelOpen)
-            {
-                this.IsServerPanelOpen = false;
-            }
-            else
-            {
-                this.IsServerPanelOpen = true;
-            }
+            this.IsPopupGridRaise = true;
+            this.IsServerPanelOpen = true;
         }
 
         #endregion
 
-        #region Settings Actions from Commands
-
-        private void SettingSplitViewDontClosing(object sender)
-        {           
-            this.IsSettingsPaneOpen = false;            
-        }
-
+        #region Settings Actions for Delegates
+        
         private async void LanguageChange(object param)
         {
             await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
         }
 
-        private async void ModeChanged(object param)
+        private  void ModeChanged(object param)
         {
-            await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
+            string selectedMode = (string)param;
+            
+            if (selectedMode == "Dark")
+            {
+                this.Settings.Theme = "Dark";
+            }
+
+            else if (selectedMode == "Light")
+            {
+                this.Settings.Theme = "Light";
+            }
+        }
+
+        private void SettingsClosing(object param)
+        {
+            this.IsSettingsPaneOpen = false;
+            this.IsPopupGridRaise = false;
         }
 
         #endregion
 
-        #region History Actions from Commands
+        #region History Actions for Delegates
 
         private async void DeleteHistory(object param)
-        {                                   
-            Style buttonStyle = CreateButtonStyle();
-            ContentDialog deleteFileDialog = CreateContentDialog(buttonStyle);
-            ContentDialogResult result = await deleteFileDialog.ShowAsync();
+        {       
+            if (this.SpeedDataCollection.Count != 0)
+            {
+                Style buttonStyle = CreateButtonStyle();
+                ContentDialog deleteFileDialog = CreateContentDialog(buttonStyle);
+                ContentDialogResult result = await deleteFileDialog.ShowAsync();
 
-                // Delete the file if the user clicked the primary button.
-                /// Otherwise, do nothing.
-            if (result == ContentDialogResult.Primary)
+                if (result == ContentDialogResult.Primary)
                 {
-                    // Delete the file.
+                    this.SpeedDataCollection.Clear();
                 }
-            else
-                {
-                    // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
-                    // Do nothing.
-                }
-            
+            }
         }
         
         private void CloseHistory(object param)
         {
+            this.IsPopupGridRaise = false;
             this.IsHistoryPanelOpen = false;
         }
 
-        private async void SingleHistoryDeleted(object param)
+        private void SingleHistoryDeleting(object param)
         {
-            await new Windows.UI.Popups.MessageDialog("SingleHistoryDeleted()").ShowAsync();
+            SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)param;
+
+            SpeedDataCollection?.Remove(singleHistoryForDeleting);
         }
 
         private void SingleHistorySelecting(object param)
         {
             SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
                         
-            SpeedDataViewModel filteredHistory = SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected.Id);
+            SpeedDataViewModel filteredHistory = SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected?.Id);
             
-            filteredHistory.IsSelected = true;
+            if (filteredHistory != null)
+            {
+                filteredHistory.IsSelected = true;
+            }
 
             if (this._oldHistoryValue == null)
             {
@@ -385,15 +381,19 @@ namespace SpeedTest.ViewModel
 
         private void SingleServerSelecting(object param)
         {
-            string selectingServer = (string)param;
+            if (param != null)
+            {
+                string selectingServer = (string)param;
 
-            this.UnsetCurrentServer();
-            this.SetCurrentServer(selectingServer);
-            this.NewServerNameLocationAssign();
+                this.UnsetCurrentServer();
+                this.SetCurrentServer(selectingServer);
+                this.NewServerNameLocationAssign();
+            }
         }
 
         private void CloseServerPanel(object param)
         {
+            this.IsPopupGridRaise = false;
             this.IsServerPanelOpen = false;
         }
 
@@ -403,7 +403,12 @@ namespace SpeedTest.ViewModel
 
         private ObservableCollection<string> FindServerInCollection(string inputText)
         {
-            var serversResults = _allServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower()));
+            var serversResults = _allServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower())).ToList();
+
+            if (serversResults.Count == 0)
+            {
+                serversResults.Add("No results");
+            }
 
             ObservableCollection<string> castServersResults = new ObservableCollection<string>(serversResults);
 

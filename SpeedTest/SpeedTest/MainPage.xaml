@@ -29,14 +29,14 @@
         </ResourceDictionary>
     </Page.Resources>
     <!--Height="500" Width="500"-->
-    <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}" RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
+    <Grid RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
 
         <!-- Background Image with Grid Above It -->
-        <!--<Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
-        <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}" Opacity="0.9"/>-->
+        <Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill" Canvas.ZIndex="0"/>
+        <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}" Canvas.ZIndex="0"/>
 
         <!-- Main Grid -->
-        <Grid x:Name="MainGrid" Canvas.ZIndex="0">
+        <Grid x:Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0.7*"/>
@@ -50,11 +50,11 @@
             <!-- Settings Panel Buttons -->
             <StackPanel Grid.Column="2" HorizontalAlignment="Center" Margin="0,50">
                 <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" 
-                        Command="{Binding SettingsButtonPressed}"/>
+                        Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
                 <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" 
-                        Command="{Binding HistoryButtonPressed}"/>
+                        Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}"/>
                 <Button x:Name="backButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" 
-                        Command="{Binding BackButtonPressed}"/>
+                        Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}"/>
             </StackPanel>
 
             <!-- Arc Board -->
@@ -188,7 +188,7 @@
               Background="{StaticResource BackgroundPopupGrid}">
 
             <!-- Settings Panel -->
-            <Grid x:Name="SettingsPanel" Canvas.ZIndex="2" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            <Grid x:Name="SettingsPanel" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   Visibility="{Binding IsSettingsPaneOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                 <RelativePanel Style="{StaticResource Border}" Height="900" Width="450" Margin="0,0,60,70" HorizontalAlignment="Right" VerticalAlignment="Stretch">
@@ -197,7 +197,7 @@
                         <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan" Padding="20,10"
                                        RelativePanel.AlignLeftWithPanel="True"/>
                         <Button x:Name="CloseSettingButton" Style="{StaticResource ButtonClose}" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"
-                                Command="{Binding SettingSplitViewClosing}"/>
+                                Command="{Binding SettingSplitViewClosing, Source={StaticResource mainViewModel}}"/>
                     </RelativePanel>
 
                     <Line Stroke="{ThemeResource LinearGradientBrushShade}" StrokeThickness="20" X1="0" X2="450" RelativePanel.Below="SettingsTopBar" Opacity="0.3" Canvas.ZIndex="1"/>
