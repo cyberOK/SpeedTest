@@ -34,24 +34,97 @@
     <!--Height="500" Width="500"-->
     <Grid RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="StateGroup">
+                <!-- Desktop version -->
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="700"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!-- SettingsPanelButtons -->
+                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,50,50,0"/>
+                        <Setter Target="ArcGrid.(Margin)" Value="150,0,150,400"/>
+                        <!-- Arcs -->
+                        <Setter Target="StartArc.(Radius)" Value="170"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="200"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="180"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="200"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="180"/>
+                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="20"/>
+                        <Setter Target="UploadSpeedArc.(Thickness)" Value="20"/>
+                        <Setter Target="TryConnectArc1.(Thickness)" Value="20"/>
+                        <Setter Target="TryConnectArc2.(Thickness)" Value="20"/>
+                        <!-- StartButton -->
+                        <Setter Target="StartButton.(Height)" Value="120"/>
+                        <Setter Target="StartButton.(Width)" Value="200"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,30"/>
+                        <Setter Target="StartButton.(FontSize)" Value="90"/>
+                        <!-- TryConnectTextBlock -->
+                        <Setter Target="TryConnectTextBlock.(FontSize)" Value="40"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,15"/>
+                        <!-- SpeedDataNumbersTextBlock -->
+                        <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="40"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,15"/>
+                        
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Middle">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!-- SettingsPanelButtons -->
+                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,10,10,0"/>
+                        <Setter Target="ArcGrid.(Margin)" Value="150,0,150,400"/>
+                        <!-- Arcs -->
+                        <Setter Target="StartArc.(Radius)" Value="100"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="120"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="110"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="120"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="110"/>
+                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
+                        <Setter Target="UploadSpeedArc.(Thickness)" Value="10"/>
+                        <Setter Target="TryConnectArc1.(Thickness)" Value="10"/>
+                        <Setter Target="TryConnectArc2.(Thickness)" Value="10"/>
+                        <!-- StartButton -->
+                        <Setter Target="StartButton.(Height)" Value="90"/>
+                        <Setter Target="StartButton.(Width)" Value="150"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,15"/>
+                        <Setter Target="StartButton.(FontSize)" Value="60"/>
+                        <!-- TryConnectTextBlock -->
+                        <Setter Target="TryConnectTextBlock.(FontSize)" Value="30"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <!-- SpeedDataNumbersTextBlock -->
+                        <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
+                        
+
+
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <!-- Background Image with Grid Above It -->
         <Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
         <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}"/>
 
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0.7*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.1*"/>
-            </Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+            </Grid.ColumnDefinitions>-->
 
             <!-- Settings Panel Buttons -->
-            <StackPanel Grid.Column="2" HorizontalAlignment="Center" Margin="0,50">
+            <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" 
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
                 <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" 
@@ -61,36 +134,36 @@
             </StackPanel>
 
             <!-- Arc Board -->
-            <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid x:Name="ArcGrid" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 
                 <!-- Arc Controls -->
-                <arcControl:Arc Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}" 
-                        Grid.Column="1" Fill="DarkCyan" Thickness="3" Radius="170" PercentValue="400" EnableGradient="False"/>
-                <arcControl:Arc Visibility="{Binding IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
-                        Grid.Column="1" Fill="DarkCyan" Thickness="20" Radius="200" PercentValue="215"/>
-                <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
-                        Grid.Column="1" Fill="Gray" Thickness="20" Radius="200" PercentValue="400" Opacity="0.4" EnableGradient="False"/>
-                <arcControl:Arc Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
-                        Grid.Column="1" Fill="DarkBlue" Thickness="20" Radius="180" PercentValue="97"/>
-                <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
-                        Grid.Column="1" Fill="Gray" Thickness="20" Radius="180" PercentValue="400" Opacity="0.2" EnableGradient="False"/>
-                
+                <arcControl:Arc x:Name="StartArc" Grid.Column="1" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False"
+                                Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
+                <arcControl:Arc x:Name="TryConnectArc1" Grid.Column="1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False"
+                                Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"/>
+                <arcControl:Arc x:Name="TryConnectArc2" Grid.Column="1" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
+                                Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"/>
+                <arcControl:Arc x:Name="DownloadSpeedArc" Grid.Column="1" Fill="DarkCyan" PercentValue="215"
+                                Visibility="{Binding IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
+                <arcControl:Arc x:Name="UploadSpeedArc" Grid.Column="1" Fill="DarkBlue" PercentValue="97"
+                                Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
+
                 <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
-                <Button x:Name="startButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Height="120" Width="200" Content="Start" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" Grid.Column="1" FontSize="90"
+                <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" Grid.Column="1" HorizontalAlignment="Center"
                         Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                         Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
-                
-                <TextBlock x:Name="TryConnectTextBlock" Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"              
-                   Grid.Column="1" Text="Connecting..." FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                <TextBlock x:Name="SpeedDataNumbersTextBlock" Grid.Column="1" FontSize="40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                <TextBlock x:Name="TryConnectTextBlock" Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"              
+                   Grid.Column="1" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <TextBlock x:Name="SpeedDataNumbersTextBlock" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Visibility="{Binding IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
                    Text="{Binding SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
 
             </Grid>
 
             <!-- Bottom Board -->
-            <StackPanel Grid.Row="1" Grid.Column="1">
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,100" VerticalAlignment="Bottom">
 
                 <!-- Test Data Board -->
                 <Grid Grid.Column="1" Grid.Row="1" Height="150" Width="1000" VerticalAlignment="Bottom">
