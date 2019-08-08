@@ -11,6 +11,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Windows10FallCreatorsUpdate="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 5)"
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -26,14 +28,15 @@
                 <ResourceDictionary Source="Styles/LightTheme" x:Key="Light"/>
                 <ResourceDictionary Source="Styles/DarkTheme" x:Key="Dark"/>
             </ResourceDictionary.ThemeDictionaries>
+
         </ResourceDictionary>
     </Page.Resources>
     <!--Height="500" Width="500"-->
     <Grid RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
 
         <!-- Background Image with Grid Above It -->
-        <Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill" Canvas.ZIndex="0"/>
-        <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}" Canvas.ZIndex="0"/>
+        <Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
+        <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}"/>
 
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
@@ -71,18 +74,12 @@
                         Grid.Column="1" Fill="DarkBlue" Thickness="20" Radius="180" PercentValue="97"/>
                 <arcControl:Arc Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"
                         Grid.Column="1" Fill="Gray" Thickness="20" Radius="180" PercentValue="400" Opacity="0.2" EnableGradient="False"/>
-
+                
                 <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
-                <Button Style="{StaticResource ButtonStyle}" x:Name="startButton"
-                Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
-                Height="120" Width="200"
-                Content="Start"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Margin="0,0,0,20"
-                Grid.Column="1" FontSize="90"
-                Command="{Binding StartButtonPressed}"/>
-
+                <Button x:Name="startButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Height="120" Width="200" Content="Start" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" Grid.Column="1" FontSize="90"
+                        Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
+                        Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
+                
                 <TextBlock x:Name="TryConnectTextBlock" Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"              
                    Grid.Column="1" Text="Connecting..." FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
@@ -207,14 +204,16 @@
 
                             <RelativePanel x:Name="ContentPanel" Width="450" Padding="20,10,0,0">
                                 <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
-                                <ComboBox x:Name="LanguageComboBox" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
+                                <ComboBox Style="{StaticResource ComboBoxStyle1}" x:Name="LanguageComboBox" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
                                           PlaceholderText="English" Width="410" FlowDirection="LeftToRight" RelativePanel.Below="LanguageBlock">
+                                    
                                     <Interactivity:Interaction.Behaviors>
                                         <Core:EventTriggerBehavior EventName="SelectionChanged">
                                             <Core:InvokeCommandAction Command="{Binding LanguageComboBoxChanged}" 
                                                                       CommandParameter="{Binding ElementName=LanguageComboBox,Path=SelectedItem}"/>
                                         </Core:EventTriggerBehavior>
                                     </Interactivity:Interaction.Behaviors>
+                                    
                                 </ComboBox>
 
                                 <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
