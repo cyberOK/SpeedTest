@@ -17,7 +17,7 @@
     
     <SolidColorBrush x:Key="BackgroundPanelTitle" Color="{StaticResource ColorDarkPanelTitle}"/>
     <SolidColorBrush x:Key="BackgroundPanelContent" Color="{StaticResource ColorDarkPanelContent}"/>
-    <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="Black" Opacity="0.9"/>
+    <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="Black" Opacity="0.7"/>
 
     <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorBlackPopupGrid}" Opacity="0.9"/>
 

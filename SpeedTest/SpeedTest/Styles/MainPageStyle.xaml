@@ -8,13 +8,9 @@
     <Style TargetType="Button" x:Key="SettingsPanelButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-        <Setter Property="FontSize" Value="36"/>
     </Style>
-    
+
     <Style TargetType="Button" x:Key="ButtonBottomBoard">
-        <Setter Property="Width" Value="250"/>
-        <Setter Property="Height" Value="50"/>
-        <Setter Property="FontSize" Value="28"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontWeight" Value="Normal"/>
     </Style>
@@ -29,24 +25,18 @@
     </Style>
 
     <Style TargetType="TextBlock" x:Key="TextBlockTextDataBoardFeature">
-        <Setter Property="FontSize" Value="40"/>
         <Setter Property="Foreground" Value="DarkCyan"/>
     </Style>
 
     <Style TargetType="TextBlock" x:Key="TextBlockTextDataBoardMetrics">
-        <Setter Property="FontSize" Value="40"/>
         <Setter Property="Foreground" Value="Gray"/>
     </Style>
 
     <Style TargetType="TextBlock" x:Key="TextBlockTextDataBoardDataNumbers">
-        <Setter Property="FontSize" Value="80"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
     <Style TargetType="TextBlock" x:Key="TextBlockBottomBoard">
-        <Setter Property="Width" Value="250"/>
-        <Setter Property="Height" Value="50"/>
-        <Setter Property="FontSize" Value="30"/>
         <Setter Property="TextAlignment" Value="Center"/>
     </Style>
 

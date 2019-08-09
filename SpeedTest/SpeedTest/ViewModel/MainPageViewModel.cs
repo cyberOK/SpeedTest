@@ -381,10 +381,10 @@ namespace SpeedTest.ViewModel
 
         private void SingleServerSelecting(object param)
         {
-            if (param != null)
-            {
-                string selectingServer = (string)param;
+            string selectingServer = (string)param;
 
+            if (selectingServer != null && selectingServer != "No results")
+            {
                 this.UnsetCurrentServer();
                 this.SetCurrentServer(selectingServer);
                 this.NewServerNameLocationAssign();
@@ -478,10 +478,23 @@ namespace SpeedTest.ViewModel
                 Content = "Do you really want to delete the history?" + "\n" + "To Continue press 'Clear history', this may take a while.",
                 PrimaryButtonText = "Clear history",
                 CloseButtonText = "Cancel",
-                PrimaryButtonStyle = buttonStyle
+                PrimaryButtonStyle = buttonStyle,
+                RequestedTheme = ThemeNow(this.Settings.Theme)
             };
 
             return FileDialog;
+        }
+         
+        private ElementTheme ThemeNow(string theme)
+        {
+            if (theme == "Dark")
+            {
+                return ElementTheme.Dark;
+            }
+            else
+            {
+                return ElementTheme.Light;
+            }
         }
 
         #endregion
