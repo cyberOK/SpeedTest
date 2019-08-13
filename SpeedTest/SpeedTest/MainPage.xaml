@@ -10,15 +10,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:Windows10FallCreatorsUpdate="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 5)"
-    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"   
     mc:Ignorable="d">
 
     <Page.DataContext>
         <StaticResource ResourceKey="mainViewModel"/>
     </Page.DataContext>
-
+    
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,7 +26,6 @@
                 <ResourceDictionary Source="Styles/LightTheme" x:Key="Light"/>
                 <ResourceDictionary Source="Styles/DarkTheme" x:Key="Dark"/>
             </ResourceDictionary.ThemeDictionaries>
-
         </ResourceDictionary>
     </Page.Resources>
 
@@ -113,16 +110,34 @@
                         <!-- SettingsPanel -->
                         <Setter Target="SettingsPanel.(Margin)" Value="0,50,50,0"/>
                         <Setter Target="SettingsPanel.(Height)" Value="850"/>
+                        <Setter Target="SettingsPanel.(Width)" Value="450"/>
+                        <Setter Target="SettingsPanel.(HorizontalAlignment)" Value="Right"/>
+                        <Setter Target="SettingsPanel.(VerticalAlignment)" Value="Top"/>
                         <!-- Servers Panel -->
                         <Setter Target="ServerPanel.(Height)" Value="550"/>
                         <Setter Target="ServerPanel.(Width)" Value="500"/>
                         <Setter Target="ServerSuggestBox.(Width)" Value="450"/>
                         <Setter Target="HeaderServerName.(FontSize)" Value="30"/>
                         <Setter Target="HeaderServerLocation.(FontSize)" Value="25"/>
+                        <!-- History Panel -->
+                        <Setter Target="HistoryPanel.(Height)" Value="700"/> 
+                        <Setter Target="HistoryPanel.(Width)" Value="700"/>
+                        <Setter Target="HistoryPanelTopBar.(Width)" Value="700"/>
+                        <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryBlock.(Padding)" Value="30,10"/>
+                        <Setter Target="DeleteHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="CloseHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryHeader.(Height)" Value="70"/>
+                        <Setter Target="HistoryHeader.(Width)" Value="700"/>
+                        <Setter Target="HistoryHeader.(Margin)" Value="0,0,0,10"/>
 
                     </VisualState.Setters>
                 </VisualState>
-                <!-- %00 X 500 version -->
+                <!-- 500 X 500 version -->
                 <VisualState x:Name="Middle">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="500"/>
@@ -135,11 +150,11 @@
                         <Setter Target="backButton.(FontSize)" Value="25"/>
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
-                        <Setter Target="StartArc.(Radius)" Value="100"/>
-                        <Setter Target="DownloadSpeedArc.(Radius)" Value="120"/>
-                        <Setter Target="UploadSpeedArc.(Radius)" Value="110"/>
-                        <Setter Target="TryConnectArc1.(Radius)" Value="120"/>
-                        <Setter Target="TryConnectArc2.(Radius)" Value="110"/>
+                        <Setter Target="StartArc.(Radius)" Value="140"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="160"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="150"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="160"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="150"/>
                         <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
                         <Setter Target="UploadSpeedArc.(Thickness)" Value="10"/>
                         <Setter Target="TryConnectArc1.(Thickness)" Value="10"/>
@@ -199,13 +214,126 @@
                         <!-- SettingsPanel -->
                         <Setter Target="SettingsPanel.(Height)" Value="475"/>
                         <Setter Target="SettingsPanel.(Margin)" Value="0,0,25,0"/>
+                        <Setter Target="SettingsPanel.(Width)" Value="450"/>
+                        <Setter Target="SettingsPanel.(HorizontalAlignment)" Value="Right"/>
+                        <Setter Target="SettingsPanel.(VerticalAlignment)" Value="Top"/>
                         <!-- Servers Panel -->
                         <Setter Target="ServerPanel.(Height)" Value="475"/>
                         <Setter Target="ServerPanel.(Width)" Value="425"/>
                         <Setter Target="ServerSuggestBox.(Width)" Value="375"/>
                         <Setter Target="HeaderServerName.(FontSize)" Value="25"/>
                         <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
+                        <!-- History Panel -->
+                        <Setter Target="HistoryPanel.(Height)" Value="480"/>
+                        <Setter Target="HistoryPanel.(Width)" Value="480"/>
+                        <Setter Target="HistoryPanelTopBar.(Width)" Value="480"/>
+                        <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryBlock.(Padding)" Value="30,10"/>
+                        <Setter Target="DeleteHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="CloseHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryHeader.(Height)" Value="70"/>
+                        <Setter Target="HistoryHeader.(Width)" Value="480"/>
+                        <Setter Target="HistoryHeader.(Margin)" Value="0,0,0,10"/>
 
+                    </VisualState.Setters>
+                </VisualState>
+                <!-- Phone version -->
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!-- SettingsPanelButtons -->
+                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,10,10,0"/>
+                        <Setter Target="setingsButton.(FontSize)" Value="25"/>
+                        <Setter Target="historyButton.(FontSize)" Value="25"/>
+                        <Setter Target="backButton.(FontSize)" Value="25"/>
+                        <!-- Arcs -->
+                        <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
+                        <Setter Target="StartArc.(Radius)" Value="100"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="120"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="110"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="120"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="110"/>
+                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
+                        <Setter Target="UploadSpeedArc.(Thickness)" Value="10"/>
+                        <Setter Target="TryConnectArc1.(Thickness)" Value="10"/>
+                        <Setter Target="TryConnectArc2.(Thickness)" Value="10"/>
+                        <!-- StartButton -->
+                        <Setter Target="StartButton.(Height)" Value="90"/>
+                        <Setter Target="StartButton.(Width)" Value="150"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,15"/>
+                        <Setter Target="StartButton.(FontSize)" Value="50"/>
+                        <!-- TryConnectTextBlock -->
+                        <Setter Target="TryConnectTextBlock.(FontSize)" Value="25"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <!-- SpeedDataNumbersTextBlock -->
+                        <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <!-- SplitLine -->
+                        <Setter Target="SplitLineGrid.(Width)" Value="380"/>
+                        <Setter Target="SplitLineGrid.(Height)" Value="10"/>
+                        <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
+                        <Setter Target="LeftSplitLine.(X1)" Value="0"/>
+                        <Setter Target="LeftSplitLine.(X2)" Value="220"/>
+                        <Setter Target="RightSplitLine.(X1)" Value="0"/>
+                        <Setter Target="RightSplitLine.(X2)" Value="220"/>
+                        <!-- Test Data Board -->
+                        <Setter Target="TestDataBoard.(Width)" Value="380"/>
+                        <Setter Target="TestDataBoard.(Height)" Value="70"/>
+                        <Setter Target="PingFieldsGrid.(Width)" Value="95"/>
+                        <Setter Target="PingText.(FontSize)" Value="18"/>
+                        <Setter Target="msText.(FontSize)" Value="18"/>
+                        <Setter Target="DataPingText.(FontSize)" Value="30"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(Width)" Value="155"/>
+                        <Setter Target="DownloadText.(FontSize)" Value="18"/>
+                        <Setter Target="mbpsText.(FontSize)" Value="18"/>
+                        <Setter Target="DownloadSpeedData.(FontSize)" Value="30"/>
+                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="130"/>
+                        <Setter Target="UploadText.(FontSize)" Value="18"/>
+                        <Setter Target="mbpsUploadText.(FontSize)" Value="18"/>
+                        <Setter Target="UploadDataText.(FontSize)" Value="30"/>
+                        <!-- Main Bottom Board -->
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,20"/>
+                        <Setter Target="MainBottomBoardInformation.(Width)" Value="380"/>
+                        <Setter Target="providerName.(Width)" Value="190"/>
+                        <Setter Target="providerName.(Height)" Value="30"/>
+                        <Setter Target="providerName.(FontSize)" Value="20"/>
+                        <Setter Target="ipAdress.(Width)" Value="190"/>
+                        <Setter Target="ipAdress.(Height)" Value="30"/>
+                        <Setter Target="ipAdress.(FontSize)" Value="20"/>
+                        <Setter Target="serverName.(Width)" Value="190"/>
+                        <Setter Target="serverName.(Height)" Value="30"/>
+                        <Setter Target="serverName.(FontSize)" Value="20"/>
+                        <Setter Target="serverLocation.(Width)" Value="190"/>
+                        <Setter Target="serverLocation.(Height)" Value="30"/>
+                        <Setter Target="serverLocation.(FontSize)" Value="20"/>
+                        <Setter Target="changeServerButton.(Width)" Value="380"/>
+                        <Setter Target="changeServerButton.(Height)" Value="35"/>
+                        <Setter Target="changeServerButton.(FontSize)" Value="18"/>
+                        <Setter Target="changeServerButton.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <!-- SettingsPanel -->
+
+                        <!-- Servers Panel -->
+                        <Setter Target="ServerPanel.(Height)" Value="475"/>
+                        <Setter Target="ServerPanel.(Width)" Value="425"/>
+                        <Setter Target="ServerSuggestBox.(Width)" Value="375"/>
+                        <Setter Target="HeaderServerName.(FontSize)" Value="25"/>
+                        <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
+                        <!-- History Panel -->
+                        <Setter Target="HistoryHeader.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryBlock.(Padding)" Value="30,10"/>
+                        <Setter Target="DeleteHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="CloseHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(FontSize)" Value="30"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -270,13 +398,13 @@
             <StackPanel x:Name="BottomBoard" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom">
 
                 <!-- Test Data Board -->
-                <Grid x:Name="TestDataBoard" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" >
-                    <StackPanel Orientation="Horizontal">
+                <Grid x:Name="TestDataBoard" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 
                         <!-- Ping Fields -->
                         <Grid x:Name="PingFieldsGrid" Visibility="Visible">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.4*"/>
+                                <ColumnDefinition Width="0.6*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -292,8 +420,8 @@
                         <!-- Download Speed Fields -->
                         <Grid x:Name="DownloadSpeedFieldsGrid" Visibility="Visible">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.9*"/>
                                 <ColumnDefinition Width="0.8*"/>
-                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -309,7 +437,7 @@
                         <Grid x:Name="UploadSpeedFieldsGrid" Visibility="Visible">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.77*"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="0.9*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -345,7 +473,7 @@
                                Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.RightOf="ipAdress"/>
                     <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server"
-                            RelativePanel.Below="serverLocation" RelativePanel.RightOf="providerName" 
+                            RelativePanel.Below="serverLocation" RelativePanel.RightOf="providerName"
                             Command="{Binding ChangeServerButtonPressed}">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
@@ -364,29 +492,32 @@
         <Grid x:Name="PopupGrid" Canvas.ZIndex="1" 
               Visibility="{Binding IsPopupGridRaise, Source={StaticResource mainViewModel},Converter={StaticResource BooleanToVisibilityConverter}}"
               Background="{StaticResource BackgroundPopupGrid}">
-
+            
             <!-- Settings Panel -->
             <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   Visibility="{Binding IsSettingsPaneOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                <RelativePanel x:Name="SettingsPanel" Style="{StaticResource Border}" Width="450" HorizontalAlignment="Right" VerticalAlignment="Top">
-
-                    <RelativePanel x:Name="SettingsTopBar" Background="{ThemeResource BackgroundPanelTitle}"  Width="450" IsHoldingEnabled="True">
+                <RelativePanel x:Name="SettingsPanel" Style="{StaticResource Border}" >
+                   
+                    <RelativePanel x:Name="SettingsTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
+                                   RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
                         <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan" Padding="20,10"
                                        RelativePanel.AlignLeftWithPanel="True"/>
                         <Button x:Name="CloseSettingButton" Style="{StaticResource ButtonClose}" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"
                                 Command="{Binding SettingSplitViewClosing, Source={StaticResource mainViewModel}}"/>
                     </RelativePanel>
 
-                    <Line Stroke="{ThemeResource LinearGradientBrushShade}" StrokeThickness="20" X1="0" X2="450" RelativePanel.Below="SettingsTopBar" Opacity="0.3" Canvas.ZIndex="1"/>
+                    <Rectangle Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="SettingsTopBar" Opacity="0.3" Canvas.ZIndex="1" 
+                               Height="10" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
 
                     <Grid Background="{ThemeResource BackgroundPanelContent}" RelativePanel.Below="SettingsTopBar">
-                        <ScrollViewer x:Name="ScrollForSettings" Width="450">
+                        <ScrollViewer x:Name="ScrollForSettings">
 
-                            <RelativePanel x:Name="ContentPanel" Width="450" Padding="20,10,0,0">
+                            <RelativePanel x:Name="ContentPanel" Padding="20,10,0,0">
                                 <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
-                                <ComboBox Style="{StaticResource ComboBoxStyle1}" x:Name="LanguageComboBox" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
-                                          PlaceholderText="English" Width="410" FlowDirection="LeftToRight" RelativePanel.Below="LanguageBlock">
+                                <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
+                                          Margin="0,0,20,0" PlaceholderText="English" FlowDirection="LeftToRight" HorizontalAlignment="Stretch"
+                                          RelativePanel.Below="LanguageBlock" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                     
                                     <Interactivity:Interaction.Behaviors>
                                         <Core:EventTriggerBehavior EventName="SelectionChanged">
@@ -412,7 +543,7 @@
                                                RelativePanel.Below="ProgramNameBlock"/>
                                 <TextBlock x:Name="MicrosoftResearchBlock" Text="Microsoft Research" Style="{StaticResource TextBlockAboutProgram}"  
                                                TextAlignment="Right" RelativePanel.Below="VersionBlock"/>
-                                <RichTextBlock x:Name="AboutStoryBlock" Margin="0,30,30,30" RelativePanel.Below="MicrosoftResearchBlock">
+                                <RichTextBlock x:Name="AboutStoryBlock" Margin="0,30,20,30" RelativePanel.Below="MicrosoftResearchBlock">
                                     <Paragraph>
                                         <Run Text="{Binding Settings.AboutArticle}"/>
                                     </Paragraph>
@@ -431,32 +562,34 @@
 
             <!-- History Panel -->
             <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <RelativePanel  Style="{StaticResource Border}" Height="700" Width="700" Background="{ThemeResource BackgroundPanelContent}"
-                                Visibility="{Binding IsHistoryPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-                    <RelativePanel x:Name="HistoryPanel" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True" Width="700">
+                <RelativePanel x:Name="HistoryPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}"
+                               Visibility="{Binding IsHistoryPanelOpen,Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter} }">
+                    <!-- TopBar -->
+                    <RelativePanel x:Name="HistoryPanelTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
+                                   RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                         
-                        <TextBlock x:Name="HistoryBlock" Text="History" FontSize="30" Foreground="DarkCyan" Padding="30,10" 
-                                       RelativePanel.AlignLeftWithPanel="True"/>
-                        <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Height="60" Width="60"  Background="Transparent" 
-                                    Foreground="DarkCyan" FontSize="30" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
-                        <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Height="60" Width="60" Background="Transparent" FontSize="30"
-                                    Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
+                        <TextBlock x:Name="HistoryBlock" Text="History" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True"/>
+                        <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Background="Transparent" 
+                                Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
+                        <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Background="Transparent"
+                                Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                     
                     </RelativePanel>
-
-                    <Line x:Name="GreyWhiteShadeLine" Stroke="{ThemeResource LinearGradientBrushShade}" StrokeThickness="20" X1="0" X2="700" Opacity="0.3" RelativePanel.Below="HistoryPanel"/>
-
-                    <Grid x:Name="HistoryHeader" Width="700" Height="70" Margin="0,0,0,10" RelativePanel.Below="HistoryPanel" RelativePanel.AlignRightWithPanel="True">
+                    <!-- Shade -->
+                    <Rectangle Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="HistoryPanelTopBar" Opacity="0.3" Canvas.ZIndex="1" 
+                               Height="10" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
+                    <!-- GridView Header -->
+                    <Grid x:Name="HistoryHeader" RelativePanel.Below="HistoryPanelTopBar" RelativePanel.AlignRightWithPanel="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.4*"/>
                             <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="1.2*"/>
-                            <ColumnDefinition Width="0.8*"/>
-                            <ColumnDefinition Width="0.8*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                            <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="0.8*"/>
                         </Grid.ColumnDefinitions>
-
+                        <TextBlock x:Name="CommonStyleSetterTextBlock"/>
+                        
                         <TextBlock Grid.Column="1" Text="Server" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
                         <TextBlock Grid.Column="2" Text="Date" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
                         <TextBlock Grid.Column="3" Text="Ping" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
@@ -466,9 +599,11 @@
                         <TextBlock Grid.Column="4" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
                         <TextBlock Grid.Column="5" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
                     </Grid>
-
-                    <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" Height="560" Width="700">
-                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" IsItemClickEnabled="True" SelectionMode="Single">
+                    <!-- GridView -->
+                    <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                          RelativePanel.AlignBottomWithPanel="True">
+                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" 
+                                  ItemsPanel="{StaticResource MyItemsPanelTemplate}" IsItemClickEnabled="True" SelectionMode="Single" HorizontalContentAlignment="Stretch">
 
                             <Interactivity:Interaction.Behaviors>
                                 <Core:EventTriggerBehavior EventName="SelectionChanged">
@@ -479,54 +614,140 @@
 
                             <GridView.ItemTemplate>
                                 <DataTemplate>
+                                    <UserControl HorizontalContentAlignment="Stretch">
+                                        <Grid x:Name="VisualStateGrid" HorizontalAlignment="Stretch">
+                                            <!-- Adaptive Styles For GridViewItems -->
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup>
+                                                    <VisualState x:Name="Desktop">
+                                                        <VisualState.StateTriggers>
+                                                            <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="830"/>
+                                                        </VisualState.StateTriggers>
+                                                        <VisualState.Setters>
+                                                            <Setter Target="HistoryItemGrid.(Height)" Value="50"/>
+                                                            <Setter Target="HistoryItemGrid.(Width)" Value="700"/>
+                                                            <Setter Target="SingleHistoryRemoveButton.(Width)" Value="50"/>
+                                                            <Setter Target="SingleHistoryRemoveButton.(FontSize)" Value="20"/>
+                                                            <Setter Target="PhoneGrid.(Visibility)" Value="Collapsed"/>
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Middle">
+                                                        <VisualState.StateTriggers>
+                                                            <AdaptiveTrigger MinWindowWidth="500"/>
+                                                        </VisualState.StateTriggers>
+                                                        <VisualState.Setters>
+                                                            <Setter Target="HistoryItemGrid.(Height)" Value="50"/>
+                                                            <Setter Target="HistoryItemGrid.(Width)" Value="480"/>
+                                                            <Setter Target="SingleHistoryRemoveButton.(Width)" Value="35"/>
+                                                         <Setter Target="SingleHistoryRemoveButton.(FontSize)" Value="17"/>
+                                                            <Setter Target="PhoneGrid.(Visibility)" Value="Collapsed"/>
+                                                         </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Phone">
+                                                        <VisualState.StateTriggers>
+                                                            <AdaptiveTrigger MinWindowWidth="0"/>
+                                                             </VisualState.StateTriggers>
+                                                        <VisualState.Setters>
+                                                            <Setter Target="HistoryItemGrid.(Visibility)" Value="Collapsed"/>
+                                                            <Setter Target="PhoneGrid.(Visibility)" Value="Visible"/>
+                                                        </VisualState.Setters>
+                                                     </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            <!-- Phone GridViewItem Template -->
+                                            <Grid x:Name="PhoneGrid">
+                                                <RelativePanel x:Name="SingleHistoryCell">
+                                                    <!-- Shade -->
+                                                    <Rectangle x:Name="PhoneShadeUp" Fill="{StaticResource LinearGradientBrushShade}"  Opacity="0.3" Canvas.ZIndex="1" 
+                                                                Height="4" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
+                                                    
+                                                    <RelativePanel x:Name="CellHeader" Background="{ThemeResource BackgroundPanelTitle}" 
+                                                                   RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
 
-                                    <Grid x:Name="HistoryItemGrid" Width="700" Height="50">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.4*"/>
-                                            <ColumnDefinition Width="1.5*"/>
-                                            <ColumnDefinition Width="1.2*"/>
-                                            <ColumnDefinition Width="0.8*"/>
-                                            <ColumnDefinition Width="0.8*"/>
-                                            <ColumnDefinition Width="0.8*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
+                                                        <TextBlock x:Name="DateTextBlockPhoneGrid" RelativePanel.AlignLeftWithPanel="True" Padding="20,10,0,10"
+                                                                   Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
+                                                        <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" Content="Delete" Margin="0,0,10,0" Height="40" 
+                                                                Background="Transparent" Foreground="DarkCyan" RelativePanel.AlignRightWithPanel="True">
 
-                                        <Button x:Name="SingleHistoryRemoveButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                            Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}"
-                                            Height="50" Width="50" FontSize="20" FontFamily="Segoe MDL2 Assets" Content="&#xE711;">
+                                                            <Interactivity:Interaction.Behaviors>
+                                                                <Core:EventTriggerBehavior EventName="Click">
+                                                                    <Core:InvokeCommandAction Command="{Binding PhoneSingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
+                                                                </Core:EventTriggerBehavior>
+                                                            </Interactivity:Interaction.Behaviors>
 
-                                            <Interactivity:Interaction.Behaviors>
-                                                <Core:EventTriggerBehavior EventName="Click">
-                                                    <Core:InvokeCommandAction Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"
-                                                              CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
-                                                </Core:EventTriggerBehavior>
-                                            </Interactivity:Interaction.Behaviors>
+                                                        </Button>
+                                                        
+                                                    </RelativePanel>
+                                                    <!-- Shade -->
+                                                    <Rectangle x:Name="PhoneShadeDown" Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="CellHeader" Opacity="0.3" Canvas.ZIndex="1" 
+                                                                Height="8" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
+                                                    <!-- Main Content of ItemTemplate -->
+                                                    <RelativePanel x:Name="CellContent" RelativePanel.Below="CellHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                                                        <TextBlock x:Name="PhoneServerTextBlock" Text="Server" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.AlignLeftWithPanel="True"/>
+                                                        <TextBlock x:Name="PhonePingTextBlock" Text="Ping" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneServerTextBlock"/>
+                                                        <TextBlock x:Name="PhoneMsTextBlock" Text="(Ms)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhonePingTextBlock" RelativePanel.Below="PhoneServerTextBlock"/>
+                                                        <TextBlock x:Name="PhoneDownloadTextBlock" Text="Dowload" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhonePingTextBlock"/>
+                                                        <TextBlock x:Name="PhoneDownloadMbpsTextBlock" Text="(Mbps)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhonePingTextBlock"/>
+                                                        <TextBlock x:Name="PhoneUploadTextBlock" Text="Upload" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneDownloadTextBlock"/>
+                                                        <TextBlock x:Name="PhoneUploadMbpsTextBlock" Text="(Mbps)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhoneDownloadTextBlock"/>
 
-                                        </Button>
-                                        <Grid Grid.Column="1" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                            <TextBlock Text="{Binding Server}" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="2" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                            <TextBlock Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
-                                                       Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="3" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                            <TextBlock Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
-                                                       Text="{Binding Ping}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="4" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                            <TextBlock Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
-                                                       Text="{Binding DownloadSpeed}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="5" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
-                                            <TextBlock Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
-                                                       Text="{Binding UploadSpeed}"/>
-                                        </Grid>
-                                    </Grid>
+                                                        <TextBlock x:Name="PhoneServerDataTextBlock" Text="{Binding Server}" Padding="20,10,20,10" RelativePanel.AlignRightWithPanel="True"/>
+                                                        <TextBlock x:Name="PhonePingDataTextBlock" Text="{Binding Ping}" Padding="20,10,20,10" RelativePanel.Below="PhoneServerDataTextBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                                        <TextBlock x:Name="PhoneDownloadSpeedDataTextBlock" Text="{Binding DownloadSpeed}" Padding="20,10,20,10" RelativePanel.Below="PhonePingDataTextBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                                        <TextBlock x:Name="PhoneUploadSpeedDataTextBlock" Text="{Binding UploadSpeed}" Padding="20,10,20,10" RelativePanel.Below="PhoneDownloadSpeedDataTextBlock" RelativePanel.AlignRightWithPanel="True"/>
+                                                    </RelativePanel>
+                                                    
+                                                </RelativePanel>
+                                            </Grid>
+                                            <!-- Common GridViewItem Template -->
+                                            <Grid x:Name="HistoryItemGrid">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.4*"/>
+                                                    <ColumnDefinition Width="1.5*"/>
+                                                    <ColumnDefinition Width="1.2*"/>
+                                                     <ColumnDefinition Width="0.6*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="0.8*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
 
+                                                <Button x:Name="SingleHistoryRemoveButton" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                                        Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}"
+                                                         Height="50" FontFamily="Segoe MDL2 Assets" Content="&#xE711;">
+
+                                                    <Interactivity:Interaction.Behaviors>
+                                                        <Core:EventTriggerBehavior EventName="Click">
+                                                            <Core:InvokeCommandAction Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"
+                                                                                  CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
+                                                        </Core:EventTriggerBehavior>
+                                                    </Interactivity:Interaction.Behaviors>
+                                                    
+                                                 </Button>
+                                                <Grid Grid.Column="1" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                                    <TextBlock x:Name="ServerTextBlock" Text="{Binding Server}" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"/>
+                                                 </Grid>
+                                                <Grid Grid.Column="2" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                                    <TextBlock x:Name="DateTextBlock" Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                           Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
+                                                </Grid>
+                                                <Grid Grid.Column="3" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                                    <TextBlock x:Name="PingTextBlock" Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                           Text="{Binding Ping}"/>
+                                                </Grid>
+                                                <Grid Grid.Column="4" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                                    <TextBlock x:Name="DownloadSpeedTextBlock" Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                           Text="{Binding DownloadSpeed}"/>
+                                                </Grid>
+                                                <Grid Grid.Column="5" Background="{Binding IsSelected, Converter={StaticResource BooleanToColorConverter}}">
+                                                    <TextBlock x:Name="UploadSpeedTextBlock" Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                           Text="{Binding UploadSpeed}"/>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </UserControl>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>

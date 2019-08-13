@@ -187,7 +187,8 @@ namespace SpeedTest.ViewModel
         public SpeedTestCommand CloseHistoryButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistoryDeletedButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistorySelected { get; private set; }
-
+        public SpeedTestCommand PhoneSingleHistoryDeletedButtonPressed { get; private set; }
+        
         // Server panel properties commands
 
         public SpeedTestCommand ServerSuggestBoxTextChanged { get; private set; }
@@ -220,6 +221,7 @@ namespace SpeedTest.ViewModel
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
             this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleting));
             this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
+            this.PhoneSingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(PhoneSingleHistoryDeleting));
 
             // Server panel commands assing
 
@@ -341,6 +343,20 @@ namespace SpeedTest.ViewModel
             SpeedDataCollection?.Remove(singleHistoryForDeleting);
         }
 
+        private void PhoneSingleHistoryDeleting(object param)
+        {
+            var args = (RoutedEventArgs)param;
+            Button but = (Button)args.OriginalSource;
+
+            GridViewItem gvi = this.FindParent<GridViewItem>(but);
+
+            if (gvi != null)
+            {
+                SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)gvi.Content;
+                SpeedDataCollection?.Remove(singleHistoryForDeleting);
+            }
+        }
+
         private void SingleHistorySelecting(object param)
         {
             SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
@@ -400,6 +416,16 @@ namespace SpeedTest.ViewModel
         #endregion
 
         #region Helpful methods
+
+        private T FindParent<T>(DependencyObject dependencyObject) where T : DependencyObject
+        {
+            var parent = VisualTreeHelper.GetParent(dependencyObject);
+
+            if (parent == null) return null;
+
+            var parentT = parent as T;
+            return parentT ?? FindParent<T>(parent);
+        }
 
         private ObservableCollection<string> FindServerInCollection(string inputText)
         {

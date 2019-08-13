@@ -83,6 +83,10 @@
         <Setter Property="BorderBrush" Value="DarkCyan"/>
     </Style>
 
+    <ItemsPanelTemplate x:Key="MyItemsPanelTemplate">
+        <ItemsStackPanel />
+    </ItemsPanelTemplate>
+
     <Style x:Key="GridViewItemRevealStyle" TargetType="GridViewItem">
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -90,9 +94,9 @@
         <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}"/>
         <Setter Property="TabNavigation" Value="Local"/>
         <Setter Property="IsHoldingEnabled" Value="True"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,0,4,4"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
         <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}"/>
         <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}"/>
         <Setter Property="AllowDrop" Value="False"/>
@@ -114,7 +118,7 @@
                                                FocusBorderBrush="Transparent" 
                                                FocusVisualMargin="{TemplateBinding FocusVisualMargin}" 
                                                FocusSecondaryBorderBrush="Transparent" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                               HorizontalContentAlignment="Stretch" 
                                                Control.IsTemplateFocusTarget="True" 
                                                PressedBackground="{ThemeResource GridViewItemBackgroundPressed}" 
                                                PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}" 
