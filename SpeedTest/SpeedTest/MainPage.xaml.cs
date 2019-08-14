@@ -36,7 +36,7 @@ namespace SpeedTest
             this.InitializeComponent();
             ApplicationView.PreferredLaunchViewSize = new Size(1920, 1080);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(100, 100));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(380, 500));
         }
 
         //private async void BackButton_Click(object sender, RoutedEventArgs e)

@@ -36,10 +36,12 @@
                 <!-- Desktop version -->
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="830"/>
+                        <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="860"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!-- SettingsPanelButtons -->
+                        <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
                         <Setter Target="SettingsPanelButtons.(Margin)" Value="0,50,50,0"/>
                         <Setter Target="setingsButton.(FontSize)" Value="36"/>
                         <Setter Target="historyButton.(FontSize)" Value="36"/>
@@ -68,12 +70,9 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,15"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="1000"/>
-                        <Setter Target="SplitLineGrid.(Height)" Value="10"/>
-                        <Setter Target="SplitLineGrid.(Margin)" Value="0,30"/>
-                        <Setter Target="LeftSplitLine.(X1)" Value="0"/>
-                        <Setter Target="LeftSplitLine.(X2)" Value="500"/>
-                        <Setter Target="RightSplitLine.(X1)" Value="0"/>
-                        <Setter Target="RightSplitLine.(X2)" Value="500"/>
+                        <Setter Target="SplitLineGrid.(Height)" Value="3"/>
+                        <Setter Target="SplitLineGrid.(Margin)" Value="0,30,0,30"/>
+
                         <!-- Main Bottom Board -->
                         <Setter Target="BottomBoard.(Margin)" Value="0,0,0,60"/>
                         <Setter Target="MainBottomBoardInformation.(Width)" Value="500"/>
@@ -113,12 +112,6 @@
                         <Setter Target="SettingsPanel.(Width)" Value="450"/>
                         <Setter Target="SettingsPanel.(HorizontalAlignment)" Value="Right"/>
                         <Setter Target="SettingsPanel.(VerticalAlignment)" Value="Top"/>
-                        <!-- Servers Panel -->
-                        <Setter Target="ServerPanel.(Height)" Value="550"/>
-                        <Setter Target="ServerPanel.(Width)" Value="500"/>
-                        <Setter Target="ServerSuggestBox.(Width)" Value="450"/>
-                        <Setter Target="HeaderServerName.(FontSize)" Value="30"/>
-                        <Setter Target="HeaderServerLocation.(FontSize)" Value="25"/>
                         <!-- History Panel -->
                         <Setter Target="HistoryPanel.(Height)" Value="700"/> 
                         <Setter Target="HistoryPanel.(Width)" Value="700"/>
@@ -134,16 +127,23 @@
                         <Setter Target="HistoryHeader.(Height)" Value="70"/>
                         <Setter Target="HistoryHeader.(Width)" Value="700"/>
                         <Setter Target="HistoryHeader.(Margin)" Value="0,0,0,10"/>
-
+                        <!-- Servers Panel -->
+                        <Setter Target="ServerPanel.(Height)" Value="550"/>
+                        <Setter Target="ServerPanel.(Width)" Value="500"/>
+                        <Setter Target="ServerSuggestBox.(Width)" Value="450"/>
+                        <Setter Target="HeaderServerName.(FontSize)" Value="30"/>
+                        <Setter Target="HeaderServerLocation.(FontSize)" Value="25"/>
                     </VisualState.Setters>
                 </VisualState>
                 <!-- 500 X 500 version -->
                 <VisualState x:Name="Middle">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="500"/>
+                        <AdaptiveTrigger MinWindowWidth="500" MinWindowHeight="580"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!-- SettingsPanelButtons -->
+                        <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
                         <Setter Target="SettingsPanelButtons.(Margin)" Value="0,10,10,0"/>
                         <Setter Target="setingsButton.(FontSize)" Value="25"/>
                         <Setter Target="historyButton.(FontSize)" Value="25"/>
@@ -172,12 +172,8 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="440"/>
-                        <Setter Target="SplitLineGrid.(Height)" Value="10"/>
+                        <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
-                        <Setter Target="LeftSplitLine.(X1)" Value="0"/>
-                        <Setter Target="LeftSplitLine.(X2)" Value="220"/>
-                        <Setter Target="RightSplitLine.(X1)" Value="0"/>
-                        <Setter Target="RightSplitLine.(X2)" Value="220"/>
                         <!-- Test Data Board -->
                         <Setter Target="TestDataBoard.(Width)" Value="440"/>
                         <Setter Target="TestDataBoard.(Height)" Value="70"/>
@@ -247,11 +243,9 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!-- SettingsPanelButtons -->
-                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,10,10,0"/>
-                        <Setter Target="setingsButton.(FontSize)" Value="25"/>
-                        <Setter Target="historyButton.(FontSize)" Value="25"/>
-                        <Setter Target="backButton.(FontSize)" Value="25"/>
+                        <!-- SettingsPanelButtons -->                         
+                        <Setter Target="GamburgerButton.(Visibility)" Value="Visible"/>
+                        <Setter Target="SettingsPanelButtons.(Visibility)" Value="Collapsed"/>
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
                         <Setter Target="StartArc.(Radius)" Value="100"/>
@@ -274,56 +268,32 @@
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
-                        <!-- SplitLine -->
-                        <Setter Target="SplitLineGrid.(Width)" Value="380"/>
-                        <Setter Target="SplitLineGrid.(Height)" Value="10"/>
-                        <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
-                        <Setter Target="LeftSplitLine.(X1)" Value="0"/>
-                        <Setter Target="LeftSplitLine.(X2)" Value="220"/>
-                        <Setter Target="RightSplitLine.(X1)" Value="0"/>
-                        <Setter Target="RightSplitLine.(X2)" Value="220"/>
                         <!-- Test Data Board -->
-                        <Setter Target="TestDataBoard.(Width)" Value="380"/>
-                        <Setter Target="TestDataBoard.(Height)" Value="70"/>
-                        <Setter Target="PingFieldsGrid.(Width)" Value="95"/>
-                        <Setter Target="PingText.(FontSize)" Value="18"/>
-                        <Setter Target="msText.(FontSize)" Value="18"/>
+                        <Setter Target="TestDataBoard.(Margin)" Value="20,0,20,0"/>
+                        <Setter Target="PingText.(FontSize)" Value="15"/>
+                        <Setter Target="msText.(FontSize)" Value="15"/>
                         <Setter Target="DataPingText.(FontSize)" Value="30"/>
-                        <Setter Target="DownloadSpeedFieldsGrid.(Width)" Value="155"/>
-                        <Setter Target="DownloadText.(FontSize)" Value="18"/>
-                        <Setter Target="mbpsText.(FontSize)" Value="18"/>
+                        <Setter Target="DownloadText.(FontSize)" Value="15"/>
+                        <Setter Target="mbpsText.(FontSize)" Value="15"/>
                         <Setter Target="DownloadSpeedData.(FontSize)" Value="30"/>
-                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="130"/>
-                        <Setter Target="UploadText.(FontSize)" Value="18"/>
-                        <Setter Target="mbpsUploadText.(FontSize)" Value="18"/>
+                        <Setter Target="UploadText.(FontSize)" Value="15"/>
+                        <Setter Target="mbpsUploadText.(FontSize)" Value="15"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="30"/>
+                        <!-- SplitLine -->
+                        <Setter Target="SplitLineGrid.(Margin)" Value="20,20,20,20"/>
                         <!-- Main Bottom Board -->
                         <Setter Target="BottomBoard.(Margin)" Value="0,0,0,20"/>
-                        <Setter Target="MainBottomBoardInformation.(Width)" Value="380"/>
-                        <Setter Target="providerName.(Width)" Value="190"/>
-                        <Setter Target="providerName.(Height)" Value="30"/>
+                        <Setter Target="MainBottomBoardInformation.(Margin)" Value="20,0"/>
                         <Setter Target="providerName.(FontSize)" Value="20"/>
-                        <Setter Target="ipAdress.(Width)" Value="190"/>
-                        <Setter Target="ipAdress.(Height)" Value="30"/>
-                        <Setter Target="ipAdress.(FontSize)" Value="20"/>
-                        <Setter Target="serverName.(Width)" Value="190"/>
-                        <Setter Target="serverName.(Height)" Value="30"/>
                         <Setter Target="serverName.(FontSize)" Value="20"/>
-                        <Setter Target="serverLocation.(Width)" Value="190"/>
-                        <Setter Target="serverLocation.(Height)" Value="30"/>
                         <Setter Target="serverLocation.(FontSize)" Value="20"/>
-                        <Setter Target="changeServerButton.(Width)" Value="380"/>
-                        <Setter Target="changeServerButton.(Height)" Value="35"/>
+                        <Setter Target="ipAdress.(FontSize)" Value="20"/>
+                        <Setter Target="changeServerButton.(Margin)" Value="0,20,0,0"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="18"/>
                         <Setter Target="changeServerButton.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <Setter Target="changeServerButton.(HorizontalAlignment)" Value="Stretch"/>
                         <!-- SettingsPanel -->
 
-                        <!-- Servers Panel -->
-                        <Setter Target="ServerPanel.(Height)" Value="475"/>
-                        <Setter Target="ServerPanel.(Width)" Value="425"/>
-                        <Setter Target="ServerSuggestBox.(Width)" Value="375"/>
-                        <Setter Target="HeaderServerName.(FontSize)" Value="25"/>
-                        <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
                         <!-- History Panel -->
                         <Setter Target="HistoryHeader.(Visibility)" Value="Collapsed"/>
                         <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
@@ -334,6 +304,9 @@
                         <Setter Target="CloseHistoryButton.(Height)" Value="60"/>
                         <Setter Target="CloseHistoryButton.(Width)" Value="60"/>
                         <Setter Target="CloseHistoryButton.(FontSize)" Value="30"/>
+                        <!-- Servers Panel -->
+                        <Setter Target="HeaderServerName.(FontSize)" Value="25"/>
+                        <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -345,17 +318,8 @@
 
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="0.7*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.1*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="70"/>
-            </Grid.ColumnDefinitions>-->
 
-            <!-- Settings Panel Buttons -->
+            <!-- Main Panel Buttons -->
             <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
@@ -364,31 +328,36 @@
                 <Button x:Name="backButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" Margin="10"
                         Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}"/>
             </StackPanel>
+            
+            <!-- Phone Gamburger Button (Settings inner) -->
+            <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"
+                    Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
 
             <!-- Arc Board -->
-            <Grid x:Name="ArcGrid" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
+            <Grid x:Name="ArcGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
 
                 <!-- Arc Controls -->
-                <arcControl:Arc x:Name="StartArc" Grid.Column="1" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
+                <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
                                 Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="TryConnectArc1" Grid.Column="1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
+                <arcControl:Arc x:Name="TryConnectArc1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
                                 Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="TryConnectArc2" Grid.Column="1" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
+                <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
                                 Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="DownloadSpeedArc" Grid.Column="1" Fill="DarkCyan" PercentValue="215"
+                <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan" PercentValue="215"
                                 Visibility="{Binding IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="UploadSpeedArc" Grid.Column="1" Fill="DarkBlue" PercentValue="97"
+                <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue" PercentValue="97"
                                 Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
 
                 <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
-                <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" Grid.Column="1" HorizontalAlignment="Center"
+                <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center"
                         Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                         Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
-                <TextBlock x:Name="TryConnectTextBlock" Grid.Column="1" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
+                <TextBlock x:Name="TryConnectTextBlock" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
                            Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"  />            
 
-                <TextBlock x:Name="SpeedDataNumbersTextBlock" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Visibility="{Binding IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
                    Text="{Binding SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
 
@@ -399,13 +368,13 @@
 
                 <!-- Test Data Board -->
                 <Grid x:Name="TestDataBoard" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <RelativePanel>
 
                         <!-- Ping Fields -->
-                        <Grid x:Name="PingFieldsGrid" Visibility="Visible">
+                        <Grid x:Name="PingFieldsGrid" Visibility="Visible" RelativePanel.AlignLeftWithPanel="True">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.6*"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -413,31 +382,31 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock x:Name="PingText" Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                            <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
                             <TextBlock x:Name="DataPingText" Grid.Column="1" Grid.RowSpan="2" Text="163" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
 
                         <!-- Download Speed Fields -->
-                        <Grid x:Name="DownloadSpeedFieldsGrid" Visibility="Visible">
+                        <Grid x:Name="DownloadSpeedFieldsGrid" Visibility="Visible" RelativePanel.RightOf="PingFieldsGrid" RelativePanel.LeftOf="UploadSpeedFieldsGrid">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.9*"/>
-                                <ColumnDefinition Width="0.8*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock x:Name="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                            <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            <TextBlock x:Name="DownloadSpeedData" Grid.Column="1" Grid.RowSpan="2" Text="121" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                            <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                            <TextBlock x:Name="DownloadSpeedData" Grid.Column="1" Grid.RowSpan="2" Text="121" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </Grid>
 
                         <!-- Upload Speed Fields -->
-                        <Grid x:Name="UploadSpeedFieldsGrid" Visibility="Visible">
+                        <Grid x:Name="UploadSpeedFieldsGrid" Visibility="Visible"  RelativePanel.AlignRightWithPanel="True">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.77*"/>
-                                <ColumnDefinition Width="0.9*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -445,19 +414,18 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock x:Name="UploadText" Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                            <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            <TextBlock x:Name="UploadDataText" Grid.Column="1" Grid.RowSpan="2" Text="111" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
+                            <TextBlock x:Name="UploadDataText" Grid.Column="1" Grid.RowSpan="2" Text="111" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" />
                         </Grid>
 
-                    </StackPanel>
+                    </RelativePanel>
                 </Grid>
 
-
                 <!-- Split Line -->
-                <Grid x:Name="SplitLineGrid" Grid.Column="1" Grid.Row="1">
+                <Grid x:Name="SplitLineGrid">
                     <RelativePanel>
-                        <Line x:Name="LeftSplitLine" Stroke="{ThemeResource LinearGradientBrush1}" StrokeThickness="3" RelativePanel.AlignLeftWithPanel="True"/>
-                        <Line x:Name="RightSplitLine" Stroke="{ThemeResource LinearGradientBrush2}" StrokeThickness="3" RelativePanel.AlignRightWithPanel="True"/>
+                        <Rectangle x:Name="SplitLine" Fill="{StaticResource LinearGradientBrush}" Stretch="Fill"
+                                   Height="3" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
                 </Grid>
 
@@ -468,12 +436,12 @@
                     <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding IpAdress}" RelativePanel.Below="providerName"/>
                     <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
-                               Text="{Binding ServerName, Source={StaticResource mainViewModel}}" RelativePanel.RightOf="providerName"/>
+                               Text="{Binding ServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
                     <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}"
-                               RelativePanel.Below="serverName" RelativePanel.RightOf="ipAdress"/>
-                    <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server"
-                            RelativePanel.Below="serverLocation" RelativePanel.RightOf="providerName"
+                               RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
+                    <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
+                            RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
                             Command="{Binding ChangeServerButtonPressed}">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
@@ -487,18 +455,19 @@
             </StackPanel>
 
         </Grid>
-
-        <!-- Popup Grid with Helpful Panels -->
+        
+        <!-- Popup Grid with Helpful Panels -->       
         <Grid x:Name="PopupGrid" Canvas.ZIndex="1" 
               Visibility="{Binding IsPopupGridRaise, Source={StaticResource mainViewModel},Converter={StaticResource BooleanToVisibilityConverter}}"
-              Background="{StaticResource BackgroundPopupGrid}">
+              Background="{ThemeResource BackgroundPopupGrid}">
             
             <!-- Settings Panel -->
-            <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   Visibility="{Binding IsSettingsPaneOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                 <RelativePanel x:Name="SettingsPanel" Style="{StaticResource Border}" >
-                   
+
+                    <!-- Settings Panel TopBar -->
                     <RelativePanel x:Name="SettingsTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
                                    RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
                         <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan" Padding="20,10"
@@ -507,13 +476,17 @@
                                 Command="{Binding SettingSplitViewClosing, Source={StaticResource mainViewModel}}"/>
                     </RelativePanel>
 
+                    <!-- Shade -->
                     <Rectangle Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="SettingsTopBar" Opacity="0.3" Canvas.ZIndex="1" 
                                Height="10" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
 
+                    <!-- Settings Panel Main Container -->
                     <Grid Background="{ThemeResource BackgroundPanelContent}" RelativePanel.Below="SettingsTopBar">
                         <ScrollViewer x:Name="ScrollForSettings">
 
                             <RelativePanel x:Name="ContentPanel" Padding="20,10,0,0">
+
+                                <!-- Language Block -->
                                 <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
                                 <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
                                           Margin="0,0,20,0" PlaceholderText="English" FlowDirection="LeftToRight" HorizontalAlignment="Stretch"
@@ -528,6 +501,7 @@
                                     
                                 </ComboBox>
 
+                                <!-- Mode Block -->
                                 <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
                                 <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme"  Content="Light" Width="90" RelativePanel.Below="ModeBlock"
                                                  Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" 
@@ -536,6 +510,7 @@
                                                  Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Content}" 
                                                  IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
 
+                                <!--About Block -->
                                 <TextBlock x:Name="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="About" RelativePanel.Below="DarkRadioButton"/>
                                 <TextBlock x:Name="ProgramNameBlock" Text="{Binding Settings.ProgramName}" Style="{StaticResource TextBlockAboutProgram}"
                                                RelativePanel.Below="AboutBlock"/>
@@ -549,6 +524,7 @@
                                     </Paragraph>
                                 </RichTextBlock>
 
+                                <!--FeedBack Block -->
                                 <HyperlinkButton x:Name="FeedBackLink" NavigateUri="{Binding Settings.FeedBackLink}" Style="{StaticResource HyperlinkButtonSettingsPanel}" 
                                                  RelativePanel.Below="AboutStoryBlock">Feedback</HyperlinkButton>
                                 <HyperlinkButton x:Name="RateLink" NavigateUri="{Binding Settings.RateLink}" Style="{StaticResource HyperlinkButtonSettingsPanel}"
@@ -561,10 +537,11 @@
             </Grid>
 
             <!-- History Panel -->
-            <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <RelativePanel x:Name="HistoryPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}"
                                Visibility="{Binding IsHistoryPanelOpen,Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter} }">
-                    <!-- TopBar -->
+
+                    <!-- History Panel TopBar -->
                     <RelativePanel x:Name="HistoryPanelTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
                                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                         
@@ -575,10 +552,12 @@
                                 Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"/>
                     
                     </RelativePanel>
+                    
                     <!-- Shade -->
                     <Rectangle Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="HistoryPanelTopBar" Opacity="0.3" Canvas.ZIndex="1" 
                                Height="10" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
-                    <!-- GridView Header -->
+
+                    <!-- History Header -->
                     <Grid x:Name="HistoryHeader" RelativePanel.Below="HistoryPanelTopBar" RelativePanel.AlignRightWithPanel="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.4*"/>
@@ -599,7 +578,8 @@
                         <TextBlock Grid.Column="4" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
                         <TextBlock Grid.Column="5" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
                     </Grid>
-                    <!-- GridView -->
+                   
+                    <!-- History List -->
                     <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignBottomWithPanel="True">
                         <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" 
@@ -661,6 +641,7 @@
                                                     <Rectangle x:Name="PhoneShadeUp" Fill="{StaticResource LinearGradientBrushShade}"  Opacity="0.3" Canvas.ZIndex="1" 
                                                                 Height="4" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
                                                     
+                                                    <!-- Phone Single History Top Bar -->
                                                     <RelativePanel x:Name="CellHeader" Background="{ThemeResource BackgroundPanelTitle}" 
                                                                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
 
@@ -676,8 +657,8 @@
                                                             </Interactivity:Interaction.Behaviors>
 
                                                         </Button>
-                                                        
                                                     </RelativePanel>
+                                                    
                                                     <!-- Shade -->
                                                     <Rectangle x:Name="PhoneShadeDown" Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="CellHeader" Opacity="0.3" Canvas.ZIndex="1" 
                                                                 Height="8" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
@@ -699,6 +680,7 @@
                                                     
                                                 </RelativePanel>
                                             </Grid>
+                                            
                                             <!-- Common GridViewItem Template -->
                                             <Grid x:Name="HistoryItemGrid">
                                                 <Grid.ColumnDefinitions>
@@ -754,29 +736,30 @@
                     </Grid>
                 </RelativePanel>
             </Grid>
-
+            
             <!-- Servers Panel -->
-            <Grid Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <RelativePanel x:Name="ServerPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}" Height="550" Width="500"
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <RelativePanel x:Name="ServerPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}"
                                Visibility="{Binding IsServerPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    
+                    <!-- TopBar -->
+                    <RelativePanel x:Name="ServersTopBar" IsHoldingEnabled="True" Margin="20,20" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
 
-                    <Button x:Name="CloseServersPanelButton" Style="{StaticResource ButtonClose}"  Content="&#xE711;"
-                            Command="{Binding CloseServerPanelButtonPressed}" RelativePanel.AlignRightWithPanel="True"/>
-                    <RelativePanel x:Name="ServersTopBar" IsHoldingEnabled="True" Width="500" Height="60" Margin="0,20">
-                        <TextBlock x:Name="ImageGlobe" Text="&#xE774;" FontSize="40" Foreground="DarkCyan" Height="60" Width="100" TextAlignment="Right" Padding="0,10,10,0"
+                        <TextBlock x:Name="ImageGlobe" Text="&#xE774;" FontSize="40" Foreground="DarkCyan"  TextAlignment="Right" Padding="0,10,10,0"
                                        FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
-                        <Line X1="100" Y1="5" X2="100" Y2="55" Stroke="DarkCyan" StrokeThickness="2" />
-                        <Grid RelativePanel.RightOf="ImageGlobe" Height="60">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="0.7*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="HeaderServerName" Grid.Row="0" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0" VerticalAlignment="Bottom"/>
-                            <TextBlock x:Name="HeaderServerLocation" Grid.Row="1" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0" VerticalAlignment="Bottom"/>
-                        </Grid>
+                        <Rectangle Fill="DarkCyan"  Canvas.ZIndex="1" RelativePanel.RightOf="ImageGlobe"
+                               Width="2" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
+                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
+                                   RelativePanel.RightOf="ImageGlobe" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
+                                   RelativePanel.RightOf="ImageGlobe" RelativePanel.Below="HeaderServerName"/>
+                        <Button x:Name="CloseServersPanelButton" Style="{StaticResource ButtonClose}"  Content="&#xE711;"
+                                Command="{Binding CloseServerPanelButtonPressed}" RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
-
-                    <AutoSuggestBox x:Name="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}"  PlaceholderText="Search" Height="40" Margin="24,0" QueryIcon="Find" RelativePanel.Below="ServersTopBar">
+                    
+                    <!-- Search Bar -->
+                    <AutoSuggestBox x:Name="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}" PlaceholderText="Search" Margin="20,0" QueryIcon="Find" 
+                                    RelativePanel.Below="ServersTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="TextChanged">
                                 <Core:InvokeCommandAction Command="{Binding ServerSuggestBoxTextChanged, Source={StaticResource mainViewModel}}"
@@ -785,44 +768,69 @@
                         </Interactivity:Interaction.Behaviors>
                     </AutoSuggestBox>
 
-                    <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Width="450" Margin="24,10,0,10"
-                                        RelativePanel.Below="ServerSuggestBox"/>
-                    
-                    <Grid RelativePanel.Below="AvailableServers">
-                        <ScrollViewer>
-                            <ListView x:Name="ServersListView" ItemsSource="{Binding ServerNamesCollection, Source={StaticResource mainViewModel}}" 
-                                      ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}"  Margin="10,0,15,0"
-                                        Width="500" Height="400" RelativePanel.Below="AvailableServers">
+                    <!-- AvailableServers Line -->
+                    <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Margin="20,10,0,10" RelativePanel.Below="ServerSuggestBox"/>
 
-                                <Interactivity:Interaction.Behaviors>
-                                    <Core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <Core:InvokeCommandAction Command="{Binding SingleServerSelected, Source={StaticResource mainViewModel}}"
-                                                                  CommandParameter="{Binding ElementName=ServersListView, Path=SelectedItem}"/>
-                                    </Core:EventTriggerBehavior>
-                                </Interactivity:Interaction.Behaviors>
+                    <!-- Servers List -->
+                    <Grid RelativePanel.Below="AvailableServers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
+                        <ListView x:Name="ServersListView" ItemsSource="{Binding ServerNamesCollection, Source={StaticResource mainViewModel}}" 
+                                  ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Margin="20,0,20,0" ItemsPanel="{StaticResource MyItemsPanelTemplate}"
+                                  RelativePanel.Below="AvailableServers">
 
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="200"/>
-                                                <ColumnDefinition Width="20"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                    <Core:InvokeCommandAction Command="{Binding SingleServerSelected, Source={StaticResource mainViewModel}}"
+                                                              CommandParameter="{Binding ElementName=ServersListView, Path=SelectedItem}"/>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
 
-                                            <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding}" FontSize="20" Foreground="DarkCyan" VerticalAlignment="Center" Padding="14,0,0,0"/>
-                                            <TextBlock x:Name="Splitter" Grid.Column="1" Text=" - " FontSize="20" VerticalAlignment="Center"/>
-                                            <TextBlock x:Name="ProviderName" Grid.Column="2" Text="Net Holding DDC" FontSize="20" TextAlignment="Left" VerticalAlignment="Center" Padding="10,0,0,0"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </ScrollViewer>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+
+                                    <RelativePanel>
+                                        <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding}" FontSize="20" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ProviderName"/>
+                                        <TextBlock x:Name="ProviderName" Grid.Column="1" Text=" - Net Holding DDC" FontSize="20" RelativePanel.AlignRightWithPanel="True"/>
+                                    </RelativePanel>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                     
                 </RelativePanel>
             </Grid>
+            
+            <!-- Phone Main Panel Buttons -->
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Visibility="{Binding IsPhoneMainPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <RelativePanel>
 
+                    <RelativePanel x:Name="PhoneMainPanelTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                        
+                        <Button x:Name="PopupGamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"
+                                Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
+                        
+                    </RelativePanel>
+
+                    <RelativePanel x:Name="PhoneMainPanelContentBar" RelativePanel.AlignBottomWithPanel="True"
+                                   RelativePanel.Below="PhoneMainPanelTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+
+                        
+                            <Button x:Name="PhoneSetingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10" FontSize="20"
+                                    RelativePanel.AlignBottomWithPanel="True"
+                                    Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
+                            <Button x:Name="PhoneHistoryButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" Margin="10" FontSize="20"
+                                     Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}"/>
+                            <Button x:Name="PhoneBackButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" Margin="10" FontSize="20"
+                                    RelativePanel.Above="PhoneSetingsButton"
+                                    Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}"/>
+                        
+                    </RelativePanel>
+
+                </RelativePanel>
+            </Grid>
+            
         </Grid>
     </Grid>
 </Page>

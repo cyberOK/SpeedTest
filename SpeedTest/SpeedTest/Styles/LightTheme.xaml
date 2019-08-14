@@ -13,14 +13,14 @@
     <Color x:Key="ColorWhiteSmokeShade1">WhiteSmoke</Color>
     <Color x:Key="ColorLightGrayShade2">LightGray</Color>
     <!-- Popup Grid Color -->
-    <Color x:Key="ColorGreyPopupGrid">Gray</Color>
+    <Color x:Key="ColorWhitePopupGrid">White</Color>
 
     <SolidColorBrush x:Key="BackgroundPanelTitle" Color="{StaticResource ColorWhitePanelTitle}"/>
     <SolidColorBrush x:Key="BackgroundPanelContent" Color="{StaticResource ColorWhiteSmokePanelContent}"/>
     <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="White" Opacity="0"/>
 
     <!--<SolidColorBrush x:Key="OpacityBrushPopupGrid" Color="#f1ebef" Opacity="0.6"/>-->
-    <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorGreyPopupGrid}" Opacity="0.6"/>
+    <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorWhitePopupGrid}" Opacity="0.8"/>
 
     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="White"/>
     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="Gray"/>
@@ -28,18 +28,14 @@
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="Black"/>
     
     <!-- Main Split Line -->
-    <LinearGradientBrush x:Key="LinearGradientBrush1" StartPoint="0,0.1" EndPoint="0.25,1" ColorInterpolationMode="ScRgbLinearInterpolation">
+    <LinearGradientBrush x:Key="LinearGradientBrush" StartPoint="0.1,1" EndPoint="0.9,1" ColorInterpolationMode="SRgbLinearInterpolation">
         <LinearGradientBrush.GradientStops>
             <GradientStop Color="{StaticResource ColorLightCyanCyan}" Offset="0" />
-            <GradientStop Color="{StaticResource ColorDBlue}" Offset="1" />
+            <GradientStop Color="{StaticResource ColorDBlue}" Offset="0.5" />
+            <GradientStop Color="{StaticResource ColorLightCyanCyan}" Offset="1" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="LinearGradientBrush2" StartPoint="0.9,4" EndPoint="0.75,0.3" ColorInterpolationMode="ScRgbLinearInterpolation">
-        <LinearGradientBrush.GradientStops>
-            <GradientStop Color="{StaticResource ColorLightCyanCyan}" Offset="0" />
-            <GradientStop Color="{StaticResource ColorDBlue}" Offset="1" />
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
+    
     <!-- Panels Shade Line -->
     <LinearGradientBrush x:Key="LinearGradientBrushShade" StartPoint="0.5,0.3" EndPoint="0.5,1">
         <LinearGradientBrush.GradientStops>

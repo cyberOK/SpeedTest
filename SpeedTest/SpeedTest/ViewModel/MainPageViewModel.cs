@@ -20,7 +20,6 @@ namespace SpeedTest.ViewModel
         #region Fields
 
         private SpeedDataViewModel _oldHistoryValue = null;
-
         private string _providerName = "ProviderName";
         private string _ipAdress = "IpAdress";
         private string _serverName;
@@ -40,6 +39,7 @@ namespace SpeedTest.ViewModel
         private bool _isDownloadSpeedDataRecieved = false;
         private bool _isUploadSpeedDataRecieved = false;
         private bool _isPopupGridRaise = false;
+        private bool _isPhoneMainPanelOpen = false;
         
         #endregion
 
@@ -137,8 +137,16 @@ namespace SpeedTest.ViewModel
             private set { Set(ref _serverNamesCollection, value); }
         }
 
-        // Helpful properties
+        // Phone Main Panel properties
+
+        public bool IsPhoneMainPanelOpen
+        {
+            get { return this._isPhoneMainPanelOpen; }
+            private set { Set(ref this._isPhoneMainPanelOpen, value); }
+        }
         
+        // Helpful properties
+
         public bool IsPopupGridRaise
         {
             get { return this._isPopupGridRaise; }
@@ -174,7 +182,8 @@ namespace SpeedTest.ViewModel
         public SpeedTestCommand HistoryButtonPressed { get; private set; }
         public SpeedTestCommand SettingsButtonPressed { get; private set; }
         public SpeedTestCommand ChangeServerButtonPressed { get; private set; }
-
+        public SpeedTestCommand GamburgerButtonPressed { get; private set; }
+        
         // Settings panel properties commands
 
         public SpeedTestCommand SettingSplitViewClosing { get; private set; }
@@ -208,6 +217,7 @@ namespace SpeedTest.ViewModel
             this.HistoryButtonPressed = new SpeedTestCommand(new Action<object>(HistoryCalling));
             this.SettingsButtonPressed = new SpeedTestCommand(new Action<object>(SettingsCalling));
             this.ChangeServerButtonPressed = new SpeedTestCommand(new Action<object>(ChangeServerCalling));
+            this.GamburgerButtonPressed = new SpeedTestCommand(new Action<object>(PhoneMainPanelCalling));
 
             // Settings panel commands assing
 
@@ -260,17 +270,24 @@ namespace SpeedTest.ViewModel
 
         private async void BackCalling(object param)
         {
+            this.ClosePhoneGrid();
+            this.IsPopupGridRaise = false;
+
             await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
         }
 
         private void HistoryCalling(object param)
         {
+            this.ClosePhoneGrid();
+
             this.IsPopupGridRaise = true;
             this.IsHistoryPanelOpen = true;                 
         }
 
         private void SettingsCalling(object param)
         {
+            this.ClosePhoneGrid();
+
             this.IsPopupGridRaise = true;
             this.IsSettingsPaneOpen = true;
         }
@@ -281,10 +298,24 @@ namespace SpeedTest.ViewModel
             this.IsServerPanelOpen = true;
         }
 
+        private void PhoneMainPanelCalling(object param)
+        {
+            if (this.IsPhoneMainPanelOpen)
+            {
+                this.IsPopupGridRaise = false;
+                this.IsPhoneMainPanelOpen = false;
+            }
+            else
+            {
+                this.IsPopupGridRaise = true;
+                this.IsPhoneMainPanelOpen = true;
+            }
+        }
+
         #endregion
 
         #region Settings Actions for Delegates
-        
+
         private async void LanguageChange(object param)
         {
             await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
@@ -520,6 +551,14 @@ namespace SpeedTest.ViewModel
             else
             {
                 return ElementTheme.Light;
+            }
+        }
+
+        private void ClosePhoneGrid()
+        {
+            if (this.IsPhoneMainPanelOpen)
+            {
+                this.IsPhoneMainPanelOpen = false;
             }
         }
 
