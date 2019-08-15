@@ -805,32 +805,46 @@
                   Visibility="{Binding IsPhoneMainPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <RelativePanel>
 
+                    <!-- Gamburger Button -->
                     <RelativePanel x:Name="PhoneMainPanelTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                        
+
                         <Button x:Name="PopupGamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10"
-                                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe MDL2 Assets"
                                 Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
-                        
+
                     </RelativePanel>
 
+                    <!-- Setings,History,Share Button -->
                     <RelativePanel x:Name="PhoneMainPanelContentBar" RelativePanel.AlignBottomWithPanel="True"
                                    RelativePanel.Below="PhoneMainPanelTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
 
-                        
-                            <Button x:Name="PhoneSetingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10" FontSize="20"
-                                    RelativePanel.AlignBottomWithPanel="True"
-                                    Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
-                            <Button x:Name="PhoneHistoryButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" Margin="10" FontSize="20"
-                                     Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}"/>
-                            <Button x:Name="PhoneBackButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" Margin="10" FontSize="20"
-                                    RelativePanel.Above="PhoneSetingsButton"
-                                    Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}"/>
-                        
+                        <Button x:Name="PhoneSetingsButton" Margin="10,0,0,10" FontSize="20" RelativePanel.AlignBottomWithPanel="True" Background="Transparent"
+                                Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE713;"/>
+                                <TextBlock Text="Settings" Padding="20,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="PhoneHistoryButton" Margin="10,0,0,0" FontSize="20" Background="Transparent"
+                                Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE81C;"/>
+                                <TextBlock Text="History" Padding="20,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="PhoneShareButton" Margin="10,0,0,0" FontSize="20" RelativePanel.Above="PhoneSetingsButton" Background="Transparent"
+                                Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}" Foreground="DarkCyan">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE72D;"/>
+                                <TextBlock Text="Share" Padding="20,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+
                     </RelativePanel>
 
                 </RelativePanel>
             </Grid>
-            
+
         </Grid>
     </Grid>
 </Page>
