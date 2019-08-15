@@ -327,7 +327,7 @@
         <Grid x:Name="MainGrid">
 
             <!-- Main Panel Buttons -->
-            <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top"> 
                 <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
                 <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" Margin="10"
@@ -357,7 +357,7 @@
                                 Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
 
                 <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
-                <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center"
+                <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 
                         Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                         Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
@@ -496,7 +496,7 @@
                                 <!-- Language Block -->
                                 <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
                                 <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
-                                          Margin="0,0,20,0" PlaceholderText="English" FlowDirection="LeftToRight" HorizontalAlignment="Stretch"
+                                          Margin="0,0,20,0" PlaceholderText="English" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" UseSystemFocusVisuals="True"
                                           RelativePanel.Below="LanguageBlock" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                     
                                     <Interactivity:Interaction.Behaviors>

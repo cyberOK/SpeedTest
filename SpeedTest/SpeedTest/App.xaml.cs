@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI;
+using Windows.System.Profile;
 
 namespace SpeedTest
 {
@@ -37,6 +38,11 @@ namespace SpeedTest
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.FocusVisualKind = FocusVisualKind.Reveal;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
+            {
+                this.FocusVisualKind = FocusVisualKind.Reveal;
+            }
         }
 
         /// <summary>
@@ -82,7 +88,7 @@ namespace SpeedTest
                 formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
                 var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                coreTitleBar.ExtendViewIntoTitleBar = true;
+                coreTitleBar.ExtendViewIntoTitleBar = true;             
             }
         }
 
