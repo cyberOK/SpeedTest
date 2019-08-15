@@ -18,6 +18,7 @@
     <SolidColorBrush x:Key="BackgroundPanelTitle" Color="{StaticResource ColorDarkPanelTitle}"/>
     <SolidColorBrush x:Key="BackgroundPanelContent" Color="{StaticResource ColorDarkPanelContent}"/>
     <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="Black" Opacity="0.7"/>
+    <SolidColorBrush x:Key="BackgroundPhone" Color="{StaticResource ColorDarkPanelContent}"/>
 
     <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorBlackPopupGrid}" Opacity="0.8"/>
 
@@ -27,16 +28,11 @@
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="White"/>
 
     <!-- Main Split Line -->
-    <LinearGradientBrush x:Key="LinearGradientBrush1" StartPoint="0,0.1" EndPoint="0.25,1" ColorInterpolationMode="ScRgbLinearInterpolation">
+    <LinearGradientBrush x:Key="LinearGradientBrush" StartPoint="0.1,1" EndPoint="0.9,1" ColorInterpolationMode="SRgbLinearInterpolation">
         <LinearGradientBrush.GradientStops>
             <GradientStop Color="{StaticResource ColorGray}" Offset="0" />
-            <GradientStop Color="{StaticResource ColorDCyan}" Offset="1" />
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="LinearGradientBrush2" StartPoint="0.9,4" EndPoint="0.75,0.3" ColorInterpolationMode="ScRgbLinearInterpolation">
-        <LinearGradientBrush.GradientStops>
-            <GradientStop Color="{StaticResource ColorGray}" Offset="0" />
-            <GradientStop Color="{StaticResource ColorDCyan}" Offset="1" />
+            <GradientStop Color="{StaticResource ColorDCyan}" Offset="0.5" />
+            <GradientStop Color="{StaticResource ColorGray}" Offset="1" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
     <!-- Panels Shade Line -->

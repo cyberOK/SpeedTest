@@ -141,6 +141,9 @@
                         <AdaptiveTrigger MinWindowWidth="500" MinWindowHeight="580"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- Main Background -->
+                        <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="MainOpacityBackgroundGrid.(Background)" Value="{ThemeResource SystemControlAcrylicWindowBrush}"/>
                         <!-- SettingsPanelButtons -->
                         <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
@@ -243,6 +246,10 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- Main Background -->
+                        <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="MainOpacityBackgroundGrid.(Background)" Value="{ThemeResource BackgroundPhone}"/>
+                        <Setter Target="PopupGrid.(Background)" Value="Transparent"/>
                         <!-- SettingsPanelButtons -->                         
                         <Setter Target="GamburgerButton.(Visibility)" Value="Visible"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Collapsed"/>
@@ -313,8 +320,8 @@
         </VisualStateManager.VisualStateGroups>
         
         <!-- Background Image with Grid Above It -->
-        <Image Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
-        <Grid Background="{ThemeResource BackgroundOpacityBrushForPhoto}"/>
+        <Image x:Name="BackgroundPhoto" Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
+        <Grid x:Name="MainOpacityBackgroundGrid" Background="{ThemeResource BackgroundOpacityBrushForPhoto}"/>
 
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
@@ -801,8 +808,10 @@
             </Grid>
             
             <!-- Phone Main Panel Buttons -->
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                  Visibility="{Binding IsPhoneMainPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}"
+                  Visibility="{Binding IsPhoneMainPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
                 <RelativePanel>
 
                     <!-- Gamburger Button -->

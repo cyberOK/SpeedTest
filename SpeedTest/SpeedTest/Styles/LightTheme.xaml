@@ -18,6 +18,7 @@
     <SolidColorBrush x:Key="BackgroundPanelTitle" Color="{StaticResource ColorWhitePanelTitle}"/>
     <SolidColorBrush x:Key="BackgroundPanelContent" Color="{StaticResource ColorWhiteSmokePanelContent}"/>
     <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="White" Opacity="0"/>
+    <SolidColorBrush x:Key="BackgroundPhone" Color="{StaticResource ColorWhiteSmokePanelContent}"/>
 
     <!--<SolidColorBrush x:Key="OpacityBrushPopupGrid" Color="#f1ebef" Opacity="0.6"/>-->
     <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorWhitePopupGrid}" Opacity="0.8"/>
@@ -43,5 +44,5 @@
             <GradientStop Color="{StaticResource ColorLightGrayShade2}" Offset="0.5" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    
+
 </ResourceDictionary>
