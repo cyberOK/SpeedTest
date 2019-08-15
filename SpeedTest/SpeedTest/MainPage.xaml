@@ -147,7 +147,7 @@
                         <!-- SettingsPanelButtons -->
                         <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
-                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,10,10,0"/>
+                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,40,10,0"/>
                         <Setter Target="setingsButton.(FontSize)" Value="25"/>
                         <Setter Target="historyButton.(FontSize)" Value="25"/>
                         <Setter Target="backButton.(FontSize)" Value="25"/>
@@ -337,7 +337,7 @@
             </StackPanel>
             
             <!-- Phone Gamburger Button (Settings inner) -->
-            <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10"
+            <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10,30"
                     HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"
                     Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
 
@@ -431,7 +431,7 @@
                 <!-- Split Line -->
                 <Grid x:Name="SplitLineGrid">
                     <RelativePanel>
-                        <Rectangle x:Name="SplitLine" Fill="{StaticResource LinearGradientBrush}" Stretch="Fill"
+                        <Rectangle x:Name="SplitLine" Fill="{ThemeResource LinearGradientBrush}" Stretch="Fill"
                                    Height="3" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
                 </Grid>
@@ -817,7 +817,7 @@
                     <!-- Gamburger Button -->
                     <RelativePanel x:Name="PhoneMainPanelTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
 
-                        <Button x:Name="PopupGamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10"
+                        <Button x:Name="PopupGamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10,30"
                                 HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontFamily="Segoe MDL2 Assets"
                                 Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
 
