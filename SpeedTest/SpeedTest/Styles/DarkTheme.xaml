@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SpeedTest">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <!-- Main Split Line Colors -->
     <Color x:Key="ColorGray">Gray</Color>
@@ -14,19 +13,16 @@
     <Color x:Key="ColorBlackShade2">#222021</Color>
     <!-- Popup Grid Color -->
     <Color x:Key="ColorBlackPopupGrid">Black</Color>
-    
+    <!-- Backgrounds -->
     <SolidColorBrush x:Key="BackgroundPanelTitle" Color="{StaticResource ColorDarkPanelTitle}"/>
     <SolidColorBrush x:Key="BackgroundPanelContent" Color="{StaticResource ColorDarkPanelContent}"/>
     <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="Black" Opacity="0.7"/>
     <SolidColorBrush x:Key="BackgroundPhone" Color="{StaticResource ColorDarkPanelContent}"/>
-
     <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorBlackPopupGrid}" Opacity="0.8"/>
-
     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Black"/>
     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="White"/>
     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="White"/>
-
     <!-- Main Split Line -->
     <LinearGradientBrush x:Key="LinearGradientBrush" StartPoint="0.1,1" EndPoint="0.9,1" ColorInterpolationMode="SRgbLinearInterpolation">
         <LinearGradientBrush.GradientStops>

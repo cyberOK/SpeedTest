@@ -38,11 +38,13 @@ namespace SpeedTest
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            // Enable Reveal for App
             this.FocusVisualKind = FocusVisualKind.Reveal;
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
-            {
-                this.FocusVisualKind = FocusVisualKind.Reveal;
-            }
+            //if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox")
+            //{
+            //    this.FocusVisualKind = FocusVisualKind.Reveal;
+            //}
         }
 
         /// <summary>
@@ -84,6 +86,7 @@ namespace SpeedTest
                 // Ensure the current window is active
                 Window.Current.Activate();
 
+                // App TitleBar Adjust
                 ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
                 formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;

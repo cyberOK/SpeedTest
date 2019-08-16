@@ -11,7 +11,9 @@ namespace SpeedTest.ViewModel.HelpfullCollections
     public enum Language
     {
         English,
-        Russian
+        Russian,
+        Polish,
+        Ukrainian
     }
 
      public enum Mode
@@ -20,10 +22,10 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         Dark
     }
 
-    public class SettingViewModel : ObservableObject
+    public class AppSetting : ObservableObject
     {
+        private static AppSetting instance;
         private string _theme = "Light";
-        private static SettingViewModel instance;
 
         public List<Language> Languages { get; private set; }
         public List<Mode> Modes { get; private set; }
@@ -54,7 +56,7 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             set { Set(ref _theme, value); }
         }
 
-        private SettingViewModel()
+        private AppSetting()
         {
             this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
             this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
@@ -62,11 +64,11 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             this.Modes = Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList();
         }
         
-        public static SettingViewModel GetInstance()
+        public static AppSetting GetInstance()
         {
             if (instance == null)
             {
-                instance = new SettingViewModel();
+                instance = new AppSetting();
             }
 
             return instance;

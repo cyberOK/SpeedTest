@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SpeedTest.ViewModel.Helpers;
 using SpeedTest.ViewModel.HelpfullCollections;
+using SpeedTest.ViewModel.ViewBoards;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -20,12 +21,8 @@ namespace SpeedTest.ViewModel
         #region Fields
 
         private SpeedDataViewModel _oldHistoryValue = null;
-        private string _providerName = "ProviderName";
-        private string _ipAdress = "IpAdress";
-        private string _serverName;
-        private string _serverLocation;
         private bool _isSettingsPaneOpen;
-        private SettingViewModel _settings;
+        private AppSetting _settings;
         private int _selectedMode = 0;
         private bool _isHistoryPanelOpen = false;
         private bool _isHistorySelected = false;
@@ -40,41 +37,26 @@ namespace SpeedTest.ViewModel
         private bool _isUploadSpeedDataRecieved = false;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
-        
+
+        private DataBoard _dataBoard;
+        private ServerInformationBoard _serverInformationBoard;
+
         #endregion
 
         #region Property binding
 
-        // Main data panel properties
+        // Main Window Properties
 
-        public string ProviderName
+        public DataBoard DataBoard
         {
-            get { return _providerName; }
-            set { Set(ref _providerName, value); }
+            get { return _dataBoard; }
+            set { Set(ref _dataBoard, value); }
         }
 
-        public string IpAdress
+        public ServerInformationBoard ServerInformationBoard
         {
-            get { return _ipAdress; }
-            set { Set(ref _ipAdress, value); }
-        }
-
-        public string ServerName
-        {
-            get { return _serverName; }
-            set { Set(ref _serverName, value); }
-        }
-
-        public string ServerLocation
-        {
-            get { return _serverLocation; }
-            set { Set(ref _serverLocation, value); }
-        }
-
-        public bool IsStartButtonPressed
-        {
-            get { return _isStartButtonPressed; }
-            set { Set(ref _isStartButtonPressed, value); }
+            get { return _serverInformationBoard; }
+            set { Set(ref _serverInformationBoard, value); }
         }
 
         // Settings panel properties
@@ -85,7 +67,7 @@ namespace SpeedTest.ViewModel
             set { Set(ref _isSettingsPaneOpen, value); }
         }       
 
-        public SettingViewModel Settings
+        public AppSetting Settings
         {
             get { return this._settings; }
             private set { Set(ref _settings, value ); }
@@ -144,8 +126,14 @@ namespace SpeedTest.ViewModel
             get { return this._isPhoneMainPanelOpen; }
             private set { Set(ref this._isPhoneMainPanelOpen, value); }
         }
-        
+
         // Helpful properties
+
+        public bool IsStartButtonPressed
+        {
+            get { return _isStartButtonPressed; }
+            set { Set(ref _isStartButtonPressed, value); }
+        }
 
         public bool IsPopupGridRaise
         {
@@ -241,7 +229,9 @@ namespace SpeedTest.ViewModel
 
             // Initialization MainPageViewModel
 
-            this.Settings = SettingViewModel.GetInstance();           
+            this.Settings = AppSetting.GetInstance();
+            this.DataBoard = new DataBoard();
+            this.ServerInformationBoard = new ServerInformationBoard();
 
             ///////////////
             // Testing data
@@ -501,8 +491,8 @@ namespace SpeedTest.ViewModel
 
         private void NewServerNameLocationAssign()
         {
-            this.ServerName = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
-            this.ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
+            this.ServerInformationBoard.ServerName = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
+            this.ServerInformationBoard.ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
         }
 
         private Style CreateButtonStyle()

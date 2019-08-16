@@ -28,6 +28,8 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             this.ServerDataCollection.Add(new ServerViewModel { IPerf3Server = "iperf.he.net", Location = "USA, California", ProviderName = "Hurricane Fremont 1", Port = "5201", IsCurrent = false });
 
             this.ServerNamesCollection = GetServerNames(ServerDataCollection);
+
+            // Realization of getting data from Model ServerCollection
         }
 
         private ObservableCollection<string> GetServerNames(ObservableCollection<ServerViewModel> serversCollection)

@@ -54,4 +54,7 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             SpeedDataCollection.Add(new SpeedDataViewModel { Id = 35, Server = "Server", Date = DateTime.Now, Ping = 13, DownloadSpeed = 100, UploadSpeed = 50 });
         }
     }
+
+
+
 }

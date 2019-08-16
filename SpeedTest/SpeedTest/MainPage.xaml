@@ -91,7 +91,7 @@
                         <Setter Target="changeServerButton.(Width)" Value="250"/>
                         <Setter Target="changeServerButton.(Height)" Value="50"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="28"/>
-                        <!-- Test Data Board -->
+                        <!-- Data Board -->
                         <Setter Target="TestDataBoard.(Width)" Value="1000"/>
                         <Setter Target="TestDataBoard.(Height)" Value="150"/>
                         <Setter Target="PingFieldsGrid.(Width)" Value="280"/>
@@ -177,7 +177,7 @@
                         <Setter Target="SplitLineGrid.(Width)" Value="440"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
-                        <!-- Test Data Board -->
+                        <!-- Data Board -->
                         <Setter Target="TestDataBoard.(Width)" Value="440"/>
                         <Setter Target="TestDataBoard.(Height)" Value="70"/>
                         <Setter Target="PingFieldsGrid.(Width)" Value="125"/>
@@ -212,7 +212,7 @@
                         <Setter Target="changeServerButton.(FontSize)" Value="18"/>
                         <!-- SettingsPanel -->
                         <Setter Target="SettingsPanel.(Height)" Value="475"/>
-                        <Setter Target="SettingsPanel.(Margin)" Value="0,0,25,0"/>
+                        <Setter Target="SettingsPanel.(Margin)" Value="0,30,25,0"/>
                         <Setter Target="SettingsPanel.(Width)" Value="450"/>
                         <Setter Target="SettingsPanel.(HorizontalAlignment)" Value="Right"/>
                         <Setter Target="SettingsPanel.(VerticalAlignment)" Value="Top"/>
@@ -275,7 +275,7 @@
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
-                        <!-- Test Data Board -->
+                        <!-- Data Board -->
                         <Setter Target="TestDataBoard.(Margin)" Value="20,0,20,0"/>
                         <Setter Target="PingText.(FontSize)" Value="15"/>
                         <Setter Target="msText.(FontSize)" Value="15"/>
@@ -286,6 +286,9 @@
                         <Setter Target="UploadText.(FontSize)" Value="15"/>
                         <Setter Target="mbpsUploadText.(FontSize)" Value="15"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="30"/>
+                        <Setter Target="ViewBox1.(MaxWidth)" Value="50"/>
+                        <Setter Target="ViewBox2.(MaxWidth)" Value="50"/>
+                        <Setter Target="ViewBox3.(MaxWidth)" Value="50"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Margin)" Value="20,20,20,20"/>
                         <!-- Main Bottom Board -->
@@ -371,16 +374,17 @@
             </Grid>
 
             <!-- Bottom Board -->
-            <StackPanel x:Name="BottomBoard" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom">
+            <StackPanel x:Name="BottomBoard" VerticalAlignment="Bottom">
 
-                <!-- Test Data Board -->
-                <Grid x:Name="TestDataBoard" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" >
+                <!-- Data Board -->
+                <Grid x:Name="TestDataBoard" HorizontalAlignment="Stretch" >
                     <RelativePanel>
-
+                       
                         <!-- Ping Fields -->
-                        <Grid x:Name="PingFieldsGrid" Visibility="Visible" RelativePanel.AlignLeftWithPanel="True">
+                        <Grid x:Name="PingFieldsGrid" RelativePanel.AlignLeftWithPanel="True"
+                               Visibility="{Binding IsPingFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -390,13 +394,17 @@
 
                             <TextBlock x:Name="PingText" Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
                             <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
-                            <TextBlock x:Name="DataPingText" Grid.Column="1" Grid.RowSpan="2" Text="163" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Viewbox x:Name="ViewBox1" Grid.Column="1" Grid.RowSpan="2" >
+                            <TextBlock x:Name="DataPingText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Text="{Binding DataBoard.PingData, Source={StaticResource mainViewModel}}"/>
+                            </Viewbox>
                         </Grid>
 
                         <!-- Download Speed Fields -->
-                        <Grid x:Name="DownloadSpeedFieldsGrid" Visibility="Visible" RelativePanel.RightOf="PingFieldsGrid" RelativePanel.LeftOf="UploadSpeedFieldsGrid">
+                        <Grid x:Name="DownloadSpeedFieldsGrid" RelativePanel.RightOf="PingFieldsGrid" RelativePanel.LeftOf="UploadSpeedFieldsGrid" HorizontalAlignment="Center"
+                              Visibility="{Binding IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -406,13 +414,17 @@
 
                             <TextBlock x:Name="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                             <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                            <TextBlock x:Name="DownloadSpeedData" Grid.Column="1" Grid.RowSpan="2" Text="121" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Viewbox  x:Name="ViewBox2" Grid.Column="1" Grid.RowSpan="2">
+                            <TextBlock x:Name="DownloadSpeedData" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Text="{Binding DataBoard.DownloadSpeedData, Source={StaticResource mainViewModel}}" />
+                            </Viewbox>
                         </Grid>
 
                         <!-- Upload Speed Fields -->
-                        <Grid x:Name="UploadSpeedFieldsGrid" Visibility="Visible"  RelativePanel.AlignRightWithPanel="True">
+                        <Grid x:Name="UploadSpeedFieldsGrid" RelativePanel.AlignRightWithPanel="True"
+                              Visibility="{Binding IsUploadSpeedFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -422,7 +434,10 @@
 
                             <TextBlock x:Name="UploadText" Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
                             <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
-                            <TextBlock x:Name="UploadDataText" Grid.Column="1" Grid.RowSpan="2" Text="111" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" />
+                            <Viewbox  x:Name="ViewBox3" Grid.Column="1" Grid.RowSpan="2">
+                            <TextBlock x:Name="UploadDataText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
+                                           Text="{Binding DataBoard.UploadSpeedData, Source={StaticResource mainViewModel}}"/>
+                            </Viewbox>
                         </Grid>
 
                     </RelativePanel>
@@ -436,16 +451,16 @@
                     </RelativePanel>
                 </Grid>
 
-                <!-- Main Bottom Board Information -->
+                <!-- Server Information Board  -->
                 <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
                     <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
-                               Text="{Binding ProviderName}" RelativePanel.AlignLeftWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
                     <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding IpAdress}" RelativePanel.Below="providerName"/>
+                               Text="{Binding ServerInformationBoard.IpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
                     <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
-                               Text="{Binding ServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.ServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
                     <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}"
+                               Text="{Binding ServerInformationBoard.ServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
                     <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
@@ -756,9 +771,9 @@
                                        FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
                         <Rectangle Fill="DarkCyan"  Canvas.ZIndex="1" RelativePanel.RightOf="ImageGlobe"
                                Width="2" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
-                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
+                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerInformationBoard.ServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
                                    RelativePanel.RightOf="ImageGlobe" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
+                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerInformationBoard.ServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
                                    RelativePanel.RightOf="ImageGlobe" RelativePanel.Below="HeaderServerName"/>
                         <Button x:Name="CloseServersPanelButton" Style="{StaticResource ButtonClose}"  Content="&#xE711;"
                                 Command="{Binding CloseServerPanelButtonPressed}" RelativePanel.AlignRightWithPanel="True"/>

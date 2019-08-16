@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SpeedTest">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Main Split Line Colors -->
     <Color x:Key="ColorLightCyanCyan">LightCyan</Color>
@@ -14,20 +13,16 @@
     <Color x:Key="ColorLightGrayShade2">LightGray</Color>
     <!-- Popup Grid Color -->
     <Color x:Key="ColorWhitePopupGrid">White</Color>
-
+    <!-- Backgrounds -->
     <SolidColorBrush x:Key="BackgroundPanelTitle" Color="{StaticResource ColorWhitePanelTitle}"/>
     <SolidColorBrush x:Key="BackgroundPanelContent" Color="{StaticResource ColorWhiteSmokePanelContent}"/>
     <SolidColorBrush x:Key="BackgroundOpacityBrushForPhoto" Color="White" Opacity="0"/>
     <SolidColorBrush x:Key="BackgroundPhone" Color="{StaticResource ColorWhiteSmokePanelContent}"/>
-
-    <!--<SolidColorBrush x:Key="OpacityBrushPopupGrid" Color="#f1ebef" Opacity="0.6"/>-->
     <SolidColorBrush x:Key="BackgroundPopupGrid" Color="{StaticResource ColorWhitePopupGrid}" Opacity="0.8"/>
-
     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="White"/>
     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="Gray"/>
     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="Black"/>
-    
     <!-- Main Split Line -->
     <LinearGradientBrush x:Key="LinearGradientBrush" StartPoint="0.1,1" EndPoint="0.9,1" ColorInterpolationMode="SRgbLinearInterpolation">
         <LinearGradientBrush.GradientStops>
@@ -36,7 +31,6 @@
             <GradientStop Color="{StaticResource ColorLightCyanCyan}" Offset="1" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    
     <!-- Panels Shade Line -->
     <LinearGradientBrush x:Key="LinearGradientBrushShade" StartPoint="0.5,0.3" EndPoint="0.5,1">
         <LinearGradientBrush.GradientStops>
