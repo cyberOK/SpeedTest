@@ -29,7 +29,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
+    <Grid RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="StateGroup">
@@ -349,27 +349,27 @@
 
                 <!-- Arc Controls -->
                 <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
-                                Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
+                                Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
                 <arcControl:Arc x:Name="TryConnectArc1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
-                                Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"/>
+                                Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"/>
                 <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
-                                Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"/>
+                                Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"/>
                 <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan" PercentValue="215"
-                                Visibility="{Binding IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
+                                Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
                 <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue" PercentValue="97"
-                                Visibility="{Binding IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
+                                Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
 
                 <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
                 <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 
-                        Visibility="{Binding IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
+                        Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                         Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
                 <TextBlock x:Name="TryConnectTextBlock" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Visibility="{Binding TryConnect, Source={StaticResource mainViewModel}}"  />            
+                           Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />            
 
                 <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Visibility="{Binding IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
-                   Text="{Binding SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
+                   Visibility="{Binding ArcBoard.IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
+                   Text="{Binding ArcBoard.SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
 
             </Grid>
 
@@ -485,7 +485,7 @@
             
             <!-- Settings Panel -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                  Visibility="{Binding IsSettingsPaneOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  Visibility="{Binding SettingsPanel.IsSettingsPaneOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                 <RelativePanel x:Name="SettingsPanel" Style="{StaticResource Border}" >
 
@@ -510,7 +510,7 @@
 
                                 <!-- Language Block -->
                                 <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
-                                <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" ItemsSource="{Binding Settings.Languages, Source={StaticResource mainViewModel}}" 
+                                <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" ItemsSource="{Binding SettingsPanel.Settings.Languages, Source={StaticResource mainViewModel}}" 
                                           Margin="0,0,20,0" PlaceholderText="English" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" UseSystemFocusVisuals="True"
                                           RelativePanel.Below="LanguageBlock" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                     
@@ -527,29 +527,33 @@
                                 <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
                                 <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme"  Content="Light" Width="90" RelativePanel.Below="ModeBlock"
                                                  Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" 
-                                                 IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
+                                                 IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
                                 <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="DarkRadioButton" GroupName="Theme" Content="Dark" Width="90" RelativePanel.Below="LightRadioButton"
                                                  Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Content}" 
-                                                 IsChecked="{Binding SelectedMode, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
+                                                 IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
 
                                 <!--About Block -->
                                 <TextBlock x:Name="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="About" RelativePanel.Below="DarkRadioButton"/>
-                                <TextBlock x:Name="ProgramNameBlock" Text="{Binding Settings.ProgramName}" Style="{StaticResource TextBlockAboutProgram}"
+                                <TextBlock x:Name="ProgramNameBlock" Text="{Binding SettingsPanel.Settings.ProgramName, Source={StaticResource mainViewModel}}" Style="{StaticResource TextBlockAboutProgram}"
                                                RelativePanel.Below="AboutBlock"/>
-                                <TextBlock x:Name="VersionBlock" Text="{Binding Settings.Version}" Style="{StaticResource TextBlockAboutProgram}" 
+                                <TextBlock x:Name="VersionBlock" Text="{Binding SettingsPanel.Settings.Version, Source={StaticResource mainViewModel}}" Style="{StaticResource TextBlockAboutProgram}" 
                                                RelativePanel.Below="ProgramNameBlock"/>
                                 <TextBlock x:Name="MicrosoftResearchBlock" Text="Microsoft Research" Style="{StaticResource TextBlockAboutProgram}"  
                                                TextAlignment="Right" RelativePanel.Below="VersionBlock"/>
                                 <RichTextBlock x:Name="AboutStoryBlock" Margin="0,30,20,30" RelativePanel.Below="MicrosoftResearchBlock">
                                     <Paragraph>
-                                        <Run Text="{Binding Settings.AboutArticle}"/>
+                                        <Run Text="{Binding SettingsPanel.Settings.AboutArticle, Source={StaticResource mainViewModel}}"/>
                                     </Paragraph>
                                 </RichTextBlock>
 
                                 <!--FeedBack Block -->
-                                <HyperlinkButton x:Name="FeedBackLink" NavigateUri="{Binding Settings.FeedBackLink}" Style="{StaticResource HyperlinkButtonSettingsPanel}" 
+                                <HyperlinkButton x:Name="FeedBackLink" 
+                                                 NavigateUri="{Binding SettingsPanel.Settings.FeedBackLink, Source={StaticResource mainViewModel}}" 
+                                                 Style="{StaticResource HyperlinkButtonSettingsPanel}" 
                                                  RelativePanel.Below="AboutStoryBlock">Feedback</HyperlinkButton>
-                                <HyperlinkButton x:Name="RateLink" NavigateUri="{Binding Settings.RateLink}" Style="{StaticResource HyperlinkButtonSettingsPanel}"
+                                <HyperlinkButton x:Name="RateLink" 
+                                                 NavigateUri="{Binding SettingsPanel.Settings.RateLink, Source={StaticResource mainViewModel}}" 
+                                                 Style="{StaticResource HyperlinkButtonSettingsPanel}"
                                                  Margin="0,0,0,30" RelativePanel.Below="FeedBackLink">Rate us</HyperlinkButton>
                             </RelativePanel>
                         </ScrollViewer>
@@ -561,7 +565,7 @@
             <!-- History Panel -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <RelativePanel x:Name="HistoryPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}"
-                               Visibility="{Binding IsHistoryPanelOpen,Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter} }">
+                               Visibility="{Binding HistoryPanel.IsHistoryPanelOpen,Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter} }">
 
                     <!-- History Panel TopBar -->
                     <RelativePanel x:Name="HistoryPanelTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
@@ -604,7 +608,7 @@
                     <!-- History List -->
                     <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignBottomWithPanel="True">
-                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" 
+                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding HistoryPanel.SpeedDataCollection, Source={StaticResource mainViewModel}}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" 
                                   ItemsPanel="{StaticResource MyItemsPanelTemplate}" IsItemClickEnabled="True" SelectionMode="Single" HorizontalContentAlignment="Stretch">
 
                             <Interactivity:Interaction.Behaviors>
@@ -762,7 +766,7 @@
             <!-- Servers Panel -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <RelativePanel x:Name="ServerPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}"
-                               Visibility="{Binding IsServerPanelOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                               Visibility="{Binding ServerPanel.IsServerPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     
                     <!-- TopBar -->
                     <RelativePanel x:Name="ServersTopBar" IsHoldingEnabled="True" Margin="20,20" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
@@ -795,7 +799,7 @@
 
                     <!-- Servers List -->
                     <Grid RelativePanel.Below="AvailableServers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
-                        <ListView x:Name="ServersListView" ItemsSource="{Binding ServerNamesCollection, Source={StaticResource mainViewModel}}" 
+                        <ListView x:Name="ServersListView" ItemsSource="{Binding ServerPanel.ServerNamesCollection, Source={StaticResource mainViewModel}}" 
                                   ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Margin="20,0,20,0" ItemsPanel="{StaticResource MyItemsPanelTemplate}"
                                   RelativePanel.Below="AvailableServers">
 
@@ -823,11 +827,10 @@
             </Grid>
             
             <!-- Phone Main Panel Buttons -->
-
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}"
                   Visibility="{Binding IsPhoneMainPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                  RequestedTheme="{Binding Settings.Theme, Source={StaticResource mainViewModel}}">
-                <RelativePanel>
+                  RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}">
+                <RelativePanel x:Name="PhonePanel">
 
                     <!-- Gamburger Button -->
                     <RelativePanel x:Name="PhoneMainPanelTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">

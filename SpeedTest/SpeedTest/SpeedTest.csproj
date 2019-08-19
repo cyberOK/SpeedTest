@@ -126,7 +126,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ServersCollection.cs" />
-    <Compile Include="Model\SpeedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Converters\BooleanToColorConverter.cs" />
     <Compile Include="ViewModel\Converters\BooleanToVisibilityConverter.cs" />
@@ -134,15 +133,18 @@
     <Compile Include="ViewModel\Converters\RadioModeSelectedIntToBooltConverter.cs" />
     <Compile Include="ViewModel\Helpers\SpeedTestCommand.cs" />
     <Compile Include="ViewModel\Helpers\ObservableObject.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\ServerCollectionViewModel.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\ServerViewModel.cs" />
+    <Compile Include="ViewModel\HelpfullCollections\ServerManager.cs" />
+    <Compile Include="ViewModel\HelpfullCollections\Server.cs" />
     <Compile Include="ViewModel\HelpfullCollections\AppSetting.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\SpeedDataCollectionViewModel.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\SpeedDataViewModel.cs" />
+    <Compile Include="ViewModel\HelpfullCollections\SpeedDataManager.cs" />
+    <Compile Include="ViewModel\HelpfullCollections\SpeedData.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewBoards\ArcBoard.cs" />
     <Compile Include="ViewModel\ViewBoards\DataBoard.cs" />
+    <Compile Include="ViewModel\ViewBoards\HistoryPanel.cs" />
     <Compile Include="ViewModel\ViewBoards\ServerInformationBoard.cs" />
+    <Compile Include="ViewModel\ViewBoards\ServerPanel.cs" />
+    <Compile Include="ViewModel\ViewBoards\SettingsPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

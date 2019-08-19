@@ -38,27 +38,5 @@ namespace SpeedTest
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(380, 500));
         }
-
-        //private async void BackButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //this.IsEnabled = false;
-        //    CoreApplicationView newView = CoreApplication.CreateNewView();
-        //    int newViewId = 0;
-        //    await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-        //    {
-
-        //        Frame frame = new Frame();
-        //        //frame.Height = 300;
-        //        //frame.Width = 300;
-        //        frame.Navigate(typeof(BlankPage1), null);
-        //        Window.Current.Content = frame;
-
-        //        Window.Current.Activate();
-
-        //        newViewId = ApplicationView.GetForCurrentView().Id;
-        //    });
-
-        //    bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId,ViewSizePreference.UseMinimum);
-        //}
     }
 }

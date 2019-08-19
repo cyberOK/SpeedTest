@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpeedTest.ViewModel.HelpfullCollections
 {
-    public class SpeedDataViewModel : ObservableObject
+    public class SpeedData : ObservableObject
     {
         private bool _isSelected = false;
 

@@ -20,32 +20,43 @@ namespace SpeedTest.ViewModel
     {
         #region Fields
 
-        private SpeedDataViewModel _oldHistoryValue = null;
-        private bool _isSettingsPaneOpen;
-        private AppSetting _settings;
-        private int _selectedMode = 0;
-        private bool _isHistoryPanelOpen = false;
-        private bool _isHistorySelected = false;
-        private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
-        private ObservableCollection<ServerViewModel> _serversCollection;
-        private ObservableCollection<string> _serverNamesCollection;
-        private ObservableCollection<string> _allServerNamesCollection;
-        private bool _isServerPanelOpen;
-        private bool _isStartButtonPressed = false;
-        private bool _tryConnect = false;
-        private bool _isDownloadSpeedDataRecieved = false;
-        private bool _isUploadSpeedDataRecieved = false;
+        private ObservableCollection<Server> _serversCollection;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
-
         private DataBoard _dataBoard;
         private ServerInformationBoard _serverInformationBoard;
+        private ArcBoard _arcBoard;
+        private SettingsPanel _settingsPanel;
+        private HistoryPanel _historyPanel;
+        private ServerPanel _serverPanel;
 
         #endregion
 
         #region Property binding
 
-        // Main Window Properties
+        public ObservableCollection<Server> ServersCollection
+        {
+            get { return this._serversCollection; }
+            set { Set(ref _serversCollection, value); }
+        }
+
+        public bool IsPopupGridRaise
+        {
+            get { return this._isPopupGridRaise; }
+            private set { Set(ref _isPopupGridRaise, value); }
+        }
+
+        public bool IsPhoneMainPanelOpen
+        {
+            get { return this._isPhoneMainPanelOpen; }
+            private set { Set(ref this._isPhoneMainPanelOpen, value); }
+        }
+
+        public ArcBoard ArcBoard
+        {
+            get { return _arcBoard; }
+            set { Set(ref _arcBoard, value); }
+        }
 
         public DataBoard DataBoard
         {
@@ -59,104 +70,22 @@ namespace SpeedTest.ViewModel
             set { Set(ref _serverInformationBoard, value); }
         }
 
-        // Settings panel properties
-
-        public bool IsSettingsPaneOpen
+        public SettingsPanel SettingsPanel
         {
-            get { return _isSettingsPaneOpen; }
-            set { Set(ref _isSettingsPaneOpen, value); }
-        }       
-
-        public AppSetting Settings
-        {
-            get { return this._settings; }
-            private set { Set(ref _settings, value ); }
+            get { return _settingsPanel; }
+            set { Set(ref _settingsPanel, value); }
         }
 
-        public int SelectedMode
+        public HistoryPanel HistoryPanel
         {
-            get { return this._selectedMode; }
-            private set { Set(ref _selectedMode, value); }
+            get { return _historyPanel; }
+            set { Set(ref _historyPanel, value); }
         }
 
-        // History panel properties
-
-        public bool IsHistoryPanelOpen
+        public ServerPanel ServerPanel
         {
-            get { return this._isHistoryPanelOpen; }
-            private set { Set(ref _isHistoryPanelOpen, value); }
-        }
-        
-        public bool IsHistorySelected
-        {
-            get { return this._isHistorySelected; }
-            private set { Set(ref _isHistorySelected, value); }
-        }
-
-        public ObservableCollection<SpeedDataViewModel> SpeedDataCollection
-        {
-            get { return this._speedDataCollection; }
-            private set { Set(ref _speedDataCollection, value); }
-        }
-
-        // Server panel properties
-        
-        public bool IsServerPanelOpen
-        {
-            get { return this._isServerPanelOpen; }
-            private set { Set(ref _isServerPanelOpen, value); }
-        }
-
-        public ObservableCollection<ServerViewModel> ServersCollection
-        {
-            get { return this._serversCollection; }
-            private set { Set(ref _serversCollection, value); }
-        }
-
-        public ObservableCollection<string> ServerNamesCollection
-        {
-            get { return this._serverNamesCollection; }
-            private set { Set(ref _serverNamesCollection, value); }
-        }
-
-        // Phone Main Panel properties
-
-        public bool IsPhoneMainPanelOpen
-        {
-            get { return this._isPhoneMainPanelOpen; }
-            private set { Set(ref this._isPhoneMainPanelOpen, value); }
-        }
-
-        // Helpful properties
-
-        public bool IsStartButtonPressed
-        {
-            get { return _isStartButtonPressed; }
-            set { Set(ref _isStartButtonPressed, value); }
-        }
-
-        public bool IsPopupGridRaise
-        {
-            get { return this._isPopupGridRaise; }
-            private set { Set(ref _isPopupGridRaise, value); }
-        }
-
-        public bool TryConnect
-        {
-            get { return _tryConnect; }
-            set { Set(ref _tryConnect, value); }
-        }
-
-        public bool IsDownloadSpeedDataRecieved
-        {
-            get { return _isDownloadSpeedDataRecieved; }
-            set { Set(ref _isDownloadSpeedDataRecieved, value); }
-        }
-
-        public bool IsUploadSpeedDataRecieved
-        {
-            get { return _isUploadSpeedDataRecieved; }
-            set { Set(ref _isUploadSpeedDataRecieved, value); }
+            get { return _serverPanel; }
+            set { Set(ref _serverPanel, value); }
         }
 
         #endregion
@@ -198,7 +127,41 @@ namespace SpeedTest.ViewModel
 
         public MainPageViewModel()
         {
-            // Main panel commands assing
+            // Initialization Helpers
+
+            SpeedDataManager speedDataManager = new SpeedDataManager();
+            ServerManager serverManager = new ServerManager();
+
+            // Initialization MainPageViewModel
+
+            this.ServersCollection = serverManager.ServerDataCollection;
+            this.DataBoard = new DataBoard();
+            this.ArcBoard = new ArcBoard();
+
+            this.ServerInformationBoard = new ServerInformationBoard
+            {
+                ServerName = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName,
+                ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location
+            };
+
+            this.SettingsPanel = new SettingsPanel
+            {
+                Settings = AppSetting.GetInstance()
+            };
+
+            this.HistoryPanel = new HistoryPanel
+            {
+                SpeedDataCollection = speedDataManager.SpeedDataCollection
+            };
+
+            this.ServerPanel = new ServerPanel
+            {
+                ServersCollection = serverManager.ServerDataCollection,
+                ServerNamesCollection = serverManager.ServerNamesCollection,
+                FullServerNamesCollection = serverManager.ServerNamesCollection
+            };
+
+            // Main panel commands assigning
 
             this.StartButtonPressed = new SpeedTestCommand(new Action<object>(StartSpeedTest));
             this.BackButtonPressed = new SpeedTestCommand(new Action<object>(BackCalling));
@@ -207,13 +170,13 @@ namespace SpeedTest.ViewModel
             this.ChangeServerButtonPressed = new SpeedTestCommand(new Action<object>(ChangeServerCalling));
             this.GamburgerButtonPressed = new SpeedTestCommand(new Action<object>(PhoneMainPanelCalling));
 
-            // Settings panel commands assing
+            // Settings panel commands assigning
 
             this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingsClosing));
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
 
-            // History panel commands assing
+            // History panel commands assigning
 
             this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
@@ -221,31 +184,11 @@ namespace SpeedTest.ViewModel
             this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
             this.PhoneSingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(PhoneSingleHistoryDeleting));
 
-            // Server panel commands assing
+            // Server panel commands assigning
 
             this.ServerSuggestBoxTextChanged = new SpeedTestCommand(new Action<object>(ServerNameTextChanged));
             this.SingleServerSelected = new SpeedTestCommand(new Action<object>(SingleServerSelecting));
             this.CloseServerPanelButtonPressed = new SpeedTestCommand(new Action<object>(CloseServerPanel));
-
-            // Initialization MainPageViewModel
-
-            this.Settings = AppSetting.GetInstance();
-            this.DataBoard = new DataBoard();
-            this.ServerInformationBoard = new ServerInformationBoard();
-
-            ///////////////
-            // Testing data
-
-            SpeedDataCollectionViewModel speedData = new SpeedDataCollectionViewModel();
-            this.SpeedDataCollection = speedData.SpeedDataCollection;
-
-            ServerCollectionViewModel servers = new ServerCollectionViewModel();
-            this.ServersCollection = servers.ServerDataCollection;
-            this.ServerNamesCollection = servers.ServerNamesCollection;
-            this._allServerNamesCollection = servers.ServerNamesCollection;
-
-            this.NewServerNameLocationAssign();
-            ///////////////
         }
 
         #endregion
@@ -254,8 +197,8 @@ namespace SpeedTest.ViewModel
 
         private void StartSpeedTest(object param) 
         {
-            this.IsStartButtonPressed = true;
-            this.TryConnect = true;
+            this.ArcBoard.IsStartButtonPressed = true;
+            this.ArcBoard.IsTryConnect = true;
         }
 
         private async void BackCalling(object param)
@@ -271,7 +214,7 @@ namespace SpeedTest.ViewModel
             this.ClosePhoneGrid();
 
             this.IsPopupGridRaise = true;
-            this.IsHistoryPanelOpen = true;                 
+            this.HistoryPanel.IsHistoryPanelOpen = true;                 
         }
 
         private void SettingsCalling(object param)
@@ -279,13 +222,13 @@ namespace SpeedTest.ViewModel
             this.ClosePhoneGrid();
 
             this.IsPopupGridRaise = true;
-            this.IsSettingsPaneOpen = true;
+            this.SettingsPanel.IsSettingsPaneOpen = true;
         }
 
         private void ChangeServerCalling(object param)
         {
             this.IsPopupGridRaise = true;
-            this.IsServerPanelOpen = true;
+            this.ServerPanel.IsServerPanelOpen = true;
         }
 
         private void PhoneMainPanelCalling(object param)
@@ -317,18 +260,18 @@ namespace SpeedTest.ViewModel
             
             if (selectedMode == "Dark")
             {
-                this.Settings.Theme = "Dark";
+                this.SettingsPanel.Settings.Theme = "Dark";
             }
 
             else if (selectedMode == "Light")
             {
-                this.Settings.Theme = "Light";
+                this.SettingsPanel.Settings.Theme = "Light";
             }
         }
 
         private void SettingsClosing(object param)
         {
-            this.IsSettingsPaneOpen = false;
+            this.SettingsPanel.IsSettingsPaneOpen = false;
             this.IsPopupGridRaise = false;
         }
 
@@ -338,15 +281,15 @@ namespace SpeedTest.ViewModel
 
         private async void DeleteHistory(object param)
         {       
-            if (this.SpeedDataCollection.Count != 0)
+            if (this.HistoryPanel.SpeedDataCollection.Count != 0)
             {
-                Style buttonStyle = CreateButtonStyle();
+                Style buttonStyle = CreateContentDialogButtonStyle();
                 ContentDialog deleteFileDialog = CreateContentDialog(buttonStyle);
                 ContentDialogResult result = await deleteFileDialog.ShowAsync();
 
                 if (result == ContentDialogResult.Primary)
                 {
-                    this.SpeedDataCollection.Clear();
+                    this.HistoryPanel.SpeedDataCollection.Clear();
                 }
             }
         }
@@ -354,14 +297,14 @@ namespace SpeedTest.ViewModel
         private void CloseHistory(object param)
         {
             this.IsPopupGridRaise = false;
-            this.IsHistoryPanelOpen = false;
+            this.HistoryPanel.IsHistoryPanelOpen = false;
         }
 
         private void SingleHistoryDeleting(object param)
         {
-            SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)param;
+            SpeedData singleHistoryForDeleting = (SpeedData)param;
 
-            SpeedDataCollection?.Remove(singleHistoryForDeleting);
+            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
         }
 
         private void PhoneSingleHistoryDeleting(object param)
@@ -373,30 +316,30 @@ namespace SpeedTest.ViewModel
 
             if (gvi != null)
             {
-                SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)gvi.Content;
-                SpeedDataCollection?.Remove(singleHistoryForDeleting);
+                SpeedData singleHistoryForDeleting = (SpeedData)gvi.Content;
+                this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
             }
         }
 
         private void SingleHistorySelecting(object param)
         {
-            SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
+            SpeedData newSingleHistorySelected = (SpeedData)param;
                         
-            SpeedDataViewModel filteredHistory = SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected?.Id);
+            SpeedData filteredHistory = this.HistoryPanel.SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected?.Id);
             
             if (filteredHistory != null)
             {
                 filteredHistory.IsSelected = true;
             }
 
-            if (this._oldHistoryValue == null)
+            if (this.HistoryPanel.OldSelectedHistoryValue == null)
             {
-                this._oldHistoryValue = filteredHistory;
+                this.HistoryPanel.OldSelectedHistoryValue = filteredHistory;
             }
             else
             {
-                this._oldHistoryValue.IsSelected = false;
-                this._oldHistoryValue = filteredHistory;
+                this.HistoryPanel.OldSelectedHistoryValue.IsSelected = false;
+                this.HistoryPanel.OldSelectedHistoryValue = filteredHistory;
             }
         }
 
@@ -412,7 +355,7 @@ namespace SpeedTest.ViewModel
 
             if (serverResults != null)
             {
-                this.ServerNamesCollection = serverResults;
+                this.ServerPanel.ServerNamesCollection = serverResults;
             }            
         }
 
@@ -431,7 +374,7 @@ namespace SpeedTest.ViewModel
         private void CloseServerPanel(object param)
         {
             this.IsPopupGridRaise = false;
-            this.IsServerPanelOpen = false;
+            this.ServerPanel.IsServerPanelOpen = false;
         }
 
         #endregion
@@ -450,7 +393,7 @@ namespace SpeedTest.ViewModel
 
         private ObservableCollection<string> FindServerInCollection(string inputText)
         {
-            var serversResults = _allServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower())).ToList();
+            var serversResults = this.ServerPanel.FullServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower())).ToList();
 
             if (serversResults.Count == 0)
             {
@@ -464,7 +407,7 @@ namespace SpeedTest.ViewModel
 
         private void UnsetCurrentServer()
         {
-            ServerViewModel currentServer = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
+            Server currentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
             if (currentServer != null)
             {
                 currentServer.IsCurrent = false;
@@ -473,16 +416,16 @@ namespace SpeedTest.ViewModel
 
         private void SetCurrentServer(string selectingServer)
         {
-            ServerViewModel newCurrentServer = this.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
+            Server newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
             if (newCurrentServer != null)
             {
                 newCurrentServer.IsCurrent = true;
             }
         }
 
-        private void SetCurrentServer(ServerViewModel selectingServer)
+        private void SetCurrentServer(Server selectingServer)
         {
-            ServerViewModel newCurrentServer = this.ServersCollection.FirstOrDefault(s => s == selectingServer);
+            Server newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s == selectingServer);
             if (newCurrentServer != null)
             {
                 newCurrentServer.IsCurrent = true;
@@ -495,7 +438,7 @@ namespace SpeedTest.ViewModel
             this.ServerInformationBoard.ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
         }
 
-        private Style CreateButtonStyle()
+        private Style CreateContentDialogButtonStyle()
         {
             LinearGradientBrush gradientBrush = new LinearGradientBrush();
             GradientStop firstGradient = new GradientStop();
@@ -526,7 +469,7 @@ namespace SpeedTest.ViewModel
                 PrimaryButtonText = "Clear history",
                 CloseButtonText = "Cancel",
                 PrimaryButtonStyle = buttonStyle,
-                RequestedTheme = ThemeNow(this.Settings.Theme)
+                RequestedTheme = ThemeNow(this.SettingsPanel.Settings.Theme)
             };
 
             return FileDialog;

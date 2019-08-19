@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpeedTest.ViewModel.HelpfullCollections
 {
-    public class ServerViewModel
+    public class Server
     {
         public bool IsCurrent { get; set; }
         public string IPerf3Server { get; set; }
