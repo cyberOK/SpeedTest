@@ -354,10 +354,12 @@
                                 Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"/>
                 <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
                                 Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan" PercentValue="215"
-                                Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue" PercentValue="97"
-                                Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"/>
+                <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan"
+                                Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
+                                PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
+                <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue"
+                                Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
+                                PercentValue="{Binding ArcBoard.UploadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
 
                 <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
                 <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 

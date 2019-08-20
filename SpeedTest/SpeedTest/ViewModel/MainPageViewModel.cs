@@ -20,6 +20,7 @@ namespace SpeedTest.ViewModel
     {
         #region Fields
 
+        private Model.SpeedTest _model;
         private ObservableCollection<Server> _serversCollection;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
@@ -34,16 +35,22 @@ namespace SpeedTest.ViewModel
 
         #region Property binding
 
+        public Model.SpeedTest Model
+        {
+            get { return this._model; }
+            set { Set(ref this._model, value); }
+        }
+
         public ObservableCollection<Server> ServersCollection
         {
             get { return this._serversCollection; }
-            set { Set(ref _serversCollection, value); }
+            set { Set(ref this._serversCollection, value); }
         }
 
         public bool IsPopupGridRaise
         {
             get { return this._isPopupGridRaise; }
-            private set { Set(ref _isPopupGridRaise, value); }
+            private set { Set(ref this._isPopupGridRaise, value); }
         }
 
         public bool IsPhoneMainPanelOpen
@@ -127,6 +134,13 @@ namespace SpeedTest.ViewModel
 
         public MainPageViewModel()
         {
+            // Model Initialization
+
+            this.Model =  new Model.SpeedTest();
+
+            this.Model.DownloudDataRecieved += Model_DownloudDataRecieved;
+            this.Model.UploadDataRecieved += Model_UploadDataRecieved;
+
             // Initialization Helpers
 
             SpeedDataManager speedDataManager = new SpeedDataManager();
@@ -199,13 +213,14 @@ namespace SpeedTest.ViewModel
         {
             this.ArcBoard.IsStartButtonPressed = true;
             this.ArcBoard.IsTryConnect = true;
+
+            this.Model.StartTest();
         }
 
         private async void BackCalling(object param)
         {
             this.ClosePhoneGrid();
             this.IsPopupGridRaise = false;
-
             await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
         }
 
@@ -379,6 +394,36 @@ namespace SpeedTest.ViewModel
 
         #endregion
 
+        #region Model Methods
+
+        List<DownloadSpeed> dowloadSpeedList = new List<DownloadSpeed>();
+        List<UploadSpeed> uploadSpeedList = new List<UploadSpeed>();
+
+        private void Model_DownloudDataRecieved(object sender, Model.SpeedDataEventArgs e)
+        {
+            this.ArcBoard.IsTryConnect = false;
+            this.ArcBoard.IsDownloadSpeedDataRecieved = true;
+            this.ArcBoard.IsSpeedDataNumbersReceiving = true;
+            this.ArcBoard.SpeedDataNumbers = e.DownloudSpeed.ToString() + "Mbps";
+            this.ArcBoard.DownloadSpeedArcValue = e.DownloudSpeed;
+
+            this.dowloadSpeedList.Add(new DownloadSpeed { Ping = (int)e.Ping, Speed = (int)e.DownloudSpeed });
+            // this.DataBoard.DownloadSpeedData;
+        }
+
+
+        private void Model_UploadDataRecieved(object sender, Model.SpeedDataEventArgs e)
+        {
+            this.ArcBoard.IsUploadSpeedDataRecieved = true;
+            this.ArcBoard.SpeedDataNumbers = e.UploadSpeed.ToString() + "Mbps";
+            this.ArcBoard.UploadSpeedArcValue = e.UploadSpeed;
+
+            this.uploadSpeedList.Add(new UploadSpeed { Ping = (int)e.Ping, Speed = (int)e.UploadSpeed });
+            //this.DataBoard.UploadSpeedData;
+        }
+
+        #endregion
+
         #region Helpful methods
 
         private T FindParent<T>(DependencyObject dependencyObject) where T : DependencyObject
@@ -496,5 +541,17 @@ namespace SpeedTest.ViewModel
         }
 
         #endregion
+    }
+
+    public class DownloadSpeed
+    {
+        public int Ping { get; set; }
+        public int Speed { get; set; }
+    }
+
+    public class UploadSpeed
+    {
+        public int Ping { get; set; }
+        public int Speed { get; set; }
     }
 }

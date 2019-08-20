@@ -14,7 +14,9 @@ namespace SpeedTest.ViewModel.ViewBoards
         private bool _isDownloadSpeedDataRecieved;
         private bool _isUploadSpeedDataRecieved;
         private bool _isSpeedDataNumbersReceiving;
-        private double _speedDataNumbers;
+        private string _speedDataNumbers;
+        private double _downloadSpeedArcValue;
+        private double _uploadSpeedArcValu;
 
         public bool IsStartButtonPressed
         {
@@ -46,10 +48,23 @@ namespace SpeedTest.ViewModel.ViewBoards
             set { Set(ref _isSpeedDataNumbersReceiving, value); }
         }
 
-        public double SpeedDataNumbers
+        public string SpeedDataNumbers
         {
             get { return _speedDataNumbers; }
             set { Set(ref _speedDataNumbers, value); }
         }
+
+        public double DownloadSpeedArcValue
+        {
+            get { return _downloadSpeedArcValue; }
+            set { Set(ref _downloadSpeedArcValue, value); }
+        }
+
+        public double UploadSpeedArcValue
+        {
+            get { return _uploadSpeedArcValu; }
+            set { Set(ref _uploadSpeedArcValu, value); }
+        }
+        
     }
 }
