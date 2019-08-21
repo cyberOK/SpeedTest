@@ -163,9 +163,10 @@ namespace SpeedTest.ViewModel
                 Settings = AppSetting.GetInstance()
             };
 
+            //this.HistoryPanel = new HistoryPanel();
             this.HistoryPanel = new HistoryPanel
             {
-                SpeedDataCollection = speedDataManager.SpeedDataCollection
+                SpeedDataCollection = new ObservableCollection<SpeedData>()
             };
 
             this.ServerPanel = new ServerPanel
@@ -213,6 +214,10 @@ namespace SpeedTest.ViewModel
         {
             this.ArcBoard.IsStartButtonPressed = true;
             this.ArcBoard.IsTryConnect = true;
+            this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+            this.DataBoard.IsPingFieldsGridVisible = false;
+            this.DataBoard.IsDownloadSpeedFieldsGridVisible = false;
+            this.DataBoard.IsUploadSpeedFieldsGridVisible = false;
 
             this.Model.StartTest();
         }
@@ -396,30 +401,74 @@ namespace SpeedTest.ViewModel
 
         #region Model Methods
 
-        List<DownloadSpeed> dowloadSpeedList = new List<DownloadSpeed>();
-        List<UploadSpeed> uploadSpeedList = new List<UploadSpeed>();
-
+        private int _id = 0;
+        
         private void Model_DownloudDataRecieved(object sender, Model.SpeedDataEventArgs e)
         {
+            // Set View Elements 
+
             this.ArcBoard.IsTryConnect = false;
             this.ArcBoard.IsDownloadSpeedDataRecieved = true;
             this.ArcBoard.IsSpeedDataNumbersReceiving = true;
-            this.ArcBoard.SpeedDataNumbers = e.DownloudSpeed.ToString() + "Mbps";
+
+            // Set Arc Board from Recieving Data
+
+            this.ArcBoard.SpeedDataNumbers = e.DownloudSpeed.ToString() + " Mbps";
             this.ArcBoard.DownloadSpeedArcValue = e.DownloudSpeed;
 
-            this.dowloadSpeedList.Add(new DownloadSpeed { Ping = (int)e.Ping, Speed = (int)e.DownloudSpeed });
-            // this.DataBoard.DownloadSpeedData;
+            // Set List of Speed Test Samples
+
+            this.HistoryPanel.SpeedDataCollection.Add(new SpeedData { Ping = (int)e.Ping, DownloadSpeed = (int)e.DownloudSpeed, Server = e.Server, Date = e.Date , Id = ++this._id});
+
+            // Set DataBoard Ping and Download Speed
+
+            if (this.HistoryPanel.SpeedDataCollection != null)
+            {
+                var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
+                this.DataBoard.PingData = testSample.Ping.ToString();
+                this.DataBoard.DownloadSpeedData = testSample.DownloadSpeed.ToString();
+                this.DataBoard.IsPingFieldsGridVisible = true;
+                this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
+            }
         }
 
 
         private void Model_UploadDataRecieved(object sender, Model.SpeedDataEventArgs e)
         {
+            // Set View Elements     
             this.ArcBoard.IsUploadSpeedDataRecieved = true;
-            this.ArcBoard.SpeedDataNumbers = e.UploadSpeed.ToString() + "Mbps";
+
+            // Set Arc Board from Recieving Data
+
+            this.ArcBoard.SpeedDataNumbers = e.UploadSpeed.ToString() + " Mbps";
             this.ArcBoard.UploadSpeedArcValue = e.UploadSpeed;
 
-            this.uploadSpeedList.Add(new UploadSpeed { Ping = (int)e.Ping, Speed = (int)e.UploadSpeed });
-            //this.DataBoard.UploadSpeedData;
+            // Set List of Speed Test Samples
+
+            this.HistoryPanel.SpeedDataCollection.Add(new SpeedData { Ping = (int)e.Ping, UploadSpeed = (int)e.UploadSpeed, Server = e.Server, Date = e.Date, Id = ++this._id });
+            //this.SpeedList.Add(new SpeedTestDataSample { Ping = (int)e.Ping, UploadSpeed = (int)e.UploadSpeed, Server = e.Server, Date = e.Date });
+
+            // Set DataBoard Ping and Upload Speed
+
+            if (this.HistoryPanel.SpeedDataCollection != null)
+            {
+                var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
+                this.DataBoard.PingData = testSample.Ping.ToString();
+                this.DataBoard.UploadSpeedData = testSample.UploadSpeed.ToString();
+                this.DataBoard.IsPingFieldsGridVisible = true;
+                this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
+            }
+
+            // Set ViewModel When Test Ending
+
+            if  (e.IsTestEnd)
+            {
+                this.ArcBoard.IsSpeedMeterBackgroundVisible = false;
+                this.ArcBoard.IsSpeedDataNumbersReceiving = false;
+                this.ArcBoard.IsStartButtonPressed = false;
+                this.ArcBoard.IsDownloadSpeedDataRecieved = false;
+                this.ArcBoard.IsUploadSpeedDataRecieved = false;
+            }
         }
 
         #endregion
@@ -541,17 +590,5 @@ namespace SpeedTest.ViewModel
         }
 
         #endregion
-    }
-
-    public class DownloadSpeed
-    {
-        public int Ping { get; set; }
-        public int Speed { get; set; }
-    }
-
-    public class UploadSpeed
-    {
-        public int Ping { get; set; }
-        public int Speed { get; set; }
     }
 }

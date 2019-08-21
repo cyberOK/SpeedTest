@@ -11,6 +11,7 @@
         <converter:RadioModeSelectedIntToBooltConverter x:Key="RadioModeSelectedIntToBooltConverter"/>
         <converter:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
         <converter:DateToStringConverter x:Key="DateToStringConverter"/>
+        <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
         <SolidColorBrush x:Key="SystemControlRevealFocusVisualBrush" Color="DarkCyan"/>
     </Application.Resources>
 </Application>

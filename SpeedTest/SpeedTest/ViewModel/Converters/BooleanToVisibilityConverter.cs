@@ -15,7 +15,7 @@ namespace SpeedTest.ViewModel.Converters
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (bool)value ^ (parameter as string ?? string.Empty).Equals("Reverse") ? Visibility.Visible : Visibility.Collapsed;
+                return (bool)value ^ (parameter as string ?? string.Empty).Equals("Reverse") ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

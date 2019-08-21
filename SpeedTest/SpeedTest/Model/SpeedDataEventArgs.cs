@@ -11,6 +11,9 @@ namespace SpeedTest.Model
         private double _ping;
         private double _downloudSpeed;
         private double _uploadSpeed;
+        private string _server;
+        private DateTime _date;
+        private bool _isTestEnd;
 
         public double Ping
         {
@@ -30,12 +33,32 @@ namespace SpeedTest.Model
             private set { this._uploadSpeed = value; }
         }
 
-        public SpeedDataEventArgs(double ping, double downloudSpeed = 0, double uploadSpeed = 0)
+        public string Server
         {
-            this.Ping = ping;
-            this.DownloudSpeed = downloudSpeed;
-            this.UploadSpeed = uploadSpeed;
+            get { return this._server; }
+            private set { this._server = value; }
         }
 
+        public DateTime Date
+        {
+            get { return this._date; }
+            private set { this._date = value; }
+        }
+
+        public bool IsTestEnd
+        {
+            get { return this._isTestEnd; }
+            set { this._isTestEnd = value; }
+        }
+
+        public SpeedDataEventArgs(double ping, double downloudSpeed = 0, double uploadSpeed = 0, bool isTestEnd = false, string server = "TestServer")
+        {
+            this.Ping = ping;
+            this.IsTestEnd = IsTestEnd;
+            this.DownloudSpeed = downloudSpeed;
+            this.UploadSpeed = uploadSpeed;
+            this.Server = server;
+            this.Date = DateTime.Now;
+        }
     }
 }

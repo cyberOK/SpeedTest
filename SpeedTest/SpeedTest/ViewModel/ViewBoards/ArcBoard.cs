@@ -11,6 +11,7 @@ namespace SpeedTest.ViewModel.ViewBoards
     {
         private bool _isStartButtonPressed;
         private bool _isTryConnect;
+        private bool _isSpeedMeterBackgroundVisible;
         private bool _isDownloadSpeedDataRecieved;
         private bool _isUploadSpeedDataRecieved;
         private bool _isSpeedDataNumbersReceiving;
@@ -22,6 +23,12 @@ namespace SpeedTest.ViewModel.ViewBoards
         {
             get { return _isStartButtonPressed; }
             set { Set(ref _isStartButtonPressed, value); }
+        }
+
+        public bool IsSpeedMeterBackgroundVisible
+        {
+            get { return _isSpeedMeterBackgroundVisible; }
+            set { Set(ref _isSpeedMeterBackgroundVisible, value); }
         }
 
         public bool IsTryConnect

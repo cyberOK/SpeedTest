@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpeedTest.ViewModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,38 +10,46 @@ namespace SpeedTest.Model
 {
     public class SpeedTest
     {
-        private bool _testRunTime, _downloadTestRunTime = true, _uploadTestRunTime = true;
+        private bool _isTestEnd, _downloadTestRunTime, _uploadTestRunTime;
         int lowerBoundD = 50, upperBoundD = 60, lowerBoundu = 30, upperBoundu = 35;
         int dowloadDataCounter = 0, uploadDataCounter = 0;
-
-        Random random = new Random();
+        Random random;
 
         public event EventHandler<SpeedDataEventArgs> DownloudDataRecieved;
         public event EventHandler<SpeedDataEventArgs> UploadDataRecieved;
 
         public SpeedTest()
         {
-
+            this.random = new Random();
         }
 
-        public  void StartTest()
+        public async void StartTest()
         {
+            this._downloadTestRunTime = true;
+            this._uploadTestRunTime = true;
+            lowerBoundD = 50;
+            upperBoundD = 60;
+            lowerBoundu = 30;
+            upperBoundu = 35;
+
+            await Task.Delay(TimeSpan.FromMilliseconds(1000));
+
             while (_downloadTestRunTime)
             {
                 this.GetDowloadData();
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
             }
 
             while (_uploadTestRunTime)
             {
                 this.GetUploadData();
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
             }
         }
 
         private void GetDowloadData()
         {
-            SpeedDataEventArgs downloadData = new SpeedDataEventArgs(random.Next(10, 20), this.RandomSpeedD());
-
-            this.OnGetDowloadData(downloadData);
+            SpeedDataEventArgs downloadData = new SpeedDataEventArgs(random.Next(10, 20), downloudSpeed: this.RandomSpeedD());
 
             dowloadDataCounter++;
 
@@ -49,13 +58,13 @@ namespace SpeedTest.Model
                 dowloadDataCounter = 0;
                 _downloadTestRunTime = false;
             }
+
+            this.OnGetDowloadData(downloadData);
         }
 
         private void GetUploadData()
         {
             SpeedDataEventArgs uploadData = new SpeedDataEventArgs(ping : random.Next(10, 20), uploadSpeed : this.RandomSpeedU());
-
-            this.OnGetUploadData(uploadData);
 
             uploadDataCounter++;
 
@@ -63,7 +72,10 @@ namespace SpeedTest.Model
             {
                 uploadDataCounter = 0;
                 _uploadTestRunTime = false;
+                uploadData.IsTestEnd = true;
             }
+
+            this.OnGetUploadData(uploadData);
         }
 
         protected virtual void OnGetDowloadData(SpeedDataEventArgs e)
@@ -98,12 +110,12 @@ namespace SpeedTest.Model
 
         private int RandomSpeedU()
         {
-            var dS = random.Next(lowerBoundu, upperBoundu);
+            var uS = random.Next(lowerBoundu, upperBoundu);
 
             lowerBoundu += 1;
             upperBoundu += 1;
 
-            return dS;
+            return uS;
         }
     }
 }

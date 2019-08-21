@@ -69,10 +69,9 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="40"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,15"/>
                         <!-- SplitLine -->
-                        <Setter Target="SplitLineGrid.(Width)" Value="1000"/>
+                        <Setter Target="SplitLineGrid.(Width)" Value="1040"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,30,0,30"/>
-
                         <!-- Main Bottom Board -->
                         <Setter Target="BottomBoard.(Margin)" Value="0,0,0,60"/>
                         <Setter Target="MainBottomBoardInformation.(Width)" Value="500"/>
@@ -92,7 +91,7 @@
                         <Setter Target="changeServerButton.(Height)" Value="50"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="28"/>
                         <!-- Data Board -->
-                        <Setter Target="TestDataBoard.(Width)" Value="1000"/>
+                        <Setter Target="TestDataBoard.(Width)" Value="1040"/>
                         <Setter Target="TestDataBoard.(Height)" Value="150"/>
                         <Setter Target="PingFieldsGrid.(Width)" Value="280"/>
                         <Setter Target="PingText.(FontSize)" Value="40"/>
@@ -102,7 +101,7 @@
                         <Setter Target="DownloadText.(FontSize)" Value="40"/>
                         <Setter Target="mbpsText.(FontSize)" Value="40"/>
                         <Setter Target="DownloadSpeedData.(FontSize)" Value="80"/>
-                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="310"/>
+                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="350"/>
                         <Setter Target="UploadText.(FontSize)" Value="40"/>
                         <Setter Target="mbpsUploadText.(FontSize)" Value="40"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="80"/>
@@ -154,14 +153,14 @@
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
                         <Setter Target="StartArc.(Radius)" Value="140"/>
-                        <Setter Target="DownloadSpeedArc.(Radius)" Value="160"/>
-                        <Setter Target="UploadSpeedArc.(Radius)" Value="150"/>
-                        <Setter Target="TryConnectArc1.(Radius)" Value="160"/>
-                        <Setter Target="TryConnectArc2.(Radius)" Value="150"/>
-                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
-                        <Setter Target="UploadSpeedArc.(Thickness)" Value="10"/>
-                        <Setter Target="TryConnectArc1.(Thickness)" Value="10"/>
-                        <Setter Target="TryConnectArc2.(Thickness)" Value="10"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="145"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="130"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="145"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="130"/>
+                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="15"/>
+                        <Setter Target="UploadSpeedArc.(Thickness)" Value="15"/>
+                        <Setter Target="TryConnectArc1.(Thickness)" Value="15"/>
+                        <Setter Target="TryConnectArc2.(Thickness)" Value="15"/>
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
@@ -174,21 +173,21 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
                         <!-- SplitLine -->
-                        <Setter Target="SplitLineGrid.(Width)" Value="440"/>
+                        <Setter Target="SplitLineGrid.(Width)" Value="455"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
                         <!-- Data Board -->
-                        <Setter Target="TestDataBoard.(Width)" Value="440"/>
+                        <Setter Target="TestDataBoard.(Width)" Value="455"/>
                         <Setter Target="TestDataBoard.(Height)" Value="70"/>
                         <Setter Target="PingFieldsGrid.(Width)" Value="125"/>
                         <Setter Target="PingText.(FontSize)" Value="18"/>
                         <Setter Target="msText.(FontSize)" Value="18"/>
                         <Setter Target="DataPingText.(FontSize)" Value="40"/>
-                        <Setter Target="DownloadSpeedFieldsGrid.(Width)" Value="180.4"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(Width)" Value="180"/>
                         <Setter Target="DownloadText.(FontSize)" Value="18"/>
                         <Setter Target="mbpsText.(FontSize)" Value="18"/>
                         <Setter Target="DownloadSpeedData.(FontSize)" Value="40"/>
-                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="136.4"/>
+                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="150"/>
                         <Setter Target="UploadText.(FontSize)" Value="18"/>
                         <Setter Target="mbpsUploadText.(FontSize)" Value="18"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="40"/>
@@ -256,10 +255,10 @@
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
                         <Setter Target="StartArc.(Radius)" Value="100"/>
-                        <Setter Target="DownloadSpeedArc.(Radius)" Value="120"/>
-                        <Setter Target="UploadSpeedArc.(Radius)" Value="110"/>
-                        <Setter Target="TryConnectArc1.(Radius)" Value="120"/>
-                        <Setter Target="TryConnectArc2.(Radius)" Value="110"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="110"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="100"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="110"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="100"/>
                         <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
                         <Setter Target="UploadSpeedArc.(Thickness)" Value="10"/>
                         <Setter Target="TryConnectArc1.(Thickness)" Value="10"/>
@@ -276,6 +275,10 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
                         <!-- Data Board -->
+
+                        <Setter Target="DownloadSpeedFieldsGrid.(HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(RelativePanel.LeftOf)" Value="UploadSpeedFieldsGrid"/>
+                        
                         <Setter Target="TestDataBoard.(Margin)" Value="20,0,20,0"/>
                         <Setter Target="PingText.(FontSize)" Value="15"/>
                         <Setter Target="msText.(FontSize)" Value="15"/>
@@ -329,154 +332,156 @@
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
 
-            <!-- Main Panel Buttons -->
-            <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top"> 
-                <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
+                <!-- Main Panel Buttons -->
+                <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
-                <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" Margin="10"
+                    <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" Margin="10"
                         Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}"/>
-                <Button x:Name="backButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" Margin="10"
+                    <Button x:Name="backButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE72D;" Margin="10"
                         Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}"/>
-            </StackPanel>
-            
-            <!-- Phone Gamburger Button (Settings inner) -->
-            <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10,30"
+                </StackPanel>
+
+                <!-- Phone Gamburger Button (Settings inner) -->
+                <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10,30"
                     HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"
                     Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
 
-            <!-- Arc Board -->
-            <Grid x:Name="ArcGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
+                <!-- Arc Board -->
+                <Grid x:Name="ArcGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
 
-                <!-- Arc Controls -->
-                <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
+                    <!-- Arc Controls -->
+                    <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
                                 Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="TryConnectArc1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
-                                Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
-                                Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan"
+                    <arcControl:Arc x:Name="TryConnectArc1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
+                                Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
+                    <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
+                                Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
+                    <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan"
                                 Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
-                <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue"
+                    <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue"
                                 Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.UploadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
 
-                <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
-                <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 
+                    <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
+                    <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 
                         Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                         Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
-                <TextBlock x:Name="TryConnectTextBlock" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />            
+                    <TextBlock x:Name="TryConnectTextBlock" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />
 
-                <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Visibility="{Binding ArcBoard.IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
                    Text="{Binding ArcBoard.SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
 
-            </Grid>
+                </Grid>
 
-            <!-- Bottom Board -->
-            <StackPanel x:Name="BottomBoard" VerticalAlignment="Bottom">
+                <!-- Bottom Board -->
+                <StackPanel x:Name="BottomBoard" VerticalAlignment="Bottom">
 
-                <!-- Data Board -->
-                <Grid x:Name="TestDataBoard" HorizontalAlignment="Stretch" >
-                    <RelativePanel>
-                       
-                        <!-- Ping Fields -->
-                        <Grid x:Name="PingFieldsGrid" RelativePanel.AlignLeftWithPanel="True"
-                               Visibility="{Binding IsPingFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                    <!-- Data Board -->
+                    <Grid x:Name="TestDataBoard" HorizontalAlignment="Stretch" >
+                        <RelativePanel>
 
-                            <TextBlock x:Name="PingText" Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                            <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
-                            <Viewbox x:Name="ViewBox1" Grid.Column="1" Grid.RowSpan="2" >
-                            <TextBlock x:Name="DataPingText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Text="{Binding DataBoard.PingData, Source={StaticResource mainViewModel}}"/>
-                            </Viewbox>
-                        </Grid>
+                            <!-- Ping Fields -->
+                            <Grid x:Name="PingFieldsGrid" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+                               Visibility="{Binding DataBoard.IsPingFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                        <!-- Download Speed Fields -->
-                        <Grid x:Name="DownloadSpeedFieldsGrid" RelativePanel.RightOf="PingFieldsGrid" RelativePanel.LeftOf="UploadSpeedFieldsGrid" HorizontalAlignment="Center"
-                              Visibility="{Binding IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                                <TextBlock x:Name="PingText" Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
+                                <Viewbox x:Name="ViewBox1" Grid.Column="1" Grid.RowSpan="2" >
+                                    <TextBlock x:Name="DataPingText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Text="{Binding DataBoard.PingData, Source={StaticResource mainViewModel}}"/>
+                                </Viewbox>
+                            </Grid>
 
-                            <TextBlock x:Name="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                            <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                            <Viewbox  x:Name="ViewBox2" Grid.Column="1" Grid.RowSpan="2">
-                            <TextBlock x:Name="DownloadSpeedData" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           Text="{Binding DataBoard.DownloadSpeedData, Source={StaticResource mainViewModel}}" />
-                            </Viewbox>
-                        </Grid>
+                            <!-- Download Speed Fields -->
+                            <Grid x:Name="DownloadSpeedFieldsGrid"
+                              RelativePanel.RightOf="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
+                              Visibility="{Binding DataBoard.IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter},Source={StaticResource mainViewModel}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                        <!-- Upload Speed Fields -->
-                        <Grid x:Name="UploadSpeedFieldsGrid" RelativePanel.AlignRightWithPanel="True"
-                              Visibility="{Binding IsUploadSpeedFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                                <TextBlock x:Name="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                <Viewbox  x:Name="ViewBox2" Grid.Column="1" Grid.RowSpan="2">
+                                    <TextBlock x:Name="DownloadSpeedData" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
+                                       Text="{Binding DataBoard.DownloadSpeedData, Source={StaticResource mainViewModel}}" />
+                                </Viewbox>
+                            </Grid>
 
-                            <TextBlock x:Name="UploadText" Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                            <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
-                            <Viewbox  x:Name="ViewBox3" Grid.Column="1" Grid.RowSpan="2">
-                            <TextBlock x:Name="UploadDataText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
+                            <!-- Upload Speed Fields -->
+                            <Grid x:Name="UploadSpeedFieldsGrid" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+                              Visibility="Visible"
+                              Opacity="{Binding DataBoard.IsUploadSpeedFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="UploadText" Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
+                                <Viewbox  x:Name="ViewBox3" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right">
+                                    <TextBlock x:Name="UploadDataText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
                                            Text="{Binding DataBoard.UploadSpeedData, Source={StaticResource mainViewModel}}"/>
-                            </Viewbox>
-                        </Grid>
+                                </Viewbox>
+                            </Grid>
 
-                    </RelativePanel>
-                </Grid>
+                        </RelativePanel>
+                    </Grid>
 
-                <!-- Split Line -->
-                <Grid x:Name="SplitLineGrid">
-                    <RelativePanel>
-                        <Rectangle x:Name="SplitLine" Fill="{ThemeResource LinearGradientBrush}" Stretch="Fill"
+                    <!-- Split Line -->
+                    <Grid x:Name="SplitLineGrid">
+                        <RelativePanel>
+                            <Rectangle x:Name="SplitLine" Fill="{ThemeResource LinearGradientBrush}" Stretch="Fill"
                                    Height="3" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
-                    </RelativePanel>
-                </Grid>
+                        </RelativePanel>
+                    </Grid>
 
-                <!-- Server Information Board  -->
-                <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
-                    <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
+                    <!-- Server Information Board  -->
+                    <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
+                        <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
                                Text="{Binding ServerInformationBoard.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
-                    <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
+                        <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.IpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
-                    <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
+                        <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
                                Text="{Binding ServerInformationBoard.ServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
-                    <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
+                        <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.ServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
-                    <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
+                        <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
                             Command="{Binding ChangeServerButtonPressed}">
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
-                                <GradientStop Color="#FF14CEEC" Offset="1"/>
-                                <GradientStop Color="#FF101757" Offset="0"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
-                </RelativePanel>
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
+                                    <GradientStop Color="#FF14CEEC" Offset="1"/>
+                                    <GradientStop Color="#FF101757" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                    </RelativePanel>
 
-            </StackPanel>
+                </StackPanel>
 
         </Grid>
         

@@ -9,12 +9,12 @@ namespace SpeedTest.ViewModel.ViewBoards
 {
     public class DataBoard : ObservableObject
     {
-        private bool _isPingFieldsGridVisible = true;
-        private bool _isDownloadSpeedFieldsGridVisible = true;
-        private bool _isUploadSpeedFieldsGridVisible = true;
-        private string _pingDataPing = "100";
-        private string _downloadSpeedData = "200";
-        private string _uploadData = "300";
+        private bool _isPingFieldsGridVisible;
+        private bool _isDownloadSpeedFieldsGridVisible;
+        private bool _isUploadSpeedFieldsGridVisible;
+        private string _pingDataPing;
+        private string _downloadSpeedData;
+        private string _uploadData;
 
         public bool IsPingFieldsGridVisible
         {
