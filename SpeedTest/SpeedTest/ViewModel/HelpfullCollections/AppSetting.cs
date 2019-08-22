@@ -23,9 +23,8 @@ namespace SpeedTest.ViewModel.HelpfullCollections
     }
 
     public class AppSetting : ObservableObject
-    {
-        private static AppSetting instance;
-        private string _theme = "Light";
+    {     
+        private string _theme;
 
         public List<Language> Languages { get; private set; }
         public List<Mode> Modes { get; private set; }
@@ -56,23 +55,28 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             set { Set(ref _theme, value); }
         }
 
-        private AppSetting()
+        public AppSetting()
         {
             this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
             this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
             this.Languages = Enum.GetValues(typeof(Language)).Cast<Language>().ToList();
             this.Modes = Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList();
-        }
-        
-        public static AppSetting GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new AppSetting();
-            }
-
-            return instance;
+            this.Theme = this.GetWindowsTheme();            
         }
        
+        private string GetWindowsTheme()
+        {
+            var DefaultTheme = new Windows.UI.ViewManagement.UISettings();
+            var uiTheme = DefaultTheme.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).ToString();
+
+            if (uiTheme == "#FF000000")
+            {
+                return this._theme = "Dark";
+            }
+            else // (uiTheme == "#FFFFFFFF")
+            {
+              return  this._theme = "Light";
+            }
+        }
     }
 }

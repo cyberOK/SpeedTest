@@ -160,7 +160,7 @@ namespace SpeedTest.ViewModel
 
             this.SettingsPanel = new SettingsPanel
             {
-                Settings = AppSetting.GetInstance()
+                Settings = new AppSetting()
             };
 
             //this.HistoryPanel = new HistoryPanel();
@@ -172,8 +172,8 @@ namespace SpeedTest.ViewModel
             this.ServerPanel = new ServerPanel
             {
                 ServersCollection = serverManager.ServerDataCollection,
-                ServerNamesCollection = serverManager.ServerNamesCollection,
-                FullServerNamesCollection = serverManager.ServerNamesCollection
+                ServerNamesCollection = serverManager.GetServerNames(),
+                FullServerNamesCollection = serverManager.GetServerNames()
             };
 
             // Main panel commands assigning
@@ -332,11 +332,11 @@ namespace SpeedTest.ViewModel
             var args = (RoutedEventArgs)param;
             Button but = (Button)args.OriginalSource;
 
-            GridViewItem gvi = this.FindParent<GridViewItem>(but);
+            var gridViewItem = but.FindGridViewItemParent(but);
 
-            if (gvi != null)
+            if (gridViewItem != null)
             {
-                SpeedData singleHistoryForDeleting = (SpeedData)gvi.Content;
+                SpeedData singleHistoryForDeleting = (SpeedData)((GridViewItem)gridViewItem).Content;
                 this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
             }
         }
@@ -475,15 +475,15 @@ namespace SpeedTest.ViewModel
 
         #region Helpful methods
 
-        private T FindParent<T>(DependencyObject dependencyObject) where T : DependencyObject
-        {
-            var parent = VisualTreeHelper.GetParent(dependencyObject);
+        //private T FindParent<T>(DependencyObject dependencyObject) where T : DependencyObject
+        //{
+        //    var parent = VisualTreeHelper.GetParent(dependencyObject);
 
-            if (parent == null) return null;
+        //    if (parent == null) return null;
 
-            var parentT = parent as T;
-            return parentT ?? FindParent<T>(parent);
-        }
+        //    var parentT = parent as T;
+        //    return parentT ?? FindParent<T>(parent);
+        //}
 
         private ObservableCollection<string> FindServerInCollection(string inputText)
         {

@@ -387,7 +387,8 @@
 
                             <!-- Ping Fields -->
                             <Grid x:Name="PingFieldsGrid" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
-                               Visibility="{Binding DataBoard.IsPingFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}">
+                               Visibility="Visible"
+                                 Opacity="{Binding DataBoard.IsPingFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition/>
@@ -408,7 +409,8 @@
                             <!-- Download Speed Fields -->
                             <Grid x:Name="DownloadSpeedFieldsGrid"
                               RelativePanel.RightOf="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
-                              Visibility="{Binding DataBoard.IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToVisibilityConverter},Source={StaticResource mainViewModel}}">
+                              Visibility="Visible"
+                                  Opacity="{Binding DataBoard.IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition/>
@@ -681,7 +683,7 @@
                                                         <TextBlock x:Name="DateTextBlockPhoneGrid" RelativePanel.AlignLeftWithPanel="True" Padding="20,10,0,10"
                                                                    Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
                                                         <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" Content="Delete" Margin="0,0,10,0" Height="40" 
-                                                                Background="Transparent" Foreground="DarkCyan" RelativePanel.AlignRightWithPanel="True">
+                                                                Background="Transparent" Foreground="DarkCyan"  RelativePanel.AlignRightWithPanel="True">
 
                                                             <Interactivity:Interaction.Behaviors>
                                                                 <Core:EventTriggerBehavior EventName="Click">

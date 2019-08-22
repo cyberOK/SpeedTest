@@ -11,8 +11,6 @@ namespace SpeedTest.ViewModel.HelpfullCollections
     {
         public ObservableCollection<Server> ServerDataCollection { get; private set; }
 
-        public ObservableCollection<string> ServerNamesCollection { get; private set; }
-
         public ServerManager()
         {
             this.ServerDataCollection = new ObservableCollection<Server>();
@@ -21,22 +19,18 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             this.ServerDataCollection.Add(new Server { IPerf3Server = "bouygues.iperf.fr", Location = "France", ProviderName = "Telehouse 2", Port = "5200", IsCurrent = false });
             this.ServerDataCollection.Add(new Server { IPerf3Server = "ping.online.net", Location = "France", ProviderName = "Online.net", Port = "5200", IsCurrent = false });
             this.ServerDataCollection.Add(new Server { IPerf3Server = "speedtest.serverius.net", Location = "Netherlands", ProviderName = "Serverius", Port = "5002", IsCurrent = false });
-            this.ServerDataCollection.Add(new Server { IPerf3Server = "iperf.eenet.ee", Location = "Estonia", ProviderName = "EENet Tartu", Port = "5201", IsCurrent = false });           
+            this.ServerDataCollection.Add(new Server { IPerf3Server = "iperf.eenet.ee", Location = "Estonia", ProviderName = "EENet Tartu", Port = "5201", IsCurrent = false });
             this.ServerDataCollection.Add(new Server { IPerf3Server = "iperf.it-north.net", Location = "Kazakhstan", ProviderName = "Petropavl", Port = "5201", IsCurrent = false });
             this.ServerDataCollection.Add(new Server { IPerf3Server = "iperf.biznetnetworks.com", Location = "Indonesia", ProviderName = "Biznet", Port = "5201", IsCurrent = false });
             this.ServerDataCollection.Add(new Server { IPerf3Server = "iperf.scottlinux.com", Location = "USA, California", ProviderName = "Hurricane Fremont 2", Port = "5201", IsCurrent = false });
             this.ServerDataCollection.Add(new Server { IPerf3Server = "iperf.he.net", Location = "USA, California", ProviderName = "Hurricane Fremont 1", Port = "5201", IsCurrent = false });
-
-            this.ServerNamesCollection = GetServerNames(ServerDataCollection);
-
-            // Realization of getting data from Model ServerCollection
         }
 
-        private ObservableCollection<string> GetServerNames(ObservableCollection<Server> serversCollection)
+        public ObservableCollection<string> GetServerNames()
         {
             ObservableCollection<string> serverNames = new ObservableCollection<string>();
 
-            foreach (Server server in serversCollection)
+            foreach (Server server in this.ServerDataCollection)
             {
                 string serverName = server.ProviderName;
                 serverNames.Add(serverName);

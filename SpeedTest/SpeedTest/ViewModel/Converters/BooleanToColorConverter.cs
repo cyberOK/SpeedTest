@@ -7,20 +7,16 @@ namespace SpeedTest.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if ((bool)value)
+            if ((bool)value) 
             {              
-                return "#77777777";
+                return "#77777777"; // if item selected background will be grey in all themes
             }
-            return "{ThemeResource BackgroundPanelContent}";
+            return "{ThemeResource BackgroundPanelContent}"; // if item doesn't select background will be set by default theme
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if ((bool)value)
-            {
-                return "WhiteSmoke";
-            }
-            return "LightGray";
+            return new NotImplementedException();
         }
     }
 }

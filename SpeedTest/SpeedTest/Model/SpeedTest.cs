@@ -10,8 +10,8 @@ namespace SpeedTest.Model
 {
     public class SpeedTest
     {
-        private bool _isTestEnd, _downloadTestRunTime, _uploadTestRunTime;
-        int lowerBoundD = 50, upperBoundD = 60, lowerBoundu = 30, upperBoundu = 35;
+        private bool _downloadTestRunTime, _uploadTestRunTime;
+        int lowerBoundD, upperBoundD, lowerBoundu, upperBoundu;
         int dowloadDataCounter = 0, uploadDataCounter = 0;
         Random random;
 

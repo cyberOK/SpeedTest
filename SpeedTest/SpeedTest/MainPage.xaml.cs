@@ -34,8 +34,6 @@ namespace SpeedTest
         public MainPage()
         {
             this.InitializeComponent();
-            //ApplicationView.PreferredLaunchViewSize = new Size(1920, 1080);
-            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(380, 500));
         }
     }
