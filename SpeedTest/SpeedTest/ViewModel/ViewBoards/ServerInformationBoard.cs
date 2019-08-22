@@ -26,13 +26,13 @@ namespace SpeedTest.ViewModel.ViewBoards
             set { Set(ref _ipAdress, value); }
         }
 
-        public string ServerName
+        public string CurrentServerName
         {
             get { return _serverName; }
             set { Set(ref _serverName, value); }
         }
 
-        public string ServerLocation
+        public string CurrentServerLocation
         {
             get { return _serverLocation; }
             set { Set(ref _serverLocation, value); }

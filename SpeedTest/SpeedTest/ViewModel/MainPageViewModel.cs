@@ -13,6 +13,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace SpeedTest.ViewModel
 {
@@ -20,10 +21,9 @@ namespace SpeedTest.ViewModel
     {
         #region Fields
 
-        private Model.SpeedTest _model;
-        private ObservableCollection<Server> _serversCollection;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
+        private Model.SpeedTest _model;
         private DataBoard _dataBoard;
         private ServerInformationBoard _serverInformationBoard;
         private ArcBoard _arcBoard;
@@ -35,18 +35,6 @@ namespace SpeedTest.ViewModel
 
         #region Property binding
 
-        public Model.SpeedTest Model
-        {
-            get { return this._model; }
-            set { Set(ref this._model, value); }
-        }
-
-        public ObservableCollection<Server> ServersCollection
-        {
-            get { return this._serversCollection; }
-            set { Set(ref this._serversCollection, value); }
-        }
-
         public bool IsPopupGridRaise
         {
             get { return this._isPopupGridRaise; }
@@ -57,6 +45,12 @@ namespace SpeedTest.ViewModel
         {
             get { return this._isPhoneMainPanelOpen; }
             private set { Set(ref this._isPhoneMainPanelOpen, value); }
+        }
+
+        public Model.SpeedTest Model
+        {
+            get { return this._model; }
+            set { Set(ref this._model, value); }
         }
 
         public ArcBoard ArcBoard
@@ -143,20 +137,12 @@ namespace SpeedTest.ViewModel
 
             // Initialization Helpers
 
-            SpeedDataManager speedDataManager = new SpeedDataManager();
             ServerManager serverManager = new ServerManager();
 
             // Initialization MainPageViewModel
 
-            this.ServersCollection = serverManager.ServerDataCollection;
             this.DataBoard = new DataBoard();
             this.ArcBoard = new ArcBoard();
-
-            this.ServerInformationBoard = new ServerInformationBoard
-            {
-                ServerName = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName,
-                ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location
-            };
 
             this.SettingsPanel = new SettingsPanel
             {
@@ -174,6 +160,12 @@ namespace SpeedTest.ViewModel
                 ServersCollection = serverManager.ServerDataCollection,
                 ServerNamesCollection = serverManager.GetServerNames(),
                 FullServerNamesCollection = serverManager.GetServerNames()
+            };
+
+            this.ServerInformationBoard = new ServerInformationBoard
+            {
+               CurrentServerName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName,
+               CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location
             };
 
             // Main panel commands assigning
@@ -226,7 +218,7 @@ namespace SpeedTest.ViewModel
         {
             this.ClosePhoneGrid();
             this.IsPopupGridRaise = false;
-            await new Windows.UI.Popups.MessageDialog("BackCalling()").ShowAsync();
+            await new Windows.UI.Popups.MessageDialog("ShareCalling()").ShowAsync();
         }
 
         private void HistoryCalling(object param)
@@ -269,9 +261,10 @@ namespace SpeedTest.ViewModel
 
         #region Settings Actions for Delegates
 
-        private async void LanguageChange(object param)
+        private void LanguageChange(object param)
         {
-            await new Windows.UI.Popups.MessageDialog(param.ToString()).ShowAsync();
+            Frame mainPage = Window.Current.Content as Frame;
+            mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());       
         }
 
         private  void ModeChanged(object param)
@@ -329,16 +322,9 @@ namespace SpeedTest.ViewModel
 
         private void PhoneSingleHistoryDeleting(object param)
         {
-            var args = (RoutedEventArgs)param;
-            Button but = (Button)args.OriginalSource;
+            SpeedData singleHistorySelected = (SpeedData)param;
 
-            var gridViewItem = but.FindGridViewItemParent(but);
-
-            if (gridViewItem != null)
-            {
-                SpeedData singleHistoryForDeleting = (SpeedData)((GridViewItem)gridViewItem).Content;
-                this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
-            }
+            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);            
         }
 
         private void SingleHistorySelecting(object param)
@@ -401,7 +387,7 @@ namespace SpeedTest.ViewModel
 
         #region Model Methods
 
-        private int _id = 0;
+        private int _id = 0; // testing field
         
         private void Model_DownloudDataRecieved(object sender, Model.SpeedDataEventArgs e)
         {
@@ -475,16 +461,6 @@ namespace SpeedTest.ViewModel
 
         #region Helpful methods
 
-        //private T FindParent<T>(DependencyObject dependencyObject) where T : DependencyObject
-        //{
-        //    var parent = VisualTreeHelper.GetParent(dependencyObject);
-
-        //    if (parent == null) return null;
-
-        //    var parentT = parent as T;
-        //    return parentT ?? FindParent<T>(parent);
-        //}
-
         private ObservableCollection<string> FindServerInCollection(string inputText)
         {
             var serversResults = this.ServerPanel.FullServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower())).ToList();
@@ -528,8 +504,8 @@ namespace SpeedTest.ViewModel
 
         private void NewServerNameLocationAssign()
         {
-            this.ServerInformationBoard.ServerName = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
-            this.ServerInformationBoard.ServerLocation = this.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
+            this.ServerInformationBoard.CurrentServerName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
+            this.ServerInformationBoard.CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
         }
 
         private Style CreateContentDialogButtonStyle()

@@ -134,15 +134,12 @@
     <Compile Include="ViewModel\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converters\DateToStringConverter.cs" />
     <Compile Include="ViewModel\Converters\RadioModeSelectedIntToBooltConverter.cs" />
-    <Compile Include="ViewModel\Helpers\ButtonExtension.cs" />
     <Compile Include="ViewModel\Helpers\SpeedTestCommand.cs" />
     <Compile Include="ViewModel\Helpers\ObservableObject.cs" />
     <Compile Include="ViewModel\HelpfullCollections\ServerManager.cs" />
     <Compile Include="ViewModel\HelpfullCollections\Server.cs" />
     <Compile Include="ViewModel\HelpfullCollections\AppSetting.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\SpeedDataManager.cs" />
     <Compile Include="ViewModel\HelpfullCollections\SpeedData.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\SpeedTestDataSample.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewBoards\ArcBoard.cs" />
     <Compile Include="ViewModel\ViewBoards\DataBoard.cs" />
