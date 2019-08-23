@@ -123,32 +123,23 @@
   <data name="AvailableServers.Text" xml:space="preserve">
     <value>Доступные сервера:</value>
   </data>
-  <data name="ChangeServerButton.Text" xml:space="preserve">
+  <data name="changeServerButton.Content" xml:space="preserve">
     <value>Поменять сервер</value>
   </data>
   <data name="DarkRadioButton.Content" xml:space="preserve">
     <value>Тёмная</value>
   </data>
+  <data name="DateTextBlock.Text" xml:space="preserve">
+    <value>Дата</value>
+  </data>
   <data name="DownloadText.Text" xml:space="preserve">
-    <value>Скачивание</value>
+    <value>Загрузка</value>
+  </data>
+  <data name="DownloadTextBlock.Text" xml:space="preserve">
+    <value>Загрузка</value>
   </data>
   <data name="FeedBackLink.Content" xml:space="preserve">
     <value>Оставить отзыв</value>
-  </data>
-  <data name="HeaderDate.Text" xml:space="preserve">
-    <value>Дата</value>
-  </data>
-  <data name="HeaderDownload.Text" xml:space="preserve">
-    <value>Скачивание</value>
-  </data>
-  <data name="HeaderPing.Text" xml:space="preserve">
-    <value>Пинг</value>
-  </data>
-  <data name="HeaderServer.Text" xml:space="preserve">
-    <value>Сервер</value>
-  </data>
-  <data name="HeaderUpload.Text" xml:space="preserve">
-    <value>Загрузка</value>
   </data>
   <data name="HistoryBlock.Text" xml:space="preserve">
     <value>История</value>
@@ -156,17 +147,41 @@
   <data name="LanguageBlock.Text" xml:space="preserve">
     <value>Язык</value>
   </data>
+  <data name="LanguageComboBox.PlaceholderText" xml:space="preserve">
+    <value>Выберите язык</value>
+  </data>
   <data name="LightRadioButton.Content" xml:space="preserve">
     <value>Светлая</value>
+  </data>
+  <data name="mbpsText.Text" xml:space="preserve">
+    <value>(мб/с)</value>
+  </data>
+  <data name="MbpsTextBlock.Text" xml:space="preserve">
+    <value>(Мб/с)</value>
+  </data>
+  <data name="mbpsUploadText.Text" xml:space="preserve">
+    <value>(мб/с)</value>
   </data>
   <data name="ModeBlock.Text" xml:space="preserve">
     <value>Режим</value>
   </data>
-  <data name="PhoneDownloadTextBlock.Text" xml:space="preserve">
-    <value>Скачивание</value>
+  <data name="msText.Text" xml:space="preserve">
+    <value>(м/с)</value>
   </data>
-  <data name="PhoneHistoryButton.Text" xml:space="preserve">
+  <data name="MsTextBlock.Text" xml:space="preserve">
+    <value>(М/с)</value>
+  </data>
+  <data name="PhoneDownloadMbpsTextBlock.Text" xml:space="preserve">
+    <value>(Мб/с)</value>
+  </data>
+  <data name="PhoneDownloadTextBlock.Text" xml:space="preserve">
+    <value>Загрузка</value>
+  </data>
+  <data name="PhoneHistoryTextBlock.Text" xml:space="preserve">
     <value>История</value>
+  </data>
+  <data name="PhoneMsTextBlock.Text" xml:space="preserve">
+    <value>(М/с)</value>
   </data>
   <data name="PhonePingTextBlock.Text" xml:space="preserve">
     <value>Пинг</value>
@@ -174,16 +189,22 @@
   <data name="PhoneServerTextBlock.Text" xml:space="preserve">
     <value>Сервер</value>
   </data>
-  <data name="PhoneSetingsButton.Text" xml:space="preserve">
+  <data name="PhoneSetingsTextBlock.Text" xml:space="preserve">
     <value>Настройки</value>
   </data>
-  <data name="PhoneShareButton.Text" xml:space="preserve">
+  <data name="PhoneShareTextBlock.Text" xml:space="preserve">
     <value>Поделиться</value>
   </data>
+  <data name="PhoneUploadMbpsTextBlock.Text" xml:space="preserve">
+    <value>(Мб/с)</value>
+  </data>
   <data name="PhoneUploadTextBlock.Text" xml:space="preserve">
-    <value>Загрузка</value>
+    <value>Выгрузка</value>
   </data>
   <data name="PingText.Text" xml:space="preserve">
+    <value>Пинг</value>
+  </data>
+  <data name="PingTextBlock.Text" xml:space="preserve">
     <value>Пинг</value>
   </data>
   <data name="RateLink.Content" xml:space="preserve">
@@ -192,7 +213,10 @@
   <data name="ServerSuggestBox.PlaceholderText" xml:space="preserve">
     <value>Поиск</value>
   </data>
-  <data name="SettingsHeader.Text" xml:space="preserve">
+  <data name="ServerTextBlock.Text" xml:space="preserve">
+    <value>Сервер</value>
+  </data>
+  <data name="SettingsBlock.Text" xml:space="preserve">
     <value>Настройки</value>
   </data>
   <data name="SingleHistoryDeletingButtonPhoneGrid.Content" xml:space="preserve">
@@ -205,6 +229,9 @@
     <value>Соединение...</value>
   </data>
   <data name="UploadText.Text" xml:space="preserve">
-    <value>Загрузка</value>
+    <value>Выгрузка</value>
+  </data>
+  <data name="UploadTextBlock.Text" xml:space="preserve">
+    <value>Выгрузка</value>
   </data>
 </root>

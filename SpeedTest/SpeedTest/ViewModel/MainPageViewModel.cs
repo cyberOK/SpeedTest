@@ -9,6 +9,7 @@ using SpeedTest.ViewModel.Helpers;
 using SpeedTest.ViewModel.HelpfullCollections;
 using SpeedTest.ViewModel.ViewBoards;
 using Windows.Foundation;
+using Windows.Globalization;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -146,7 +147,7 @@ namespace SpeedTest.ViewModel
 
             this.SettingsPanel = new SettingsPanel
             {
-                Settings = AppSetting.GetInstance()
+                Settings = new AppSetting()
             };
 
             //this.HistoryPanel = new HistoryPanel();
@@ -263,6 +264,13 @@ namespace SpeedTest.ViewModel
 
         private void LanguageChange(object param)
         {
+            Languages chosenLanguage = (Languages)param;
+
+            var langIndex = this.SettingsPanel.Settings.Languages.IndexOf(chosenLanguage);
+            var langCode = this.SettingsPanel.Settings.LanguagesCodes[langIndex].ToString();
+
+            ApplicationLanguages.PrimaryLanguageOverride = langCode;
+
             Frame mainPage = Window.Current.Content as Frame;
             mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());       
         }
@@ -273,11 +281,13 @@ namespace SpeedTest.ViewModel
             
             if (selectedMode == "Dark")
             {
+                this.SettingsPanel.SelectedMode = 1;
                 this.SettingsPanel.Settings.Theme = "Dark";
             }
 
             else if (selectedMode == "Light")
             {
+                this.SettingsPanel.SelectedMode = 0;
                 this.SettingsPanel.Settings.Theme = "Light";
             }
         }

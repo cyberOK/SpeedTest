@@ -61,7 +61,7 @@
                         <Setter Target="StartButton.(Height)" Value="120"/>
                         <Setter Target="StartButton.(Width)" Value="200"/>
                         <Setter Target="StartButton.(Margin)" Value="0,0,0,30"/>
-                        <Setter Target="StartButton.(FontSize)" Value="90"/>
+                        <Setter Target="StartButton.(FontSize)" Value="70"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,15"/>
@@ -173,21 +173,22 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
                         <!-- SplitLine -->
-                        <Setter Target="SplitLineGrid.(Width)" Value="455"/>
+                        <Setter Target="SplitLineGrid.(Width)" Value="470"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
                         <!-- Data Board -->
-                        <Setter Target="TestDataBoard.(Width)" Value="455"/>
+                        
+                        <Setter Target="TestDataBoard.(Width)" Value="470"/>
                         <Setter Target="TestDataBoard.(Height)" Value="70"/>
-                        <Setter Target="PingFieldsGrid.(Width)" Value="125"/>
+                        <Setter Target="PingFieldsGrid.(Width)" Value="120"/>
                         <Setter Target="PingText.(FontSize)" Value="18"/>
                         <Setter Target="msText.(FontSize)" Value="18"/>
                         <Setter Target="DataPingText.(FontSize)" Value="40"/>
-                        <Setter Target="DownloadSpeedFieldsGrid.(Width)" Value="180"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(Width)" Value="190"/>
                         <Setter Target="DownloadText.(FontSize)" Value="18"/>
                         <Setter Target="mbpsText.(FontSize)" Value="18"/>
                         <Setter Target="DownloadSpeedData.(FontSize)" Value="40"/>
-                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="150"/>
+                        <Setter Target="UploadSpeedFieldsGrid.(Width)" Value="160"/>
                         <Setter Target="UploadText.(FontSize)" Value="18"/>
                         <Setter Target="mbpsUploadText.(FontSize)" Value="18"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="40"/>
@@ -208,7 +209,7 @@
                         <Setter Target="serverLocation.(FontSize)" Value="20"/>
                         <Setter Target="changeServerButton.(Width)" Value="150"/>
                         <Setter Target="changeServerButton.(Height)" Value="35"/>
-                        <Setter Target="changeServerButton.(FontSize)" Value="18"/>
+                        <Setter Target="changeServerButton.(FontSize)" Value="16"/>
                         <!-- SettingsPanel -->
                         <Setter Target="SettingsPanel.(Height)" Value="475"/>
                         <Setter Target="SettingsPanel.(Margin)" Value="0,30,25,0"/>
@@ -363,16 +364,16 @@
                                 PercentValue="{Binding ArcBoard.UploadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
 
                     <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
-                    <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 
-                        Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
-                        Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
+                    <Button x:Name="StartButton" x:Uid="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" Content="Start" HorizontalAlignment="Center" 
+                            Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
+                            Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
-                    <TextBlock x:Name="TryConnectTextBlock" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />
+                    <TextBlock x:Name="TryConnectTextBlock" x:Uid="TryConnectTextBlock" Text="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />
 
                     <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Visibility="{Binding ArcBoard.IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
-                   Text="{Binding ArcBoard.SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
+                               Visibility="{Binding ArcBoard.IsSpeedDataNumbersReceiving, Source={StaticResource mainViewModel}}"              
+                               Text="{Binding ArcBoard.SpeedDataNumbers, Source={StaticResource mainViewModel}}"/>
 
                 </Grid>
 
@@ -396,8 +397,8 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock x:Name="PingText" Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                                <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
+                                <TextBlock x:Name="PingText" x:Uid="PingText" Grid.Column="0" Text="Ping" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="msText" x:Uid="msText" Grid.Column="0" Grid.Row="1" Text="(ms)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
                                 <Viewbox x:Name="ViewBox1" Grid.Column="1" Grid.RowSpan="2" >
                                     <TextBlock x:Name="DataPingText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Text="{Binding DataBoard.PingData, Source={StaticResource mainViewModel}}"/>
@@ -417,8 +418,8 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock x:Name="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                <TextBlock x:Name="DownloadText" x:Uid="DownloadText" Grid.Column="0" Text="Download" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                <TextBlock x:Name="mbpsText" x:Uid="mbpsText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                                 <Viewbox  x:Name="ViewBox2" Grid.Column="1" Grid.RowSpan="2">
                                     <TextBlock x:Name="DownloadSpeedData" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
                                        Text="{Binding DataBoard.DownloadSpeedData, Source={StaticResource mainViewModel}}" />
@@ -438,10 +439,10 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock x:Name="UploadText" Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
-                                <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
+                                <TextBlock x:Name="UploadText" x:Uid="UploadText" Grid.Column="0" Text="Upload" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="mbpsUploadText"  x:Uid="mbpsUploadText" Grid.Column="0" Grid.Row="1" Text="(mbps)" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" />
                                 <Viewbox  x:Name="ViewBox3" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right">
-                                    <TextBlock x:Name="UploadDataText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
+                                    <TextBlock x:Name="UploadDataText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Right"
                                            Text="{Binding DataBoard.UploadSpeedData, Source={StaticResource mainViewModel}}"/>
                                 </Viewbox>
                             </Grid>
@@ -468,7 +469,7 @@
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
-                        <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
+                        <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
                             Command="{Binding ChangeServerButtonPressed}">
                             <Button.Background>
@@ -498,7 +499,7 @@
                     <!-- Settings Panel TopBar -->
                     <RelativePanel x:Name="SettingsTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
                                    RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
-                        <TextBlock x:Name="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan" Padding="20,10"
+                        <TextBlock x:Name="SettingsBlock" x:Uid="SettingsBlock" Text="Settings" FontSize="30" Foreground="DarkCyan" Padding="20,10"
                                        RelativePanel.AlignLeftWithPanel="True"/>
                         <Button x:Name="CloseSettingButton" Style="{StaticResource ButtonClose}" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"
                                 Command="{Binding SettingSplitViewClosing, Source={StaticResource mainViewModel}}"/>
@@ -515,9 +516,10 @@
                             <RelativePanel x:Name="ContentPanel" Padding="20,10,0,0">
 
                                 <!-- Language Block -->
-                                <TextBlock x:Name="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
-                                <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" ItemsSource="{Binding SettingsPanel.Settings.Languages, Source={StaticResource mainViewModel}}" 
-                                          Margin="0,0,20,0" PlaceholderText="English" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" UseSystemFocusVisuals="True"
+                                <TextBlock x:Name="LanguageBlock" x:Uid="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
+                                <ComboBox x:Name="LanguageComboBox" x:Uid="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" 
+                                          ItemsSource="{Binding SettingsPanel.Settings.Languages, Source={StaticResource mainViewModel}}" 
+                                          Margin="0,0,20,0" PlaceholderText="Choose language" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" UseSystemFocusVisuals="True"
                                           RelativePanel.Below="LanguageBlock" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                     
                                     <Interactivity:Interaction.Behaviors>
@@ -530,16 +532,18 @@
                                 </ComboBox>
 
                                 <!-- Mode Block -->
-                                <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
-                                <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme" Content="Light" Width="90" RelativePanel.Below="ModeBlock"
-                                                 Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" 
-                                                 IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
-                                <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="DarkRadioButton" GroupName="Theme" Content="Dark" Width="90" RelativePanel.Below="LightRadioButton"
-                                                 Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Content}" 
-                                                 IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
+                                <TextBlock x:Name="ModeBlock" x:Uid="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
+                                <RadioButton  x:Name="LightRadioButton" x:Uid="LightRadioButton" GroupName="Theme" Content="Light" Width="90" RelativePanel.Below="ModeBlock" Tag="Light"
+                                              Style="{StaticResource RadioButtonStyle1}"
+                                              Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Tag}" 
+                                              IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
+                                <RadioButton  x:Name="DarkRadioButton" x:Uid="DarkRadioButton" GroupName="Theme" Content="Dark" Width="90" RelativePanel.Below="LightRadioButton" Tag="Dark"
+                                              Style="{StaticResource RadioButtonStyle1}"   
+                                              Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Tag}" 
+                                              IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
 
                                 <!--About Block -->
-                                <TextBlock x:Name="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="About" RelativePanel.Below="DarkRadioButton"/>
+                                <TextBlock x:Name="AboutBlock" x:Uid="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="About" RelativePanel.Below="DarkRadioButton"/>
                                 <TextBlock x:Name="ProgramNameBlock" Text="{Binding SettingsPanel.Settings.ProgramName, Source={StaticResource mainViewModel}}" Style="{StaticResource TextBlockAboutProgram}"
                                                RelativePanel.Below="AboutBlock"/>
                                 <TextBlock x:Name="VersionBlock" Text="{Binding SettingsPanel.Settings.Version, Source={StaticResource mainViewModel}}" Style="{StaticResource TextBlockAboutProgram}" 
@@ -553,14 +557,14 @@
                                 </RichTextBlock>
 
                                 <!--FeedBack Block -->
-                                <HyperlinkButton x:Name="FeedBackLink" 
+                                <HyperlinkButton x:Name="FeedBackLink"  x:Uid="FeedBackLink" Content="Feedback"
                                                  NavigateUri="{Binding SettingsPanel.Settings.FeedBackLink, Source={StaticResource mainViewModel}}" 
                                                  Style="{StaticResource HyperlinkButtonSettingsPanel}" 
-                                                 RelativePanel.Below="AboutStoryBlock">Feedback</HyperlinkButton>
-                                <HyperlinkButton x:Name="RateLink" 
+                                                 RelativePanel.Below="AboutStoryBlock"/>
+                                <HyperlinkButton x:Name="RateLink" x:Uid="RateLink" Content="Rate us"
                                                  NavigateUri="{Binding SettingsPanel.Settings.RateLink, Source={StaticResource mainViewModel}}" 
                                                  Style="{StaticResource HyperlinkButtonSettingsPanel}"
-                                                 Margin="0,0,0,30" RelativePanel.Below="FeedBackLink">Rate us</HyperlinkButton>
+                                                 Margin="0,0,0,30" RelativePanel.Below="FeedBackLink"/>
                             </RelativePanel>
                         </ScrollViewer>
                     </Grid>
@@ -576,8 +580,8 @@
                     <!-- History Panel TopBar -->
                     <RelativePanel x:Name="HistoryPanelTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
                                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                        
-                        <TextBlock x:Name="HistoryBlock" Text="History" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True"/>
+
+                        <TextBlock x:Name="HistoryBlock" x:Uid="HistoryBlock" Text="History" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True"/>
                         <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Background="Transparent" 
                                 Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
                         <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Background="Transparent"
@@ -594,21 +598,21 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.4*"/>
                             <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="1.2*"/>
+                            <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="0.6*"/>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="0.8*"/>
+                            <ColumnDefinition Width="1.1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="CommonStyleSetterTextBlock"/>
-                        
-                        <TextBlock Grid.Column="1" Text="Server" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
-                        <TextBlock Grid.Column="2" Text="Date" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
-                        <TextBlock Grid.Column="3" Text="Ping" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
-                        <TextBlock Grid.Column="4" Text="Download" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
-                        <TextBlock Grid.Column="5" Text="Upload" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
-                        <TextBlock Grid.Column="3" Text="(Ms)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
-                        <TextBlock Grid.Column="4" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
-                        <TextBlock Grid.Column="5" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
+
+                        <TextBlock x:Uid="ServerTextBlock" Grid.Column="1" Text="Server" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock x:Uid="DateTextBlock" Grid.Column="2" Text="Date" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock x:Uid="PingTextBlock" Grid.Column="3" Text="Ping" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock x:Uid="DownloadTextBlock" Grid.Column="4" Text="Download" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock x:Uid="UploadTextBlock" Grid.Column="5" Text="Upload" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}"/>
+                        <TextBlock x:Uid="MsTextBlock" Grid.Column="3" Text="(Ms)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
+                        <TextBlock x:Uid="MbpsTextBlock" Grid.Column="4" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
+                        <TextBlock x:Uid="MbpsTextBlock" Grid.Column="5" Text="(Mbps)" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}"/>
                     </Grid>
                    
                     <!-- History List -->
@@ -628,6 +632,7 @@
                                 <DataTemplate>
                                     <UserControl HorizontalContentAlignment="Stretch">
                                         <Grid x:Name="VisualStateGrid" HorizontalAlignment="Stretch">
+                                            
                                             <!-- Adaptive Styles For GridViewItems -->
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup>
@@ -666,6 +671,7 @@
                                                      </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
+                                            
                                             <!-- Phone GridViewItem Template -->
                                             <Grid x:Name="PhoneGrid">
                                                 <RelativePanel x:Name="SingleHistoryCell">
@@ -680,7 +686,7 @@
                                                         <TextBlock x:Name="DateTextBlockPhoneGrid" RelativePanel.AlignLeftWithPanel="True" Padding="20,10,0,10"
                                                                    Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
 
-                                                        <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" Content="Delete" Margin="0,0,10,0" Height="40" 
+                                                        <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" x:Uid="SingleHistoryDeletingButtonPhoneGrid" Content="Delete" Margin="0,0,10,0" Height="40" 
                                                                 Background="Transparent" Foreground="DarkCyan"  RelativePanel.AlignRightWithPanel="True" CommandParameter="{Binding }"
                                                                 Command="{Binding PhoneSingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
 
@@ -689,15 +695,16 @@
                                                     <!-- Shade -->
                                                     <Rectangle x:Name="PhoneShadeDown" Fill="{StaticResource LinearGradientBrushShade}" RelativePanel.Below="CellHeader" Opacity="0.3" Canvas.ZIndex="1" 
                                                                 Height="8" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
+                                                    
                                                     <!-- Main Content of ItemTemplate -->
                                                     <RelativePanel x:Name="CellContent" RelativePanel.Below="CellHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                                                        <TextBlock x:Name="PhoneServerTextBlock" Text="Server" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.AlignLeftWithPanel="True"/>
-                                                        <TextBlock x:Name="PhonePingTextBlock" Text="Ping" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneServerTextBlock"/>
-                                                        <TextBlock x:Name="PhoneMsTextBlock" Text="(Ms)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhonePingTextBlock" RelativePanel.Below="PhoneServerTextBlock"/>
-                                                        <TextBlock x:Name="PhoneDownloadTextBlock" Text="Dowload" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhonePingTextBlock"/>
-                                                        <TextBlock x:Name="PhoneDownloadMbpsTextBlock" Text="(Mbps)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhonePingTextBlock"/>
-                                                        <TextBlock x:Name="PhoneUploadTextBlock" Text="Upload" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneDownloadTextBlock"/>
-                                                        <TextBlock x:Name="PhoneUploadMbpsTextBlock" Text="(Mbps)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhoneDownloadTextBlock"/>
+                                                        <TextBlock x:Name="PhoneServerTextBlock" x:Uid="PhoneServerTextBlock" Text="Server" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.AlignLeftWithPanel="True"/>
+                                                        <TextBlock x:Name="PhonePingTextBlock" x:Uid="PhonePingTextBlock" Text="Ping" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneServerTextBlock"/>
+                                                        <TextBlock x:Name="PhoneMsTextBlock" x:Uid="PhoneMsTextBlock" Text="(Ms)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhonePingTextBlock" RelativePanel.Below="PhoneServerTextBlock"/>
+                                                        <TextBlock x:Name="PhoneDownloadTextBlock" x:Uid="PhoneDownloadTextBlock" Text="Dowload" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhonePingTextBlock"/>
+                                                        <TextBlock x:Name="PhoneDownloadMbpsTextBlock" x:Uid="PhoneDownloadMbpsTextBlock" Text="(Mbps)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhonePingTextBlock"/>
+                                                        <TextBlock x:Name="PhoneUploadTextBlock" x:Uid="PhoneUploadTextBlock" Text="Upload" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneDownloadTextBlock"/>
+                                                        <TextBlock x:Name="PhoneUploadMbpsTextBlock" x:Uid="PhoneUploadMbpsTextBlock" Text="(Mbps)" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhoneDownloadTextBlock"/>
 
                                                         <TextBlock x:Name="PhoneServerDataTextBlock" Text="{Binding Server}" Padding="20,10,20,10" RelativePanel.AlignRightWithPanel="True"/>
                                                         <TextBlock x:Name="PhonePingDataTextBlock" Text="{Binding Ping}" Padding="20,10,20,10" RelativePanel.Below="PhoneServerDataTextBlock" RelativePanel.AlignRightWithPanel="True"/>
@@ -713,10 +720,10 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="0.4*"/>
                                                     <ColumnDefinition Width="1.5*"/>
-                                                    <ColumnDefinition Width="1.2*"/>
-                                                     <ColumnDefinition Width="0.6*"/>
                                                     <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="0.8*"/>
+                                                     <ColumnDefinition Width="0.6*"/>
+                                                    <ColumnDefinition Width="1.1*"/>
+                                                    <ColumnDefinition Width="1.1*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition/>
@@ -785,7 +792,7 @@
                     </RelativePanel>
                     
                     <!-- Search Bar -->
-                    <AutoSuggestBox x:Name="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}" PlaceholderText="Search" Margin="20,0" QueryIcon="Find" 
+                    <AutoSuggestBox x:Name="ServerSuggestBox" x:Uid="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}" PlaceholderText="Search" Margin="20,0" QueryIcon="Find" 
                                     RelativePanel.Below="ServersTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="TextChanged">
@@ -796,7 +803,7 @@
                     </AutoSuggestBox>
 
                     <!-- AvailableServers Line -->
-                    <TextBlock x:Name="AvailableServers" Text="Available servers:" FontSize="20" Margin="20,10,0,10" RelativePanel.Below="ServerSuggestBox"/>
+                    <TextBlock x:Name="AvailableServers" x:Uid="AvailableServers" Text="Available servers:" FontSize="20" Margin="20,10,0,10" RelativePanel.Below="ServerSuggestBox"/>
 
                     <!-- Servers List -->
                     <Grid RelativePanel.Below="AvailableServers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
@@ -850,21 +857,21 @@
                                 Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE713;"/>
-                                <TextBlock Text="Settings" Padding="20,0,0,0"/>
+                                <TextBlock x:Uid="PhoneSetingsTextBlock" Text="Settings" Padding="20,0,0,0"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="PhoneHistoryButton" Margin="10,0,0,0" FontSize="20" Background="Transparent"
                                 Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE81C;"/>
-                                <TextBlock Text="History" Padding="20,0,0,0"/>
+                                <TextBlock x:Uid="PhoneHistoryTextBlock" Text="History" Padding="20,0,0,0"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="PhoneShareButton" Margin="10,0,0,0" FontSize="20" RelativePanel.Above="PhoneSetingsButton" Background="Transparent"
                                 Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}" Foreground="DarkCyan">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE72D;"/>
-                                <TextBlock Text="Share" Padding="20,0,0,0"/>
+                                <TextBlock x:Uid="PhoneShareTextBlock" Text="Share" Padding="20,0,0,0"/>
                             </StackPanel>
                         </Button>
 

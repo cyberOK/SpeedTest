@@ -8,15 +8,20 @@ using System.Threading.Tasks;
 
 namespace SpeedTest.ViewModel.HelpfullCollections
 {
-    public enum Language
+
+    public enum Languages
     {
         English,
-        Russian,
-        Polish,
-        Ukrainian
+        Русский,
     }
 
-     public enum Mode
+    public enum LanguagesCodes
+    {
+        en,
+        ru
+    }
+
+    public enum Mode
     {
         Light,
         Dark
@@ -24,10 +29,10 @@ namespace SpeedTest.ViewModel.HelpfullCollections
 
     public class AppSetting : ObservableObject
     {
-        private static AppSetting _instance;
         private string _theme;
 
-        public List<Language> Languages { get; private set; }
+        public List<LanguagesCodes> LanguagesCodes { get; private set; }
+        public List<Languages> Languages { get; private set; }
         public List<Mode> Modes { get; private set; }
         public string ProgramName { get; private set; } 
         public string Version { get; private set; }  
@@ -56,24 +61,15 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             set { Set(ref _theme, value); }
         }
 
-        private AppSetting()
+        public AppSetting()
         {
             this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
             this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
-            this.Languages = Enum.GetValues(typeof(Language)).Cast<Language>().ToList();
+            this.Languages = Enum.GetValues(typeof(Languages)).Cast<Languages>().ToList();
+            this.LanguagesCodes = Enum.GetValues(typeof(LanguagesCodes)).Cast<LanguagesCodes>().ToList();
             this.Modes = Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList();
             this.Theme = this.GetWindowsTheme();            
-        }
-       
-        public static AppSetting GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new AppSetting();
-            }
-
-            return _instance;
-        }
+        }    
 
         private string GetWindowsTheme()
         {
@@ -82,11 +78,11 @@ namespace SpeedTest.ViewModel.HelpfullCollections
 
             if (uiTheme == "#FF000000")
             {
-                return this._theme = "Dark";
+                return this.Theme = "Dark";
             }
             else // (uiTheme == "#FFFFFFFF")
             {
-              return  this._theme = "Light";
+              return  this.Theme = "Light";
             }
         }
     }
