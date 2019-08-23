@@ -12,9 +12,9 @@ namespace SpeedTest.ViewModel.ViewBoards
         private bool _isPingFieldsGridVisible;
         private bool _isDownloadSpeedFieldsGridVisible;
         private bool _isUploadSpeedFieldsGridVisible;
-        private string _pingDataPing;
-        private string _downloadSpeedData;
-        private string _uploadData;
+        private string _pingDataPing = "000";
+        private string _downloadSpeedData = "000";
+        private string _uploadData = "000";
 
         public bool IsPingFieldsGridVisible
         {

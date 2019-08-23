@@ -146,7 +146,7 @@ namespace SpeedTest.ViewModel
 
             this.SettingsPanel = new SettingsPanel
             {
-                Settings = new AppSetting()
+                Settings = AppSetting.GetInstance()
             };
 
             //this.HistoryPanel = new HistoryPanel();

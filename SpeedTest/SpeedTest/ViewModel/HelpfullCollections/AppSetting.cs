@@ -23,7 +23,8 @@ namespace SpeedTest.ViewModel.HelpfullCollections
     }
 
     public class AppSetting : ObservableObject
-    {     
+    {
+        private static AppSetting _instance;
         private string _theme;
 
         public List<Language> Languages { get; private set; }
@@ -55,7 +56,7 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             set { Set(ref _theme, value); }
         }
 
-        public AppSetting()
+        private AppSetting()
         {
             this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
             this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
@@ -64,6 +65,16 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             this.Theme = this.GetWindowsTheme();            
         }
        
+        public static AppSetting GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new AppSetting();
+            }
+
+            return _instance;
+        }
+
         private string GetWindowsTheme()
         {
             var DefaultTheme = new Windows.UI.ViewManagement.UISettings();

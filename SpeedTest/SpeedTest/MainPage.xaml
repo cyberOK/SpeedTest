@@ -275,10 +275,8 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
                         <!-- Data Board -->
-
                         <Setter Target="DownloadSpeedFieldsGrid.(HorizontalAlignment)" Value="Center"/>
                         <Setter Target="DownloadSpeedFieldsGrid.(RelativePanel.LeftOf)" Value="UploadSpeedFieldsGrid"/>
-                        
                         <Setter Target="TestDataBoard.(Margin)" Value="20,0,20,0"/>
                         <Setter Target="PingText.(FontSize)" Value="15"/>
                         <Setter Target="msText.(FontSize)" Value="15"/>
@@ -407,9 +405,8 @@
                             </Grid>
 
                             <!-- Download Speed Fields -->
-                            <Grid x:Name="DownloadSpeedFieldsGrid"
-                              RelativePanel.RightOf="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
-                              Visibility="Visible"
+                            <Grid x:Name="DownloadSpeedFieldsGrid" Visibility="Visible"
+                                  RelativePanel.RightOf="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
                                   Opacity="{Binding DataBoard.IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -467,9 +464,9 @@
                         <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.IpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
                         <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
-                               Text="{Binding ServerInformationBoard.ServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.CurrentServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.ServerLocation, Source={StaticResource mainViewModel}}"
+                               Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
                         <Button x:Name="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
@@ -534,7 +531,7 @@
 
                                 <!-- Mode Block -->
                                 <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
-                                <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme"  Content="Light" Width="90" RelativePanel.Below="ModeBlock"
+                                <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="LightRadioButton" GroupName="Theme" Content="Light" Width="90" RelativePanel.Below="ModeBlock"
                                                  Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Content}" 
                                                  IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
                                 <RadioButton Style="{StaticResource RadioButtonStyle1}" x:Name="DarkRadioButton" GroupName="Theme" Content="Dark" Width="90" RelativePanel.Below="LightRadioButton"
@@ -779,9 +776,9 @@
                                        FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
                         <Rectangle Fill="DarkCyan"  Canvas.ZIndex="1" RelativePanel.RightOf="ImageGlobe"
                                Width="2" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
-                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerInformationBoard.ServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
+                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerInformationBoard.CurrentServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
                                    RelativePanel.RightOf="ImageGlobe" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerInformationBoard.ServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
+                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
                                    RelativePanel.RightOf="ImageGlobe" RelativePanel.Below="HeaderServerName"/>
                         <Button x:Name="CloseServersPanelButton" Style="{StaticResource ButtonClose}"  Content="&#xE711;"
                                 Command="{Binding CloseServerPanelButtonPressed}" RelativePanel.AlignRightWithPanel="True"/>
