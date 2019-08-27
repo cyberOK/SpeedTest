@@ -39,6 +39,10 @@
                         <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="860"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- Backgrounds Setting -->
+                        <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Visible"/>
+                        <Setter Target="MiddleStateBackgroundGrid.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="PhoneBackgroundGrid.(Visibility)" Value="Collapsed"/>
                         <!-- SettingsPanelButtons -->
                         <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
@@ -142,7 +146,9 @@
                     <VisualState.Setters>
                         <!-- Main Background -->
                         <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
-                        <Setter Target="MainOpacityBackgroundGrid.(Background)" Value="{ThemeResource SystemControlAcrylicWindowBrush}"/>
+                        <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="MiddleStateBackgroundGrid.(Visibility)" Value="Visible"/>
+                        <Setter Target="PhoneBackgroundGrid.(Visibility)" Value="Collapsed"/>
                         <!-- SettingsPanelButtons -->
                         <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
@@ -248,7 +254,9 @@
                     <VisualState.Setters>
                         <!-- Main Background -->
                         <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
-                        <Setter Target="MainOpacityBackgroundGrid.(Background)" Value="{ThemeResource BackgroundPhone}"/>
+                        <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="MiddleStateBackgroundGrid.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="PhoneBackgroundGrid.(Visibility)" Value="Visible"/>
                         <Setter Target="PopupGrid.(Background)" Value="Transparent"/>
                         <!-- SettingsPanelButtons -->                         
                         <Setter Target="GamburgerButton.(Visibility)" Value="Visible"/>
@@ -268,7 +276,7 @@
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
                         <Setter Target="StartButton.(Margin)" Value="0,0,0,15"/>
-                        <Setter Target="StartButton.(FontSize)" Value="50"/>
+                        <Setter Target="StartButton.(FontSize)" Value="40"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="25"/>
                         <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,10"/>
@@ -326,7 +334,18 @@
         
         <!-- Background Image with Grid Above It -->
         <Image x:Name="BackgroundPhoto" Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
-        <Grid x:Name="MainOpacityBackgroundGrid" Background="{ThemeResource BackgroundOpacityBrushForPhoto}"/>
+        <!-- Desktop Background -->
+        <Grid x:Name="MainOpacityBackgroundGrid" 
+              RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+              Background="{ThemeResource BackgroundOpacityBrushForPhoto}" />
+        <!-- MiddleState(500 x 500) Background -->
+        <Grid x:Name="MiddleStateBackgroundGrid" 
+              RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+              Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
+        <!-- Phone Background -->
+        <Grid x:Name="PhoneBackgroundGrid" 
+              RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+              Background="{ThemeResource BackgroundPhone}" />
 
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
@@ -519,6 +538,7 @@
                                 <TextBlock x:Name="LanguageBlock" x:Uid="LanguageBlock" Text="Language" FontSize="20" Padding="0,10"/>
                                 <ComboBox x:Name="LanguageComboBox" x:Uid="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" 
                                           ItemsSource="{Binding SettingsPanel.Settings.Languages, Source={StaticResource mainViewModel}}" 
+                                          DisplayMemberPath="DisplayName" SelectedValuePath="LanguageCode"
                                           Margin="0,0,20,0" PlaceholderText="Choose language" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" UseSystemFocusVisuals="True"
                                           RelativePanel.Below="LanguageBlock" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                     
@@ -881,5 +901,6 @@
             </Grid>
 
         </Grid>
+        
     </Grid>
 </Page>

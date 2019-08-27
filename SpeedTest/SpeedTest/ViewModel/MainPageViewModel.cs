@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SpeedTest.ViewModel.Helpers;
 using SpeedTest.ViewModel.HelpfullCollections;
 using SpeedTest.ViewModel.ViewBoards;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Globalization;
 using Windows.UI;
@@ -116,7 +117,9 @@ namespace SpeedTest.ViewModel
         public SpeedTestCommand SingleHistoryDeletedButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistorySelected { get; private set; }
         public SpeedTestCommand PhoneSingleHistoryDeletedButtonPressed { get; private set; }
-        
+
+        public SpeedTestCommand DeleteHistoryContentDialogButtonPressed { get; private set; }
+
         // Server panel properties commands
 
         public SpeedTestCommand ServerSuggestBoxTextChanged { get; private set; }
@@ -150,7 +153,6 @@ namespace SpeedTest.ViewModel
                 Settings = new AppSetting()
             };
 
-            //this.HistoryPanel = new HistoryPanel();
             this.HistoryPanel = new HistoryPanel
             {
                 SpeedDataCollection = new ObservableCollection<SpeedData>()
@@ -172,7 +174,7 @@ namespace SpeedTest.ViewModel
             // Main panel commands assigning
 
             this.StartButtonPressed = new SpeedTestCommand(new Action<object>(StartSpeedTest));
-            this.BackButtonPressed = new SpeedTestCommand(new Action<object>(BackCalling));
+            this.BackButtonPressed = new SpeedTestCommand(new Action<object>(ShareCalling));
             this.HistoryButtonPressed = new SpeedTestCommand(new Action<object>(HistoryCalling));
             this.SettingsButtonPressed = new SpeedTestCommand(new Action<object>(SettingsCalling));
             this.ChangeServerButtonPressed = new SpeedTestCommand(new Action<object>(ChangeServerCalling));
@@ -186,11 +188,12 @@ namespace SpeedTest.ViewModel
 
             // History panel commands assigning
 
-            this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
+            this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CallDeleteHistoryDialog));
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
             this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleting));
             this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
             this.PhoneSingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(PhoneSingleHistoryDeleting));
+            this.DeleteHistoryContentDialogButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
 
             // Server panel commands assigning
 
@@ -215,7 +218,7 @@ namespace SpeedTest.ViewModel
             this.Model.StartTest();
         }
 
-        private async void BackCalling(object param)
+        private async void ShareCalling(object param)
         {
             this.ClosePhoneGrid();
             this.IsPopupGridRaise = false;
@@ -264,10 +267,9 @@ namespace SpeedTest.ViewModel
 
         private void LanguageChange(object param)
         {
-            Languages chosenLanguage = (Languages)param;
+            HelpfullCollections.Language chosenLanguage = (HelpfullCollections.Language)param;
 
-            var langIndex = this.SettingsPanel.Settings.Languages.IndexOf(chosenLanguage);
-            var langCode = this.SettingsPanel.Settings.LanguagesCodes[langIndex].ToString();
+            string langCode = chosenLanguage.LanguageCode;
 
             ApplicationLanguages.PrimaryLanguageOverride = langCode;
 
@@ -302,21 +304,21 @@ namespace SpeedTest.ViewModel
 
         #region History Actions for Delegates
 
-        private async void DeleteHistory(object param)
+        private async void CallDeleteHistoryDialog(object param)
         {       
             if (this.HistoryPanel.SpeedDataCollection.Count != 0)
             {
-                Style buttonStyle = CreateContentDialogButtonStyle();
-                ContentDialog deleteFileDialog = CreateContentDialog(buttonStyle);
-                ContentDialogResult result = await deleteFileDialog.ShowAsync();
+                DeleteDialog dD = new DeleteDialog();
 
-                if (result == ContentDialogResult.Primary)
-                {
-                    this.HistoryPanel.SpeedDataCollection.Clear();
-                }
+                await dD.ShowAsync();
             }
         }
-        
+
+        private void DeleteHistory(object param)
+        {
+            this.HistoryPanel.SpeedDataCollection.Clear();           
+        }
+
         private void CloseHistory(object param)
         {
             this.IsPopupGridRaise = false;
@@ -516,56 +518,7 @@ namespace SpeedTest.ViewModel
         {
             this.ServerInformationBoard.CurrentServerName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
             this.ServerInformationBoard.CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
-        }
-
-        private Style CreateContentDialogButtonStyle()
-        {
-            LinearGradientBrush gradientBrush = new LinearGradientBrush();
-            GradientStop firstGradient = new GradientStop();
-            GradientStop secondGradient = new GradientStop();
-            firstGradient.Color = Color.FromArgb(255, 20, 206, 236);
-            firstGradient.Offset = 1;
-            secondGradient.Color = Color.FromArgb(255, 16, 23, 87);
-            secondGradient.Offset = 0;
-
-            gradientBrush.GradientStops.Add(firstGradient);
-            gradientBrush.GradientStops.Add(secondGradient);
-            gradientBrush.EndPoint = new Point(0, 1);
-            gradientBrush.StartPoint = new Point(0.6, 0);
-
-            var buttonStyle = new Style(typeof(Button));
-            buttonStyle.Setters.Add(new Setter(Button.BackgroundProperty, gradientBrush));
-            buttonStyle.Setters.Add(new Setter(Button.ForegroundProperty, Colors.White));
-
-            return buttonStyle;
-        }
-
-        private ContentDialog CreateContentDialog(Style buttonStyle)
-        {
-            ContentDialog FileDialog = new ContentDialog
-            {
-                Title = "Clear Application history?",
-                Content = "Do you really want to delete the history?" + "\n" + "To Continue press 'Clear history', this may take a while.",
-                PrimaryButtonText = "Clear history",
-                CloseButtonText = "Cancel",
-                PrimaryButtonStyle = buttonStyle,
-                RequestedTheme = ThemeNow(this.SettingsPanel.Settings.Theme)
-            };
-
-            return FileDialog;
-        }
-         
-        private ElementTheme ThemeNow(string theme)
-        {
-            if (theme == "Dark")
-            {
-                return ElementTheme.Dark;
-            }
-            else
-            {
-                return ElementTheme.Light;
-            }
-        }
+        }       
 
         private void ClosePhoneGrid()
         {

@@ -234,4 +234,16 @@
   <data name="UploadTextBlock.Text" xml:space="preserve">
     <value>Upload</value>
   </data>
+  <data name="DeleteDialog.Content" xml:space="preserve">
+    <value>Do you really want to delete the history? To Continue press 'Clear history', this may take a while.</value>
+  </data>
+  <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Clear history</value>
+  </data>
+  <data name="DeleteDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DeleteDialog.Title" xml:space="preserve">
+    <value>"Clear Application history?</value>
+  </data>
 </root>
