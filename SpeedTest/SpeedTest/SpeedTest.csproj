@@ -138,6 +138,9 @@
     <Compile Include="Model\SpeedDataEventArgs.cs" />
     <Compile Include="Model\SpeedTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RingSlice\ColorExtension.cs" />
+    <Compile Include="RingSlice\PropertyChangeEventSource.cs" />
+    <Compile Include="RingSlice\RingSlice.cs" />
     <Compile Include="ViewModel\Converters\BooleanToColorConverter.cs" />
     <Compile Include="ViewModel\Converters\BooleanToOpacityConverter.cs" />
     <Compile Include="ViewModel\Converters\BooleanToVisibilityConverter.cs" />

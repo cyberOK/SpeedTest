@@ -36,7 +36,7 @@
                 <!-- Desktop version -->
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="860"/>
+                        <AdaptiveTrigger MinWindowWidth="1040" MinWindowHeight="850"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!-- Backgrounds Setting -->
@@ -95,6 +95,8 @@
                         <Setter Target="changeServerButton.(Height)" Value="50"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="28"/>
                         <!-- Data Board -->
+                        <Setter Target="UploadSpeedFieldsGrid.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(RelativePanel.RightOf)" Value="PingFieldsGrid"/>
                         <Setter Target="TestDataBoard.(Width)" Value="1040"/>
                         <Setter Target="TestDataBoard.(Height)" Value="150"/>
                         <Setter Target="PingFieldsGrid.(Width)" Value="280"/>
@@ -116,7 +118,7 @@
                         <Setter Target="SettingsPanel.(HorizontalAlignment)" Value="Right"/>
                         <Setter Target="SettingsPanel.(VerticalAlignment)" Value="Top"/>
                         <!-- History Panel -->
-                        <Setter Target="HistoryPanel.(Height)" Value="700"/> 
+                        <Setter Target="HistoryPanel.(Height)" Value="700"/>
                         <Setter Target="HistoryPanel.(Width)" Value="700"/>
                         <Setter Target="HistoryPanelTopBar.(Width)" Value="700"/>
                         <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
@@ -183,7 +185,8 @@
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
                         <!-- Data Board -->
-                        
+                        <Setter Target="UploadSpeedFieldsGrid.(RelativePanel.AlignRightWithPanel)" Value="True"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(RelativePanel.RightOf)" Value="PingFieldsGrid"/>
                         <Setter Target="TestDataBoard.(Width)" Value="470"/>
                         <Setter Target="TestDataBoard.(Height)" Value="70"/>
                         <Setter Target="PingFieldsGrid.(Width)" Value="120"/>
@@ -258,7 +261,7 @@
                         <Setter Target="MiddleStateBackgroundGrid.(Visibility)" Value="Collapsed"/>
                         <Setter Target="PhoneBackgroundGrid.(Visibility)" Value="Visible"/>
                         <Setter Target="PopupGrid.(Background)" Value="Transparent"/>
-                        <!-- SettingsPanelButtons -->                         
+                        <!-- SettingsPanelButtons -->
                         <Setter Target="GamburgerButton.(Visibility)" Value="Visible"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Collapsed"/>
                         <!-- Arcs -->
@@ -284,8 +287,13 @@
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
                         <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
                         <!-- Data Board -->
+                        <Setter Target="UploadSpeedFieldsGrid.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="UploadSpeedFieldsGrid.(MinWidth)" Value="130"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(MinWidth)" Value="135"/>
                         <Setter Target="DownloadSpeedFieldsGrid.(HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="DownloadSpeedFieldsGrid.(RelativePanel.RightOf)" Value="PingFieldsGrid"/>
                         <Setter Target="DownloadSpeedFieldsGrid.(RelativePanel.LeftOf)" Value="UploadSpeedFieldsGrid"/>
+                        <Setter Target="UploadSpeedFieldsGrid.(RelativePanel.AlignRightWithPanel)" Value="True"/>
                         <Setter Target="TestDataBoard.(Margin)" Value="20,0,20,0"/>
                         <Setter Target="PingText.(FontSize)" Value="15"/>
                         <Setter Target="msText.(FontSize)" Value="15"/>
@@ -296,9 +304,12 @@
                         <Setter Target="UploadText.(FontSize)" Value="15"/>
                         <Setter Target="mbpsUploadText.(FontSize)" Value="15"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="30"/>
-                        <Setter Target="ViewBox1.(MaxWidth)" Value="50"/>
-                        <Setter Target="ViewBox2.(MaxWidth)" Value="50"/>
-                        <Setter Target="ViewBox3.(MaxWidth)" Value="50"/>
+                        <Setter Target="ViewBox1.(MaxWidth)" Value="100"/>
+                        <Setter Target="ViewBox2.(MaxWidth)" Value="100"/>
+                        <Setter Target="ViewBox3.(MaxWidth)" Value="100"/>
+                        <Setter Target="ViewBox1.(MaxHeight)" Value="50"/>
+                        <Setter Target="ViewBox2.(MaxHeight)" Value="50"/>
+                        <Setter Target="ViewBox3.(MaxHeight)" Value="50"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Margin)" Value="20,20,20,20"/>
                         <!-- Main Bottom Board -->
@@ -308,7 +319,7 @@
                         <Setter Target="serverName.(FontSize)" Value="20"/>
                         <Setter Target="serverLocation.(FontSize)" Value="20"/>
                         <Setter Target="ipAdress.(FontSize)" Value="20"/>
-                        <Setter Target="changeServerButton.(Margin)" Value="0,20,0,0"/>
+                        <Setter Target="changeServerButton.(Margin)" Value="0,10,0,0"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="18"/>
                         <Setter Target="changeServerButton.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
                         <Setter Target="changeServerButton.(HorizontalAlignment)" Value="Stretch"/>
@@ -331,7 +342,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <!-- Background Image with Grid Above It -->
         <Image x:Name="BackgroundPhoto" Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
         <!-- Desktop Background -->
@@ -404,8 +415,7 @@
                         <RelativePanel>
 
                             <!-- Ping Fields -->
-                            <Grid x:Name="PingFieldsGrid" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
-                               Visibility="Visible"
+                            <Grid x:Name="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
                                  Opacity="{Binding DataBoard.IsPingFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -425,8 +435,7 @@
                             </Grid>
 
                             <!-- Download Speed Fields -->
-                            <Grid x:Name="DownloadSpeedFieldsGrid" Visibility="Visible"
-                                  RelativePanel.RightOf="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
+                            <Grid x:Name="DownloadSpeedFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
                                   Opacity="{Binding DataBoard.IsDownloadSpeedFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -446,8 +455,7 @@
                             </Grid>
 
                             <!-- Upload Speed Fields -->
-                            <Grid x:Name="UploadSpeedFieldsGrid" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
-                              Visibility="Visible"
+                            <Grid x:Name="UploadSpeedFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
                               Opacity="{Binding DataBoard.IsUploadSpeedFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -488,16 +496,9 @@
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
-                        <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ButtonBottomBoard}" Content="Change server" 
+                    <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ContentDialogPrimaryButtonStyle}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
-                            Command="{Binding ChangeServerButtonPressed}">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="0,1" StartPoint="0.6,0">
-                                    <GradientStop Color="#FF14CEEC" Offset="1"/>
-                                    <GradientStop Color="#FF101757" Offset="0"/>
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                            Command="{Binding ChangeServerButtonPressed}"/>
                     </RelativePanel>
 
                 </StackPanel>
