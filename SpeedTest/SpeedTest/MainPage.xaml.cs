@@ -36,13 +36,6 @@ namespace SpeedTest
         {
             this.InitializeComponent();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(380, 500));
-
-            for (int i = 0; i < 360; i++)
-            {
-                double startAngle = i - 180;
-                Brush brush = new SolidColorBrush(Colors.DarkCyan.Interpolate(Colors.Black, (double)i / 360));
-                this.ArcGrid.Children.Add(new RingSlice() { StartAngle = startAngle, EndAngle = startAngle + 1, Fill = brush, Stroke = brush, Radius = 210, InnerRadius = 190 });
-            }
         }
     }
 }

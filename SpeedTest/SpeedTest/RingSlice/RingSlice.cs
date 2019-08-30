@@ -292,16 +292,16 @@ namespace SpeedTest.RingSliceControl
             // Starting Point
             pathFigure.StartPoint =
                 new Point(
-                    center.X + Math.Sin(StartAngle * Math.PI / 180) * innerRadius,
-                    center.Y - Math.Cos(StartAngle * Math.PI / 180) * innerRadius);
+                    center.X - Math.Sin(StartAngle * Math.PI / 180) * innerRadius,
+                    center.Y + Math.Cos(StartAngle * Math.PI / 180) * innerRadius);
 
             // Inner Arc
             var innerArcSegment = new ArcSegment();
             innerArcSegment.IsLargeArc = (EndAngle - StartAngle) >= 180.0;
             innerArcSegment.Point =
                 new Point(
-                    center.X + Math.Sin(EndAngle * Math.PI / 180) * innerRadius,
-                    center.Y - Math.Cos(EndAngle * Math.PI / 180) * innerRadius);
+                    center.X - Math.Sin(EndAngle * Math.PI / 180) * innerRadius,
+                    center.Y + Math.Cos(EndAngle * Math.PI / 180) * innerRadius);
             innerArcSegment.Size = new Size(innerRadius, innerRadius);
             innerArcSegment.SweepDirection = SweepDirection.Clockwise;
 
@@ -309,8 +309,8 @@ namespace SpeedTest.RingSliceControl
                 new LineSegment
                 {
                     Point = new Point(
-                        center.X + Math.Sin(EndAngle * Math.PI / 180) * outerRadius,
-                        center.Y - Math.Cos(EndAngle * Math.PI / 180) * outerRadius)
+                        center.X - Math.Sin(EndAngle * Math.PI / 180) * outerRadius,
+                        center.Y + Math.Cos(EndAngle * Math.PI / 180) * outerRadius)
                 };
 
             // Outer Arc
@@ -318,8 +318,8 @@ namespace SpeedTest.RingSliceControl
             outerArcSegment.IsLargeArc = (EndAngle - StartAngle) >= 180.0;
             outerArcSegment.Point =
                 new Point(
-                        center.X + Math.Sin(StartAngle * Math.PI / 180) * outerRadius,
-                        center.Y - Math.Cos(StartAngle * Math.PI / 180) * outerRadius);
+                        center.X - Math.Sin(StartAngle * Math.PI / 180) * outerRadius,
+                        center.Y + Math.Cos(StartAngle * Math.PI / 180) * outerRadius);
             outerArcSegment.Size = new Size(outerRadius, outerRadius);
             outerArcSegment.SweepDirection = SweepDirection.Counterclockwise;
 

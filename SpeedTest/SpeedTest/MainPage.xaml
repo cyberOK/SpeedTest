@@ -386,10 +386,10 @@
                                 Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
                     <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
                                 Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
-                    <arcControl:Arc x:Name="DownloadSpeedArc" Fill="DarkCyan"
+                    <arcControl:ArcWithGradient x:Name="DownloadSpeedArc" Fill="DarkCyan" EnableGradient="True" FirstGradientColor="Cyan"
                                 Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
-                    <arcControl:Arc x:Name="UploadSpeedArc" Fill="DarkBlue"
+                <arcControl:ArcWithGradient x:Name="UploadSpeedArc" Fill="DarkBlue" EnableGradient="True" FirstGradientColor="PowderBlue"
                                 Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.UploadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
 
