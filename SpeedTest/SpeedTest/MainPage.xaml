@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"   
+    xmlns:Ad="using:Microsoft.Advertising.WinRT.UI" 
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -39,6 +40,10 @@
                         <AdaptiveTrigger MinWindowWidth="1040" MinWindowHeight="850"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- Advertisement -->
+                        <Setter Target="Advertisement.(Width)" Value="728"/>
+                        <Setter Target="Advertisement.(Height)" Value="90"/>
+                        <Setter Target="Advertisement.(HorizontalAlignment)" Value="Center"/>
                         <!-- Backgrounds Setting -->
                         <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Visible"/>
                         <Setter Target="MiddleStateBackgroundGrid.(Visibility)" Value="Collapsed"/>
@@ -75,9 +80,9 @@
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="1040"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
-                        <Setter Target="SplitLineGrid.(Margin)" Value="0,30,0,30"/>
+                        <Setter Target="SplitLineGrid.(Margin)" Value="0,10,0,20"/>
                         <!-- Main Bottom Board -->
-                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,60"/>
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,95"/>
                         <Setter Target="MainBottomBoardInformation.(Width)" Value="500"/>
                         <Setter Target="providerName.(Width)" Value="250"/>
                         <Setter Target="providerName.(Height)" Value="50"/>
@@ -146,6 +151,10 @@
                         <AdaptiveTrigger MinWindowWidth="500" MinWindowHeight="580"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- Advertisement -->
+                        <Setter Target="Advertisement.(Width)" Value="300"/>
+                        <Setter Target="Advertisement.(Height)" Value="60"/>
+                        <Setter Target="Advertisement.(HorizontalAlignment)" Value="Center"/>
                         <!-- Main Background -->
                         <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
                         <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Collapsed"/>
@@ -202,7 +211,7 @@
                         <Setter Target="mbpsUploadText.(FontSize)" Value="18"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="40"/>
                         <!-- Main Bottom Board -->
-                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,20"/>
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,65"/>
                         <Setter Target="MainBottomBoardInformation.(Width)" Value="300"/>
                         <Setter Target="providerName.(Width)" Value="150"/>
                         <Setter Target="providerName.(Height)" Value="30"/>
@@ -255,6 +264,9 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <!-- Advertisement -->
+                        <Setter Target="Advertisement.(Height)" Value="80"/>
+                        <Setter Target="Advertisement.(HorizontalAlignment)" Value="Stretch"/>
                         <!-- Main Background -->
                         <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
                         <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Collapsed"/>
@@ -313,7 +325,7 @@
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Margin)" Value="20,20,20,20"/>
                         <!-- Main Bottom Board -->
-                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,20"/>
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,85"/>
                         <Setter Target="MainBottomBoardInformation.(Margin)" Value="20,0"/>
                         <Setter Target="providerName.(FontSize)" Value="20"/>
                         <Setter Target="serverName.(FontSize)" Value="20"/>
@@ -361,7 +373,12 @@
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
 
-                <!-- Main Panel Buttons -->
+            <Ad:AdControl x:Name="Advertisement"
+            ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
+ 		    AdUnitId="test" 		    
+            VerticalAlignment="Bottom"/>
+            
+            <!-- Main Panel Buttons -->
                 <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
@@ -378,8 +395,8 @@
 
                 <!-- Arc Board -->
                 <Grid x:Name="ArcGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
-
-                    <!-- Arc Controls -->
+                
+                <!-- Arc Controls -->
                     <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
                                 Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
                     <arcControl:Arc x:Name="TryConnectArc1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
@@ -389,7 +406,7 @@
                     <arcControl:ArcWithGradient x:Name="DownloadSpeedArc" Fill="DarkCyan" EnableGradient="True" FirstGradientColor="Cyan"
                                 Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
-                    <arcControl:ArcWithGradient x:Name="UploadSpeedArc" Fill="DarkBlue" EnableGradient="True" FirstGradientColor="PowderBlue"
+                    <arcControl:ArcWithGradient x:Name="UploadSpeedArc" Fill="DarkBlue" EnableGradient="True"  FirstGradientColor="PowderBlue"
                                 Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.UploadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
 
