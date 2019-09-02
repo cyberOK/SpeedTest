@@ -17,7 +17,7 @@ namespace SpeedTest.ArcControl
         const double MaxPercentValue = 400;
         const double MaxAngle = 360;
 
-        private List<Brush> brushCollection;
+        private List<SolidColorBrush> brushCollection;
         private List<RingSlice> ringSliceCollection;
 
         #endregion
@@ -77,8 +77,10 @@ namespace SpeedTest.ArcControl
 
         public ArcWithGradient()
         {
-            this.brushCollection = new List<Brush>();
+            this.brushCollection = new List<SolidColorBrush>();
             this.ringSliceCollection = new List<RingSlice>();
+
+            this.InitializeBrushAndRingSliceCollections();
         }
 
         #endregion
@@ -88,7 +90,8 @@ namespace SpeedTest.ArcControl
         private static void OnSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ArcWithGradient control = (ArcWithGradient)d;
-            control.SetBrushAndRingSliceCollections();
+
+            control.SetNewPropertyBrushAndRingSliceCollections();
             control.SetControlSize();
             control.Draw();
         }
@@ -97,36 +100,80 @@ namespace SpeedTest.ArcControl
         {
             ArcWithGradient control = (ArcWithGradient)d;
 
-            for (int i = 0; i < MaxAngle; i++)
-            {
-                control.Children[i].Visibility = Visibility.Collapsed;
-            }
-
+            control.CollapsedChildrenVisibility();
             control.SetControlSize();
             control.Draw();
-        }
-
-        private void CollapsedChildrenVisibility()
-        {
-            
         }
 
         #endregion
 
         #region Helpful methods
 
-        private void SetBrushAndRingSliceCollections()
+        private void InitializeBrushAndRingSliceCollections()
         {
-            this.brushCollection.Clear();
-            this.ringSliceCollection.Clear();
-            Children.Clear();
-
             for (int i = 0; i < MaxAngle; i++)
             {
                 this.brushCollection.Add(new SolidColorBrush(this.Fill.Interpolate(this.FirstGradientColor, (double)i / MaxAngle)));
                 this.ringSliceCollection.Add(new RingSlice() { StartAngle = i, EndAngle = i + 1, Fill = this.brushCollection[i], Stroke = this.brushCollection[i], Radius = this.Radius, InnerRadius = this.Radius - this.Thickness , Visibility = Visibility.Collapsed});
                 Children.Add(this.ringSliceCollection[i]);
             }
+        }
+
+        private void SetNewPropertyBrushAndRingSliceCollections()
+        {
+            for (int i = 0; i < MaxAngle; i++)
+            {
+                this.brushCollection[i].Color = this.Fill.Interpolate(this.FirstGradientColor, (double)i / MaxAngle);
+
+                this.ringSliceCollection[i].StartAngle = i;
+                this.ringSliceCollection[i].EndAngle = i + 1;
+                this.ringSliceCollection[i].Fill = this.brushCollection[i];
+                this.ringSliceCollection[i].Stroke = this.brushCollection[i];
+                this.ringSliceCollection[i].Radius = this.Radius;
+                this.ringSliceCollection[i].InnerRadius = this.Radius - this.Thickness;
+                this.ringSliceCollection[i].Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void CollapsedChildrenVisibility()
+        {
+            for (int i = 0; i < MaxAngle; i++)
+            {
+                this.Children[i].Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Draw()
+        {
+            if (this.EnableGradient)
+            {
+                this.DrawArcGradient();         
+            }
+
+            else
+            {
+                this.DrawArcWithoutGradient();
+            }
+        }
+
+        private void DrawArcGradient()
+        {
+            for (int i = 0; i < GetAngle(); i++)
+            {
+                var ringSlice = Children[i];
+                ringSlice.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void DrawArcWithoutGradient()
+        {
+            Children.Clear();
+
+            Path radialStrip = GetCircleSegment(this.GetCenterPoint(), this.Radius, this.GetAngle());
+            radialStrip.Stroke = new SolidColorBrush(this.Fill);
+            radialStrip.StrokeThickness = this.Thickness;
+
+            Children.Add(radialStrip);
         }
 
         private void SetControlSize()
@@ -138,29 +185,6 @@ namespace SpeedTest.ArcControl
         private Point GetCenterPoint()
         {
             return new Point(this.Radius + (this.Thickness / 2), this.Radius + (this.Thickness / 2));
-        }
-
-        private void Draw()
-        {
-            if (this.EnableGradient)
-            {
-                for (int i = 0; i < GetAngle(); i++)
-                {
-                    var item = Children[i];
-                    item.Visibility = Visibility.Visible;
-                }               
-            }
-
-            else
-            {
-                Children.Clear();
-
-                Path radialStrip = GetCircleSegment(this.GetCenterPoint(), this.Radius, this.GetAngle());
-                radialStrip.Stroke = new SolidColorBrush(this.Fill);
-                radialStrip.StrokeThickness = this.Thickness;
-
-                Children.Add(radialStrip);
-            }
         }
 
         private double GetAngle()
@@ -178,7 +202,7 @@ namespace SpeedTest.ArcControl
 
             if (angle >= 360)
             {
-                angle = 359.999;
+                angle = 360;
             }
             return angle;
         }

@@ -53,8 +53,8 @@
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="150,0,150,380"/>
                         <Setter Target="StartArc.(Radius)" Value="170"/>
-                        <Setter Target="DownloadSpeedArc.(Radius)" Value="200"/>
-                        <Setter Target="UploadSpeedArc.(Radius)" Value="180"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="210"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="190"/>
                         <Setter Target="TryConnectArc1.(Radius)" Value="200"/>
                         <Setter Target="TryConnectArc2.(Radius)" Value="180"/>
                         <Setter Target="DownloadSpeedArc.(Thickness)" Value="20"/>
@@ -161,14 +161,14 @@
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
                         <Setter Target="StartArc.(Radius)" Value="140"/>
-                        <Setter Target="DownloadSpeedArc.(Radius)" Value="145"/>
-                        <Setter Target="UploadSpeedArc.(Radius)" Value="130"/>
-                        <Setter Target="TryConnectArc1.(Radius)" Value="145"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="154"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="138"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="146"/>
                         <Setter Target="TryConnectArc2.(Radius)" Value="130"/>
-                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="15"/>
-                        <Setter Target="UploadSpeedArc.(Thickness)" Value="15"/>
-                        <Setter Target="TryConnectArc1.(Thickness)" Value="15"/>
-                        <Setter Target="TryConnectArc2.(Thickness)" Value="15"/>
+                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="16"/>
+                        <Setter Target="UploadSpeedArc.(Thickness)" Value="16"/>
+                        <Setter Target="TryConnectArc1.(Thickness)" Value="16"/>
+                        <Setter Target="TryConnectArc2.(Thickness)" Value="16"/>
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
@@ -267,8 +267,8 @@
                         <!-- Arcs -->
                         <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
                         <Setter Target="StartArc.(Radius)" Value="100"/>
-                        <Setter Target="DownloadSpeedArc.(Radius)" Value="110"/>
-                        <Setter Target="UploadSpeedArc.(Radius)" Value="100"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="115"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="105"/>
                         <Setter Target="TryConnectArc1.(Radius)" Value="110"/>
                         <Setter Target="TryConnectArc2.(Radius)" Value="100"/>
                         <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
