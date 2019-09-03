@@ -7,6 +7,7 @@
     xmlns:arcControl="using:SpeedTest.ArcControl"
     xmlns:converter="using:SpeedTest.ViewModel.Converters"
     xmlns:speedDate="using:SpeedTest.ViewModel.HelpfullCollections"
+    xmlns:trigger="using:SpeedTest.Triggers.DeviceFamilyStateTrigger"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
@@ -69,14 +70,14 @@
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="120"/>
                         <Setter Target="StartButton.(Width)" Value="200"/>
-                        <Setter Target="StartButton.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,20"/>
                         <Setter Target="StartButton.(FontSize)" Value="70"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="30"/>
-                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,20"/>
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="40"/>
-                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,20"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="1040"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
@@ -180,14 +181,14 @@
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
-                        <Setter Target="StartButton.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,20"/>
                         <Setter Target="StartButton.(FontSize)" Value="50"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="25"/>
-                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,20"/>
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
-                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,20"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="470"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
@@ -289,14 +290,14 @@
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
-                        <Setter Target="StartButton.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,20"/>
                         <Setter Target="StartButton.(FontSize)" Value="40"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="25"/>
-                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,20"/>
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
-                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,20"/>
                         <!-- Data Board -->
                         <Setter Target="UploadSpeedFieldsGrid.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="UploadSpeedFieldsGrid.(MinWidth)" Value="130"/>
@@ -352,6 +353,102 @@
                         <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
                     </VisualState.Setters>
                 </VisualState>
+
+                <VisualState x:Name="Xbox">
+                    <VisualState.StateTriggers>
+                        <trigger:DeviceFamilyStateTrigger TargetDeviceFamily="Xbox"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!-- Advertisement -->
+                        <Setter Target="Advertisement.(Width)" Value="480"/>
+                        <Setter Target="Advertisement.(Height)" Value="80"/>
+                        <Setter Target="Advertisement.(Margin)" Value="0,0,0,50"/>
+                        <!-- Backgrounds Setting -->
+                        <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="MiddleStateBackgroundGrid.(Visibility)" Value="Visible"/>
+                        <Setter Target="PhoneBackgroundGrid.(Visibility)" Value="Collapsed"/>
+                        <!-- SettingsPanelButtons -->
+                        <Setter Target="GamburgerButton.(Visibility)" Value="Collapsed"/>
+                        <Setter Target="SettingsPanelButtons.(Visibility)" Value="Visible"/>
+                        <Setter Target="SettingsPanelButtons.(Margin)" Value="0,40,50,0"/>
+                        <Setter Target="setingsButton.(FontSize)" Value="20"/>
+                        <Setter Target="historyButton.(FontSize)" Value="20"/>
+                        <Setter Target="backButton.(FontSize)" Value="20"/>
+                        <!-- Arcs -->
+                        <Setter Target="ArcGrid.(Margin)" Value="50,0,50,0"/>
+                        <Setter Target="StartArc.(Radius)" Value="100"/>
+                        <Setter Target="DownloadSpeedArc.(Radius)" Value="115"/>
+                        <Setter Target="UploadSpeedArc.(Radius)" Value="105"/>
+                        <Setter Target="TryConnectArc1.(Radius)" Value="110"/>
+                        <Setter Target="TryConnectArc2.(Radius)" Value="100"/>
+                        <Setter Target="DownloadSpeedArc.(Thickness)" Value="10"/>
+                        <Setter Target="UploadSpeedArc.(Thickness)" Value="10"/>
+                        <Setter Target="TryConnectArc1.(Thickness)" Value="10"/>
+                        <Setter Target="TryConnectArc2.(Thickness)" Value="10"/>
+                        <!-- StartButton -->
+                        <Setter Target="StartButton.(Height)" Value="120"/>
+                        <Setter Target="StartButton.(Width)" Value="200"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,20"/>
+                        <Setter Target="StartButton.(FontSize)" Value="40"/>
+                        <!-- TryConnectTextBlock -->
+                        <Setter Target="TryConnectTextBlock.(FontSize)" Value="30"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,20"/>
+                        <!-- SpeedDataNumbersTextBlock -->
+                        <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,20"/>
+                        <!-- SplitLine -->
+                        <Setter Target="SplitLineGrid.(Width)" Value="500"/>
+                        <Setter Target="SplitLineGrid.(Height)" Value="3"/>
+                        <Setter Target="SplitLineGrid.(Margin)" Value="0,10"/>
+                        <!-- Main Bottom Board -->
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,0"/>
+                        <Setter Target="MainBottomBoardInformation.(Width)" Value="300"/>
+                        <Setter Target="providerName.(Width)" Value="150"/>
+                        <Setter Target="providerName.(Height)" Value="30"/>
+                        <Setter Target="providerName.(FontSize)" Value="16"/>
+                        <Setter Target="ipAdress.(Width)" Value="150"/>
+                        <Setter Target="ipAdress.(Height)" Value="30"/>
+                        <Setter Target="ipAdress.(FontSize)" Value="16"/>
+                        <Setter Target="serverName.(Width)" Value="150"/>
+                        <Setter Target="serverName.(Height)" Value="30"/>
+                        <Setter Target="serverName.(FontSize)" Value="16"/>
+                        <Setter Target="serverLocation.(Width)" Value="150"/>
+                        <Setter Target="serverLocation.(Height)" Value="30"/>
+                        <Setter Target="serverLocation.(FontSize)" Value="16"/>
+                        <Setter Target="changeServerButton.(Width)" Value="150"/>
+                        <Setter Target="changeServerButton.(Height)" Value="35"/>
+                        <Setter Target="changeServerButton.(FontSize)" Value="16"/>
+                        <!-- SettingsPanel -->
+                        <Setter Target="SettingsPanel.(Height)" Value="475"/>
+                        <Setter Target="SettingsPanel.(Margin)" Value="0,40,50,0"/>
+                        <Setter Target="SettingsPanel.(Width)" Value="450"/>
+                        <Setter Target="SettingsPanel.(HorizontalAlignment)" Value="Right"/>
+                        <Setter Target="SettingsPanel.(VerticalAlignment)" Value="Top"/>
+                        <!-- Servers Panel -->
+                        <Setter Target="ServerPanel.(Height)" Value="475"/>
+                        <Setter Target="ServerPanel.(Width)" Value="425"/>
+                        <Setter Target="ServerSuggestBox.(Width)" Value="375"/>
+                        <Setter Target="HeaderServerName.(FontSize)" Value="25"/>
+                        <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
+                        <!-- History Panel -->
+                        <Setter Target="HistoryPanel.(Height)" Value="480"/>
+                        <Setter Target="HistoryPanel.(Width)" Value="480"/>
+                        <Setter Target="HistoryPanelTopBar.(Width)" Value="480"/>
+                        <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryBlock.(Padding)" Value="30,10"/>
+                        <Setter Target="DeleteHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="DeleteHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="CloseHistoryButton.(Height)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(Width)" Value="60"/>
+                        <Setter Target="CloseHistoryButton.(FontSize)" Value="30"/>
+                        <Setter Target="HistoryHeader.(Height)" Value="70"/>
+                        <Setter Target="HistoryHeader.(Width)" Value="480"/>
+                        <Setter Target="HistoryHeader.(Margin)" Value="0,0,0,10"/>
+                    </VisualState.Setters>
+                </VisualState>
+                
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
@@ -573,11 +670,15 @@
 
                                 <!-- Mode Block -->
                                 <TextBlock x:Name="ModeBlock" x:Uid="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
-                                <RadioButton  x:Name="LightRadioButton" x:Uid="LightRadioButton" GroupName="Theme" Content="Light" Width="90" RelativePanel.Below="ModeBlock" Tag="Light"
+                                <RadioButton  x:Name="DefaultRadioButton" x:Uid="DefaultRadioButton" GroupName="Theme" Content="Default" Width="150" RelativePanel.Below="ModeBlock" Tag="Default"
+                                              Style="{StaticResource RadioButtonStyle1}"
+                                              Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Tag}" 
+                                              IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 2}"/>
+                                <RadioButton  x:Name="LightRadioButton" x:Uid="LightRadioButton" GroupName="Theme" Content="Light" Width="150" RelativePanel.Below="DefaultRadioButton" Tag="Light"
                                               Style="{StaticResource RadioButtonStyle1}"
                                               Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Tag}" 
                                               IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
-                                <RadioButton  x:Name="DarkRadioButton" x:Uid="DarkRadioButton" GroupName="Theme" Content="Dark" Width="90" RelativePanel.Below="LightRadioButton" Tag="Dark"
+                                <RadioButton  x:Name="DarkRadioButton" x:Uid="DarkRadioButton" GroupName="Theme" Content="Dark" Width="150" RelativePanel.Below="LightRadioButton" Tag="Dark"
                                               Style="{StaticResource RadioButtonStyle1}"   
                                               Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Tag}" 
                                               IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>

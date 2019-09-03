@@ -150,8 +150,9 @@ namespace SpeedTest.ViewModel
 
             this.SettingsPanel = new SettingsPanel
             {
-                Settings = new AppSetting()
-            };
+                Settings = new AppSetting(),
+                SelectedMode = 2
+        };
 
             this.HistoryPanel = new HistoryPanel
             {
@@ -292,6 +293,12 @@ namespace SpeedTest.ViewModel
             {
                 this.SettingsPanel.SelectedMode = 0;
                 this.SettingsPanel.Settings.Theme = "Light";
+            }
+
+            else if (selectedMode == "Default")
+            {
+                this.SettingsPanel.SelectedMode = 2;
+                this.SettingsPanel.Settings.Theme = this.SettingsPanel.Settings.GetUserTheme();
             }
         }
 

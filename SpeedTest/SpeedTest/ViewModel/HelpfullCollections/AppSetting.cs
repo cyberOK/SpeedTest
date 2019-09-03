@@ -73,7 +73,7 @@ namespace SpeedTest.ViewModel.HelpfullCollections
             };
         }    
 
-        private string GetUserTheme()
+        public string GetUserTheme()
         {
             var DefaultTheme = new Windows.UI.ViewManagement.UISettings();
             var uiTheme = DefaultTheme.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).ToString();
