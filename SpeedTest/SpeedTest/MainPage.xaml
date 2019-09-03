@@ -338,6 +338,7 @@
                         <!-- SettingsPanel -->
 
                         <!-- History Panel -->
+                        <Setter Target="HistoryPanel.(Margin)" Value="0,0,0,80"/>
                         <Setter Target="HistoryHeader.(Visibility)" Value="Collapsed"/>
                         <Setter Target="HistoryBlock.(FontSize)" Value="30"/>
                         <Setter Target="HistoryBlock.(Padding)" Value="30,10"/>
