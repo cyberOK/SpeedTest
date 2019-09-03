@@ -168,7 +168,8 @@ namespace SpeedTest.ViewModel
             this.ServerInformationBoard = new ServerInformationBoard
             {
                CurrentServerName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName,
-               CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location
+               CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location,
+               ProviderName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.IPerf3Server
             };
 
             // Main panel commands assigning
@@ -518,6 +519,7 @@ namespace SpeedTest.ViewModel
         {
             this.ServerInformationBoard.CurrentServerName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
             this.ServerInformationBoard.CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;
+            this.ServerInformationBoard.ProviderName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.IPerf3Server;
         }       
 
         private void ClosePhoneGrid()

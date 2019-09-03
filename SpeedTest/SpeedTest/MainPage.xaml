@@ -56,7 +56,7 @@
                         <Setter Target="historyButton.(FontSize)" Value="36"/>
                         <Setter Target="backButton.(FontSize)" Value="36"/>
                         <!-- Arcs -->
-                        <Setter Target="ArcGrid.(Margin)" Value="150,0,150,380"/>
+                        <Setter Target="ArcGrid.(Margin)" Value="150,0,150,0"/>
                         <Setter Target="StartArc.(Radius)" Value="170"/>
                         <Setter Target="DownloadSpeedArc.(Radius)" Value="210"/>
                         <Setter Target="UploadSpeedArc.(Radius)" Value="190"/>
@@ -69,33 +69,32 @@
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="120"/>
                         <Setter Target="StartButton.(Width)" Value="200"/>
-                        <Setter Target="StartButton.(Margin)" Value="0,0,0,30"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="StartButton.(FontSize)" Value="70"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="30"/>
-                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,15"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,0"/>
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="40"/>
-                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,15"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,0"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="1040"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
                         <Setter Target="SplitLineGrid.(Margin)" Value="0,10,0,20"/>
                         <!-- Main Bottom Board -->
-                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,95"/>
                         <Setter Target="MainBottomBoardInformation.(Width)" Value="500"/>
                         <Setter Target="providerName.(Width)" Value="250"/>
                         <Setter Target="providerName.(Height)" Value="50"/>
-                        <Setter Target="providerName.(FontSize)" Value="30"/>
+                        <Setter Target="providerName.(FontSize)" Value="28"/>
                         <Setter Target="ipAdress.(Width)" Value="250"/>
                         <Setter Target="ipAdress.(Height)" Value="50"/>
-                        <Setter Target="ipAdress.(FontSize)" Value="30"/>
+                        <Setter Target="ipAdress.(FontSize)" Value="28"/>
                         <Setter Target="serverName.(Width)" Value="250"/>
                         <Setter Target="serverName.(Height)" Value="50"/>
-                        <Setter Target="serverName.(FontSize)" Value="30"/>
+                        <Setter Target="serverName.(FontSize)" Value="28"/>
                         <Setter Target="serverLocation.(Width)" Value="250"/>
                         <Setter Target="serverLocation.(Height)" Value="50"/>
-                        <Setter Target="serverLocation.(FontSize)" Value="30"/>
+                        <Setter Target="serverLocation.(FontSize)" Value="28"/>
                         <Setter Target="changeServerButton.(Width)" Value="250"/>
                         <Setter Target="changeServerButton.(Height)" Value="50"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="28"/>
@@ -148,7 +147,7 @@
                 <!-- 500 X 500 version -->
                 <VisualState x:Name="Middle">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="500" MinWindowHeight="580"/>
+                        <AdaptiveTrigger MinWindowWidth="500" MinWindowHeight="560"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!-- Advertisement -->
@@ -168,7 +167,7 @@
                         <Setter Target="historyButton.(FontSize)" Value="25"/>
                         <Setter Target="backButton.(FontSize)" Value="25"/>
                         <!-- Arcs -->
-                        <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
+                        <Setter Target="ArcGrid.(Margin)" Value="50,0,50,0"/>
                         <Setter Target="StartArc.(Radius)" Value="140"/>
                         <Setter Target="DownloadSpeedArc.(Radius)" Value="154"/>
                         <Setter Target="UploadSpeedArc.(Radius)" Value="138"/>
@@ -181,14 +180,14 @@
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
-                        <Setter Target="StartButton.(Margin)" Value="0,0,0,15"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="StartButton.(FontSize)" Value="50"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="25"/>
-                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,0"/>
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
-                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,0"/>
                         <!-- SplitLine -->
                         <Setter Target="SplitLineGrid.(Width)" Value="470"/>
                         <Setter Target="SplitLineGrid.(Height)" Value="3"/>
@@ -211,20 +210,20 @@
                         <Setter Target="mbpsUploadText.(FontSize)" Value="18"/>
                         <Setter Target="UploadDataText.(FontSize)" Value="40"/>
                         <!-- Main Bottom Board -->
-                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,65"/>
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="MainBottomBoardInformation.(Width)" Value="300"/>
                         <Setter Target="providerName.(Width)" Value="150"/>
                         <Setter Target="providerName.(Height)" Value="30"/>
-                        <Setter Target="providerName.(FontSize)" Value="20"/>
+                        <Setter Target="providerName.(FontSize)" Value="16"/>
                         <Setter Target="ipAdress.(Width)" Value="150"/>
                         <Setter Target="ipAdress.(Height)" Value="30"/>
-                        <Setter Target="ipAdress.(FontSize)" Value="20"/>
+                        <Setter Target="ipAdress.(FontSize)" Value="16"/>
                         <Setter Target="serverName.(Width)" Value="150"/>
                         <Setter Target="serverName.(Height)" Value="30"/>
-                        <Setter Target="serverName.(FontSize)" Value="20"/>
+                        <Setter Target="serverName.(FontSize)" Value="16"/>
                         <Setter Target="serverLocation.(Width)" Value="150"/>
                         <Setter Target="serverLocation.(Height)" Value="30"/>
-                        <Setter Target="serverLocation.(FontSize)" Value="20"/>
+                        <Setter Target="serverLocation.(FontSize)" Value="16"/>
                         <Setter Target="changeServerButton.(Width)" Value="150"/>
                         <Setter Target="changeServerButton.(Height)" Value="35"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="16"/>
@@ -266,7 +265,7 @@
                     <VisualState.Setters>
                         <!-- Advertisement -->
                         <Setter Target="Advertisement.(Height)" Value="80"/>
-                        <Setter Target="Advertisement.(HorizontalAlignment)" Value="Stretch"/>
+                        <!--<Setter Target="Advertisement.(HorizontalAlignment)" Value="Stretch"/>-->
                         <!-- Main Background -->
                         <Setter Target="BackgroundPhoto.(Visibility)" Value="Collapsed"/>
                         <Setter Target="MainOpacityBackgroundGrid.(Visibility)" Value="Collapsed"/>
@@ -277,7 +276,7 @@
                         <Setter Target="GamburgerButton.(Visibility)" Value="Visible"/>
                         <Setter Target="SettingsPanelButtons.(Visibility)" Value="Collapsed"/>
                         <!-- Arcs -->
-                        <Setter Target="ArcGrid.(Margin)" Value="50,30,50,220"/>
+                        <Setter Target="ArcGrid.(Margin)" Value="50,0,50,0"/>
                         <Setter Target="StartArc.(Radius)" Value="100"/>
                         <Setter Target="DownloadSpeedArc.(Radius)" Value="115"/>
                         <Setter Target="UploadSpeedArc.(Radius)" Value="105"/>
@@ -290,14 +289,14 @@
                         <!-- StartButton -->
                         <Setter Target="StartButton.(Height)" Value="90"/>
                         <Setter Target="StartButton.(Width)" Value="150"/>
-                        <Setter Target="StartButton.(Margin)" Value="0,0,0,15"/>
+                        <Setter Target="StartButton.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="StartButton.(FontSize)" Value="40"/>
                         <!-- TryConnectTextBlock -->
                         <Setter Target="TryConnectTextBlock.(FontSize)" Value="25"/>
-                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <Setter Target="TryConnectTextBlock.(Margin)" Value="0,0,0,0"/>
                         <!-- SpeedDataNumbersTextBlock -->
                         <Setter Target="SpeedDataNumbersTextBlock.(FontSize)" Value="30"/>
-                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,10"/>
+                        <Setter Target="SpeedDataNumbersTextBlock.(Margin)" Value="0,0,0,0"/>
                         <!-- Data Board -->
                         <Setter Target="UploadSpeedFieldsGrid.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="UploadSpeedFieldsGrid.(MinWidth)" Value="130"/>
@@ -323,15 +322,15 @@
                         <Setter Target="ViewBox2.(MaxHeight)" Value="50"/>
                         <Setter Target="ViewBox3.(MaxHeight)" Value="50"/>
                         <!-- SplitLine -->
-                        <Setter Target="SplitLineGrid.(Margin)" Value="20,20,20,20"/>
+                        <Setter Target="SplitLineGrid.(Margin)" Value="20,10,20,10"/>
                         <!-- Main Bottom Board -->
-                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,85"/>
+                        <Setter Target="BottomBoard.(Margin)" Value="0,0,0,0"/>
                         <Setter Target="MainBottomBoardInformation.(Margin)" Value="20,0"/>
                         <Setter Target="providerName.(FontSize)" Value="20"/>
                         <Setter Target="serverName.(FontSize)" Value="20"/>
                         <Setter Target="serverLocation.(FontSize)" Value="20"/>
                         <Setter Target="ipAdress.(FontSize)" Value="20"/>
-                        <Setter Target="changeServerButton.(Margin)" Value="0,10,0,0"/>
+                        <Setter Target="changeServerButton.(Margin)" Value="0,10,0,5"/>
                         <Setter Target="changeServerButton.(FontSize)" Value="18"/>
                         <Setter Target="changeServerButton.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
                         <Setter Target="changeServerButton.(HorizontalAlignment)" Value="Stretch"/>
@@ -373,14 +372,14 @@
 
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
-
-            <Ad:AdControl x:Name="Advertisement"
-            ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
- 		    AdUnitId="test" 		    
-            VerticalAlignment="Bottom"/>
+            <RelativePanel>
+                
+            <Ad:AdControl x:Name="Advertisement" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                          ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
+ 		                  AdUnitId="test"/>
             
             <!-- Main Panel Buttons -->
-                <StackPanel x:Name="SettingsPanelButtons" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <StackPanel x:Name="SettingsPanelButtons" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
                     <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
                     <Button x:Name="historyButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE81C;" Margin="10"
@@ -390,12 +389,13 @@
                 </StackPanel>
 
                 <!-- Phone Gamburger Button (Settings inner) -->
-                <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10,30"
-                    HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"
+                <Button x:Name="GamburgerButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE700;" Margin="10,30" FontSize="20" 
+                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True"
                     Command="{Binding GamburgerButtonPressed, Source={StaticResource mainViewModel}}"/>
 
                 <!-- Arc Board -->
-                <Grid x:Name="ArcGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0">
+                <Grid x:Name="ArcGrid" 
+                      RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Above="BottomBoard" RelativePanel.AlignTopWithPanel="True">
                 
                 <!-- Arc Controls -->
                     <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
@@ -404,7 +404,7 @@
                                 Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
                     <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"
                                 Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
-                    <arcControl:ArcWithGradient x:Name="DownloadSpeedArc" Fill="DarkCyan" EnableGradient="True" FirstGradientColor="Cyan"
+                    <arcControl:ArcWithGradient x:Name="DownloadSpeedArc" Fill="DarkCyan" EnableGradient="True" FirstGradientColor="WhiteSmoke"
                                 Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
                     <arcControl:ArcWithGradient x:Name="UploadSpeedArc" Fill="DarkBlue" EnableGradient="True"  FirstGradientColor="PowderBlue"
@@ -426,7 +426,7 @@
                 </Grid>
 
                 <!-- Bottom Board -->
-                <StackPanel x:Name="BottomBoard" VerticalAlignment="Bottom">
+                <StackPanel x:Name="BottomBoard" VerticalAlignment="Bottom" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Above="Advertisement">
 
                     <!-- Data Board -->
                     <Grid x:Name="TestDataBoard" HorizontalAlignment="Stretch" >
@@ -520,7 +520,8 @@
                     </RelativePanel>
 
                 </StackPanel>
-
+           
+            </RelativePanel>
         </Grid>
         
         <!-- Popup Grid with Helpful Panels -->       
