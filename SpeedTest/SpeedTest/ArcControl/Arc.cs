@@ -81,7 +81,7 @@ namespace SpeedTest.ArcControl
             Children.Clear();
 
             Path radialStrip = GetCircleSegment(this.GetCenterPoint(), this.Radius, this.GetAngle());
-            radialStrip.Stroke = GetGradientBrush(this.Fill, this.EnableGradient);           
+            radialStrip.Stroke = new SolidColorBrush(this.Fill);           
             radialStrip.StrokeThickness = this.Thickness;
 
             Children.Add(radialStrip);
@@ -110,30 +110,6 @@ namespace SpeedTest.ArcControl
                 angle = 359.999;
             }
             return angle;
-        }
-
-        private Brush GetGradientBrush(Color fillColor, bool enableGradient)
-        {
-            if (enableGradient)
-            {
-                GradientStopCollection gradientCollection = new GradientStopCollection();
-                gradientCollection.Add(new GradientStop { Color = Colors.LightBlue, Offset = 0.9 });
-                gradientCollection.Add(new GradientStop { Color = fillColor, Offset = 0.3 });
-
-                LinearGradientBrush linearGradientBrush = new LinearGradientBrush
-                {
-                    StartPoint = new Point { X = 0.6, Y = 0.8 },
-                    EndPoint = new Point { X = 0.4, Y = 1 },
-                    GradientStops = gradientCollection,
-                    ColorInterpolationMode = ColorInterpolationMode.ScRgbLinearInterpolation
-                };
-
-                return linearGradientBrush;
-            }
-            else
-            {
-                return new SolidColorBrush(fillColor);
-            }
         }
 
         #endregion

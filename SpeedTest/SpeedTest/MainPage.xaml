@@ -353,7 +353,7 @@
                         <Setter Target="HeaderServerLocation.(FontSize)" Value="20"/>
                     </VisualState.Setters>
                 </VisualState>
-
+                <!-- Xbox version -->
                 <VisualState x:Name="Xbox">
                     <VisualState.StateTriggers>
                         <trigger:DeviceFamilyStateTrigger TargetDeviceFamily="Xbox"/>
@@ -716,7 +716,7 @@
             <!-- History Panel -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <RelativePanel x:Name="HistoryPanel" Style="{StaticResource Border}" Background="{ThemeResource BackgroundPanelContent}"
-                               Visibility="{Binding HistoryPanel.IsHistoryPanelOpen,Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter} }">
+                               Opacity="{Binding HistoryPanel.IsHistoryPanelOpen,Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToOpacityConverter} }">
 
                     <!-- History Panel TopBar -->
                     <RelativePanel x:Name="HistoryPanelTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"

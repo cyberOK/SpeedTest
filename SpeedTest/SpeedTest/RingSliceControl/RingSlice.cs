@@ -166,7 +166,7 @@ namespace SpeedTest.RingSliceControl
         {
             if (newInnerRadius < 0)
             {
-                throw new ArgumentException("InnerRadius can't be a negative value.", "InnerRadius");
+                this.InnerRadius = 0;
             }
 
             UpdatePath();
@@ -280,8 +280,10 @@ namespace SpeedTest.RingSliceControl
             }
 
             var pathGeometry = new PathGeometry();
-            var pathFigure = new PathFigure();
-            pathFigure.IsClosed = true;
+            var pathFigure = new PathFigure
+            {
+                IsClosed = true
+            };
 
             var center =
                 this.Center ??
@@ -296,14 +298,16 @@ namespace SpeedTest.RingSliceControl
                     center.Y + Math.Cos(StartAngle * Math.PI / 180) * innerRadius);
 
             // Inner Arc
-            var innerArcSegment = new ArcSegment();
-            innerArcSegment.IsLargeArc = (EndAngle - StartAngle) >= 180.0;
-            innerArcSegment.Point =
+            var innerArcSegment = new ArcSegment
+            {
+                IsLargeArc = (EndAngle - StartAngle) >= 180.0,
+                Point =
                 new Point(
                     center.X - Math.Sin(EndAngle * Math.PI / 180) * innerRadius,
-                    center.Y + Math.Cos(EndAngle * Math.PI / 180) * innerRadius);
-            innerArcSegment.Size = new Size(innerRadius, innerRadius);
-            innerArcSegment.SweepDirection = SweepDirection.Clockwise;
+                    center.Y + Math.Cos(EndAngle * Math.PI / 180) * innerRadius),
+                Size = new Size(innerRadius, innerRadius),
+                SweepDirection = SweepDirection.Clockwise
+            };
 
             var lineSegment =
                 new LineSegment
@@ -314,14 +318,16 @@ namespace SpeedTest.RingSliceControl
                 };
 
             // Outer Arc
-            var outerArcSegment = new ArcSegment();
-            outerArcSegment.IsLargeArc = (EndAngle - StartAngle) >= 180.0;
-            outerArcSegment.Point =
+            var outerArcSegment = new ArcSegment
+            {
+                IsLargeArc = (EndAngle - StartAngle) >= 180.0,
+                Point =
                 new Point(
                         center.X - Math.Sin(StartAngle * Math.PI / 180) * outerRadius,
-                        center.Y + Math.Cos(StartAngle * Math.PI / 180) * outerRadius);
-            outerArcSegment.Size = new Size(outerRadius, outerRadius);
-            outerArcSegment.SweepDirection = SweepDirection.Counterclockwise;
+                        center.Y + Math.Cos(StartAngle * Math.PI / 180) * outerRadius),
+                Size = new Size(outerRadius, outerRadius),
+                SweepDirection = SweepDirection.Counterclockwise
+            };
 
             pathFigure.Segments.Add(innerArcSegment);
             pathFigure.Segments.Add(lineSegment);

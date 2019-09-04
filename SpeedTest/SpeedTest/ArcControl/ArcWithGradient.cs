@@ -14,11 +14,10 @@ namespace SpeedTest.ArcControl
     {
         #region Fields
 
-        const double MaxPercentValue = 400;
-        const double MaxAngle = 360;
+        private const double MaxAngle = 360;
 
-        private List<SolidColorBrush> brushCollection;
-        private List<RingSlice> ringSliceCollection;
+        private readonly List<SolidColorBrush> brushCollection;
+        private readonly List<RingSlice> ringSliceCollection;
 
         #endregion
 

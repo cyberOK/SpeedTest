@@ -66,12 +66,7 @@ namespace SpeedTest.RingSliceControl
         private void OnValueChanged(
             TPropertyType oldValue, TPropertyType newValue)
         {
-            var handler = ValueChanged;
-
-            if (handler != null)
-            {
-                handler(_source, newValue);
-            }
+            ValueChanged?.Invoke(_source, newValue);
         }
         #endregion
 

@@ -11,7 +11,7 @@ namespace SpeedTest.ViewModel.ViewBoards
 {
     public class ServerPanel : ObservableObject
     {
-        private ObservableCollection<Server> _serversCollection;
+        private ObservableCollection<ServerInformation> _serversCollection;
         private ObservableCollection<string> _serverNamesCollection;
         private ObservableCollection<string> _allServerNamesCollection;
         private bool _isServerPanelOpen;
@@ -22,7 +22,7 @@ namespace SpeedTest.ViewModel.ViewBoards
             set { Set(ref _isServerPanelOpen, value); }
         }
 
-        public ObservableCollection<Server> ServersCollection
+        public ObservableCollection<ServerInformation> ServersCollection
         {
             get { return this._serversCollection; }
             set { Set(ref _serversCollection, value); }

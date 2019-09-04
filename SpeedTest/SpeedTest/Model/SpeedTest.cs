@@ -80,22 +80,12 @@ namespace SpeedTest.Model
 
         protected virtual void OnGetDowloadData(SpeedDataEventArgs e)
         {
-            EventHandler<SpeedDataEventArgs> temp = Volatile.Read(ref DownloudDataRecieved);
-
-            if (temp != null)
-            {
-                temp(this, e);
-            }
+            Volatile.Read(ref DownloudDataRecieved)?.Invoke(this, e);
         }
 
         protected virtual void OnGetUploadData(SpeedDataEventArgs e)
         {
-            EventHandler<SpeedDataEventArgs> temp = Volatile.Read(ref UploadDataRecieved);
-
-            if (temp != null)
-            {
-                temp(this, e);
-            }
+            Volatile.Read(ref UploadDataRecieved)?.Invoke(this, e);
         }
 
         private int RandomSpeedD()

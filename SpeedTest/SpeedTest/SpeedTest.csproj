@@ -136,6 +136,7 @@
     <Compile Include="RingSliceControl\ColorExtension.cs" />
     <Compile Include="RingSliceControl\PropertyChangeEventSource.cs" />
     <Compile Include="RingSliceControl\RingSlice.cs" />
+    <Compile Include="Tlles\TileSpeedTest.cs" />
     <Compile Include="Triggers\DeviceFamilyStateTrigger\DeviceFamilyStateTrigger.cs" />
     <Compile Include="Triggers\Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="ViewModel\Converters\BooleanToColorConverter.cs" />
@@ -146,7 +147,7 @@
     <Compile Include="ViewModel\Helpers\SpeedTestCommand.cs" />
     <Compile Include="ViewModel\Helpers\ObservableObject.cs" />
     <Compile Include="ViewModel\HelpfullCollections\ServerManager.cs" />
-    <Compile Include="ViewModel\HelpfullCollections\Server.cs" />
+    <Compile Include="ViewModel\HelpfullCollections\ServerInformation.cs" />
     <Compile Include="ViewModel\HelpfullCollections\AppSetting.cs" />
     <Compile Include="ViewModel\HelpfullCollections\SpeedData.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
@@ -210,6 +211,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>5.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>

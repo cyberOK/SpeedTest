@@ -57,7 +57,7 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         public ObservableCollection<Language> Languages
         {
             get { return this._languages; }
-            set { Set(ref this._languages, value); }
+            private set { Set(ref this._languages, value); }
         }
 
         public AppSetting()

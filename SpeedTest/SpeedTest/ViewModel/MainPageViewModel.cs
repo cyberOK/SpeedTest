@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using SpeedTest.Tlles;
 using SpeedTest.ViewModel.Helpers;
 using SpeedTest.ViewModel.HelpfullCollections;
 using SpeedTest.ViewModel.ViewBoards;
@@ -474,6 +475,8 @@ namespace SpeedTest.ViewModel
                 this.ArcBoard.IsStartButtonPressed = false;
                 this.ArcBoard.IsDownloadSpeedDataRecieved = false;
                 this.ArcBoard.IsUploadSpeedDataRecieved = false;
+
+                TileSpeedTest.CreateTile(this.DataBoard.PingData, this.DataBoard.DownloadSpeedData, this.DataBoard.UploadSpeedData);
             }
         }
 
@@ -497,7 +500,7 @@ namespace SpeedTest.ViewModel
 
         private void UnsetCurrentServer()
         {
-            Server currentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
+            ServerInformation currentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
             if (currentServer != null)
             {
                 currentServer.IsCurrent = false;
@@ -506,16 +509,16 @@ namespace SpeedTest.ViewModel
 
         private void SetCurrentServer(string selectingServer)
         {
-            Server newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
+            ServerInformation newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
             if (newCurrentServer != null)
             {
                 newCurrentServer.IsCurrent = true;
             }
         }
 
-        private void SetCurrentServer(Server selectingServer)
+        private void SetCurrentServer(ServerInformation selectingServer)
         {
-            Server newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s == selectingServer);
+            ServerInformation newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s == selectingServer);
             if (newCurrentServer != null)
             {
                 newCurrentServer.IsCurrent = true;

@@ -54,7 +54,7 @@ namespace SpeedTest.Model
         public SpeedDataEventArgs(double ping, double downloudSpeed = 0, double uploadSpeed = 0, bool isTestEnd = false, string server = "TestServer")
         {
             this.Ping = ping;
-            this.IsTestEnd = IsTestEnd;
+            this.IsTestEnd = isTestEnd;
             this.DownloudSpeed = downloudSpeed;
             this.UploadSpeed = uploadSpeed;
             this.Server = server;
