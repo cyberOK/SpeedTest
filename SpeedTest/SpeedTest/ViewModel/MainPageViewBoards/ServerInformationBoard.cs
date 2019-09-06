@@ -9,7 +9,7 @@ namespace SpeedTest.ViewModel.ViewBoards
 {
     public class ServerInformationBoard : ObservableObject
     {
-        private string _providerName = "ProviderName";
+        private string _providerName;
         private string _ipAdress = "IpAdress";
         private string _serverName;
         private string _serverLocation;

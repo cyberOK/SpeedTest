@@ -13,6 +13,7 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"   
     xmlns:Ad="using:Microsoft.Advertising.WinRT.UI" 
+    xmlns:Behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -470,8 +471,8 @@
         <!-- Main Grid -->
         <Grid x:Name="MainGrid">
             <RelativePanel>
-                
-            <Ad:AdControl x:Name="Advertisement" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+
+                <Ad:AdControl x:Name="Advertisement" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
                           ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
  		                  AdUnitId="test"/>
             
@@ -503,7 +504,9 @@
                                 Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
                     <arcControl:ArcWithGradient x:Name="DownloadSpeedArc" Fill="DarkCyan" EnableGradient="True" FirstGradientColor="WhiteSmoke"
                                 Visibility="{Binding ArcBoard.IsDownloadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
-                                PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
+                                PercentValue="{Binding ArcBoard.DownloadSpeedArcValue,Source={StaticResource mainViewModel}}">
+                    </arcControl:ArcWithGradient>
+                   
                     <arcControl:ArcWithGradient x:Name="UploadSpeedArc" Fill="DarkBlue" EnableGradient="True"  FirstGradientColor="PowderBlue"
                                 Visibility="{Binding ArcBoard.IsUploadSpeedDataRecieved, Source={StaticResource mainViewModel}}"
                                 PercentValue="{Binding ArcBoard.UploadSpeedArcValue,Source={StaticResource mainViewModel}}"/>
@@ -611,7 +614,7 @@
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
-                    <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ContentDialogPrimaryButtonStyle}" Content="Change server" 
+                        <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ContentDialogPrimaryButtonStyle}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
                             Command="{Binding ChangeServerButtonPressed}"/>
                     </RelativePanel>
@@ -672,7 +675,7 @@
                                 <TextBlock x:Name="ModeBlock" x:Uid="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="Mode" RelativePanel.Below="LanguageComboBox"/>
                                 <RadioButton  x:Name="DefaultRadioButton" x:Uid="DefaultRadioButton" GroupName="Theme" Content="Default" Width="150" RelativePanel.Below="ModeBlock" Tag="Default"
                                               Style="{StaticResource RadioButtonStyle1}"
-                                              Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Tag}" 
+                                              Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DefaultRadioButton,Path=Tag}" 
                                               IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 2}"/>
                                 <RadioButton  x:Name="LightRadioButton" x:Uid="LightRadioButton" GroupName="Theme" Content="Light" Width="150" RelativePanel.Below="DefaultRadioButton" Tag="Light"
                                               Style="{StaticResource RadioButtonStyle1}"
@@ -684,7 +687,7 @@
                                               IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
 
                                 <!--About Block -->
-                                <TextBlock x:Name="AboutBlock" x:Uid="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" Text="About" RelativePanel.Below="DarkRadioButton"/>
+                                <TextBlock x:Name="AboutBlock" x:Uid="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" RelativePanel.Below="DarkRadioButton"/>
                                 <TextBlock x:Name="ProgramNameBlock" Text="{Binding SettingsPanel.Settings.ProgramName, Source={StaticResource mainViewModel}}" Style="{StaticResource TextBlockAboutProgram}"
                                                RelativePanel.Below="AboutBlock"/>
                                 <TextBlock x:Name="VersionBlock" Text="{Binding SettingsPanel.Settings.Version, Source={StaticResource mainViewModel}}" Style="{StaticResource TextBlockAboutProgram}" 

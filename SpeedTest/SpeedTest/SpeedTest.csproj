@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -151,12 +151,12 @@
     <Compile Include="ViewModel\HelpfullCollections\AppSetting.cs" />
     <Compile Include="ViewModel\HelpfullCollections\SpeedData.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
-    <Compile Include="ViewModel\ViewBoards\ArcBoard.cs" />
-    <Compile Include="ViewModel\ViewBoards\DataBoard.cs" />
-    <Compile Include="ViewModel\ViewBoards\HistoryPanel.cs" />
-    <Compile Include="ViewModel\ViewBoards\ServerInformationBoard.cs" />
-    <Compile Include="ViewModel\ViewBoards\ServerPanel.cs" />
-    <Compile Include="ViewModel\ViewBoards\SettingsPanel.cs" />
+    <Compile Include="ViewModel\MainPageViewBoards\ArcBoard.cs" />
+    <Compile Include="ViewModel\MainPageViewBoards\DataBoard.cs" />
+    <Compile Include="ViewModel\MainPageViewBoards\HistoryPanel.cs" />
+    <Compile Include="ViewModel\MainPageViewBoards\ServerInformationBoard.cs" />
+    <Compile Include="ViewModel\MainPageViewBoards\ServerPanel.cs" />
+    <Compile Include="ViewModel\MainPageViewBoards\SettingsPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -210,9 +210,12 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>5.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
       <Version>5.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">

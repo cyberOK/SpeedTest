@@ -394,7 +394,7 @@ namespace SpeedTest.ViewModel
             {
                 this.UnsetCurrentServer();
                 this.SetCurrentServer(selectingServer);
-                this.NewServerNameLocationAssign();
+                this.RefreshServerInformationBoard();
             }
         }
 
@@ -510,22 +510,11 @@ namespace SpeedTest.ViewModel
         private void SetCurrentServer(string selectingServer)
         {
             ServerInformation newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
-            if (newCurrentServer != null)
-            {
-                newCurrentServer.IsCurrent = true;
-            }
+
+            newCurrentServer.IsCurrent = true;
         }
 
-        private void SetCurrentServer(ServerInformation selectingServer)
-        {
-            ServerInformation newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s == selectingServer);
-            if (newCurrentServer != null)
-            {
-                newCurrentServer.IsCurrent = true;
-            }
-        }
-
-        private void NewServerNameLocationAssign()
+        private void RefreshServerInformationBoard()
         {
             this.ServerInformationBoard.CurrentServerName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.ProviderName;
             this.ServerInformationBoard.CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location;

@@ -15,18 +15,11 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         public string LanguageCode { get; set; }
     }
 
-    public enum Mode
-    {
-        Light,
-        Dark
-    }
-
     public class AppSetting : ObservableObject
     {
         private string _theme;
         private ObservableCollection<Language> _languages;
         
-        public List<Mode> Modes { get; private set; }
         public string ProgramName { get; private set; } 
         public string Version { get; private set; }  
         public string AboutArticle { get;  set; } = $"Also, since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline," +
@@ -64,7 +57,6 @@ namespace SpeedTest.ViewModel.HelpfullCollections
         {
             this.ProgramName = typeof(App).GetTypeInfo().Assembly.GetName().Name;
             this.Version = "Version: " + typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
-            this.Modes = Enum.GetValues(typeof(Mode)).Cast<Mode>().ToList();
             this.Theme = this.GetUserTheme();
             this.Languages = new ObservableCollection<Language>
             {
