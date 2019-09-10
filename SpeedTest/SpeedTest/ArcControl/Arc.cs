@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
-namespace SpeedTest.ArcControl
+namespace SpeedTestIPerf.ArcControl
 {
     public class Arc : Canvas
     {

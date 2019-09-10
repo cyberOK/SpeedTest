@@ -1,6 +1,6 @@
-﻿using SpeedTest.Model;
-using SpeedTest.ViewModel.Helpers;
-using SpeedTest.ViewModel.HelpfullCollections;
+﻿using SpeedTestIPerf.Model;
+using SpeedTestIPerf.ViewModel.Helpers;
+using SpeedTestIPerf.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTest.ViewModel.ViewBoards
+namespace SpeedTestIPerf.ViewModel.ViewBoards
 {
     public class HistoryPanel : ObservableObject
     {

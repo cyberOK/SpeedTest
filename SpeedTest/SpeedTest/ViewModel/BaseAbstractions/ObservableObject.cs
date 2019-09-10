@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SpeedTest.ViewModel.Helpers
+namespace SpeedTestIPerf.ViewModel.Helpers
 {
     public class ObservableObject : INotifyPropertyChanged
     {

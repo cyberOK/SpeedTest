@@ -1,4 +1,4 @@
-﻿using SpeedTest.ViewModel.Helpers;
+﻿using SpeedTestIPerf.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SpeedTest.Model
+namespace SpeedTestIPerf.Model
 {
     public class SpeedTest
     {

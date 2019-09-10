@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTest.ViewModel.HelpfullCollections
+namespace SpeedTestIPerf.ViewModel.Helpers
 {
     public class ServerInformation
     {

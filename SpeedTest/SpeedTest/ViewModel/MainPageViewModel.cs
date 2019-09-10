@@ -5,10 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SpeedTest.Tlles;
-using SpeedTest.ViewModel.Helpers;
-using SpeedTest.ViewModel.HelpfullCollections;
-using SpeedTest.ViewModel.ViewBoards;
+using SpeedTestIPerf.Tlles;
+using SpeedTestIPerf.ViewModel.Helpers;
+using SpeedTestIPerf.ViewModel.ViewBoards;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Globalization;
@@ -18,7 +17,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace SpeedTest.ViewModel
+namespace SpeedTestIPerf.ViewModel
 {
     public class MainPageViewModel : ObservableObject
     {
@@ -53,43 +52,43 @@ namespace SpeedTest.ViewModel
         public Model.SpeedTest Model
         {
             get { return this._model; }
-            set { Set(ref this._model, value); }
+            private set { Set(ref this._model, value); }
         }
 
         public ArcBoard ArcBoard
         {
             get { return _arcBoard; }
-            set { Set(ref _arcBoard, value); }
+            private set { Set(ref _arcBoard, value); }
         }
 
         public DataBoard DataBoard
         {
             get { return _dataBoard; }
-            set { Set(ref _dataBoard, value); }
+            private set { Set(ref _dataBoard, value); }
         }
 
         public ServerInformationBoard ServerInformationBoard
         {
             get { return _serverInformationBoard; }
-            set { Set(ref _serverInformationBoard, value); }
+            private set { Set(ref _serverInformationBoard, value); }
         }
 
         public SettingsPanel SettingsPanel
         {
             get { return _settingsPanel; }
-            set { Set(ref _settingsPanel, value); }
+            private set { Set(ref _settingsPanel, value); }
         }
 
         public HistoryPanel HistoryPanel
         {
             get { return _historyPanel; }
-            set { Set(ref _historyPanel, value); }
+            private set { Set(ref _historyPanel, value); }
         }
 
         public ServerPanel ServerPanel
         {
             get { return _serverPanel; }
-            set { Set(ref _serverPanel, value); }
+            private set { Set(ref _serverPanel, value); }
         }
 
         #endregion
@@ -152,8 +151,8 @@ namespace SpeedTest.ViewModel
             this.SettingsPanel = new SettingsPanel
             {
                 Settings = new AppSetting(),
-                SelectedMode = 2
-        };
+                SelectedMode = 2 // Set Windows Default Theme when start app
+            };
 
             this.HistoryPanel = new HistoryPanel
             {
@@ -270,14 +269,14 @@ namespace SpeedTest.ViewModel
 
         private void LanguageChange(object param)
         {
-            HelpfullCollections.Language chosenLanguage = (HelpfullCollections.Language)param;
-
+            Helpers.Language chosenLanguage = (Helpers.Language)param;
+            
             string langCode = chosenLanguage.LanguageCode;
 
             ApplicationLanguages.PrimaryLanguageOverride = langCode;
 
             Frame mainPage = Window.Current.Content as Frame;
-            mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());       
+            mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }
 
         private  void ModeChanged(object param)
@@ -490,7 +489,11 @@ namespace SpeedTest.ViewModel
 
             if (serversResults.Count == 0)
             {
-                serversResults.Add("No results");
+                ResourceLoader resources = new ResourceLoader();
+                
+                string outOfResult = resources.GetString("ChangeServerPanelOutOfResult");
+
+                serversResults.Add(outOfResult);
             }
 
             ObservableCollection<string> castServersResults = new ObservableCollection<string>(serversResults);

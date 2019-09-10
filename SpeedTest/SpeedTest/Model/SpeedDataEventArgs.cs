@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTest.Model
+namespace SpeedTestIPerf.Model
 {
     public class SpeedDataEventArgs : EventArgs
     {

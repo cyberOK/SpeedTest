@@ -1,7 +1,7 @@
-﻿using SpeedTest.Triggers.Helpers;
+﻿using SpeedTestIPerf.Triggers.Helpers;
 using Windows.UI.Xaml;
 
-namespace SpeedTest.Triggers.DeviceFamilyStateTrigger
+namespace SpeedTestIPerf.Triggers.DeviceFamilyStateTrigger
 {
     /// <summary>
     /// Trigger to differentiate between device families

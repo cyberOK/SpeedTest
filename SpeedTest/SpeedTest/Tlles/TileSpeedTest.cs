@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Notifications;
 using Microsoft.Toolkit.Uwp.Notifications;
 
-namespace SpeedTest.Tlles
+namespace SpeedTestIPerf.Tlles
 {
     public static class TileSpeedTest
     {

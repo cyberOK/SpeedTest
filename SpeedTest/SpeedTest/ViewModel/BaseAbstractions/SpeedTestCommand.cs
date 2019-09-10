@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace SpeedTest.ViewModel.Helpers
+namespace SpeedTestIPerf.ViewModel.Helpers
 {
     public class SpeedTestCommand : ICommand
     {
