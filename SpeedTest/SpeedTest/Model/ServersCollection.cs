@@ -29,8 +29,6 @@ namespace SpeedTestIPerf.Model
                 new ServerInformation { IPerf3Server = "iperf.scottlinux.com", Location = "USA, California", ProviderName = "Hurricane Fremont 2", Port = "5201", IsCurrent = false },
                 new ServerInformation { IPerf3Server = "iperf.he.net", Location = "USA, California", ProviderName = "Hurricane Fremont 1", Port = "5201", IsCurrent = false }
             };
-
-            this.ServerNamesCollection = GetServerNames(ServerDataCollection);
         }
 
         public static ServersCollection GetInstance()
@@ -43,11 +41,11 @@ namespace SpeedTestIPerf.Model
             return instance;
         }
 
-        private ObservableCollection<string> GetServerNames(ObservableCollection<ServerInformation> serversCollection)
+        public ObservableCollection<string> GetServerNames()
         {
             ObservableCollection<string> serverNames = new ObservableCollection<string>();
 
-            foreach (ServerInformation server in serversCollection)
+            foreach (ServerInformation server in this.ServerDataCollection)
             {
                 string serverName = server.ProviderName;
                 serverNames.Add(serverName);

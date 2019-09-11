@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using IPerfLibrary;
 
 namespace SpeedTestIPerf.Model
 {
@@ -15,12 +16,20 @@ namespace SpeedTestIPerf.Model
         int dowloadDataCounter = 0, uploadDataCounter = 0;
         Random random;
 
+        IPerfApp test;
+
+        public IPerfApp IPerf
+        {
+            get { return this.test; }
+        }
+
         public event EventHandler<SpeedDataEventArgs> DownloudDataRecieved;
         public event EventHandler<SpeedDataEventArgs> UploadDataRecieved;
 
         public SpeedTest()
         {
             this.random = new Random();
+            this.test = new IPerfApp();
         }
 
         public async void StartTest()

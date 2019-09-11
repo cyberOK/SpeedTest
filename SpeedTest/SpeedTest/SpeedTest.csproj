@@ -130,6 +130,8 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ServersCollection.cs" />
+    <Compile Include="Model\SpeedData.cs" />
+    <Compile Include="Model\SpeedDataContext.cs" />
     <Compile Include="Model\SpeedDataEventArgs.cs" />
     <Compile Include="Model\SpeedTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,10 +148,9 @@
     <Compile Include="ViewModel\Converters\RadioModeSelectedIntToBooltConverter.cs" />
     <Compile Include="ViewModel\BaseAbstractions\SpeedTestCommand.cs" />
     <Compile Include="ViewModel\BaseAbstractions\ObservableObject.cs" />
-    <Compile Include="ViewModel\Helpers\ServerManager.cs" />
-    <Compile Include="ViewModel\Helpers\ServerInformation.cs" />
+    <Compile Include="ViewModel\Helpers\LocalizedStrings.cs" />
     <Compile Include="ViewModel\Helpers\AppSetting.cs" />
-    <Compile Include="ViewModel\Helpers\SpeedData.cs" />
+    <Compile Include="ViewModel\Helpers\SpeedDataViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewBoards\ArcBoard.cs" />
     <Compile Include="ViewModel\MainPageViewBoards\DataBoard.cs" />
@@ -212,6 +213,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+      <Version>2.2.6</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <Version>2.2.6</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
@@ -223,6 +232,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite">
+      <Version>3.13.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

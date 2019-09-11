@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using SpeedTest.Model;
+using SpeedTestIPerf.Model;
 using SpeedTestIPerf.Tlles;
 using SpeedTestIPerf.ViewModel.Helpers;
 using SpeedTestIPerf.ViewModel.ViewBoards;
@@ -23,6 +25,7 @@ namespace SpeedTestIPerf.ViewModel
     {
         #region Fields
 
+        private int _id = 0;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
         private Model.SpeedTest _model;
@@ -94,6 +97,10 @@ namespace SpeedTestIPerf.ViewModel
         #endregion
 
         #region Property commands
+        
+        // MainPage properties commands
+        public SpeedTestCommand MainPageLoadedCommand { get; private set; }
+        public SpeedTestCommand MainPageUnloadedCommand { get; private set; }
 
         // Mainboard properties commands
 
@@ -136,12 +143,19 @@ namespace SpeedTestIPerf.ViewModel
 
             this.Model =  new Model.SpeedTest();
 
+            ServersCollection serversCollection = ServersCollection.GetInstance();
+
             this.Model.DownloudDataRecieved += Model_DownloudDataRecieved;
             this.Model.UploadDataRecieved += Model_UploadDataRecieved;
 
+            this.Model.IPerf.ConnectingDataUpdated += IPerf_ConnectingDataUpdated;
+            this.Model.IPerf.ConnectedDataUpdated += IPerf_ConnectedDataUpdated;
+            this.Model.IPerf.StartOfTestDataUpdated += IPerf_StartOfTestDataUpdated;
+            this.Model.IPerf.SpeedDataUpdated += IPerf_SpeedDataUpdated;
+            this.Model.IPerf.PingTestDataUpdated += IPerf_PingTestDataUpdated;
+
             // Initialization Helpers
 
-            ServerManager serverManager = new ServerManager();
 
             // Initialization MainPageViewModel
 
@@ -156,14 +170,14 @@ namespace SpeedTestIPerf.ViewModel
 
             this.HistoryPanel = new HistoryPanel
             {
-                SpeedDataCollection = new ObservableCollection<SpeedData>()
+                SpeedDataCollection = new ObservableCollection<SpeedDataViewModel>()
             };
 
             this.ServerPanel = new ServerPanel
             {
-                ServersCollection = serverManager.ServerDataCollection,
-                ServerNamesCollection = serverManager.GetServerNames(),
-                FullServerNamesCollection = serverManager.GetServerNames()
+                ServersCollection = serversCollection.ServerDataCollection,
+                ServerNamesCollection = serversCollection.GetServerNames(),
+                FullServerNamesCollection = serversCollection.GetServerNames()
             };
 
             this.ServerInformationBoard = new ServerInformationBoard
@@ -172,6 +186,11 @@ namespace SpeedTestIPerf.ViewModel
                CurrentServerLocation = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.Location,
                ProviderName = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)?.IPerf3Server
             };
+
+            // MainPage commands assigning
+
+            this.MainPageLoadedCommand = new SpeedTestCommand(new Action<object>(LoadingHistoryWhenAppStarting));
+            this.MainPageUnloadedCommand = new SpeedTestCommand(new Action<object>(SaveHistoryWhenAppClosing));
 
             // Main panel commands assigning
 
@@ -206,9 +225,55 @@ namespace SpeedTestIPerf.ViewModel
 
         #endregion
 
+        #region MainPage Actions for Delegates
+
+        private void LoadingHistoryWhenAppStarting(object param)
+        {
+            using (SpeedDataContext db = new SpeedDataContext())
+            {
+                ObservableCollection<SpeedDataViewModel> speedDataFromDatabase = new ObservableCollection<SpeedDataViewModel>();
+
+                foreach(SpeedData sd in db.SpeedDatas.ToList())
+                {
+                    speedDataFromDatabase.Add(new SpeedDataViewModel
+                    {
+                        Id = sd.Id,
+                        IsSelected = false,
+                        Server = sd.Server,
+                        Date = sd.Date,
+                        Ping = sd.Ping,
+                        DownloadSpeed = sd.DownloadSpeed,
+                        UploadSpeed = sd.UploadSpeed
+                    });
+                }
+
+                this.HistoryPanel.SpeedDataCollection = speedDataFromDatabase;
+
+                SpeedDataViewModel lastHistory;
+
+                if (HistoryPanel.SpeedDataCollection.Any())
+                {
+                    lastHistory = this.HistoryPanel.SpeedDataCollection.Last();
+
+                    if (lastHistory != null)
+                    {
+                        this._id = lastHistory.Id;
+                    }
+                }
+               
+            }
+        }
+
+        private void SaveHistoryWhenAppClosing(object param)
+        {
+            
+        }
+
+        #endregion
+
         #region Mainboard Actions for Delegates
 
-        private void StartSpeedTest(object param) 
+        private async void StartSpeedTest(object param) 
         {
             this.ArcBoard.IsStartButtonPressed = true;
             this.ArcBoard.IsTryConnect = true;
@@ -218,6 +283,8 @@ namespace SpeedTestIPerf.ViewModel
             this.DataBoard.IsUploadSpeedFieldsGridVisible = false;
 
             this.Model.StartTest();
+
+            //await this.Model.IPerf.TestNTimesAsync();
         }
 
         private async void ShareCalling(object param)
@@ -324,7 +391,18 @@ namespace SpeedTestIPerf.ViewModel
 
         private void DeleteHistory(object param)
         {
-            this.HistoryPanel.SpeedDataCollection.Clear();           
+            this.HistoryPanel.SpeedDataCollection.Clear();   
+            
+            using (SpeedDataContext db = new SpeedDataContext())
+            {
+                var histories = db.SpeedDatas;
+
+                if (histories != null)
+                {
+                    db.SpeedDatas?.RemoveRange(histories);
+                    db.SaveChanges();
+                }
+            }
         }
 
         private void CloseHistory(object param)
@@ -335,23 +413,34 @@ namespace SpeedTestIPerf.ViewModel
 
         private void SingleHistoryDeleting(object param)
         {
-            SpeedData singleHistoryForDeleting = (SpeedData)param;
+            SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)param;
 
             this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
+
+            using (SpeedDataContext db = new SpeedDataContext())
+            {
+                SpeedData singlehistory = db.SpeedDatas.FirstOrDefault(x => x.Id == singleHistoryForDeleting.Id);
+
+                if (singlehistory != null)
+                {
+                    db.SpeedDatas?.Remove(singlehistory);
+                    db.SaveChanges();
+                }
+            }
         }
 
         private void PhoneSingleHistoryDeleting(object param)
         {
-            SpeedData singleHistorySelected = (SpeedData)param;
+            SpeedDataViewModel singleHistorySelected = (SpeedDataViewModel)param;
 
             this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);            
         }
 
         private void SingleHistorySelecting(object param)
         {
-            SpeedData newSingleHistorySelected = (SpeedData)param;
+            SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
                         
-            SpeedData filteredHistory = this.HistoryPanel.SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected?.Id);
+            SpeedDataViewModel filteredHistory = this.HistoryPanel.SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected?.Id);
             
             if (filteredHistory != null)
             {
@@ -407,8 +496,34 @@ namespace SpeedTestIPerf.ViewModel
 
         #region Model Methods
 
-        private int _id = 0; // testing field
-        
+        private void IPerf_ConnectingDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfConnectingReport args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void IPerf_ConnectedDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfConnectedReport args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void IPerf_StartOfTestDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfStartOfTestReport args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void IPerf_SpeedDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfSpeedReport args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void IPerf_PingTestDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfPingTestReport args)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
         private void Model_DownloudDataRecieved(object sender, Model.SpeedDataEventArgs e)
         {
             // Set View Elements 
@@ -424,7 +539,31 @@ namespace SpeedTestIPerf.ViewModel
 
             // Set List of Speed Test Samples
 
-            this.HistoryPanel.SpeedDataCollection.Add(new SpeedData { Ping = (int)e.Ping, DownloadSpeed = (int)e.DownloudSpeed, Server = e.Server, Date = e.Date , Id = ++this._id});
+            SpeedDataViewModel speedDataSample = new SpeedDataViewModel
+            {
+                Ping = (int)e.Ping,
+                DownloadSpeed = (int)e.DownloudSpeed,
+                Server = e.Server,
+                Date = e.Date,
+                Id = ++this._id
+            };
+
+            this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+
+            using (SpeedDataContext db = new SpeedDataContext())
+            {
+                var speedData = new SpeedData
+                {
+                    Id = speedDataSample.Id,
+                    Date = speedDataSample.Date,
+                    Server = speedDataSample.Server,
+                    DownloadSpeed = speedDataSample.DownloadSpeed,
+                    UploadSpeed = 0
+                };
+
+                db.SpeedDatas.Add(speedData);
+                db.SaveChanges();
+            }
 
             // Set DataBoard Ping and Download Speed
 
@@ -451,8 +590,31 @@ namespace SpeedTestIPerf.ViewModel
 
             // Set List of Speed Test Samples
 
-            this.HistoryPanel.SpeedDataCollection.Add(new SpeedData { Ping = (int)e.Ping, UploadSpeed = (int)e.UploadSpeed, Server = e.Server, Date = e.Date, Id = ++this._id });
-            //this.SpeedList.Add(new SpeedTestDataSample { Ping = (int)e.Ping, UploadSpeed = (int)e.UploadSpeed, Server = e.Server, Date = e.Date });
+            SpeedDataViewModel speedDataSample = new SpeedDataViewModel
+            {
+                Ping = (int)e.Ping,
+                UploadSpeed = (int)e.UploadSpeed,
+                Server = e.Server,
+                Date = e.Date,
+                Id = ++this._id
+            };
+
+            this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+
+            using (SpeedDataContext db = new SpeedDataContext())
+            {
+                var speedData = new SpeedData
+                {
+                    Id = speedDataSample.Id,
+                    Date = speedDataSample.Date,
+                    Server = speedDataSample.Server,
+                    DownloadSpeed = 0,
+                    UploadSpeed = speedDataSample.UploadSpeed
+                };
+
+                db.SpeedDatas.Add(speedData);
+                db.SaveChanges();
+            }
 
             // Set DataBoard Ping and Upload Speed
 

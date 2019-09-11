@@ -12,10 +12,10 @@ namespace SpeedTestIPerf.ViewModel.ViewBoards
 {
     public class HistoryPanel : ObservableObject
     {
-        private SpeedData _oldSelectedHistoryValue = null;
+        private SpeedDataViewModel _oldSelectedHistoryValue = null;
         private bool _isHistoryPanelOpen;
         private bool _isHistorySelected;
-        private ObservableCollection<SpeedData> _speedDataCollection;
+        private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
 
         public bool IsHistoryPanelOpen
         {
@@ -29,13 +29,13 @@ namespace SpeedTestIPerf.ViewModel.ViewBoards
             set { Set(ref _isHistorySelected, value); }
         }
 
-        public ObservableCollection<SpeedData> SpeedDataCollection
+        public ObservableCollection<SpeedDataViewModel> SpeedDataCollection
         {
             get { return this._speedDataCollection; }
             set { Set(ref _speedDataCollection, value); }
         }
 
-        public SpeedData OldSelectedHistoryValue
+        public SpeedDataViewModel OldSelectedHistoryValue
         {
             get { return this._oldSelectedHistoryValue; }
             set { Set(ref _oldSelectedHistoryValue, value); }

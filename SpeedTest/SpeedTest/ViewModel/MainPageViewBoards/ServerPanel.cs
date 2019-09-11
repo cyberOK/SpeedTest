@@ -1,4 +1,4 @@
-﻿using SpeedTestIPerf.ViewModel.Helpers;
+﻿using SpeedTestIPerf.Model;
 using SpeedTestIPerf.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
