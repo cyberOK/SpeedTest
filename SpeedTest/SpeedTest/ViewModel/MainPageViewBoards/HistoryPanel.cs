@@ -15,7 +15,14 @@ namespace SpeedTestIPerf.ViewModel.ViewBoards
         private SpeedDataViewModel _oldSelectedHistoryValue = null;
         private bool _isHistoryPanelOpen;
         private bool _isHistorySelected;
+        private string _currentPing;
         private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
+
+        public string CurrentPing
+        {
+            get { return this._currentPing; }
+            set { Set(ref this._currentPing, value); }
+        }
 
         public bool IsHistoryPanelOpen
         {

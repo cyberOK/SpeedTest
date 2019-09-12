@@ -255,4 +255,7 @@
   <data name="ChangeServerPanelOutOfResult" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
+  <data name="MeasureValue" xml:space="preserve">
+    <value>Мб/с</value>
+  </data>
 </root>

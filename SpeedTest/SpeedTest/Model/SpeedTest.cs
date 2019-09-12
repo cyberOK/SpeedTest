@@ -16,11 +16,11 @@ namespace SpeedTestIPerf.Model
         int dowloadDataCounter = 0, uploadDataCounter = 0;
         Random random;
 
-        IPerfApp test;
+        IPerfApp _test;
 
         public IPerfApp IPerf
         {
-            get { return this.test; }
+            get { return this._test; }
         }
 
         public event EventHandler<SpeedDataEventArgs> DownloudDataRecieved;
@@ -29,7 +29,7 @@ namespace SpeedTestIPerf.Model
         public SpeedTest()
         {
             this.random = new Random();
-            this.test = new IPerfApp();
+            this._test = new IPerfApp();
         }
 
         public async void StartTest()

@@ -615,13 +615,13 @@
                     <!-- Server Information Board  -->
                     <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
                         <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
-                               Text="{Binding ServerInformationBoard.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
                         <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.IpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
+                               Text="{Binding ServerInformationBoard.CurrentServer.Port, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
                         <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
-                               Text="{Binding ServerInformationBoard.CurrentServerName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}"
+                               Text="{Binding ServerInformationBoard.CurrentServer.Location, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
                         <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ContentDialogPrimaryButtonStyle}" Content="Change server" 
                             RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
@@ -915,9 +915,9 @@
                                        FontFamily="Segoe MDL2 Assets" RelativePanel.AlignLeftWithPanel="True"/>
                         <Rectangle Fill="DarkCyan"  Canvas.ZIndex="1" RelativePanel.RightOf="ImageGlobe"
                                Width="2" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True"/>
-                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerInformationBoard.CurrentServerName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
+                        <TextBlock x:Name="HeaderServerName" Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" Foreground="DarkCyan" Padding="10,0,0,0"
                                    RelativePanel.RightOf="ImageGlobe" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerInformationBoard.CurrentServerLocation, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
+                        <TextBlock x:Name="HeaderServerLocation" Text="{Binding ServerInformationBoard.CurrentServer.Location, Source={StaticResource mainViewModel}}" Padding="10,0,0,0"
                                    RelativePanel.RightOf="ImageGlobe" RelativePanel.Below="HeaderServerName"/>
                         <Button x:Name="CloseServersPanelButton" Style="{StaticResource ButtonClose}"  Content="&#xE711;"
                                 Command="{Binding CloseServerPanelButtonPressed}" RelativePanel.AlignRightWithPanel="True"/>

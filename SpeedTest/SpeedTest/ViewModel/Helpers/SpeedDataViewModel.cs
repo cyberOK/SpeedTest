@@ -23,10 +23,10 @@ namespace SpeedTestIPerf.ViewModel.Helpers
 
         public DateTime Date { get; set; }
 
-        public int Ping { get; set; }
+        public string Ping { get; set; }
 
-        public int DownloadSpeed { get; set; }
+        public double DownloadSpeed { get; set; }
 
-        public int UploadSpeed { get; set; }
+        public double UploadSpeed { get; set; }
     }
 }

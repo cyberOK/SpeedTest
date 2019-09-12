@@ -261,4 +261,7 @@
   <data name="RateLink.NavigateUri" xml:space="preserve">
     <value>https://docs.mongodb.com/ecosystem/drivers/csharp/</value>
   </data>
+  <data name="MeasureValue" xml:space="preserve">
+    <value>Mbps</value>
+  </data>
 </root>
