@@ -245,6 +245,12 @@
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RuntimeSpeedTest\RuntimeSpeedTest.csproj">
+      <Project>{6d8fccaa-dc4a-4508-89cf-a7bf0ae68f46}</Project>
+      <Name>RuntimeSpeedTest</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

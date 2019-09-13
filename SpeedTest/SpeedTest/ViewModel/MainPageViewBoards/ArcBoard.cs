@@ -9,6 +9,7 @@ namespace SpeedTestIPerf.ViewModel.ViewBoards
 {
     public class ArcBoard : ObservableObject
     {
+        private bool _isStartArcVisible = true;
         private bool _isStartButtonPressed;
         private bool _isTryConnect;
         private bool _isSpeedMeterBackgroundVisible;
@@ -18,6 +19,13 @@ namespace SpeedTestIPerf.ViewModel.ViewBoards
         private string _speedDataNumbers;
         private double _downloadSpeedArcValue;
         private double _uploadSpeedArcValu;
+
+        
+        public bool IsStartArcVisible
+        {
+            get { return _isStartArcVisible; }
+            set { Set(ref _isStartArcVisible, value); }
+        }
 
         public bool IsStartButtonPressed
         {

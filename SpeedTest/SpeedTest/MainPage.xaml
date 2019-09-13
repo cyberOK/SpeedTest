@@ -506,7 +506,7 @@
                 
                 <!-- Arc Controls -->
                     <arcControl:Arc x:Name="StartArc" Fill="DarkCyan" Thickness="3" PercentValue="400" EnableGradient="False" 
-                                Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"/>
+                                Visibility="{Binding ArcBoard.IsStartArcVisible, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource mainViewModel}}"/>
                     <arcControl:Arc x:Name="TryConnectArc1" Fill="Gray" PercentValue="400" Opacity="0.4" EnableGradient="False" 
                                 Visibility="{Binding ArcBoard.IsSpeedMeterBackgroundVisible, Source={StaticResource mainViewModel}}"/>
                     <arcControl:Arc x:Name="TryConnectArc2" Fill="Gray" PercentValue="400" Opacity="0.2" EnableGradient="False"

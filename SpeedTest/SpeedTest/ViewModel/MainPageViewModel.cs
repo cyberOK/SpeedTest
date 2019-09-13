@@ -23,11 +23,17 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace SpeedTestIPerf.ViewModel
 {
+
+    public enum TestMode
+    {
+        Download,
+        Upload
+    }
     public class MainPageViewModel : ObservableObject
     {
         #region Fields
 
-        ResourceLoader resources; 
+        ResourceLoader resources;
         private int _id = 0;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
@@ -39,12 +45,15 @@ namespace SpeedTestIPerf.ViewModel
         private HistoryPanel _historyPanel;
         private ServerPanel _serverPanel;
 
-        int timeOut = 0;
-        int numberOfPingTests = 1;
-        int numberOfDownloadTests = 10, numberOfUploadTests = 10;
-        TimeSpan interval = TimeSpan.FromMilliseconds(200);
-        bool downloadMode = false, uploadMode = true, testMode = false;
-
+        const int timeOut = 0;
+        const int numberOfPingTests = 50;
+        const int numberOfValidPingTests = 10;
+        const int numberOfDownloadTests = 10, numberOfUploadTests = 10;
+        TimeSpan interval = TimeSpan.FromMilliseconds(250);
+        bool downloadMode = false, uploadMode = true;
+        private TestMode TestMode;
+        private int latencySummary;
+        private int latencyCallbackCount;
         #endregion
 
         #region Property binding
@@ -106,7 +115,7 @@ namespace SpeedTestIPerf.ViewModel
         #endregion
 
         #region Property commands
-        
+
         // MainPage properties commands
         public SpeedTestCommand MainPageLoadedCommand { get; private set; }
         public SpeedTestCommand MainPageUnloadedCommand { get; private set; }
@@ -119,7 +128,7 @@ namespace SpeedTestIPerf.ViewModel
         public SpeedTestCommand SettingsButtonPressed { get; private set; }
         public SpeedTestCommand ChangeServerButtonPressed { get; private set; }
         public SpeedTestCommand GamburgerButtonPressed { get; private set; }
-        
+
         // Settings panel properties commands
 
         public SpeedTestCommand SettingSplitViewClosing { get; private set; }
@@ -128,7 +137,7 @@ namespace SpeedTestIPerf.ViewModel
 
         // History panel properties commands
 
-        public SpeedTestCommand DeleteHistoryButtonPressed { get; private set; }       
+        public SpeedTestCommand DeleteHistoryButtonPressed { get; private set; }
         public SpeedTestCommand CloseHistoryButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistoryDeletedButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistorySelected { get; private set; }
@@ -141,7 +150,7 @@ namespace SpeedTestIPerf.ViewModel
         public SpeedTestCommand ServerSuggestBoxTextChanged { get; private set; }
         public SpeedTestCommand SingleServerSelected { get; private set; }
         public SpeedTestCommand CloseServerPanelButtonPressed { get; private set; }
-     
+
         #endregion
 
         #region Constructors
@@ -150,7 +159,7 @@ namespace SpeedTestIPerf.ViewModel
         {
             // Model Initialization
 
-            this.Model =  new Model.SpeedTest();
+            this.Model = new Model.SpeedTest();
 
             ServersCollection serversCollection = ServersCollection.GetInstance();
 
@@ -159,10 +168,10 @@ namespace SpeedTestIPerf.ViewModel
 
             this.Model.IPerf.ConnectingDataUpdated += IPerf_ConnectingDataUpdated;
             this.Model.IPerf.ConnectedDataUpdated += IPerf_ConnectedDataUpdated;
-            this.Model.IPerf.StartOfTestDataUpdated += IPerf_StartOfTestDataUpdated;
             this.Model.IPerf.SpeedDataUpdated += IPerf_SpeedDataUpdated;
             this.Model.IPerf.PingTestDataUpdated += IPerf_PingTestDataUpdated;
             this.Model.IPerf.ErrorDataUpdated += IPerf_ErrorDataUpdated;
+            this.Model.IPerf.ErrorPingTestDataUpdated += IPerf_ErrorPingTestDataUpdated;
 
             // Initialization Helpers
 
@@ -193,7 +202,7 @@ namespace SpeedTestIPerf.ViewModel
 
             this.ServerInformationBoard = new ServerInformationBoard
             {
-                CurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)               
+                CurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)
             };
 
             // MainPage commands assigning
@@ -242,7 +251,7 @@ namespace SpeedTestIPerf.ViewModel
             {
                 ObservableCollection<SpeedDataViewModel> speedDataFromDatabase = new ObservableCollection<SpeedDataViewModel>();
 
-                foreach(SpeedData sd in db.SpeedDatas.ToList())
+                foreach (SpeedData sd in db.SpeedDatas.ToList())
                 {
                     speedDataFromDatabase.Add(new SpeedDataViewModel
                     {
@@ -269,36 +278,39 @@ namespace SpeedTestIPerf.ViewModel
                         this._id = lastHistory.Id;
                     }
                 }
-               
+
             }
         }
 
         private void SaveHistoryWhenAppClosing(object param)
         {
-            
+
         }
 
         #endregion
 
         #region Mainboard Actions for Delegates
 
-        private async void StartSpeedTest(object param) 
+        private async void StartSpeedTest(object param)
         {
             this.ArcBoard.IsStartButtonPressed = true;
-            //this.ArcBoard.IsTryConnect = true;
-            //this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
-            //this.DataBoard.IsPingFieldsGridVisible = false;
-            //this.DataBoard.IsDownloadSpeedFieldsGridVisible = false;
-            //this.DataBoard.IsUploadSpeedFieldsGridVisible = false;
+            this.ArcBoard.IsTryConnect = true;
+            this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+            this.ArcBoard.IsDownloadSpeedDataRecieved = false;
+            this.ArcBoard.IsUploadSpeedDataRecieved = false;
+            this.ArcBoard.IsStartArcVisible = false;
+            this.DataBoard.IsPingFieldsGridVisible = false;
+            this.DataBoard.IsDownloadSpeedFieldsGridVisible = false;
+            this.DataBoard.IsUploadSpeedFieldsGridVisible = false;
 
             //this.Model.StartTest();
 
             // Download Test Initialization
-           
+
             string hostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
             int port = this.ServerInformationBoard.CurrentServer.Port;
 
-            await this.Model.IPerf.TestNTimesAsync(hostName, port, this.numberOfDownloadTests, interval, downloadMode);
+            await this.Model.IPerf.TestNTimesAsync(hostName, port, numberOfDownloadTests, interval, downloadMode);
         }
 
         private async void ShareCalling(object param)
@@ -312,7 +324,7 @@ namespace SpeedTestIPerf.ViewModel
         {
             this.ClosePhoneGrid();
             this.IsPopupGridRaise = true;
-            this.HistoryPanel.IsHistoryPanelOpen = true;                 
+            this.HistoryPanel.IsHistoryPanelOpen = true;
         }
 
         private void SettingsCalling(object param)
@@ -349,7 +361,7 @@ namespace SpeedTestIPerf.ViewModel
         private void LanguageChange(object param)
         {
             Helpers.Language chosenLanguage = (Helpers.Language)param;
-            
+
             string langCode = chosenLanguage.LanguageCode;
 
             ApplicationLanguages.PrimaryLanguageOverride = langCode;
@@ -358,10 +370,10 @@ namespace SpeedTestIPerf.ViewModel
             mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }
 
-        private  void ModeChanged(object param)
+        private void ModeChanged(object param)
         {
             string selectedMode = (string)param;
-            
+
             if (selectedMode == "Dark")
             {
                 this.SettingsPanel.SelectedMode = 1;
@@ -392,7 +404,7 @@ namespace SpeedTestIPerf.ViewModel
         #region History Actions for Delegates
 
         private async void CallDeleteHistoryDialog(object param)
-        {       
+        {
             if (this.HistoryPanel.SpeedDataCollection.Count != 0)
             {
                 DeleteDialog dD = new DeleteDialog();
@@ -403,8 +415,8 @@ namespace SpeedTestIPerf.ViewModel
 
         private void DeleteHistory(object param)
         {
-            this.HistoryPanel.SpeedDataCollection.Clear();   
-            
+            this.HistoryPanel.SpeedDataCollection.Clear();
+
             using (SpeedDataContext db = new SpeedDataContext())
             {
                 var histories = db.SpeedDatas;
@@ -445,15 +457,15 @@ namespace SpeedTestIPerf.ViewModel
         {
             SpeedDataViewModel singleHistorySelected = (SpeedDataViewModel)param;
 
-            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);            
+            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);
         }
 
         private void SingleHistorySelecting(object param)
         {
             SpeedDataViewModel newSingleHistorySelected = (SpeedDataViewModel)param;
-                        
+
             SpeedDataViewModel filteredHistory = this.HistoryPanel.SpeedDataCollection.FirstOrDefault(h => h.Id == newSingleHistorySelected?.Id);
-            
+
             if (filteredHistory != null)
             {
                 filteredHistory.IsSelected = true;
@@ -478,12 +490,12 @@ namespace SpeedTestIPerf.ViewModel
         {
             string inputText = (string)param;
 
-            ObservableCollection<string> serverResults = FindServerInCollection(inputText);            
+            ObservableCollection<string> serverResults = FindServerInCollection(inputText);
 
             if (serverResults != null)
             {
                 this.ServerPanel.ServerNamesCollection = serverResults;
-            }            
+            }
         }
 
         private void SingleServerSelecting(object param)
@@ -508,203 +520,284 @@ namespace SpeedTestIPerf.ViewModel
 
         #region Model Methods
 
+        private async void IPerf_ErrorPingTestDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfErrorPingTestReport args)
+        {
+            switch (this.TestMode)
+            {
+                case TestMode.Download:
+
+                    break;
+
+                case TestMode.Upload:
+
+                    break;
+            }
+        }
+
         private async void IPerf_ErrorDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfErrorReport args)
         {
-            var errors = args.ErrorCode;
-
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            switch (this.TestMode)
             {
-                this.ArcBoard.IsStartButtonPressed = false;
-                this.ArcBoard.IsTryConnect = false;
-                this.ArcBoard.IsSpeedMeterBackgroundVisible = false;
-            });
+                case TestMode.Download:
 
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        this.ArcBoard.IsStartButtonPressed = false;
+                        this.ArcBoard.IsStartArcVisible = true;
+                        this.ArcBoard.IsTryConnect = false;
+                        this.ArcBoard.IsSpeedMeterBackgroundVisible = false;
+                        this.ArcBoard.IsSpeedDataNumbersReceiving = false;
+                        this.ArcBoard.IsDownloadSpeedDataRecieved = false;
+                        this.DataBoard.IsPingFieldsGridVisible = false;
+                        this.DataBoard.IsDownloadSpeedFieldsGridVisible = false;
+                    });
+
+                    break;
+
+                case TestMode.Upload:
+
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        this.ArcBoard.IsStartButtonPressed = true;
+                        this.ArcBoard.IsStartArcVisible = false;
+
+                        string hostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
+                        int port = this.ServerInformationBoard.CurrentServer.Port;
+
+                        await this.Model.IPerf.TestNTimesAsync(hostName, port, numberOfUploadTests, interval, this.uploadMode);
+                    });
+
+                    break;
+            }
         }
 
         private async void IPerf_ConnectingDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfConnectingReport args)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            switch (this.TestMode)
             {
-                this.ArcBoard.IsTryConnect = true;
-                this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
-            });
+                case TestMode.Download:
+
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.ArcBoard.IsTryConnect = true;
+                        this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+                    });
+
+                    break;
+
+                case TestMode.Upload:
+
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.ArcBoard.IsStartButtonPressed = true;
+                        this.ArcBoard.IsTryConnect = false;
+                    });
+
+                    break;
+            }
         }
 
         private async void IPerf_ConnectedDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfConnectedReport args)
         {
-            string hostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
-
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            switch (this.TestMode)
             {
-                this.ArcBoard.IsTryConnect = false;
-            });
+                case TestMode.Download:
 
-            await this.Model.IPerf.PingTestAsync(hostName, this.timeOut, this.numberOfPingTests);
-        }
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.ArcBoard.IsTryConnect = false;
+                    });
 
-        private async void IPerf_StartOfTestDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfStartOfTestReport args)
-        {
+                    this.latencyCallbackCount = 0;
+                    this.latencySummary = 0;
 
+                    string hostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
+
+                    await this.Model.IPerf.PingTestAsync(hostName, timeOut, numberOfPingTests);
+
+                    break;
+
+                case TestMode.Upload:
+
+                    break;
+            }
         }
 
         private async void IPerf_SpeedDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfSpeedReport args)
-        {    
-            if (!testMode)
+        {
+            switch (this.TestMode)
             {
-                if (args.ReportSender.Length == 0)
-                {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                case TestMode.Download:
+
+                    if (args.ReportSender.Length == 0) // Check ending of Test
                     {
-                        // Set View Elements
-
-                        this.ArcBoard.IsDownloadSpeedDataRecieved = true;
-                        this.ArcBoard.IsSpeedDataNumbersReceiving = true;
-
-                        this.ArcBoard.IsStartButtonPressed = true;
-                        this.ArcBoard.IsTryConnect = false;
-                        this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
-
-                        // Set Arc Board from Recieving Data
-
-                        string[] downloadValue = args.BitrateBuf.Split(' '); ;
-                        string downloadSpeed = downloadValue[0];
-                        string measureValue = resources.GetString("MeasureValue");
-
-                        double downloadSpeedParse = 0;
-
-                        if (double.TryParse(downloadSpeed, out downloadSpeedParse))
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            if (downloadSpeedParse != 0)
+                            // Set View Elements
+
+                            this.ArcBoard.IsDownloadSpeedDataRecieved = true;
+                            this.ArcBoard.IsSpeedDataNumbersReceiving = true;
+                            this.ArcBoard.IsStartButtonPressed = true;
+                            this.ArcBoard.IsStartArcVisible = false;
+                            this.ArcBoard.IsTryConnect = false;
+                            this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+
+                            // Parse receiving data
+
+                            string[] downloadValue = args.BitrateBuf.Split(' '); ;
+                            string downloadSpeed = downloadValue[0];
+                            string measureValue = resources.GetString("MeasureValue");
+
+                            double downloadSpeedParse = 0;
+
+                            if (double.TryParse(downloadSpeed, out downloadSpeedParse))
                             {
-                                this.ArcBoard.DownloadSpeedArcValue = downloadSpeedParse;
-                                this.ArcBoard.SpeedDataNumbers = downloadSpeed + " " + measureValue;
-
-                                // Set List of Speed Test Samples
-
-                                SpeedDataViewModel speedDataSample = new SpeedDataViewModel
+                                if (downloadSpeedParse != 0)
                                 {
-                                    Ping = this.HistoryPanel.CurrentPing,
-                                    DownloadSpeed = downloadSpeedParse,
-                                    UploadSpeed = 0,
-                                    Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
-                                    Date = DateTime.Now,
-                                    Id = ++this._id
-                                };
+                                    // Set Arc Board from Recieving Data
 
-                                this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+                                    this.ArcBoard.DownloadSpeedArcValue = downloadSpeedParse;
+                                    this.ArcBoard.SpeedDataNumbers = downloadSpeed + " " + measureValue;
 
-                                // Set DataBoard
+                                    // Set List of Speed Test Samples
 
-                                if (this.HistoryPanel.SpeedDataCollection != null)
-                                {
-                                    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
-                                    this.DataBoard.PingData = testSample.Ping;
-                                    this.DataBoard.DownloadSpeedData = ((int)testSample.DownloadSpeed).ToString();
-                                    this.DataBoard.IsPingFieldsGridVisible = true;
-                                    this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
+                                    SpeedDataViewModel speedDataSample = new SpeedDataViewModel
+                                    {
+                                        Ping = this.HistoryPanel.CurrentPing,
+                                        DownloadSpeed = downloadSpeedParse,
+                                        UploadSpeed = 0,
+                                        Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
+                                        Date = DateTime.Now,
+                                        Id = ++this._id
+                                    };
+
+                                    // Set History Collection
+
+                                    this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+
+                                    // Set DataBoard
+
+                                    if (this.HistoryPanel.SpeedDataCollection != null)
+                                    {
+                                        var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
+                                        this.DataBoard.PingData = testSample.Ping;
+                                        this.DataBoard.DownloadSpeedData = (testSample.DownloadSpeed).ToString();
+                                        this.DataBoard.IsPingFieldsGridVisible = true;
+                                        this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
+                                    }
                                 }
                             }
-                        }
-                    });
-                }
+                        });
+                    }
 
-                else 
-                {
-                    string hostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
-                    int port = this.ServerInformationBoard.CurrentServer.Port;
-
-                    await this.Model.IPerf.TestNTimesAsync(hostName, port, this.numberOfUploadTests, interval, this.uploadMode);
-
-                    this.testMode = true;
-                }
-            }
-
-            else
-            {
-                if (args.ReportSender.Length == 0)
-                {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    else if (args.ReportSender == "receiver")// If Download Test ended starting Upload Test
                     {
-                        // Set View Elements   
-                        
-                        this.ArcBoard.IsUploadSpeedDataRecieved = true;
+                        string hostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
+                        int port = this.ServerInformationBoard.CurrentServer.Port;
 
-                        this.ArcBoard.IsStartButtonPressed = true;
-                        this.ArcBoard.IsTryConnect = false;
-                        this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+                        this.TestMode = TestMode.Upload;
 
-                        // Set Arc Board from Recieving Data
+                        await this.Model.IPerf.TestNTimesAsync(hostName, port, numberOfUploadTests, interval, this.uploadMode);
+                    }
 
-                        string[] uploadValue = args.BitrateBuf.Split(' '); ;
-                        string uploadSpeed = uploadValue[0];
-                        string measureValue = resources.GetString("MeasureValue");
+                    break;
 
-                        double uploadSpeedParse = 0;
+                case TestMode.Upload:
 
-                        if (double.TryParse(uploadSpeed, out uploadSpeedParse))
+                    if (args.ReportSender.Length == 0) // Check ending of Test
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            if (uploadSpeedParse != 0)
+                            // Set View Elements   
+
+                            this.ArcBoard.IsUploadSpeedDataRecieved = true;
+                            this.ArcBoard.IsStartButtonPressed = true;
+                            this.ArcBoard.IsStartArcVisible = false;
+                            this.ArcBoard.IsTryConnect = false;
+                            this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+
+                            // Set Arc Board from Recieving Data
+
+                            string[] uploadValue = args.BitrateBuf.Split(' '); ;
+                            string uploadSpeed = uploadValue[0];
+                            string measureValue = resources.GetString("MeasureValue");
+
+                            double uploadSpeedParse = 0;
+
+                            if (double.TryParse(uploadSpeed, out uploadSpeedParse))
                             {
-                                this.ArcBoard.UploadSpeedArcValue = uploadSpeedParse;
-                                this.ArcBoard.SpeedDataNumbers = uploadSpeed + " " + measureValue;
-
-                                // Set List of Speed Test Samples
-
-                                SpeedDataViewModel speedDataSample = new SpeedDataViewModel
+                                if (uploadSpeedParse != 0)
                                 {
-                                    Ping = this.HistoryPanel.CurrentPing,
-                                    UploadSpeed = uploadSpeedParse,
-                                    DownloadSpeed = 0,
-                                    Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
-                                    Date = DateTime.Now,
-                                    Id = ++this._id
-                                };
+                                    // Set Arc Board from Recieving Data
 
-                                this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+                                    this.ArcBoard.UploadSpeedArcValue = uploadSpeedParse;
+                                    this.ArcBoard.SpeedDataNumbers = uploadSpeed + " " + measureValue;
 
-                                // Set DataBoard
+                                    // Set Speed Sample Test Samples
 
-                                if (this.HistoryPanel.SpeedDataCollection != null)
-                                {
-                                    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
-                                    this.DataBoard.PingData = testSample.Ping;
-                                    this.DataBoard.UploadSpeedData = ((int)testSample.UploadSpeed).ToString();
-                                    this.DataBoard.IsPingFieldsGridVisible = true;
-                                    this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
+                                    SpeedDataViewModel speedDataSample = new SpeedDataViewModel
+                                    {
+                                        Ping = this.HistoryPanel.CurrentPing,
+                                        UploadSpeed = uploadSpeedParse,
+                                        DownloadSpeed = 0,
+                                        Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
+                                        Date = DateTime.Now,
+                                        Id = ++this._id
+                                    };
+
+                                    // Add Speed Sample to History Collection
+
+                                    this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+
+                                    // Set DataBoard by Speed Sample
+
+                                    if (this.HistoryPanel.SpeedDataCollection != null)
+                                    {
+                                        var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
+                                        this.DataBoard.PingData = testSample.Ping;
+                                        this.DataBoard.UploadSpeedData = (testSample.UploadSpeed).ToString();
+                                        this.DataBoard.IsPingFieldsGridVisible = true;
+                                        this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
+                                    }
                                 }
                             }
-                        }
 
-                    });
-                }
+                        });
+                    }
 
-                else if (args.ReportSender == "receiver")
-                {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    else // if (args.ReportSender == "receiver") // Upload Test ended reset TestMode
                     {
-                        this.testMode = false;
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            this.TestMode = TestMode.Download;
 
-                        this.ArcBoard.IsSpeedDataNumbersReceiving = false;
-                        this.ArcBoard.IsStartButtonPressed = false;
-                    });
-                }
+                            this.ArcBoard.IsSpeedDataNumbersReceiving = false;
+                            this.ArcBoard.IsStartButtonPressed = false;
+
+                            this.latencyCallbackCount = 0;
+                        });
+                    }
+
+                    break;
             }
         }
 
         private async void IPerf_PingTestDataUpdated(IPerfLibrary.IPerfApp sender, IPerfLibrary.iPerfPingTestReport args)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                var ping = args.Latency;
+                var ping = new TimeSpan(args.Latency).Milliseconds;
 
-                // Remove 0 in the end
-
-                while (ping % 10 == 0)
+                if (ping != 0)
                 {
-                    ping = ping / 10;
+                    this.latencySummary += ping;
+                    this.latencyCallbackCount++;
                 }
 
-                this.HistoryPanel.CurrentPing = ping.ToString();
+                if (this.latencyCallbackCount == numberOfValidPingTests)
+                {
+                    this.HistoryPanel.CurrentPing = ((double)this.latencySummary / (double)numberOfValidPingTests).ToString();
+                }                                   
             });
         }
 
@@ -722,7 +815,7 @@ namespace SpeedTestIPerf.ViewModel
 
             string measureValue = resources.GetString("MeasureValue");
 
-            this.ArcBoard.SpeedDataNumbers = e.DownloudSpeed.ToString() +" "+ measureValue;
+            this.ArcBoard.SpeedDataNumbers = e.DownloudSpeed.ToString() + " " + measureValue;
             this.ArcBoard.DownloadSpeedArcValue = e.DownloudSpeed;
 
             // Set List of Speed Test Samples
@@ -818,7 +911,7 @@ namespace SpeedTestIPerf.ViewModel
 
             // Set ViewModel When Test Ending
 
-            if  (e.IsTestEnd)
+            if (e.IsTestEnd)
             {
                 this.ArcBoard.IsSpeedMeterBackgroundVisible = false;
                 this.ArcBoard.IsSpeedDataNumbersReceiving = false;
@@ -839,7 +932,7 @@ namespace SpeedTestIPerf.ViewModel
             var serversResults = this.ServerPanel.FullServerNamesCollection.Where(s => s.ToLower().Contains(inputText.ToLower())).ToList();
 
             if (serversResults.Count == 0)
-            {                              
+            {
                 string outOfResult = resources.GetString("ChangeServerPanelOutOfResult");
 
                 serversResults.Add(outOfResult);
@@ -869,7 +962,7 @@ namespace SpeedTestIPerf.ViewModel
         private void RefreshServerInformationBoard()
         {
             this.ServerInformationBoard.CurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
-        }       
+        }
 
         private void ClosePhoneGrid()
         {

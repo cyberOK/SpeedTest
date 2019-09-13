@@ -20,8 +20,8 @@ namespace SpeedTestIPerf.Model
             this.ServerDataCollection = new ObservableCollection<ServerInformation>
             {
                 new ServerInformation { IPerf3Server = "iperf.volia.net", Location = "Ukraine", ProviderName = "Volia Kiev", Port = 5201, IsCurrent = false },
-                new ServerInformation { IPerf3Server = "bouygues.iperf.fr", Location = "France", ProviderName = "Telehouse 2", Port = 5200, IsCurrent = true },
-                new ServerInformation { IPerf3Server = "ping.online.net", Location = "France", ProviderName = "Online.net", Port = 5200, IsCurrent = false },
+                new ServerInformation { IPerf3Server = "bouygues.iperf.fr", Location = "France", ProviderName = "Telehouse 2", Port = 5205, IsCurrent = true },
+                new ServerInformation { IPerf3Server = "ping.online.net", Location = "France", ProviderName = "Online.net", Port = 5205, IsCurrent = false },
                 new ServerInformation { IPerf3Server = "speedtest.serverius.net", Location = "Netherlands", ProviderName = "Serverius", Port = 5002, IsCurrent = false },
                 new ServerInformation { IPerf3Server = "iperf.eenet.ee", Location = "Estonia", ProviderName = "EENet Tartu", Port = 5201, IsCurrent = false },
                 new ServerInformation { IPerf3Server = "iperf.it-north.net", Location = "Kazakhstan", ProviderName = "Petropavl", Port = 5201, IsCurrent = false },
