@@ -1,23 +1,14 @@
-﻿using SpeedTestUWP.ViewModel.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTestUWP.ViewModel.Helpers
+namespace SpeedTestModel
 {
-    public class SpeedDataViewModel : ObservableObject
+    public class SpeedData
     {
-        private bool _isSelected = false;
-
         public int Id { get; set; }
-
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set { Set(ref _isSelected, value); }
-        }
 
         public string Server { get; set; }
 

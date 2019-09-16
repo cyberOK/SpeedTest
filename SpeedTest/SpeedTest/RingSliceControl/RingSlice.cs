@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
-namespace SpeedTestIPerf.RingSliceControl
+namespace SpeedTestUWP.RingSliceControl
 {
     public class RingSlice : Path
     {

@@ -1,11 +1,11 @@
-﻿using SpeedTestIPerf.ViewModel.Helpers;
+﻿using SpeedTestUWP.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTestIPerf.ViewModel.ViewBoards
+namespace SpeedTestUWP.ViewModel.ViewBoards
 {
     public class ArcBoard : ObservableObject
     {

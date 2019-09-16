@@ -231,6 +231,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp">
+      <Version>5.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>5.1.1</Version>
     </PackageReference>
@@ -256,6 +259,10 @@
     <ProjectReference Include="..\RuntimeSpeedTest\RuntimeSpeedTest.csproj">
       <Project>{6d8fccaa-dc4a-4508-89cf-a7bf0ae68f46}</Project>
       <Name>RuntimeSpeedTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpeedTestModel\SpeedTestModel.csproj">
+      <Project>{9f670486-6edc-4158-9324-f7314e1ca100}</Project>
+      <Name>SpeedTestModel</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

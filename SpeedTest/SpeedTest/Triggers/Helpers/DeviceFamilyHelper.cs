@@ -1,4 +1,4 @@
-﻿namespace SpeedTestIPerf.Triggers.Helpers
+﻿namespace SpeedTestUWP.Triggers.Helpers
 {
     /// <summary>
     /// Represents different Windows 10 device families

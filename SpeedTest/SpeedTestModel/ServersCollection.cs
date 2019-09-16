@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTestUWP.Model
+namespace SpeedTestModel
 {
-    public class ServersCollection
+    public  class ServersCollection
     {
         private static ServersCollection instance;
 
@@ -53,14 +53,5 @@ namespace SpeedTestUWP.Model
 
             return serverNames;
         }
-    }
-
-    public class ServerInformation
-    {
-        public bool IsCurrent { get; set; }
-        public string IPerf3Server { get; set; }
-        public string Location { get; set; }
-        public string ProviderName { get; set; }
-        public int Port { get; set; }
     }
 }

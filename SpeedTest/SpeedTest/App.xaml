@@ -1,11 +1,11 @@
 ﻿<Application
-    x:Class="SpeedTestIPerf.App"
+    x:Class="SpeedTestUWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SpeedTestIPerf"
-    xmlns:vm="using:SpeedTestIPerf.ViewModel"
-    xmlns:helpers="using:SpeedTestIPerf.ViewModel.Helpers"
-    xmlns:converter="using:SpeedTestIPerf.ViewModel.Converters">
+    xmlns:local="using:SpeedTestUWP"
+    xmlns:vm="using:SpeedTestUWP.ViewModel"
+    xmlns:helpers="using:SpeedTestUWP.ViewModel.Helpers"
+    xmlns:converter="using:SpeedTestUWP.ViewModel.Converters">
     <Application.Resources>
         <!-- View Model Class-->
         <vm:MainPageViewModel x:Key="mainViewModel"/>

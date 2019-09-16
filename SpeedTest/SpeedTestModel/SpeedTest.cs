@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
-using SpeedTest.Model.SpeedTestEventArgs;
+using SpeedTestModel.SpeedTestEventArgs;
 
-namespace SpeedTest.Model
+namespace SpeedTestModel
 {
     public enum TestMode
     {
@@ -77,7 +77,7 @@ namespace SpeedTest.Model
         protected virtual void OnGetErrorWhileTesting(ErrorsEventArgs e)
         {
             this.ErrorRecieved?.Invoke(this, e);
-        }        
+        }
 
         protected virtual void OnConnectingDataRecieved(ConnectingEventArgs e)
         {
@@ -87,7 +87,7 @@ namespace SpeedTest.Model
         protected virtual void OnConnectedDataRecieved(ConnectedEventArgs e)
         {
             this.ConnectedDataRecieved?.Invoke(this, e);
-        }        
+        }
 
         protected virtual void OnPingDataRecieved(PingEventArgs e)
         {

@@ -1,6 +1,6 @@
 ﻿using Windows.UI;
 
-namespace SpeedTestIPerf.RingSliceControl
+namespace SpeedTestUWP.RingSliceControl
 {
     public static class ColorExtension
     {

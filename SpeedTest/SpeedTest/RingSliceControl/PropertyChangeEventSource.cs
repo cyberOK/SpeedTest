@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace SpeedTestIPerf.RingSliceControl
+namespace SpeedTestUWP.RingSliceControl
 {
     /// <summary>
     /// Allows raise an event when the value of a dependency property changes when a view model is otherwise not necessary.

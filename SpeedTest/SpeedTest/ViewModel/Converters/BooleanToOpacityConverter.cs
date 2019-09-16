@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace SpeedTestIPerf.ViewModel.Converters
+namespace SpeedTestUWP.ViewModel.Converters
 {
 
     public class BooleanToOpacityConverter : IValueConverter

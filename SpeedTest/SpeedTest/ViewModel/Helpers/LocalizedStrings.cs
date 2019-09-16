@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 
-namespace SpeedTestIPerf.ViewModel.Helpers
+namespace SpeedTestUWP.ViewModel.Helpers
 {
     public class LocalizedStrings
     {

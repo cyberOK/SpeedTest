@@ -5,11 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SpeedTest.Model;
-using SpeedTestIPerf.Model;
-using SpeedTestIPerf.Tlles;
-using SpeedTestIPerf.ViewModel.Helpers;
-using SpeedTestIPerf.ViewModel.ViewBoards;
+using SpeedTestUWP.Model;
+using SpeedTestUWP.Tlles;
+using SpeedTestUWP.ViewModel.Helpers;
+using SpeedTestUWP.ViewModel.ViewBoards;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
@@ -20,8 +19,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Microsoft.Toolkit.Uwp;
+using SpeedTestModel;
 
-namespace SpeedTestIPerf.ViewModel
+namespace SpeedTestUWP.ViewModel
 {
     public class MainPageViewModel : ObservableObject
     {
@@ -31,7 +32,7 @@ namespace SpeedTestIPerf.ViewModel
         private int _id = 0;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
-        private SpeedTest.Model.SpeedTest _model;
+        private SpeedTestModel.SpeedTest _model;
         private DataBoard _dataBoard;
         private ServerInformationBoard _serverInformationBoard;
         private ArcBoard _arcBoard;
@@ -55,7 +56,7 @@ namespace SpeedTestIPerf.ViewModel
             private set { Set(ref this._isPhoneMainPanelOpen, value); }
         }
 
-        public SpeedTest.Model.SpeedTest Model
+        public SpeedTestModel.SpeedTest Model
         {
             get { return this._model; }
             private set { Set(ref this._model, value); }
@@ -143,9 +144,9 @@ namespace SpeedTestIPerf.ViewModel
         {
             // Model Initialization
 
-            this.Model = new SpeedTest.Model.SpeedTest();
+            this.Model = new SpeedTestModel.SpeedTest();
 
-            this.Model.ErrorRecieved += Model_ErrorRecieved;
+            this.Model.ErrorRecieved += Model_ErrorRecieved; ;
             this.Model.ConnectingDataRecieved += Model_ConnectingDataRecieved;
             this.Model.ConnectedDataRecieved += Model_ConnectedDataRecieved;
             this.Model.PingDataRecieved += Model_PingDataRecieved;
@@ -154,7 +155,7 @@ namespace SpeedTestIPerf.ViewModel
             this.Model.AverageDowloadDataRecieved += Model_AverageDowloadDataRecieved;
             this.Model.AverageUploadDataRecieved += Model_AverageUploadDataRecieved;
 
-            ServersCollection serversCollection = ServersCollection.GetInstance();
+            SpeedTestModel.ServersCollection serversCollection = SpeedTestModel.ServersCollection.GetInstance();
 
             // Initialization Helpers
 
@@ -397,7 +398,7 @@ namespace SpeedTestIPerf.ViewModel
         {
             this.HistoryPanel.SpeedDataCollection.Clear();
 
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (SpeedTestModel.SpeedDataContext db = new SpeedTestModel.SpeedDataContext())
             {
                 var histories = db.SpeedDatas;
 
@@ -421,9 +422,9 @@ namespace SpeedTestIPerf.ViewModel
 
             this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
 
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (SpeedTestModel.SpeedDataContext db = new SpeedTestModel.SpeedDataContext())
             {
-                SpeedData singlehistory = db.SpeedDatas.FirstOrDefault(x => x.Id == singleHistoryForDeleting.Id);
+                SpeedTestModel.SpeedData singlehistory = db.SpeedDatas.FirstOrDefault(x => x.Id == singleHistoryForDeleting.Id);
 
                 if (singlehistory != null)
                 {
@@ -508,7 +509,7 @@ namespace SpeedTestIPerf.ViewModel
             this.Model.StartSpeedTest(currentHostName, currentHostPort);
         }
 
-        private void Model_ErrorRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.ErrorsEventArgs e)
+        private void Model_ErrorRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ErrorsEventArgs e)
         {
             TestMode testMode = e.TestMode;
 
@@ -536,7 +537,7 @@ namespace SpeedTestIPerf.ViewModel
             }
         }
 
-        private void Model_ConnectingDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.ConnectingEventArgs e)
+        private void Model_ConnectingDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectingEventArgs e)
         {
             TestMode testMode = e.TestMode;
 
@@ -558,7 +559,7 @@ namespace SpeedTestIPerf.ViewModel
             }
         }
 
-        private void Model_ConnectedDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.ConnectedEventArgs e)
+        private void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e)
         {
             TestMode testMode = e.TestMode;
 
@@ -576,7 +577,7 @@ namespace SpeedTestIPerf.ViewModel
             }
         }
 
-        private void Model_PingDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.PingEventArgs e)
+        private void Model_PingDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.PingEventArgs e)
         {
             int ping = e.Ping;
 
@@ -584,7 +585,7 @@ namespace SpeedTestIPerf.ViewModel
             this.DataBoard.PingData = ping.ToString();
         }
 
-        private void Model_DownloadDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.DownloadSpeedEventArgs e)
+        private void Model_DownloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.DownloadSpeedEventArgs e)
         {
             // Set View Elements
 
@@ -603,7 +604,7 @@ namespace SpeedTestIPerf.ViewModel
             this.ArcBoard.SpeedDataNumbers = e.DownloadSpeed + " " + measureValue;          
         }
 
-        private void Model_UploadDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.UploadSpeedEventArgs e)
+        private void Model_UploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.UploadSpeedEventArgs e)
         {
             if (e.IsTestEnd == false)
             {
@@ -630,7 +631,7 @@ namespace SpeedTestIPerf.ViewModel
             }
         }
 
-        private async void Model_AverageDowloadDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.AverageDownloadDataEventArgs e)
+        private async void Model_AverageDowloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageDownloadDataEventArgs e)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -666,7 +667,7 @@ namespace SpeedTestIPerf.ViewModel
             //}
         }
 
-        private async void Model_AverageUploadDataRecieved(object sender, SpeedTest.Model.SpeedTestEventArgs.AverageUploadDataEventArgs e)
+        private async void Model_AverageUploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageUploadDataEventArgs e)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -724,7 +725,7 @@ namespace SpeedTestIPerf.ViewModel
 
         private void UnsetCurrentServer()
         {
-            ServerInformation currentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
+            SpeedTestModel.ServerInformation currentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true);
             if (currentServer != null)
             {
                 currentServer.IsCurrent = false;
@@ -733,7 +734,7 @@ namespace SpeedTestIPerf.ViewModel
 
         private void SetCurrentServer(string selectingServer)
         {
-            ServerInformation newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
+            SpeedTestModel.ServerInformation newCurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.ProviderName == selectingServer);
 
             newCurrentServer.IsCurrent = true;
         }

@@ -1,4 +1,4 @@
-﻿using SpeedTestIPerf.ViewModel;
+﻿using SpeedTestUWP.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,9 +22,9 @@ using Windows.System.Profile;
 using Windows.UI.Xaml.Resources;
 using Microsoft.EntityFrameworkCore;
 using SpeedTest.Model;
-using SpeedTestIPerf.ViewModel.Helpers;
+using SpeedTestUWP.ViewModel.Helpers;
 
-namespace SpeedTestIPerf
+namespace SpeedTestUWP
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

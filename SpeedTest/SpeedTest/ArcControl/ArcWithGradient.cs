@@ -1,4 +1,4 @@
-﻿using SpeedTestIPerf.RingSliceControl;
+﻿using SpeedTestUWP.RingSliceControl;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
-namespace SpeedTestIPerf.ArcControl
+namespace SpeedTestUWP.ArcControl
 {
     public class ArcWithGradient : Canvas
     {

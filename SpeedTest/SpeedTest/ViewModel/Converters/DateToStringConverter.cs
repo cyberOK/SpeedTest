@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Data;
 
 
-namespace SpeedTestIPerf.ViewModel.Converters
+namespace SpeedTestUWP.ViewModel.Converters
 {
     public class DateToStringConverter : IValueConverter
     {
