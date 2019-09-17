@@ -264,4 +264,7 @@
   <data name="MeasureValue" xml:space="preserve">
     <value>Mbps</value>
   </data>
+  <data name="BackgroundTestBlock.Text" xml:space="preserve">
+    <value>Test speed in background</value>
+  </data>
 </root>

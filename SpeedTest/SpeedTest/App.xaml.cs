@@ -21,7 +21,7 @@ using Windows.UI;
 using Windows.System.Profile;
 using Windows.UI.Xaml.Resources;
 using Microsoft.EntityFrameworkCore;
-using SpeedTest.Model;
+using SpeedTestModel;
 using SpeedTestUWP.ViewModel.Helpers;
 
 namespace SpeedTestUWP

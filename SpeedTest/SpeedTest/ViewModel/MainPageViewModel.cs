@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SpeedTestUWP.Model;
 using SpeedTestUWP.Tlles;
 using SpeedTestUWP.ViewModel.Helpers;
 using SpeedTestUWP.ViewModel.ViewBoards;
@@ -19,8 +18,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Microsoft.Toolkit.Uwp;
+using Microsoft.Toolkit.Uwp.UI;
 using SpeedTestModel;
+using SpeedTestUWP.BackgroundSpeedTest;
 
 namespace SpeedTestUWP.ViewModel
 {
@@ -29,6 +29,7 @@ namespace SpeedTestUWP.ViewModel
         #region Fields
 
         private ResourceLoader resources;
+        private BackgroundHelper backgroundHelper;
         private int _id = 0;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
@@ -117,6 +118,7 @@ namespace SpeedTestUWP.ViewModel
 
         // Settings panel properties commands
 
+        public SpeedTestCommand BackgroundTestToggleSwitch { get; private set; }
         public SpeedTestCommand SettingSplitViewClosing { get; private set; }
         public SpeedTestCommand LanguageComboBoxChanged { get; private set; }
         public SpeedTestCommand SelectedItemRadioButtonChanged { get; private set; }
@@ -155,11 +157,7 @@ namespace SpeedTestUWP.ViewModel
             this.Model.AverageDowloadDataRecieved += Model_AverageDowloadDataRecieved;
             this.Model.AverageUploadDataRecieved += Model_AverageUploadDataRecieved;
 
-            SpeedTestModel.ServersCollection serversCollection = SpeedTestModel.ServersCollection.GetInstance();
-
-            // Initialization Helpers
-
-            this.resources = new ResourceLoader();
+            ServersCollection serversCollection = ServersCollection.GetInstance();
 
             // Initialization MainPageViewModel
 
@@ -189,6 +187,11 @@ namespace SpeedTestUWP.ViewModel
                 CurrentServer = this.ServerPanel.ServersCollection.FirstOrDefault(s => s.IsCurrent == true)
             };
 
+            // Initialization Helpers
+
+            this.resources = new ResourceLoader();
+            this.backgroundHelper = new BackgroundHelper();
+
             // MainPage commands assigning
 
             this.MainPageLoadedCommand = new SpeedTestCommand(new Action<object>(LoadingHistoryWhenAppStarting));
@@ -204,7 +207,8 @@ namespace SpeedTestUWP.ViewModel
             this.GamburgerButtonPressed = new SpeedTestCommand(new Action<object>(PhoneMainPanelCalling));
 
             // Settings panel commands assigning
-
+            
+            this.BackgroundTestToggleSwitch = new SpeedTestCommand(new Action<object>(BackgroundTestToggle));
             this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingsClosing));
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
             this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
@@ -338,6 +342,21 @@ namespace SpeedTestUWP.ViewModel
         #endregion
 
         #region Settings Actions for Delegates
+        
+        private void BackgroundTestToggle(object param)
+        {
+            //bool isBackgroundTestOn = (bool)param;
+
+            //if (isBackgroundTestOn)
+            //{
+            //    this.backgroundHelper.StartBackgroundSpeedTest();
+            //}
+
+            //else
+            //{
+            //    this.backgroundHelper.StopBackgroundSpeedTest();
+            //}
+        }
 
         private void LanguageChange(object param)
         {

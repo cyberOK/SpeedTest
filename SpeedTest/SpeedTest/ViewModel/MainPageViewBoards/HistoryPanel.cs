@@ -1,5 +1,4 @@
-﻿using SpeedTestUWP.Model;
-using SpeedTestUWP.ViewModel.Helpers;
+﻿using SpeedTestUWP.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using SpeedTestModel.SpeedTestEventArgs;
+using Windows.Storage;
 
 namespace SpeedTestModel
 {
@@ -28,6 +29,9 @@ namespace SpeedTestModel
         private TimeSpan interval;
         private TestMode TestMode;
         private readonly IPerfApp iPerf;
+        private int ping;
+        private double downloadSpeed;
+        private double uploadSpeed;
         private List<double> downloadSamplesCollection;
         private List<double> uploadSamplesCollection;
 
@@ -42,9 +46,42 @@ namespace SpeedTestModel
 
         public string HostName { get; private set; }
         public int Port { get; private set; }
-        public int Ping { get; private set; }
-        public double DownloadSpeed { get; private set; }
-        public double UploadSpeed { get; private set; }
+        public int Ping
+        {
+            get
+            {
+                return ping;
+            }
+            private set
+            {
+                ApplicationData.Current.LocalSettings.Values["Ping"] = value;
+                ping = value;
+            }
+        }
+        public double DownloadSpeed
+        {
+            get
+            {
+                return downloadSpeed;
+            }
+            private set
+            {
+                ApplicationData.Current.LocalSettings.Values["DownloadSpeed"] = value;
+                downloadSpeed = value;
+            }
+        }
+        public double UploadSpeed
+        {
+            get
+            {
+                return uploadSpeed;
+            }
+            private set
+            {
+                ApplicationData.Current.LocalSettings.Values["UploadSpeed"] = value;
+                uploadSpeed = value;
+            }
+        }
 
         public SpeedTest()
         {
@@ -241,6 +278,11 @@ namespace SpeedTestModel
             });
         }
 
+        //private string numberLocalizeConverter(string inputString)
+        //{
+        //    return inputString.Replace(".", ",");
+        //}
+
         private async void IPerf_SpeedDataUpdated(IPerfApp sender, iPerfSpeedReport args)
         {
             switch (this.TestMode)
@@ -255,18 +297,19 @@ namespace SpeedTestModel
 
                             string[] downloadValue = args.BitrateBuf.Split(' '); ;
                             string downloadSpeed = downloadValue[0];
+                                                       
 
                             if (double.TryParse(downloadSpeed, out double downloadSpeedParse))
-                            {
-                                if (downloadSpeedParse != 0)
                                 {
-                                    this.downloadSamplesCollection.Add(downloadSpeedParse);
+                                    if (downloadSpeedParse != 0)
+                                    {
+                                        this.downloadSamplesCollection.Add(downloadSpeedParse);
 
-                                    DownloadSpeedEventArgs downloadDataSample = new DownloadSpeedEventArgs(downloadSpeedParse);
+                                        DownloadSpeedEventArgs downloadDataSample = new DownloadSpeedEventArgs(downloadSpeedParse);
 
-                                    this.OnDownloadDataRecieved(downloadDataSample);
+                                        this.OnDownloadDataRecieved(downloadDataSample);
+                                    }
                                 }
-                            }
                         });
                     }
 

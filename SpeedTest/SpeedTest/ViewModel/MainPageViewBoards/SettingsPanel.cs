@@ -11,6 +11,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
     public class SettingsPanel : ObservableObject
     {
         private bool _isSettingsPaneOpen;
+        private bool _isBackgroundTestEnable = true;
         private AppSetting _settings;
         private int _selectedMode;
 
@@ -18,6 +19,12 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
         {
             get { return _isSettingsPaneOpen; }
             set { Set(ref _isSettingsPaneOpen, value); }
+        }
+
+        public bool IsBackgroundTestEnable
+        {
+            get { return _isBackgroundTestEnable; }
+            set { Set(ref _isBackgroundTestEnable, value); }
         }
 
         public AppSetting Settings

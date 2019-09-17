@@ -663,8 +663,23 @@
 
                             <RelativePanel x:Name="ContentPanel" Padding="20,10,0,0">
 
+                                <!-- Background Test Block -->
+                                <TextBlock x:Name="BackgroundTestBlock" Text="{Binding Source={StaticResource Localizer}, Path=[BackgroundTestBlock/Text]}" FontSize="20" Padding="0,10"/>
+                                <ToggleSwitch x:Name="BackgroundTestToggleSwitch" RelativePanel.Below="BackgroundTestBlock"
+                                              IsOn="{Binding SettingsPanel.IsBackgroundTestEnable, Source={StaticResource mainViewModel}}">
+
+                                    <Interactivity:Interaction.Behaviors>
+                                        <Core:EventTriggerBehavior EventName="Toggled">
+                                            <Core:InvokeCommandAction Command="{Binding BackgroundTestToggleSwitch}"
+                                                                      CommandParameter="{Binding ElementName=BackgroundTestToggleSwitch,Path=IsOn}"/>                                                                      
+                                        </Core:EventTriggerBehavior>
+                                    </Interactivity:Interaction.Behaviors>
+
+                                </ToggleSwitch>
+
                                 <!-- Language Block -->
-                                <TextBlock x:Name="LanguageBlock" Text="{Binding Source={StaticResource Localizer}, Path=[LanguageBlock/Text]}" FontSize="20" Padding="0,10"/>
+                                <TextBlock x:Name="LanguageBlock" Text="{Binding Source={StaticResource Localizer}, Path=[LanguageBlock/Text]}" FontSize="20" Padding="0,10"
+                                           RelativePanel.Below="BackgroundTestToggleSwitch"/>
                                 <ComboBox x:Name="LanguageComboBox" x:Uid="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" 
                                           ItemsSource="{Binding SettingsPanel.Settings.Languages, Source={StaticResource mainViewModel}}" 
                                           DisplayMemberPath="DisplayName"

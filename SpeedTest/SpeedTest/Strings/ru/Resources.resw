@@ -258,4 +258,7 @@
   <data name="MeasureValue" xml:space="preserve">
     <value>Мб/с</value>
   </data>
+  <data name="BackgroundTestBlock.Text" xml:space="preserve">
+    <value>Тест скорости в фоне</value>
+  </data>
 </root>
