@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using SpeedTestModel.SpeedTestEventArgs;
 using Windows.Storage;
+using System.Globalization;
 
 namespace SpeedTestModel
 {
@@ -299,7 +300,7 @@ namespace SpeedTestModel
                             string downloadSpeed = downloadValue[0];
                                                        
 
-                            if (double.TryParse(downloadSpeed, out double downloadSpeedParse))
+                            if (double.TryParse(downloadSpeed, NumberStyles.Any, CultureInfo.InvariantCulture, out double downloadSpeedParse))
                                 {
                                     if (downloadSpeedParse != 0)
                                     {
@@ -339,7 +340,7 @@ namespace SpeedTestModel
                             string[] uploadValue = args.BitrateBuf.Split(' '); ;
                             string uploadSpeed = uploadValue[0];
 
-                            if (double.TryParse(uploadSpeed, out double uploadSpeedParse))
+                            if (double.TryParse(uploadSpeed, NumberStyles.Any, CultureInfo.InvariantCulture, out double uploadSpeedParse))
                             {
                                 if (uploadSpeedParse != 0)
                                 {
