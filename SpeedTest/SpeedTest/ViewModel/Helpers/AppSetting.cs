@@ -27,7 +27,6 @@ namespace SpeedTestUWP.ViewModel.Helpers
             get { return this._theme; }
             set { Set(ref this._theme, value); }
         }
-
         public ObservableCollection<Language> Languages
         {
             get { return this._languages; }

@@ -15,6 +15,8 @@ namespace RuntimeSpeedTest
     public sealed class SpeedTestBackgroundTask : IBackgroundTask
     {
         volatile bool _cancelRequested = false;
+        BackgroundTaskDeferral _deferral;
+
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             var cost = BackgroundWorkCost.CurrentBackgroundWorkCost;
@@ -29,20 +31,25 @@ namespace RuntimeSpeedTest
                 this._cancelRequested = true;
             };
 
-            BackgroundTaskDeferral _deferral = taskInstance.GetDeferral();
+            this._deferral = taskInstance.GetDeferral();
 
-            await this.DoWork(taskInstance);
-                                    
-            _deferral.Complete();
+            await this.StartBackgroundSpeedTest(taskInstance);
+
+            bool isTestEnded = (bool)ApplicationData.Current.LocalSettings.Values["IsTestEnded"];
+
+            while (isTestEnded)
+            {
+                _deferral.Complete();
+            }
         }
 
-        private async Task DoWork(IBackgroundTaskInstance taskInstance)
+        private async Task StartBackgroundSpeedTest(IBackgroundTaskInstance taskInstance)
         {
-            SpeedTest speedTest = new SpeedTest();
+            BackgroundSpeedTest backgroundSpeedTest = new BackgroundSpeedTest();
             string currentHostName = (string)ApplicationData.Current.LocalSettings.Values["HostName"];
             int currentHostPort = (int)ApplicationData.Current.LocalSettings.Values["HostPort"];
 
-            //await speedTest.StartSpeedTest(currentHostName, currentHostPort);
+            await backgroundSpeedTest.StartSpeedTest(currentHostName, currentHostPort);
         }
     }
 }

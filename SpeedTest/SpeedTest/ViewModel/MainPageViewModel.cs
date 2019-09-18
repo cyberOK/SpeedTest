@@ -33,7 +33,7 @@ namespace SpeedTestUWP.ViewModel
         private int _id = 0;
         private bool _isPopupGridRaise = false;
         private bool _isPhoneMainPanelOpen = false;
-        private SpeedTestModel.SpeedTest _model;
+        private IperfWrapper iPerfInstance;
         private DataBoard _dataBoard;
         private ServerInformationBoard _serverInformationBoard;
         private ArcBoard _arcBoard;
@@ -57,10 +57,10 @@ namespace SpeedTestUWP.ViewModel
             private set { Set(ref this._isPhoneMainPanelOpen, value); }
         }
 
-        public SpeedTestModel.SpeedTest Model
+        public IperfWrapper IPerfInstance
         {
-            get { return this._model; }
-            private set { Set(ref this._model, value); }
+            get { return this.iPerfInstance; }
+            private set { Set(ref this.iPerfInstance, value); }
         }
 
         public ArcBoard ArcBoard
@@ -146,16 +146,16 @@ namespace SpeedTestUWP.ViewModel
         {
             // Model Initialization
 
-            this.Model = new SpeedTestModel.SpeedTest();
+            this.IPerfInstance = new IperfWrapper();
 
-            this.Model.ErrorRecieved += Model_ErrorRecieved; ;
-            this.Model.ConnectingDataRecieved += Model_ConnectingDataRecieved;
-            this.Model.ConnectedDataRecieved += Model_ConnectedDataRecieved;
-            this.Model.PingDataRecieved += Model_PingDataRecieved;
-            this.Model.DownloadDataRecieved += Model_DownloadDataRecieved;
-            this.Model.UploadDataRecieved += Model_UploadDataRecieved;
-            this.Model.AverageDowloadDataRecieved += Model_AverageDowloadDataRecieved;
-            this.Model.AverageUploadDataRecieved += Model_AverageUploadDataRecieved;
+            this.IPerfInstance.ErrorRecieved += Model_ErrorRecieved; ;
+            this.IPerfInstance.ConnectingDataRecieved += Model_ConnectingDataRecieved;
+            this.IPerfInstance.ConnectedDataRecieved += Model_ConnectedDataRecieved;
+            this.IPerfInstance.PingDataRecieved += Model_PingDataRecieved;
+            this.IPerfInstance.DownloadDataRecieved += Model_DownloadDataRecieved;
+            this.IPerfInstance.UploadDataRecieved += Model_UploadDataRecieved;
+            this.IPerfInstance.AverageDowloadDataRecieved += Model_AverageDowloadDataRecieved;
+            this.IPerfInstance.AverageUploadDataRecieved += Model_AverageUploadDataRecieved;
 
             ServersCollection serversCollection = ServersCollection.GetInstance();
 
@@ -345,17 +345,17 @@ namespace SpeedTestUWP.ViewModel
         
         private void BackgroundTestToggle(object param)
         {
-            //bool isBackgroundTestOn = (bool)param;
+            bool isBackgroundTestOn = (bool)param;
 
-            //if (isBackgroundTestOn)
-            //{
-            //    this.backgroundHelper.StartBackgroundSpeedTest();
-            //}
+            if (isBackgroundTestOn)
+            {
+                this.backgroundHelper.StartBackgroundSpeedTest();
+            }
 
-            //else
-            //{
-            //    this.backgroundHelper.StopBackgroundSpeedTest();
-            //}
+            else
+            {
+                this.backgroundHelper.StopBackgroundSpeedTest();
+            }
         }
 
         private void LanguageChange(object param)
@@ -525,111 +525,105 @@ namespace SpeedTestUWP.ViewModel
             string currentHostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
             int currentHostPort = this.ServerInformationBoard.CurrentServer.Port;
 
-            this.Model.StartSpeedTest(currentHostName, currentHostPort);
+            this.IPerfInstance.StartSpeedTest(currentHostName, currentHostPort);
         }
 
-        private void Model_ErrorRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ErrorsEventArgs e)
+        private async void Model_ErrorRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ErrorsEventArgs e)
         {
-            TestMode testMode = e.TestMode;
-
-            switch (testMode)
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                case TestMode.Download:
+                TestMode testMode = e.TestMode;
 
-                    this.ArcBoard.IsStartButtonPressed = false;
-                    this.ArcBoard.IsStartArcVisible = true;
-                    this.ArcBoard.IsTryConnect = false;
-                    this.ArcBoard.IsSpeedMeterBackgroundVisible = false;
-                    this.ArcBoard.IsSpeedDataNumbersReceiving = false;
-                    this.ArcBoard.IsDownloadSpeedDataRecieved = false;
-                    this.DataBoard.IsPingFieldsGridVisible = false;
-                    this.DataBoard.IsDownloadSpeedFieldsGridVisible = false;
+                switch (testMode)
+                {
+                    case TestMode.Download:
 
-                    break;
+                        this.ArcBoard.IsStartButtonPressed = false;
+                        this.ArcBoard.IsStartArcVisible = true;
+                        this.ArcBoard.IsTryConnect = false;
+                        this.ArcBoard.IsSpeedMeterBackgroundVisible = false;
+                        this.ArcBoard.IsSpeedDataNumbersReceiving = false;
+                        this.ArcBoard.IsDownloadSpeedDataRecieved = false;
+                        this.DataBoard.IsPingFieldsGridVisible = false;
+                        this.DataBoard.IsDownloadSpeedFieldsGridVisible = false;
 
-                case TestMode.Upload:
+                        break;
 
-                    this.ArcBoard.IsStartButtonPressed = true;
-                    this.ArcBoard.IsStartArcVisible = false;
-                    
-                    break;
-            }
+                    case TestMode.Upload:
+
+                        this.ArcBoard.IsStartButtonPressed = true;
+                        this.ArcBoard.IsStartArcVisible = false;
+
+                        break;
+                }
+            });
         }
 
-        private void Model_ConnectingDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectingEventArgs e)
+        private async void Model_ConnectingDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectingEventArgs e)
         {
-            TestMode testMode = e.TestMode;
-
-            switch (testMode)
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                case TestMode.Download:
+                TestMode testMode = e.TestMode;
 
-                    this.ArcBoard.IsTryConnect = true;
-                    this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+                switch (testMode)
+                {
+                    case TestMode.Download:
 
-                    break;
+                        this.ArcBoard.IsTryConnect = true;
+                        this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
 
-                case TestMode.Upload:
+                        break;
 
-                    this.ArcBoard.IsStartButtonPressed = true;
-                    this.ArcBoard.IsTryConnect = false;
+                    case TestMode.Upload:
 
-                    break;
-            }
+                        this.ArcBoard.IsStartButtonPressed = true;
+                        this.ArcBoard.IsTryConnect = false;
+
+                        break;
+                }
+            });
         }
 
-        private void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e)
+        private async void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e)
         {
-            TestMode testMode = e.TestMode;
-
-            switch (testMode)
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                case TestMode.Download:
+                TestMode testMode = e.TestMode;
 
-                    this.ArcBoard.IsTryConnect = false;
+                switch (testMode)
+                {
+                    case TestMode.Download:
 
-                    break;
+                        this.ArcBoard.IsTryConnect = false;
 
-                case TestMode.Upload:
+                        break;
 
-                    break;
-            }
+                    case TestMode.Upload:
+
+                        break;
+                }
+            });
         }
 
-        private void Model_PingDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.PingEventArgs e)
+        private async void Model_PingDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.PingEventArgs e)
         {
-            int ping = e.Ping;
-
-            this.DataBoard.IsPingFieldsGridVisible = true;
-            this.DataBoard.PingData = ping.ToString();
-        }
-
-        private void Model_DownloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.DownloadSpeedEventArgs e)
-        {
-            // Set View Elements
-
-            this.ArcBoard.IsDownloadSpeedDataRecieved = true;
-            this.ArcBoard.IsSpeedDataNumbersReceiving = true;
-            this.ArcBoard.IsStartButtonPressed = true;
-            this.ArcBoard.IsStartArcVisible = false;
-            this.ArcBoard.IsTryConnect = false;
-            this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
-
-            // Set Arc Board from Recieving Data
-
-            string measureValue = resources.GetString("MeasureValue");
-
-            this.ArcBoard.DownloadSpeedArcValue = e.DownloadSpeed;
-            this.ArcBoard.SpeedDataNumbers = e.DownloadSpeed + " " + measureValue;          
-        }
-
-        private void Model_UploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.UploadSpeedEventArgs e)
-        {
-            if (e.IsTestEnd == false)
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                // Set View Elements   
+                int ping = e.Ping;
 
-                this.ArcBoard.IsUploadSpeedDataRecieved = true;
+                this.DataBoard.IsPingFieldsGridVisible = true;
+                this.DataBoard.PingData = ping.ToString();
+            });
+        }
+
+        private async void Model_DownloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.DownloadSpeedEventArgs e)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                // Set View Elements
+
+                this.ArcBoard.IsDownloadSpeedDataRecieved = true;
+                this.ArcBoard.IsSpeedDataNumbersReceiving = true;
                 this.ArcBoard.IsStartButtonPressed = true;
                 this.ArcBoard.IsStartArcVisible = false;
                 this.ArcBoard.IsTryConnect = false;
@@ -639,15 +633,39 @@ namespace SpeedTestUWP.ViewModel
 
                 string measureValue = resources.GetString("MeasureValue");
 
-                this.ArcBoard.UploadSpeedArcValue = e.UploadSpeed;
-                this.ArcBoard.SpeedDataNumbers = e.UploadSpeed + " " + measureValue;                
-            }
+                this.ArcBoard.DownloadSpeedArcValue = e.DownloadSpeed;
+                this.ArcBoard.SpeedDataNumbers = e.DownloadSpeed + " " + measureValue;
+            });                      
+        }
 
-            else // If Test Ended set View elements
+        private async void Model_UploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.UploadSpeedEventArgs e)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                this.ArcBoard.IsSpeedDataNumbersReceiving = false;
-                this.ArcBoard.IsStartButtonPressed = false;
-            }
+                if (e.IsTestEnd == false)
+                {
+                    // Set View Elements   
+
+                    this.ArcBoard.IsUploadSpeedDataRecieved = true;
+                    this.ArcBoard.IsStartButtonPressed = true;
+                    this.ArcBoard.IsStartArcVisible = false;
+                    this.ArcBoard.IsTryConnect = false;
+                    this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
+
+                    // Set Arc Board from Recieving Data
+
+                    string measureValue = resources.GetString("MeasureValue");
+
+                    this.ArcBoard.UploadSpeedArcValue = e.UploadSpeed;
+                    this.ArcBoard.SpeedDataNumbers = e.UploadSpeed + " " + measureValue;
+                }
+
+                else // If Test Ended set View elements
+                {
+                    this.ArcBoard.IsSpeedDataNumbersReceiving = false;
+                    this.ArcBoard.IsStartButtonPressed = false;
+                }
+            });
         }
 
         private async void Model_AverageDowloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageDownloadDataEventArgs e)
@@ -672,18 +690,18 @@ namespace SpeedTestUWP.ViewModel
                 // Set Speed Sample to History Collection
 
                 this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
+
+                // Set DataBoard
+
+                //if (this.HistoryPanel.SpeedDataCollection != null)
+                //{
+                //    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
+                //    this.DataBoard.PingData = testSample.Ping;
+                //    this.DataBoard.DownloadSpeedData = (testSample.DownloadSpeed).ToString();
+                //    this.DataBoard.IsPingFieldsGridVisible = true;
+                //    this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
+                //}
             });
-
-            // Set DataBoard
-
-            //if (this.HistoryPanel.SpeedDataCollection != null)
-            //{
-            //    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
-            //    this.DataBoard.PingData = testSample.Ping;
-            //    this.DataBoard.DownloadSpeedData = (testSample.DownloadSpeed).ToString();
-            //    this.DataBoard.IsPingFieldsGridVisible = true;
-            //    this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
-            //}
         }
 
         private async void Model_AverageUploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageUploadDataEventArgs e)
@@ -708,18 +726,18 @@ namespace SpeedTestUWP.ViewModel
                 // Add Speed Sample to History Collection
 
                 this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
-            });
-            
-            // Set DataBoard by Speed Sample
 
-            //if (this.HistoryPanel.SpeedDataCollection != null)
-            //{
-            //    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
-            //    this.DataBoard.PingData = testSample.Ping;
-            //    this.DataBoard.UploadSpeedData = (testSample.UploadSpeed).ToString();
-            //    this.DataBoard.IsPingFieldsGridVisible = true;
-            //    this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
-            //}
+                // Set DataBoard by Speed Sample
+
+                //if (this.HistoryPanel.SpeedDataCollection != null)
+                //{
+                //    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
+                //    this.DataBoard.PingData = testSample.Ping;
+                //    this.DataBoard.UploadSpeedData = (testSample.UploadSpeed).ToString();
+                //    this.DataBoard.IsPingFieldsGridVisible = true;
+                //    this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
+                //}
+            });
         }
 
         #endregion

@@ -22,8 +22,8 @@ namespace SpeedTestUWP.BackgroundSpeedTest
         }
 
         public async void StartBackgroundSpeedTest()
-        {
-            //ApplicationData.Current.LocalSettings.Values["SpeedTest"] = speedTest;
+         {
+            ApplicationTrigger applicationTrigger = new ApplicationTrigger();
 
             var taskList = BackgroundTaskRegistration.AllTasks.Values;
             var task = taskList.FirstOrDefault(t => t.Name == _taskName);
@@ -35,13 +35,16 @@ namespace SpeedTestUWP.BackgroundSpeedTest
                 taskBuilder.Name = _taskName;
                 taskBuilder.TaskEntryPoint = typeof(RuntimeSpeedTest.SpeedTestBackgroundTask).FullName;
                 //SystemTrigger trigger = new SystemTrigger(SystemTriggerType.NetworkStateChange, false);
-                ApplicationTrigger applicationTrigger = new ApplicationTrigger();
                 taskBuilder.SetTrigger(applicationTrigger);
                 task = taskBuilder.Register();
-                task.Completed += Task_Completed;
+                task.Completed += Task_Completed;                
 
                 await applicationTrigger.RequestAsync();
-            }            
+            }
+            else
+            {
+                await applicationTrigger.RequestAsync();
+            }
         }
 
         public void StopBackgroundSpeedTest()
@@ -56,7 +59,9 @@ namespace SpeedTestUWP.BackgroundSpeedTest
         }
 
         private void Task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
-        {            
+        {
+            ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = false;
+
             int ping = (int)ApplicationData.Current.LocalSettings.Values["Ping"];
             double downloadSpeed = (double)ApplicationData.Current.LocalSettings.Values["DownloadSpeed"];
             double uploadSpeed = (double)ApplicationData.Current.LocalSettings.Values["UploadSpeed"];

@@ -44,7 +44,6 @@
         <Extension Category="windows.backgroundTasks" EntryPoint="RuntimeSpeedTest.SpeedTestBackgroundTask">
           <BackgroundTasks>
             <Task Type="general"/>
-            <Task Type="systemEvent"/>
           </BackgroundTasks>
         </Extension>
       </Extensions>

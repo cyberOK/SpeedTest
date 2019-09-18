@@ -18,13 +18,12 @@ namespace SpeedTest.Toasts
             this.xml = new XmlDocument();
         }
 
-        public void CreateSpeedTestToast(int ping, double downloadSpeed, double uploadSpeed)
+        public void CreateSpeedTestToast(int ping = 0, double downloadSpeed = 0, double uploadSpeed = 0)
         {
-            this.template.Append("<toast><visual version='2'><binding template='ToastText02'>");
-            this.template.Append("<text id='2'>TimeZoneChanged</text>");
-            this.template.AppendFormat("<text id='1'>{0}</text>",ping);
-            this.template.AppendFormat("<text id='1'>{0}</text>", downloadSpeed);
-            this.template.AppendFormat("<text id='1'>{0}</text>", uploadSpeed);
+            this.template.Append("<toast><visual><binding>");            
+            this.template.AppendFormat("<text id='1'>Ping: {0}</text>",ping);
+            this.template.AppendFormat("<text id='1'>Download speed: {0}</text>", downloadSpeed);
+            this.template.AppendFormat("<text id='1'>Upload speed: {0}</text>", uploadSpeed);
             this.template.Append("</binding></visual></toast>");
 
             this.xml.LoadXml(this.template.ToString());
