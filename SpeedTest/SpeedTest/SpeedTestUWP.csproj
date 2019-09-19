@@ -135,7 +135,6 @@
     <Compile Include="RingSliceControl\PropertyChangeEventSource.cs" />
     <Compile Include="RingSliceControl\RingSlice.cs" />
     <Compile Include="Tlles\TileSpeedTest.cs" />
-    <Compile Include="Toasts\SpeedTestToast.cs" />
     <Compile Include="Triggers\DeviceFamilyStateTrigger\DeviceFamilyStateTrigger.cs" />
     <Compile Include="Triggers\Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="ViewModel\Converters\BooleanToColorConverter.cs" />

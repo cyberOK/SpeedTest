@@ -11,7 +11,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
     public class SettingsPanel : ObservableObject
     {
         private bool _isSettingsPaneOpen;
-        private bool _isBackgroundTestEnable = true;
+        private bool _isBackgroundTestEnable;
         private AppSetting _settings;
         private int _selectedMode;
 

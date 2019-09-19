@@ -25,16 +25,12 @@ namespace SpeedTestModel
         const int numberOfValidPingTests = 10;
         const int numberOfDownloadTests = 10, numberOfUploadTests = 10;
         const bool downloadMode = false, uploadMode = true;
-        private double downloadSum = 0, uploadSum = 0;
-        private int latencySummary, latencyCallbackCount;
+        private int latencySummary, latencyCallbackCount, ping;
         private TimeSpan interval;
         private TestMode TestMode;
         private readonly IPerfApp iPerf;
-        private int ping;
-        private double downloadSpeed;
-        private double uploadSpeed;
-        private List<double> downloadSamplesCollection;
-        private List<double> uploadSamplesCollection;
+        private double downloadSpeed, uploadSpeed;
+        private List<double> downloadSamplesCollection, uploadSamplesCollection;
 
         public event EventHandler<ErrorsEventArgs> ErrorRecieved;
         public event EventHandler<PingEventArgs> PingDataRecieved;
@@ -287,14 +283,13 @@ namespace SpeedTestModel
 
                     else if (args.ReportSender == "receiver") // If Download Test ended starting Upload Test
                     {
-                        AverageDownloadDataEventArgs averageDownloadDataEventArgs = this.GetAverageDownloadSpeedData();
+                        AverageDownloadDataEventArgs averageDownloadDataEventArgs = new AverageDownloadDataEventArgs(this.GetAverageSpeedValue(this.downloadSamplesCollection));
 
                         this.OnAverageDownloadDataRecieved(averageDownloadDataEventArgs);
 
-                        this.downloadSum = 0; // Initialize Summary of Download Samples for next test
                         this.TestMode = TestMode.Upload;
 
-                        await this.iPerf.TestNTimesAsync(this.HostName, this.Port, numberOfUploadTests, interval, uploadMode);
+                        await this.iPerf.TestNTimesAsync(this.HostName, this.Port, numberOfUploadTests, interval, uploadMode); // Call Upload Test
                     }
 
                     break;
@@ -324,13 +319,12 @@ namespace SpeedTestModel
                     else // if (args.ReportSender == "receiver") Upload Test ended
                     {
                         UploadSpeedEventArgs testEndedSignal = new UploadSpeedEventArgs(0.0, true);
-                        AverageUploadDataEventArgs averageUploadDataEventArgs = this.GetAverageUploadSpeedData();
+                        AverageUploadDataEventArgs averageUploadDataEventArgs = new AverageUploadDataEventArgs(this.GetAverageSpeedValue(this.uploadSamplesCollection));
 
                         this.OnAverageUploadDataRecieved(averageUploadDataEventArgs);
                         this.OnUploadDataRecieved(testEndedSignal);                   // Signal that test ended
 
                         this.TestMode = TestMode.Download;
-                        this.uploadSum = 0;
                         this.latencyCallbackCount = 0;
                     }
 
@@ -342,36 +336,16 @@ namespace SpeedTestModel
 
         #region Helpful methods
 
-        private AverageDownloadDataEventArgs GetAverageDownloadSpeedData()
+        private double GetAverageSpeedValue(IList<double> samplesCollection)
         {
-            foreach (double downloadSample in downloadSamplesCollection)
+            double accumulator = 0;
+
+            foreach (double sample in samplesCollection)
             {
-                downloadSum += downloadSample;
+                accumulator += sample;
             }
 
-            double averageDownloadSpeed = downloadSum / downloadSamplesCollection.Count();
-
-            this.DownloadSpeed = averageDownloadSpeed;
-
-            AverageDownloadDataEventArgs averageDownloadDataEventArgs = new AverageDownloadDataEventArgs(averageDownloadSpeed);
-
-            return averageDownloadDataEventArgs;
-        }
-
-        private AverageUploadDataEventArgs GetAverageUploadSpeedData()
-        {
-            foreach (double uploadSample in downloadSamplesCollection)
-            {
-                uploadSum += uploadSample;
-            }
-
-            double averageDownloadSpeed = uploadSum / uploadSamplesCollection.Count();
-
-            this.UploadSpeed = averageDownloadSpeed;
-
-            AverageUploadDataEventArgs averageUploadDataEventArgs = new AverageUploadDataEventArgs(averageDownloadSpeed);
-
-            return averageUploadDataEventArgs;
+            return accumulator / samplesCollection.Count();
         }
 
         #endregion

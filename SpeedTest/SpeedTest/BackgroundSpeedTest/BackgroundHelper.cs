@@ -6,67 +6,59 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using SpeedTestModel;
 using Windows.Storage;
-using SpeedTest.Toasts;
 using SpeedTestUWP.ViewModel.ViewBoards;
 
 namespace SpeedTestUWP.BackgroundSpeedTest
 {
     public class BackgroundHelper
     {
-        private string _taskName = "BackgroundSpeedTest";
-        private SpeedTestToast toast;
+        private string taskName = "BackgroundSpeedTest";
+        private string taskEntryPoint = "RuntimeSpeedTest.SpeedTestBackgroundTask";
+        private ApplicationTrigger applicationTrigger;
 
         public BackgroundHelper()
         {
-            this.toast = new SpeedTestToast();
+            this.applicationTrigger = new ApplicationTrigger();
         }
 
         public async void StartBackgroundSpeedTest()
-         {
-            ApplicationTrigger applicationTrigger = new ApplicationTrigger();
+        {
+            ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = true;
 
-            var taskList = BackgroundTaskRegistration.AllTasks.Values;
-            var task = taskList.FirstOrDefault(t => t.Name == _taskName);
+            await this.applicationTrigger.RequestAsync();
+        }
 
-            if (task == null)
+        public async void StopBackgroundSpeedTest()
+        {
+            ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = false;
+
+            await this.applicationTrigger.RequestAsync();
+        }
+
+        public void Register()
+        {
+            // if the task is already registered, there is no need to register it again
+
+            if ( !(this.IsTaskRegistered(this.taskName)))
             {
                 var taskBuilder = new BackgroundTaskBuilder();
+                taskBuilder.Name = this.taskName;
+                taskBuilder.TaskEntryPoint = this.taskEntryPoint;
+                taskBuilder.SetTrigger(this.applicationTrigger);
+                taskBuilder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+                taskBuilder.Register();
 
-                taskBuilder.Name = _taskName;
-                taskBuilder.TaskEntryPoint = typeof(RuntimeSpeedTest.SpeedTestBackgroundTask).FullName;
-                //SystemTrigger trigger = new SystemTrigger(SystemTriggerType.NetworkStateChange, false);
-                taskBuilder.SetTrigger(applicationTrigger);
-                task = taskBuilder.Register();
-                task.Completed += Task_Completed;                
-
-                await applicationTrigger.RequestAsync();
-            }
-            else
-            {
-                await applicationTrigger.RequestAsync();
-            }
+                ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = true;
+            }            
         }
 
-        public void StopBackgroundSpeedTest()
-        {
-            var taskList = BackgroundTaskRegistration.AllTasks.Values;
-            var task = taskList.FirstOrDefault(t => t.Name == _taskName);
+        private bool IsTaskRegistered(string taskName) =>
+            BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name.Equals(taskName));
 
-            if (task != null)
-            {
-                task.Unregister(true);
-            }
-        }
+        //private void UnregisterTask(string taskName, bool cancelTask) =>
+        //    BackgroundTaskRegistration.AllTasks.First(x => x.Value.Name.Equals(taskName)).Value?.Unregister(cancelTask);
 
-        private void Task_Completed(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
-        {
-            ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = false;
-
-            int ping = (int)ApplicationData.Current.LocalSettings.Values["Ping"];
-            double downloadSpeed = (double)ApplicationData.Current.LocalSettings.Values["DownloadSpeed"];
-            double uploadSpeed = (double)ApplicationData.Current.LocalSettings.Values["UploadSpeed"];
-
-            this.toast.CreateSpeedTestToast(ping, downloadSpeed, uploadSpeed);
-        }
+        //private BackgroundTaskRegistration GetTaskByName(string taskName) =>
+        //    BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name.Equals(taskName)).Value as BackgroundTaskRegistration;
     }
 }

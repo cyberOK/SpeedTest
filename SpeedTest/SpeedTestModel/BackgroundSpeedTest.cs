@@ -102,7 +102,7 @@ namespace SpeedTestModel
             {
                 case TestMode.Download:
 
-                    ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = true;
+                    ApplicationData.Current.LocalSettings.Values["ErrorOccur"] = true;
 
                     break;
 
@@ -177,7 +177,7 @@ namespace SpeedTestModel
             {
                 int currentPing = this.latencySummary / numberOfValidPingTests;
 
-                this.Ping = currentPing;
+                ApplicationData.Current.LocalSettings.Values["Ping"] = currentPing;
             }
         }
 
@@ -212,7 +212,7 @@ namespace SpeedTestModel
                             downloadSum += downloadSample;
                         }
 
-                        this.DownloadSpeed = downloadSum / downloadSamplesCollection.Count(); 
+                        ApplicationData.Current.LocalSettings.Values["DownloadSpeed"] = downloadSum / downloadSamplesCollection.Count(); 
 
                         await this.iPerf.TestNTimesAsync(this.HostName, this.Port, numberOfUploadTests, interval, uploadMode);
                     }
@@ -233,7 +233,6 @@ namespace SpeedTestModel
                                 this.uploadSamplesCollection.Add(uploadSpeedParse);
                             }
                         }
-
                     }
 
                     else // if (args.ReportSender == "receiver") Upload Test ended reset TestMode
@@ -247,7 +246,7 @@ namespace SpeedTestModel
                             uploadSum += uploadSample;
                         }
 
-                        this.UploadSpeed = uploadSum / uploadSamplesCollection.Count();
+                        ApplicationData.Current.LocalSettings.Values["UploadSpeed"] = uploadSum / uploadSamplesCollection.Count();
 
                         ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = true;
                     }

@@ -167,7 +167,8 @@ namespace SpeedTestUWP.ViewModel
             this.SettingsPanel = new SettingsPanel
             {
                 Settings = new AppSetting(),
-                SelectedMode = 2                    // Set Windows Default Theme when start app
+                SelectedMode = 2,                 // Set Windows Default Theme when app start
+                IsBackgroundTestEnable = true     // Enable BackgroundSpeedTest when app start 
             };
 
             this.HistoryPanel = new HistoryPanel
@@ -191,6 +192,8 @@ namespace SpeedTestUWP.ViewModel
 
             this.resources = new ResourceLoader();
             this.backgroundHelper = new BackgroundHelper();
+
+             this.backgroundHelper.Register();
 
             // MainPage commands assigning
 
