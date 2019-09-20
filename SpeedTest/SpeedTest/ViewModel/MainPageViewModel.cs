@@ -30,16 +30,16 @@ namespace SpeedTestUWP.ViewModel
 
         private ResourceLoader resources;
         private BackgroundHelper backgroundHelper;
-        private int _id = 0;
-        private bool _isPopupGridRaise = false;
-        private bool _isPhoneMainPanelOpen = false;
+        private int id = 0;
+        private bool isPopupGridRaise = false;
+        private bool isPhoneMainPanelOpen = false;
         private IperfWrapper iPerfInstance;
-        private DataBoard _dataBoard;
-        private ServerInformationBoard _serverInformationBoard;
-        private ArcBoard _arcBoard;
-        private SettingsPanel _settingsPanel;
-        private HistoryPanel _historyPanel;
-        private ServerPanel _serverPanel;
+        private DataBoard dataBoard;
+        private ServerInformationBoard serverInformationBoard;
+        private ArcBoard arcBoard;
+        private SettingsPanel settingsPanel;
+        private HistoryPanel historyPanel;
+        private ServerPanel serverPanel;
 
         #endregion
 
@@ -47,14 +47,14 @@ namespace SpeedTestUWP.ViewModel
 
         public bool IsPopupGridRaise
         {
-            get { return this._isPopupGridRaise; }
-            private set { Set(ref this._isPopupGridRaise, value); }
+            get { return this.isPopupGridRaise; }
+            private set { Set(ref this.isPopupGridRaise, value); }
         }
 
         public bool IsPhoneMainPanelOpen
         {
-            get { return this._isPhoneMainPanelOpen; }
-            private set { Set(ref this._isPhoneMainPanelOpen, value); }
+            get { return this.isPhoneMainPanelOpen; }
+            private set { Set(ref this.isPhoneMainPanelOpen, value); }
         }
 
         public IperfWrapper IPerfInstance
@@ -65,38 +65,38 @@ namespace SpeedTestUWP.ViewModel
 
         public ArcBoard ArcBoard
         {
-            get { return _arcBoard; }
-            private set { Set(ref _arcBoard, value); }
+            get { return arcBoard; }
+            private set { Set(ref arcBoard, value); }
         }
 
         public DataBoard DataBoard
         {
-            get { return _dataBoard; }
-            private set { Set(ref _dataBoard, value); }
+            get { return dataBoard; }
+            private set { Set(ref dataBoard, value); }
         }
 
         public ServerInformationBoard ServerInformationBoard
         {
-            get { return _serverInformationBoard; }
-            private set { Set(ref _serverInformationBoard, value); }
+            get { return serverInformationBoard; }
+            private set { Set(ref serverInformationBoard, value); }
         }
 
         public SettingsPanel SettingsPanel
         {
-            get { return _settingsPanel; }
-            private set { Set(ref _settingsPanel, value); }
+            get { return settingsPanel; }
+            private set { Set(ref settingsPanel, value); }
         }
 
         public HistoryPanel HistoryPanel
         {
-            get { return _historyPanel; }
-            private set { Set(ref _historyPanel, value); }
+            get { return historyPanel; }
+            private set { Set(ref historyPanel, value); }
         }
 
         public ServerPanel ServerPanel
         {
-            get { return _serverPanel; }
-            private set { Set(ref _serverPanel, value); }
+            get { return serverPanel; }
+            private set { Set(ref serverPanel, value); }
         }
 
         #endregion
@@ -193,7 +193,7 @@ namespace SpeedTestUWP.ViewModel
             this.resources = new ResourceLoader();
             this.backgroundHelper = new BackgroundHelper();
 
-             this.backgroundHelper.Register();
+             this.backgroundHelper.RegisteringBackgroundSpeedTest();
 
             // MainPage commands assigning
 
@@ -266,16 +266,16 @@ namespace SpeedTestUWP.ViewModel
 
                     if (lastHistory != null)
                     {
-                        this._id = lastHistory.Id;
+                        this.id = lastHistory.Id;
                     }
                 }
 
             }
         }
 
-        private void SaveHistoryWhenAppClosing(object param)
+        private async void SaveHistoryWhenAppClosing(object param)
         {
-
+            await new Windows.UI.Popups.MessageDialog("SaveHistoryWhenAppClosing()").ShowAsync();
         }
 
         #endregion
@@ -687,7 +687,7 @@ namespace SpeedTestUWP.ViewModel
                     UploadSpeed = 0,
                     Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
                     Date = DateTime.Now,
-                    Id = ++this._id
+                    Id = ++this.id
                 };
 
                 // Set Speed Sample to History Collection
@@ -723,7 +723,7 @@ namespace SpeedTestUWP.ViewModel
                     DownloadSpeed = 0,
                     Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
                     Date = DateTime.Now,
-                    Id = ++this._id
+                    Id = ++this.id
                 };
 
                 // Add Speed Sample to History Collection

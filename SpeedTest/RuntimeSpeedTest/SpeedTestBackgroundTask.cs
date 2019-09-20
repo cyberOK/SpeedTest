@@ -10,16 +10,14 @@ using SpeedTestModel;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.Data.Xml.Dom;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Windows.UI.Notifications;
 
 namespace RuntimeSpeedTest
 {
     public sealed class SpeedTestBackgroundTask : IBackgroundTask
     {
-        volatile bool cancelRequested = false;
-        bool isTestEnded;
-        BackgroundTaskDeferral deferral;
-        private readonly StringBuilder template = new StringBuilder();
-        private readonly XmlDocument xml = new XmlDocument();
+        private BackgroundTaskDeferral deferral;
 
         public bool IsBackgroundSpeedTestEnded
         {
@@ -32,7 +30,6 @@ namespace RuntimeSpeedTest
                 ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = value;
             }
         }
-
         public bool IsErrorOccur
         {
             get
@@ -44,48 +41,44 @@ namespace RuntimeSpeedTest
                 ApplicationData.Current.LocalSettings.Values["ErrorOccur"] = value;
             }
         }
+        public bool IsBackgroundTestEnable
+        {
+            get
+            {
+                return (bool)ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"];
+            }
+            private set
+            {
+                ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = value;
+            }
+        }
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            var cost = BackgroundWorkCost.CurrentBackgroundWorkCost;
-            if (cost == BackgroundWorkCostValue.High)
+            BackgroundWorkCostValue cost = BackgroundWorkCost.CurrentBackgroundWorkCost;
+
+            if (cost != BackgroundWorkCostValue.High)
+            {
+                this.deferral = taskInstance.GetDeferral();
+
+                if (this.IsBackgroundTestEnable)
+                {
+                    await this.StartBackgroundSpeedTest();
+
+                    this.LoopingUntilTestEndedOrErrorOccur();
+
+                    this.CreateNotificationWhenTestEnded();
+
+                    this.InitializeNextTest();
+                }
+
+                deferral.Complete(); // Ending background test
+            }
+
+            else
+            {
                 return;
-
-            var cancel = new CancellationTokenSource();
-            taskInstance.Canceled += (s, e) =>
-            {
-                cancel.Cancel();
-                cancel.Dispose();
-                this.cancelRequested = true;
-            };
-
-            this.deferral = taskInstance.GetDeferral();
-
-            this.IsBackgroundSpeedTestEnded = false;
-            this.IsErrorOccur = false;
-
-            if ((bool)ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"])
-            {
-                await this.StartBackgroundSpeedTest();
-
-                while (!(this.IsErrorOccur == true) && !(this.IsBackgroundSpeedTestEnded == true))
-                {
-                    // Looping until Test ended or Occur Error
-                }
-
-                if (!this.IsErrorOccur)
-                {
-                    int ping = (int)ApplicationData.Current.LocalSettings.Values["Ping"];
-                    double downloadSpeed = (double)ApplicationData.Current.LocalSettings.Values["DownloadSpeed"];
-                    double uploadSpeed = (double)ApplicationData.Current.LocalSettings.Values["UploadSpeed"];
-
-                    this.CreateNotification(ping, downloadSpeed, uploadSpeed);
-                }
-
-                ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = false;
-            }            
-
-            deferral.Complete();
+            }
         }
 
         private async Task StartBackgroundSpeedTest()
@@ -97,6 +90,30 @@ namespace RuntimeSpeedTest
             await backgroundSpeedTest.StartSpeedTest(currentHostName, currentHostPort);           
         }
 
+        private void LoopingUntilTestEndedOrErrorOccur()
+        {
+            while (!(this.IsErrorOccur == true) && !(this.IsBackgroundSpeedTestEnded == true))
+            {
+                // Looping until Test Ended or Occur Error
+            }
+
+            return;
+        }
+
+        private void CreateNotificationWhenTestEnded()
+        {
+            if (!this.IsErrorOccur)
+            {
+                int ping = (int)ApplicationData.Current.LocalSettings.Values["Ping"];
+                double downloadSpeed = (double)ApplicationData.Current.LocalSettings.Values["DownloadSpeed"];
+                double uploadSpeed = (double)ApplicationData.Current.LocalSettings.Values["UploadSpeed"];
+
+                this.CreateNotification(ping, downloadSpeed, uploadSpeed);
+            }
+
+            return;
+        }
+
         private void CreateNotification(int ping, double downloadSpeed, double uploadSpeed)
         {        
             // Truncate Speed Numbers
@@ -104,22 +121,71 @@ namespace RuntimeSpeedTest
             double uploadSpeedTruncate = this.TruncateSpeeedNumber(uploadSpeed);
 
             //CreateSpeedTestToast
-            this.template.Append("<toast><visual version='2'><binding template='ToastText02'>");
-            this.template.AppendFormat("<text id='1'>Ping: {0}</text>", ping);
-            this.template.AppendFormat("<text id='1'>Download speed: {0:N2}</text>", downloadSpeedTruncate);
-            this.template.AppendFormat("<text id='1'>Upload speed: {0:N2}</text>", uploadSpeedTruncate);
-            this.template.Append("</binding></visual></toast>");
+            var toastNotification = this.CreateToastNotification(ping, downloadSpeedTruncate, uploadSpeedTruncate);
 
-            this.xml.LoadXml(this.template.ToString());
-
-            // Notify
-            Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier().Show(new Windows.UI.Notifications.ToastNotification(this.xml));
+            // Notify with toast
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
         }
 
-
-        private void CreateToastXmlDocument(int ping, double downloadSpeed, double uploadSpeed)
+        private void InitializeNextTest()
         {
+            this.IsBackgroundSpeedTestEnded = false;
+            this.IsErrorOccur = false;
 
+            return;
+        }
+
+        private ToastNotification CreateToastNotification(int ping, double downloadSpeed, double uploadSpeed)
+        {
+            ToastVisual toastVisual = this.CreateToastVisual(ping, downloadSpeed, uploadSpeed);
+
+            ToastContent toastContent = this.CreateToastContent(toastVisual);
+
+            ToastNotification toast = new ToastNotification(toastContent.GetXml());
+
+            return toast;
+        }
+
+        private ToastContent CreateToastContent(ToastVisual toastVisual)
+        {
+            ToastContent toastContent = new ToastContent()
+            {
+                Visual = toastVisual
+            };
+
+            return toastContent;
+        }
+
+        private ToastVisual CreateToastVisual(int ping, double downloadSpeed, double uploadSpeed)
+        {
+            ToastVisual visual = new ToastVisual()
+            {
+                BindingGeneric = new ToastBindingGeneric()
+                {
+                    Children =
+                    {
+                        new AdaptiveText()
+                        {
+                            Text = ping.ToString(),
+                            HintMaxLines = 1
+                        },
+
+                        new AdaptiveText()
+                        {
+                            Text = downloadSpeed.ToString(),
+                            HintMaxLines = 1
+                        },
+
+                        new AdaptiveText()
+                        {
+                            Text = uploadSpeed.ToString(),
+                            HintMaxLines = 1
+                        }
+                    }
+                }
+            };
+
+            return visual;
         }
 
         private double TruncateSpeeedNumber(double truncateNumber)

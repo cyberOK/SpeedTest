@@ -16,7 +16,7 @@ namespace SpeedTestModel
         const int timeOut = 0;
         const int numberOfPingTests = 50;
         const int numberOfValidPingTests = 10;
-        const int numberOfDownloadTests = 10, numberOfUploadTests = 10;
+        const int numberOfDownloadTests = 2, numberOfUploadTests = 2;
         const bool downloadMode = false, uploadMode = true;
         private double downloadSum = 0, uploadSum = 0;
         private int latencySummary, latencyCallbackCount;

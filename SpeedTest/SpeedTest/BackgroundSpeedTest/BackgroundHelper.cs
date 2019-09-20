@@ -16,6 +16,18 @@ namespace SpeedTestUWP.BackgroundSpeedTest
         private string taskEntryPoint = "RuntimeSpeedTest.SpeedTestBackgroundTask";
         private ApplicationTrigger applicationTrigger;
 
+        public bool IsBackgroundTestEnable
+        {
+            get
+            {
+                return (bool)ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"];
+            }
+            private set
+            {
+                ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = value;
+            }
+        }
+
         public BackgroundHelper()
         {
             this.applicationTrigger = new ApplicationTrigger();
@@ -23,19 +35,19 @@ namespace SpeedTestUWP.BackgroundSpeedTest
 
         public async void StartBackgroundSpeedTest()
         {
-            ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = true;
+            this.IsBackgroundTestEnable = true;
 
-            await this.applicationTrigger.RequestAsync();
+            await this.applicationTrigger.RequestAsync(); // Need delete after testing
         }
 
         public async void StopBackgroundSpeedTest()
         {
-            ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = false;
+            this.IsBackgroundTestEnable = false;
 
-            await this.applicationTrigger.RequestAsync();
+            await this.applicationTrigger.RequestAsync(); // Need delete after testing
         }
 
-        public void Register()
+        public void RegisteringBackgroundSpeedTest()
         {
             // if the task is already registered, there is no need to register it again
 
@@ -44,11 +56,11 @@ namespace SpeedTestUWP.BackgroundSpeedTest
                 var taskBuilder = new BackgroundTaskBuilder();
                 taskBuilder.Name = this.taskName;
                 taskBuilder.TaskEntryPoint = this.taskEntryPoint;
-                taskBuilder.SetTrigger(this.applicationTrigger);
+                taskBuilder.SetTrigger(this.applicationTrigger);                                      // Need set systemTrigger after testing
                 taskBuilder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
                 taskBuilder.Register();
 
-                ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = true;
+                this.IsBackgroundTestEnable = true;
             }            
         }
 
