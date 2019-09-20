@@ -21,6 +21,10 @@ using Windows.UI.Xaml.Media.Animation;
 using Microsoft.Toolkit.Uwp.UI;
 using SpeedTestModel;
 using SpeedTestUWP.BackgroundSpeedTest;
+using Windows.Storage;
+using Windows.Foundation.Metadata;
+using Windows.ApplicationModel;
+using Windows.UI.StartScreen;
 
 namespace SpeedTestUWP.ViewModel
 {
@@ -106,7 +110,7 @@ namespace SpeedTestUWP.ViewModel
         // MainPage properties commands
         public SpeedTestCommand MainPageLoadedCommand { get; private set; }
         public SpeedTestCommand MainPageUnloadedCommand { get; private set; }
-
+        
         // Mainboard properties commands
 
         public SpeedTestCommand StartButtonPressed { get; private set; }
@@ -199,7 +203,7 @@ namespace SpeedTestUWP.ViewModel
 
             this.MainPageLoadedCommand = new SpeedTestCommand(new Action<object>(LoadingHistoryWhenAppStarting));
             this.MainPageUnloadedCommand = new SpeedTestCommand(new Action<object>(SaveHistoryWhenAppClosing));
-
+            
             // Main panel commands assigning
 
             this.StartButtonPressed = new SpeedTestCommand(new Action<object>(StartSpeedTest));
@@ -238,6 +242,9 @@ namespace SpeedTestUWP.ViewModel
 
         private void LoadingHistoryWhenAppStarting(object param)
         {
+            this.FirstStartAppSuggestingAddLiveTile();
+
+            // Loading history
             using (SpeedDataContext db = new SpeedDataContext())
             {
                 ObservableCollection<SpeedDataViewModel> speedDataFromDatabase = new ObservableCollection<SpeedDataViewModel>();
@@ -271,7 +278,7 @@ namespace SpeedTestUWP.ViewModel
                 }
 
             }
-        }
+        }        
 
         private async void SaveHistoryWhenAppClosing(object param)
         {
@@ -634,7 +641,7 @@ namespace SpeedTestUWP.ViewModel
 
                 // Set Arc Board from Recieving Data
 
-                string measureValue = resources.GetString("MeasureValue");
+                string measureValue = resources.GetString("MeasureSpeedValue");
 
                 this.ArcBoard.DownloadSpeedArcValue = e.DownloadSpeed;
                 this.ArcBoard.SpeedDataNumbers = e.DownloadSpeed + " " + measureValue;
@@ -657,7 +664,7 @@ namespace SpeedTestUWP.ViewModel
 
                     // Set Arc Board from Recieving Data
 
-                    string measureValue = resources.GetString("MeasureValue");
+                    string measureValue = resources.GetString("MeasureSpeedValue");
 
                     this.ArcBoard.UploadSpeedArcValue = e.UploadSpeed;
                     this.ArcBoard.SpeedDataNumbers = e.UploadSpeed + " " + measureValue;
@@ -730,6 +737,13 @@ namespace SpeedTestUWP.ViewModel
 
                 this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
 
+                TileSpeedTest.CreateTile(this.DataBoard.PingData, this.DataBoard.DownloadSpeedData, this.DataBoard.UploadSpeedData, this.resources);
+
+                //if (this.IsLiveTileCreatingApproved)
+                //{
+                //    TileSpeedTest.CreateTile(this.DataBoard.PingData, this.DataBoard.DownloadSpeedData, this.DataBoard.UploadSpeedData, this.resources);
+                //}                
+
                 // Set DataBoard by Speed Sample
 
                 //if (this.HistoryPanel.SpeedDataCollection != null)
@@ -746,6 +760,33 @@ namespace SpeedTestUWP.ViewModel
         #endregion
 
         #region Helpful methods
+
+        private async void FirstStartAppSuggestingAddLiveTile()
+        {
+            //ApplicationData.Current.LocalSettings.Values.Remove("IsNotFirstStart"); // remove after testing
+            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey("IsNotFirstStart")) 
+            {
+                if (ApiInformation.IsTypePresent("Windows.UI.StartScreen.StartScreenManager"))
+                {
+                    AppListEntry entry = (await Package.Current.GetAppListEntriesAsync())[0];
+                    bool isSupportedStartScreen = StartScreenManager.GetDefault().SupportsAppListEntry(entry);
+
+                    if (isSupportedStartScreen)
+                    {
+                        // Check if your app is currently pinned
+                        bool isPinned = await StartScreenManager.GetDefault().ContainsAppListEntryAsync(entry);
+
+                        if (!isPinned)
+                        {
+                            // And pin it to Start
+                            bool isApproved = await StartScreenManager.GetDefault().RequestAddAppListEntryAsync(entry);
+                        }
+                    }
+                }
+                ApplicationData.Current.LocalSettings.Values["IsNotFirstStart"] = true;
+                //ApplicationData.Current.LocalSettings.Values.Remove("IsNotFirstStart"); // remove after testing
+            }
+        }
 
         private ObservableCollection<string> FindServerInCollection(string inputText)
         {

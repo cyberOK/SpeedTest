@@ -255,10 +255,34 @@
   <data name="ChangeServerPanelOutOfResult" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
-  <data name="MeasureValue" xml:space="preserve">
-    <value>Мб/с</value>
+  <data name="MeasureSpeedValue" xml:space="preserve">
+    <value> Мб/с</value>
   </data>
   <data name="BackgroundTestBlock.Text" xml:space="preserve">
     <value>Тест скорости в фоне</value>
+  </data>
+  <data name="MeasurePingValue" xml:space="preserve">
+    <value> (М/с)</value>
+  </data>
+  <data name="TileDownloadText" xml:space="preserve">
+    <value>Загрузка: </value>
+  </data>
+  <data name="TilePingText" xml:space="preserve">
+    <value>Пинг: </value>
+  </data>
+  <data name="TileUploadText" xml:space="preserve">
+    <value>Выгрузка: </value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Да, создать Живую Плитку</value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.Content" xml:space="preserve">
+    <value>Хотите ли вы создать Живую Плитку где можно будет увидеть результаты вашего последнего теста?</value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Нет, не создавать Живую Плитку</value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.Title" xml:space="preserve">
+    <value>Добро пожаловать в Тест Скорости!</value>
   </data>
 </root>

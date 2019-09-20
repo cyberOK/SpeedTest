@@ -9,47 +9,47 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
 {
     public class DataBoard : ObservableObject
     {
-        private bool _isPingFieldsGridVisible;
-        private bool _isDownloadSpeedFieldsGridVisible;
-        private bool _isUploadSpeedFieldsGridVisible;
-        private string _pingDataPing = "000";
-        private string _downloadSpeedData = "000";
-        private string _uploadData = "000";
+        private bool isPingFieldsGridVisible;
+        private bool isDownloadSpeedFieldsGridVisible;
+        private bool isUploadSpeedFieldsGridVisible;
+        private string pingDataPing = "000";
+        private string downloadSpeedData = "000";
+        private string uploadData = "000";
 
         public bool IsPingFieldsGridVisible
         {
-            get { return _isPingFieldsGridVisible; }
-            set { Set(ref _isPingFieldsGridVisible, value); }
+            get { return isPingFieldsGridVisible; }
+            set { Set(ref isPingFieldsGridVisible, value); }
         }
 
         public bool IsDownloadSpeedFieldsGridVisible
         {
-            get { return _isDownloadSpeedFieldsGridVisible; }
-            set { Set(ref _isDownloadSpeedFieldsGridVisible, value); }
+            get { return isDownloadSpeedFieldsGridVisible; }
+            set { Set(ref isDownloadSpeedFieldsGridVisible, value); }
         }
 
         public bool IsUploadSpeedFieldsGridVisible
         {
-            get { return _isUploadSpeedFieldsGridVisible; }
-            set { Set(ref _isUploadSpeedFieldsGridVisible, value); }
+            get { return isUploadSpeedFieldsGridVisible; }
+            set { Set(ref isUploadSpeedFieldsGridVisible, value); }
         }
 
         public string PingData
         {
-            get { return _pingDataPing; }
-            set { Set(ref _pingDataPing, value); }
+            get { return pingDataPing; }
+            set { Set(ref pingDataPing, value); }
         }
 
         public string DownloadSpeedData
         {
-            get { return _downloadSpeedData; }
-            set { Set(ref _downloadSpeedData, value); }
+            get { return downloadSpeedData; }
+            set { Set(ref downloadSpeedData, value); }
         }
 
         public string UploadSpeedData
         {
-            get { return _uploadData; }
-            set { Set(ref _uploadData, value); }
+            get { return uploadData; }
+            set { Set(ref uploadData, value); }
         }
     }
 }

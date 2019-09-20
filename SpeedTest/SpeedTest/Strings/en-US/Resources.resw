@@ -261,10 +261,34 @@
   <data name="RateLink.NavigateUri" xml:space="preserve">
     <value>https://docs.mongodb.com/ecosystem/drivers/csharp/</value>
   </data>
-  <data name="MeasureValue" xml:space="preserve">
-    <value>Mbps</value>
+  <data name="MeasureSpeedValue" xml:space="preserve">
+    <value> Mbps</value>
   </data>
   <data name="BackgroundTestBlock.Text" xml:space="preserve">
     <value>Test speed in background</value>
+  </data>
+  <data name="MeasurePingValue" xml:space="preserve">
+    <value> (Ms)</value>
+  </data>
+  <data name="TileDownloadText" xml:space="preserve">
+    <value>Download: </value>
+  </data>
+  <data name="TilePingText" xml:space="preserve">
+    <value>Ping: </value>
+  </data>
+  <data name="TileUploadText" xml:space="preserve">
+    <value>Upload: </value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Create LiveTile</value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.Content" xml:space="preserve">
+    <value>Do you want to create LiveTile where you can see a values from your last test?</value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Don't create LiveTile</value>
+  </data>
+  <data name="SuggestCreateLiveTileDialog.Title" xml:space="preserve">
+    <value>Welcome to SpeedTest!</value>
   </data>
 </root>

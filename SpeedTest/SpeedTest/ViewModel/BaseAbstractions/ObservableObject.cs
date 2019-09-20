@@ -8,7 +8,7 @@ namespace SpeedTestUWP.ViewModel.Helpers
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void RaisePropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         protected bool Set<T>(ref T filed, T newValue, [CallerMemberName] string propertyName = null)
         {
@@ -18,7 +18,7 @@ namespace SpeedTestUWP.ViewModel.Helpers
             }
 
             filed = newValue;
-            this.RaisePropertyChanged(propertyName);
+            this.OnPropertyChanged(propertyName);
             return true;
         }
     }

@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Notifications;
 using Microsoft.Toolkit.Uwp.Notifications;
+using Windows.ApplicationModel.Resources;
 
 namespace SpeedTestUWP.Tlles
 {
     public static class TileSpeedTest
     {
-        public static void CreateTile(string ping, string downloadSpeed, string uploadSpeed)
+        public static void CreateTile(string ping, string downloadSpeed, string uploadSpeed, ResourceLoader resources)
         {
             TileContent content = new TileContent()
             {
@@ -24,13 +25,13 @@ namespace SpeedTestUWP.Tlles
                             {
                                 new AdaptiveText()
                                 {
-                                    Text = downloadSpeed,
+                                    Text = downloadSpeed + resources.GetString("MeasureSpeedValue"),
                                     HintStyle = AdaptiveTextStyle.Default
                                 },
 
                                 new AdaptiveText()
                                 {
-                                    Text = uploadSpeed,
+                                    Text = uploadSpeed + resources.GetString("MeasureSpeedValue"),
                                     HintStyle = AdaptiveTextStyle.Default
                                 }
                             }
@@ -45,17 +46,17 @@ namespace SpeedTestUWP.Tlles
                             {
                                 new AdaptiveText()
                                 {
-                                    Text = "Ping: " + ping,
+                                    Text = resources.GetString("TilePingText") + ping + resources.GetString("MeasurePingValue"),
                                 },
 
                                 new AdaptiveText()
                                 {
-                                    Text = "Download: " + downloadSpeed,
+                                    Text = resources.GetString("TileDownloadText") + downloadSpeed + resources.GetString("MeasureSpeedValue"),
                                 },
-
+                                // resources.GetString("MeasureSpeedValue");
                                 new AdaptiveText()
                                 {
-                                    Text = "Upload: " + uploadSpeed,
+                                    Text = resources.GetString("TileUploadText") + uploadSpeed + resources.GetString("MeasureSpeedValue"),
                                 }
                             }
                         }
@@ -69,17 +70,17 @@ namespace SpeedTestUWP.Tlles
                             {
                                 new AdaptiveText()
                                 {
-                                    Text = "Ping: " + ping,
+                                    Text = resources.GetString("TilePingText") + ping + resources.GetString("MeasurePingValue"),
                                 },
 
                                 new AdaptiveText()
                                 {
-                                    Text = "Download: " + downloadSpeed,
+                                    Text = resources.GetString("TileDownloadText") + downloadSpeed + resources.GetString("MeasureSpeedValue"),
                                 },
 
                                 new AdaptiveText()
                                 {
-                                    Text = "Upload: " + uploadSpeed,
+                                    Text = resources.GetString("TileUploadText") + uploadSpeed + resources.GetString("MeasureSpeedValue"),
                                 }
                             }
                         }
