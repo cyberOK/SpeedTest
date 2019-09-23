@@ -18,10 +18,13 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
             get { return _currentServer; }
             set
             {
-                ApplicationData.Current.LocalSettings.Values["HostName"] = value.IPerf3Server;
-                ApplicationData.Current.LocalSettings.Values["HostPort"] = value.Port;
+                if(value != null)
+                {
+                    ApplicationData.Current.LocalSettings.Values["HostName"] = value.IPerf3Server;
+                    ApplicationData.Current.LocalSettings.Values["HostPort"] = value.Port;
 
-                Set(ref _currentServer, value);
+                    Set(ref _currentServer, value);
+                }
             }
         }
     }

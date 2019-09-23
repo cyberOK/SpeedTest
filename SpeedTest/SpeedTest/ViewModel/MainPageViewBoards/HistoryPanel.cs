@@ -45,5 +45,10 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
             get { return this._oldSelectedHistoryValue; }
             set { Set(ref _oldSelectedHistoryValue, value); }
         }
+
+        public HistoryPanel()
+        {
+            this.SpeedDataCollection = new ObservableCollection<SpeedDataViewModel>();
+        }
     }
 }

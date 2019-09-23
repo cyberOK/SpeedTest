@@ -252,9 +252,6 @@
   <data name="AboutArticle.Text" xml:space="preserve">
     <value>Also, since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline,again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also,since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline, gain as the other examples have shown,you can now create a new style off of it to customize things on a per - item basis such as spacing. (This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also,since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline, gain as the other examples have shown,you can now create a new style off of it to customize things on a per - item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also,since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline, gain as the other examples have shown,you can now create a new style off of it to customize things on a per - item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)</value>
   </data>
-  <data name="ChangeServerPanelOutOfResult" xml:space="preserve">
-    <value>No results</value>
-  </data>
   <data name="FeedBackLink.NavigateUri" xml:space="preserve">
     <value>https://docs.microsoft.com</value>
   </data>
@@ -290,5 +287,8 @@
   </data>
   <data name="SuggestCreateLiveTileDialog.Title" xml:space="preserve">
     <value>Welcome to SpeedTest!</value>
+  </data>
+  <data name="NoresultsTextBlock.Text" xml:space="preserve">
+    <value>No results</value>
   </data>
 </root>

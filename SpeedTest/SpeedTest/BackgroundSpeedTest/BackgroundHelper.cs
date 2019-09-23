@@ -31,6 +31,7 @@ namespace SpeedTestUWP.BackgroundSpeedTest
         public BackgroundHelper()
         {
             this.applicationTrigger = new ApplicationTrigger();
+            this.RegisteringBackgroundSpeedTest();
         }
 
         public async void StartBackgroundSpeedTest()

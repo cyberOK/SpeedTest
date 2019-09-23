@@ -6,38 +6,33 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI;
 
 namespace SpeedTestUWP.ViewModel.ViewBoards
 {
     public class ServerPanel : ObservableObject
-    {
-        private ObservableCollection<ServerInformation> _serversCollection;
-        private ObservableCollection<string> _serverNamesCollection;
-        private ObservableCollection<string> _allServerNamesCollection;
-        private bool _isServerPanelOpen;
+    {       
+        private bool isServerPanelOpen;
+        private bool isNoresults;
 
         public bool IsServerPanelOpen
         {
-            get { return this._isServerPanelOpen; }
-            set { Set(ref _isServerPanelOpen, value); }
+            get { return this.isServerPanelOpen; }
+            set { Set(ref isServerPanelOpen, value); }
         }
 
-        public ObservableCollection<ServerInformation> ServersCollection
+        public bool IsNoresults
         {
-            get { return this._serversCollection; }
-            set { Set(ref _serversCollection, value); }
+            get { return this.isNoresults; }
+            set { Set(ref isNoresults, value); }
         }
 
-        public ObservableCollection<string> ServerNamesCollection
-        {
-            get { return this._serverNamesCollection; }
-            set { Set(ref _serverNamesCollection, value); }
-        }
+        public AdvancedCollectionView ServersCollection { get; private set; }
 
-        public ObservableCollection<string> FullServerNamesCollection
+        public ServerPanel(AdvancedCollectionView serversCollection)
         {
-            get { return this._allServerNamesCollection; }
-            set { Set(ref _allServerNamesCollection, value); }
+            this.ServersCollection = serversCollection;
+            this.ServersCollection.SortDescriptions.Add(new SortDescription("ProviderName", SortDirection.Ascending));
         }
     }
 }

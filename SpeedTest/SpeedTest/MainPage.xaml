@@ -950,12 +950,14 @@
                     </AutoSuggestBox>
 
                     <!-- AvailableServers Line -->
-                    <TextBlock x:Name="AvailableServers" x:Uid="AvailableServers" Text="Available servers:" FontSize="20" Margin="20,10,0,10" RelativePanel.Below="ServerSuggestBox"/>
+                    <TextBlock x:Name="AvailableServers" x:Uid="AvailableServers" Text="Available servers:" FontSize="20" Margin="35,10,0,10" RelativePanel.Below="ServerSuggestBox"
+                               Visibility="{Binding ServerPanel.IsNoresults, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse}" />
 
                     <!-- Servers List -->
-                    <Grid RelativePanel.Below="AvailableServers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
-                        <ListView x:Name="ServersListView" ItemsSource="{Binding ServerPanel.ServerNamesCollection, Source={StaticResource mainViewModel}}" 
-                                  ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Margin="20,0,20,0" ItemsPanel="{StaticResource MyItemsPanelTemplate}"
+                    <Grid RelativePanel.Below="AvailableServers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
+                          Visibility="{Binding ServerPanel.IsNoresults, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse}" >
+                        <ListView x:Name="ServersListView" ItemsSource="{Binding ServerPanel.ServersCollection, Source={StaticResource mainViewModel}}" 
+                                  ItemContainerStyle="{StaticResource ListViewItemContainerStyle1}" Margin="24,0,20,0" ItemsPanel="{StaticResource MyItemsPanelTemplate}"
                                   RelativePanel.Below="AvailableServers">
 
                             <Interactivity:Interaction.Behaviors>
@@ -969,7 +971,7 @@
                                 <DataTemplate>
 
                                     <RelativePanel>
-                                        <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding}" FontSize="20" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ProviderName"/>
+                                        <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding ProviderName}" FontSize="20" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ProviderName"/>
                                         <TextBlock x:Name="ProviderName" Grid.Column="1" Text=" - Net Holding DDC" FontSize="20" RelativePanel.AlignRightWithPanel="True"/>
                                     </RelativePanel>
 
@@ -977,7 +979,14 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                    
+
+                    <!-- No results Line -->
+                    <StackPanel Orientation="Horizontal" Margin="24,20,24,0" Background="#77777777" RelativePanel.Below="AvailableServers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                                 Visibility="{Binding ServerPanel.IsNoresults, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB90;" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="NoresultsTextBlock" x:Uid="NoresultsTextBlock" FontSize="20" Margin="10,7,0,6" VerticalAlignment="Stretch"/>
+                    </StackPanel>
+
                 </RelativePanel>
             </Grid>
             

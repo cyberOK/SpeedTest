@@ -13,8 +13,6 @@ namespace SpeedTestModel
 
         public ObservableCollection<ServerInformation> ServerDataCollection { get; private set; }
 
-        public ObservableCollection<string> ServerNamesCollection { get; private set; }
-
         private ServersCollection()
         {
             this.ServerDataCollection = new ObservableCollection<ServerInformation>
@@ -39,19 +37,6 @@ namespace SpeedTestModel
             }
 
             return instance;
-        }
-
-        public ObservableCollection<string> GetServerNames()
-        {
-            ObservableCollection<string> serverNames = new ObservableCollection<string>();
-
-            foreach (ServerInformation server in this.ServerDataCollection)
-            {
-                string serverName = server.ProviderName;
-                serverNames.Add(serverName);
-            }
-
-            return serverNames;
         }
     }
 }
