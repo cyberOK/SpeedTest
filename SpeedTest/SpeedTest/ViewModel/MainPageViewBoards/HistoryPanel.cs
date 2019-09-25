@@ -22,6 +22,8 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
             set { Set(ref this._currentPing, value); }
         }
 
+        public SpeedDataViewModel CurrentSpeedDataSample { get; set; }
+
         public bool IsHistoryPanelOpen
         {
             get { return this._isHistoryPanelOpen; }

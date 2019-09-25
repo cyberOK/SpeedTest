@@ -121,11 +121,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BackgroundSpeedTest.cs" />
+    <Compile Include="HistoryProvider\HistoryProvider.cs" />
+    <Compile Include="HistoryProvider\SpeedData.cs" />
+    <Compile Include="HistoryProvider\SpeedDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerInformation.cs" />
     <Compile Include="ServersCollection.cs" />
-    <Compile Include="SpeedData.cs" />
-    <Compile Include="SpeedDataContext.cs" />
     <Compile Include="IperfWrapper.cs" />
     <Compile Include="SpeedTestEventArgs\AverageDowloadDataEventArgs.cs" />
     <Compile Include="SpeedTestEventArgs\AverageUploadDataEventArgs.cs" />

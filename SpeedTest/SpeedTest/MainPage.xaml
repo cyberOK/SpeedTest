@@ -615,9 +615,9 @@
                     <!-- Server Information Board  -->
                     <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
                         <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
-                               Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.CurrentServer.IPerf3Server, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
                         <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.CurrentServer.Port, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
+                               Text="{Binding ServerInformationBoard.CurrentServer.IpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
                         <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
                                Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
@@ -762,7 +762,7 @@
                             <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="0.6*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1.1*"/>
                             <ColumnDefinition Width="1.1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="CommonStyleSetterTextBlock"/>
@@ -851,7 +851,7 @@
 
                                                         <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" x:Uid="SingleHistoryDeletingButtonPhoneGrid" Content="Delete" Margin="0,0,10,0" Height="40" 
                                                                 Background="Transparent" Foreground="DarkCyan"  RelativePanel.AlignRightWithPanel="True" CommandParameter="{Binding }"
-                                                                Command="{Binding PhoneSingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
+                                                                Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
 
                                                     </RelativePanel>
                                                     
@@ -897,7 +897,7 @@
                                                         Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                                         Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"
                                                         CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
-                                                <TextBlock x:Name="ServerTextBlock" Grid.Column="1" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                <TextBlock x:Name="ServerTextBlock" TextWrapping="WrapWholeWords" Grid.Column="1" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
                                                            Text="{Binding Server}"/>
                                                 <TextBlock x:Name="DateTextBlock" Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
                                                            Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>

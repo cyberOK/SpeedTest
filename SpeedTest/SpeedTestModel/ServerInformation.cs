@@ -13,5 +13,7 @@ namespace SpeedTestModel
         public string Location { get; set; }
         public string ProviderName { get; set; }
         public int Port { get; set; }
+
+        public string IpAdress { get; set; }
     }
 }

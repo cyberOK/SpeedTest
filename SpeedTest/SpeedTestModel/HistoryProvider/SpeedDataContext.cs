@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace SpeedTestModel
+namespace SpeedTestModel.HistoryProvider
 {
     public class SpeedDataContext : DbContext
     {
@@ -18,7 +18,7 @@ namespace SpeedTestModel
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=SpeedData.db");
+            optionsBuilder.UseSqlite("Filename=History.db");
         }
     }
 }

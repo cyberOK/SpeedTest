@@ -9,6 +9,7 @@ using Windows.UI.Core;
 using SpeedTestModel.SpeedTestEventArgs;
 using Windows.Storage;
 using System.Globalization;
+using Windows.Foundation;
 
 namespace SpeedTestModel
 {
@@ -21,7 +22,7 @@ namespace SpeedTestModel
     public class IperfWrapper
     {
         const int timeOut = 0;
-        const int numberOfPingTests = 50;
+        const int numberOfPingTests = 1000;
         const int numberOfValidPingTests = 10;
         const int numberOfDownloadTests = 10, numberOfUploadTests = 10;
         const bool downloadMode = false, uploadMode = true;
@@ -31,6 +32,7 @@ namespace SpeedTestModel
         private readonly IPerfApp iPerf;
         private double downloadSpeed, uploadSpeed;
         private List<double> downloadSamplesCollection, uploadSamplesCollection;
+        private IAsyncAction currentTask;
 
         public event EventHandler<ErrorsEventArgs> ErrorRecieved;
         public event EventHandler<PingEventArgs> PingDataRecieved;
@@ -182,7 +184,11 @@ namespace SpeedTestModel
             {
                 case TestMode.Download:
 
-                    await this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
+                    await this.PerformOperation(async () =>
+                    {
+                        this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
+                        
+                    });
 
                     break;
 
@@ -223,7 +229,10 @@ namespace SpeedTestModel
                     this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
                     this.latencySummary = 0;
 
-                    await this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
+                    await this.PerformOperation(async () =>
+                    {
+                        this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests); ;
+                    });
 
                     break;
 
@@ -245,6 +254,8 @@ namespace SpeedTestModel
 
             if (this.latencyCallbackCount == numberOfValidPingTests)
             {
+                this.currentTask.Cancel();
+
                 int currentPing = this.latencySummary / numberOfValidPingTests;
 
                 this.Ping = currentPing;
@@ -346,6 +357,16 @@ namespace SpeedTestModel
             }
 
             return accumulator / samplesCollection.Count();
+        }
+        private async Task PerformOperation(Func<Task> asyncOperation)
+        {
+            try
+            {
+                await asyncOperation();
+            }
+            catch (OperationCanceledException)
+            {
+            }
         }
 
         #endregion

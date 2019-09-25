@@ -19,12 +19,13 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Microsoft.Toolkit.Uwp.UI;
-using SpeedTestModel;
+using SpeedTestModel.HistoryProvider;
 using SpeedTestUWP.BackgroundSpeedTest;
 using Windows.Storage;
 using Windows.Foundation.Metadata;
 using Windows.ApplicationModel;
 using Windows.UI.StartScreen;
+using SpeedTestModel;
 
 namespace SpeedTestUWP.ViewModel
 {
@@ -34,7 +35,8 @@ namespace SpeedTestUWP.ViewModel
 
         private ResourceLoader resources;
         private BackgroundHelper backgroundHelper;
-        private int id = 0;
+        private HistoryProvider history;
+        private int id = 1;
         private bool isPopupGridRaise;
         private bool isPhoneMainPanelOpen;
         private IperfWrapper iPerfInstance;
@@ -185,6 +187,7 @@ namespace SpeedTestUWP.ViewModel
 
             this.resources = new ResourceLoader();
             this.backgroundHelper = new BackgroundHelper();
+            this.history = new HistoryProvider();
 
             // MainPage commands assigning
             this.MainPageLoadedCommand = new SpeedTestCommand(new Action<object>(InitializePage));
@@ -223,13 +226,13 @@ namespace SpeedTestUWP.ViewModel
             this.FirstStartAppSuggestingAddLiveTile();
 
             // Loading history
-            using (SpeedDataContext db = new SpeedDataContext())
-            {
-                ObservableCollection<SpeedDataViewModel> speedDataFromDatabase = new ObservableCollection<SpeedDataViewModel>();
+            int historyCount = this.history.Count();
 
-                foreach (SpeedData sd in db.SpeedDatas.ToList())
+            if (historyCount != 0)
+            {
+                foreach(SpeedData sd in history.GetHistoryList())
                 {
-                    speedDataFromDatabase.Add(new SpeedDataViewModel
+                    this.HistoryPanel.SpeedDataCollection.Add(new SpeedDataViewModel
                     {
                         Id = sd.Id,
                         IsSelected = false,
@@ -241,21 +244,8 @@ namespace SpeedTestUWP.ViewModel
                     });
                 }
 
-                this.HistoryPanel.SpeedDataCollection = speedDataFromDatabase;
-
-                SpeedDataViewModel lastHistory;
-
-                if (HistoryPanel.SpeedDataCollection.Any())
-                {
-                    lastHistory = this.HistoryPanel.SpeedDataCollection.Last();
-
-                    if (lastHistory != null)
-                    {
-                        this.id = lastHistory.Id;
-                    }
-                }
-
-            }
+                this.id = historyCount;
+            }                      
         }        
 
         private async void SaveHistoryWhenAppClosing(object param)
@@ -391,61 +381,20 @@ namespace SpeedTestUWP.ViewModel
 
         #region History Actions for Delegates
 
-        private async void CallDeleteHistoryDialog(object param)
-        {
-            if (this.HistoryPanel.SpeedDataCollection.Count != 0)
-            {
-                DeleteDialog dD = new DeleteDialog();
-
-                await dD.ShowAsync();
-            }
-        }
-
-        private void DeleteHistory(object param)
-        {
-            this.HistoryPanel.SpeedDataCollection.Clear();
-
-            using (SpeedTestModel.SpeedDataContext db = new SpeedTestModel.SpeedDataContext())
-            {
-                var histories = db.SpeedDatas;
-
-                if (histories != null)
-                {
-                    db.SpeedDatas?.RemoveRange(histories);
-                    db.SaveChanges();
-                }
-            }
-        }
-
-        private void CloseHistory(object param)
-        {
-            this.IsPopupGridRaise = false;
-            this.HistoryPanel.IsHistoryPanelOpen = false;
-        }
-
-        private void SingleHistoryDeleting(object param)
+        private async void SingleHistoryDeleting(object param)
         {
             SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)param;
 
             this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
-
-            using (SpeedTestModel.SpeedDataContext db = new SpeedTestModel.SpeedDataContext())
-            {
-                SpeedTestModel.SpeedData singlehistory = db.SpeedDatas.FirstOrDefault(x => x.Id == singleHistoryForDeleting.Id);
-
-                if (singlehistory != null)
-                {
-                    db.SpeedDatas?.Remove(singlehistory);
-                    db.SaveChanges();
-                }
-            }
+            await this.history.DeleteSingleSample(singleHistoryForDeleting.Id);
+            --this.id;
         }
 
-        private void PhoneSingleHistoryDeleting(object param)
+        private async void DeleteHistory(object param)
         {
-            SpeedDataViewModel singleHistorySelected = (SpeedDataViewModel)param;
-
-            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);
+            this.HistoryPanel.SpeedDataCollection.Clear();
+            await this.history.Delete();
+            this.id = 1;
         }
 
         private void SingleHistorySelecting(object param)
@@ -468,6 +417,29 @@ namespace SpeedTestUWP.ViewModel
                 this.HistoryPanel.OldSelectedHistoryValue.IsSelected = false;
                 this.HistoryPanel.OldSelectedHistoryValue = filteredHistory;
             }
+        }
+
+        private async void CallDeleteHistoryDialog(object param)
+        {
+            if (this.HistoryPanel.SpeedDataCollection.Count != 0)
+            {
+                DeleteDialog dD = new DeleteDialog();
+
+                await dD.ShowAsync();
+            }
+        }
+
+        private void CloseHistory(object param)
+        {
+            this.IsPopupGridRaise = false;
+            this.HistoryPanel.IsHistoryPanelOpen = false;
+        }
+
+        private void PhoneSingleHistoryDeleting(object param)
+        {
+            SpeedDataViewModel singleHistorySelected = (SpeedDataViewModel)param;
+
+            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);
         }
 
         #endregion
@@ -577,7 +549,7 @@ namespace SpeedTestUWP.ViewModel
             });
         }
 
-        private async void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e)
+        private async void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e) 
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -588,6 +560,7 @@ namespace SpeedTestUWP.ViewModel
                     case TestMode.Download:
 
                         this.ArcBoard.IsTryConnect = false;
+                        this.ServerInformationBoard.CurrentServer.IpAdress = e.HostIp;
 
                         break;
 
@@ -604,8 +577,19 @@ namespace SpeedTestUWP.ViewModel
             {
                 int ping = e.Ping;
 
+                // Set View
                 this.DataBoard.IsPingFieldsGridVisible = true;
                 this.DataBoard.PingData = ping.ToString();
+
+                // Set Current SpeedData Sample
+                this.HistoryPanel.CurrentSpeedDataSample = new SpeedDataViewModel
+                {
+                    Date = DateTime.Now,
+                    Ping = ping.ToString(),
+                    Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
+                    IsSelected = false,
+                    Id = ++this.id
+                };
             });
         }
 
@@ -665,35 +649,12 @@ namespace SpeedTestUWP.ViewModel
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                // Set View
                 this.DataBoard.DownloadSpeedData = ((int)(e.AverageDownloadSpeed)).ToString();
                 this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
 
-                // Set List of Speed Test Samples
-
-                SpeedDataViewModel speedDataSample = new SpeedDataViewModel
-                {
-                    Ping = this.HistoryPanel.CurrentPing,
-                    DownloadSpeed = e.AverageDownloadSpeed,
-                    UploadSpeed = 0,
-                    Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
-                    Date = DateTime.Now,
-                    Id = ++this.id
-                };
-
-                // Set Speed Sample to History Collection
-
-                this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
-
-                // Set DataBoard
-
-                //if (this.HistoryPanel.SpeedDataCollection != null)
-                //{
-                //    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
-                //    this.DataBoard.PingData = testSample.Ping;
-                //    this.DataBoard.DownloadSpeedData = (testSample.DownloadSpeed).ToString();
-                //    this.DataBoard.IsPingFieldsGridVisible = true;
-                //    this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
-                //}
+                // Set Current SpeedData Sample
+                this.HistoryPanel.CurrentSpeedDataSample.DownloadSpeed = e.AverageDownloadSpeed;
             });
         }
 
@@ -701,42 +662,19 @@ namespace SpeedTestUWP.ViewModel
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                // Set View
                 this.DataBoard.UploadSpeedData = ((int)(e.AverageUploadSpeed)).ToString();
                 this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
 
-                // Set Speed Sample Test Samples
-
-                SpeedDataViewModel speedDataSample = new SpeedDataViewModel
-                {
-                    Ping = this.HistoryPanel.CurrentPing,
-                    UploadSpeed = e.AverageUploadSpeed,
-                    DownloadSpeed = 0,
-                    Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
-                    Date = DateTime.Now,
-                    Id = ++this.id
-                };
+                // Set Current SpeedData Sample
+                this.HistoryPanel.CurrentSpeedDataSample.UploadSpeed = e.AverageUploadSpeed;
 
                 // Add Speed Sample to History Collection
+                this.HistoryPanel.SpeedDataCollection.Add(this.HistoryPanel.CurrentSpeedDataSample);
+                this.history.Save(this.SpeedDataConversion(this.HistoryPanel.CurrentSpeedDataSample));
 
-                this.HistoryPanel.SpeedDataCollection.Add(speedDataSample);
-
+                // Create LiveTile
                 TileSpeedTest.CreateTile(this.DataBoard.PingData, this.DataBoard.DownloadSpeedData, this.DataBoard.UploadSpeedData, this.resources);
-
-                //if (this.IsLiveTileCreatingApproved)
-                //{
-                //    TileSpeedTest.CreateTile(this.DataBoard.PingData, this.DataBoard.DownloadSpeedData, this.DataBoard.UploadSpeedData, this.resources);
-                //}                
-
-                // Set DataBoard by Speed Sample
-
-                //if (this.HistoryPanel.SpeedDataCollection != null)
-                //{
-                //    var testSample = this.HistoryPanel.SpeedDataCollection[this.HistoryPanel.SpeedDataCollection.Count - 1];
-                //    this.DataBoard.PingData = testSample.Ping;
-                //    this.DataBoard.UploadSpeedData = (testSample.UploadSpeed).ToString();
-                //    this.DataBoard.IsPingFieldsGridVisible = true;
-                //    this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
-                //}
             });
         }
 
@@ -762,13 +700,26 @@ namespace SpeedTestUWP.ViewModel
                         if (!isPinned)
                         {
                             // And pin it to Start
-                            bool isApproved = await StartScreenManager.GetDefault().RequestAddAppListEntryAsync(entry);
+                            await StartScreenManager.GetDefault().RequestAddAppListEntryAsync(entry);
                         }
                     }
                 }
                 ApplicationData.Current.LocalSettings.Values["IsNotFirstStart"] = true;
                 //ApplicationData.Current.LocalSettings.Values.Remove("IsNotFirstStart"); // remove after testing
             }
+        }
+
+        private SpeedData SpeedDataConversion(SpeedDataViewModel sample)
+        {
+            return new SpeedData
+            {
+                Id = sample.Id,
+                Server = sample.Server,
+                Date = sample.Date,
+                Ping = sample.Ping,
+                DownloadSpeed = sample.DownloadSpeed,
+                UploadSpeed = sample.UploadSpeed
+            };
         }
 
         private void ClosePhoneGrid()
