@@ -11,11 +11,18 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
 {
     public class ServerInformationBoard : ObservableObject
     {
-        private ServerInformation _currentServer;
+        private string currentHostIpAdress;
+        private ServerInformation currentServer;
+
+        public string CurrentHostIpAdress
+        {
+            get { return this.currentHostIpAdress; }
+            set { Set(ref this.currentHostIpAdress, value); }
+        }
 
         public ServerInformation CurrentServer
         {
-            get { return _currentServer; }
+            get { return currentServer; }
             set
             {
                 if(value != null)
@@ -23,7 +30,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
                     ApplicationData.Current.LocalSettings.Values["HostName"] = value.IPerf3Server;
                     ApplicationData.Current.LocalSettings.Values["HostPort"] = value.Port;
 
-                    Set(ref _currentServer, value);
+                    Set(ref currentServer, value);
                 }
             }
         }

@@ -614,12 +614,12 @@
 
                     <!-- Server Information Board  -->
                     <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
-                        <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan"
-                               Text="{Binding ServerInformationBoard.CurrentServer.IPerf3Server, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True"/>
+                        <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" TextTrimming="CharacterEllipsis"
+                               Text="{Binding ServerInformationBoard.CurrentServer.IPerf3Server, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True" />
                         <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.CurrentServer.IpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
-                        <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" 
-                               Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True"/>
+                               Text="{Binding ServerInformationBoard.CurrentHostIpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
+                        <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" TextAlignment="Right" TextTrimming="CharacterEllipsis"
+                               Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="providerName"/>
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
                                Text="{Binding ServerInformationBoard.CurrentServer.Location, Source={StaticResource mainViewModel}}"
                                RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
@@ -897,7 +897,7 @@
                                                         Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                                         Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"
                                                         CommandParameter="{Binding ElementName=HistoryGrid, Path=SelectedItem}"/>
-                                                <TextBlock x:Name="ServerTextBlock" TextWrapping="WrapWholeWords" Grid.Column="1" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
+                                                <TextBlock x:Name="ServerTextBlock" TextTrimming="CharacterEllipsis" Grid.Column="1" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
                                                            Text="{Binding Server}"/>
                                                 <TextBlock x:Name="DateTextBlock" Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewItem}"
                                                            Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
@@ -971,7 +971,9 @@
                                 <DataTemplate>
 
                                     <RelativePanel>
-                                        <TextBlock x:Name="ServerName" Grid.Column="0" Text="{Binding ProviderName}" FontSize="20" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ProviderName"/>
+                                        <TextBlock x:Name="ServerName" Grid.Column="0" FontSize="20" Foreground="DarkCyan" TextTrimming="CharacterEllipsis"
+                                                   RelativePanel.AlignLeftWithPanel="True" RelativePanel.LeftOf="ProviderName"
+                                                   Text="{Binding ProviderName}"/>
                                         <TextBlock x:Name="ProviderName" Grid.Column="1" Text=" - Net Holding DDC" FontSize="20" RelativePanel.AlignRightWithPanel="True"/>
                                     </RelativePanel>
 

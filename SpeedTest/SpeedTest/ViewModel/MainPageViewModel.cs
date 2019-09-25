@@ -33,9 +33,9 @@ namespace SpeedTestUWP.ViewModel
     {
         #region Fields
 
-        private ResourceLoader resources;
-        private BackgroundHelper backgroundHelper;
-        private HistoryProvider history;
+        private readonly ResourceLoader resources;
+        private readonly BackgroundHelper backgroundHelper;
+        private readonly HistoryProvider history;
         private int id = 1;
         private bool isPopupGridRaise;
         private bool isPhoneMainPanelOpen;
@@ -560,7 +560,7 @@ namespace SpeedTestUWP.ViewModel
                     case TestMode.Download:
 
                         this.ArcBoard.IsTryConnect = false;
-                        this.ServerInformationBoard.CurrentServer.IpAdress = e.HostIp;
+                        this.ServerInformationBoard.CurrentHostIpAdress = e.HostIp;
 
                         break;
 

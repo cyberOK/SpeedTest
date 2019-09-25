@@ -31,7 +31,7 @@ namespace SpeedTestModel
         private TestMode TestMode;
         private readonly IPerfApp iPerf;
         private double downloadSpeed, uploadSpeed;
-        private List<double> downloadSamplesCollection, uploadSamplesCollection;
+        private readonly List<double> downloadSamplesCollection, uploadSamplesCollection;
         private IAsyncAction currentTask;
 
         public event EventHandler<ErrorsEventArgs> ErrorRecieved;
@@ -184,10 +184,12 @@ namespace SpeedTestModel
             {
                 case TestMode.Download:
 
+                    this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
+                    this.latencySummary = 0;
+
                     await this.PerformOperation(async () =>
                     {
-                        this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
-                        
+                        await this.currentTask;
                     });
 
                     break;
@@ -198,7 +200,7 @@ namespace SpeedTestModel
             }
         }
 
-        private void IPerf_ConnectingDataUpdated(IPerfApp sender, iPerfConnectingReport args)
+        private async void IPerf_ConnectingDataUpdated(IPerfApp sender, iPerfConnectingReport args)
         {
             switch (this.TestMode)
             {
@@ -208,10 +210,19 @@ namespace SpeedTestModel
 
                     this.OnConnectingDataRecieved(connectingDataSample);
 
+                    this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
+                    this.latencySummary = 0;
+
+                    await this.PerformOperation(async () =>
+                    {
+                        this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
+                        await this.currentTask;
+                    });
+
                     break;
 
                 case TestMode.Upload:
-                    
+
                     break;
             }
         }
@@ -226,13 +237,14 @@ namespace SpeedTestModel
 
                     this.OnConnectedDataRecieved(connectedDataSample);
 
-                    this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
-                    this.latencySummary = 0;
+                    //this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
+                    //this.latencySummary = 0;
 
-                    await this.PerformOperation(async () =>
-                    {
-                        this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests); ;
-                    });
+                    //await this.PerformOperation(async () =>
+                    //{
+                    //    this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
+                    //    await this.currentTask;
+                    //});
 
                     break;
 
@@ -336,7 +348,6 @@ namespace SpeedTestModel
                         this.OnUploadDataRecieved(testEndedSignal);                   // Signal that test ended
 
                         this.TestMode = TestMode.Download;
-                        this.latencyCallbackCount = 0;
                     }
 
                     break;

@@ -10,47 +10,41 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
 {
     public class HistoryPanel : ObservableObject
     {
-        private SpeedDataViewModel _oldSelectedHistoryValue = null;
-        private bool _isHistoryPanelOpen;
-        private bool _isHistorySelected;
-        private string _currentPing;
-        private ObservableCollection<SpeedDataViewModel> _speedDataCollection;
+        private SpeedDataViewModel oldSelectedHistoryValue = null;
+        private bool isHistoryPanelOpen;
+        private bool isHistorySelected;
+        private ObservableCollection<SpeedDataViewModel> speedDataCollection;
 
-        public string CurrentPing
-        {
-            get { return this._currentPing; }
-            set { Set(ref this._currentPing, value); }
-        }
-
-        public SpeedDataViewModel CurrentSpeedDataSample { get; set; }
+        public SpeedDataViewModel CurrentSpeedDataSample { get; set; } 
 
         public bool IsHistoryPanelOpen
         {
-            get { return this._isHistoryPanelOpen; }
-            set { Set(ref _isHistoryPanelOpen, value); }
+            get { return this.isHistoryPanelOpen; }
+            set { Set(ref isHistoryPanelOpen, value); }
         }
 
         public bool IsHistorySelected
         {
-            get { return this._isHistorySelected; }
-            set { Set(ref _isHistorySelected, value); }
+            get { return this.isHistorySelected; }
+            set { Set(ref isHistorySelected, value); }
         }
 
         public ObservableCollection<SpeedDataViewModel> SpeedDataCollection
         {
-            get { return this._speedDataCollection; }
-            set { Set(ref _speedDataCollection, value); }
+            get { return this.speedDataCollection; }
+            set { Set(ref speedDataCollection, value); }
         }
 
         public SpeedDataViewModel OldSelectedHistoryValue
         {
-            get { return this._oldSelectedHistoryValue; }
-            set { Set(ref _oldSelectedHistoryValue, value); }
+            get { return this.oldSelectedHistoryValue; }
+            set { Set(ref oldSelectedHistoryValue, value); }
         }
 
         public HistoryPanel()
         {
             this.SpeedDataCollection = new ObservableCollection<SpeedDataViewModel>();
+            this.CurrentSpeedDataSample = new SpeedDataViewModel();
         }
     }
 }
