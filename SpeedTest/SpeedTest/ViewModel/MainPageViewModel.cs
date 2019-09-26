@@ -36,7 +36,7 @@ namespace SpeedTestUWP.ViewModel
         private readonly ResourceLoader resources;
         private readonly BackgroundHelper backgroundHelper;
         private readonly HistoryProvider history;
-        private int id = 1;
+        private int id = 0;
         private bool isPopupGridRaise;
         private bool isPhoneMainPanelOpen;
         private IperfWrapper iPerfInstance;
@@ -114,7 +114,6 @@ namespace SpeedTestUWP.ViewModel
         public SpeedTestCommand MainPageUnloadedCommand { get; private set; }
         
         // Mainboard properties commands
-
         public SpeedTestCommand StartButtonPressed { get; private set; }
         public SpeedTestCommand BackButtonPressed { get; private set; }
         public SpeedTestCommand HistoryButtonPressed { get; private set; }
@@ -123,23 +122,19 @@ namespace SpeedTestUWP.ViewModel
         public SpeedTestCommand GamburgerButtonPressed { get; private set; }
 
         // Settings panel properties commands
-
         public SpeedTestCommand BackgroundTestToggleSwitch { get; private set; }
         public SpeedTestCommand SettingSplitViewClosing { get; private set; }
         public SpeedTestCommand LanguageComboBoxChanged { get; private set; }
         public SpeedTestCommand SelectedItemRadioButtonChanged { get; private set; }
 
         // History panel properties commands
-
         public SpeedTestCommand DeleteHistoryButtonPressed { get; private set; }
         public SpeedTestCommand CloseHistoryButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistoryDeletedButtonPressed { get; private set; }
         public SpeedTestCommand SingleHistorySelected { get; private set; }
-        public SpeedTestCommand PhoneSingleHistoryDeletedButtonPressed { get; private set; }
         public SpeedTestCommand DeleteHistoryContentDialogButtonPressed { get; private set; }
 
         // Server panel properties commands
-
         public SpeedTestCommand ServerSuggestBoxTextChanged { get; private set; }
         public SpeedTestCommand SingleServerSelected { get; private set; }
         public SpeedTestCommand CloseServerPanelButtonPressed { get; private set; }
@@ -209,7 +204,6 @@ namespace SpeedTestUWP.ViewModel
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
             this.SingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(SingleHistoryDeleting));
             this.SingleHistorySelected = new SpeedTestCommand(new Action<object>(SingleHistorySelecting));
-            this.PhoneSingleHistoryDeletedButtonPressed = new SpeedTestCommand(new Action<object>(PhoneSingleHistoryDeleting));
             this.DeleteHistoryContentDialogButtonPressed = new SpeedTestCommand(new Action<object>(DeleteHistory));
             // Server panel commands assigning
             this.ServerSuggestBoxTextChanged = new SpeedTestCommand(new Action<object>(ServerNameTextChanged));
@@ -244,7 +238,7 @@ namespace SpeedTestUWP.ViewModel
                     });
                 }
 
-                this.id = historyCount;
+                this.id = this.HistoryPanel.SpeedDataCollection.Last().Id;
             }                      
         }        
 
@@ -343,7 +337,7 @@ namespace SpeedTestUWP.ViewModel
             string langCode = chosenLanguage.LanguageCode;
 
             ApplicationLanguages.PrimaryLanguageOverride = langCode;
-
+            
             Frame mainPage = Window.Current.Content as Frame;
             mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }
@@ -387,14 +381,13 @@ namespace SpeedTestUWP.ViewModel
 
             this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
             await this.history.DeleteSingleSample(singleHistoryForDeleting.Id);
-            --this.id;
         }
 
         private async void DeleteHistory(object param)
         {
             this.HistoryPanel.SpeedDataCollection.Clear();
             await this.history.Delete();
-            this.id = 1;
+            this.id = 0;
         }
 
         private void SingleHistorySelecting(object param)
@@ -433,13 +426,6 @@ namespace SpeedTestUWP.ViewModel
         {
             this.IsPopupGridRaise = false;
             this.HistoryPanel.IsHistoryPanelOpen = false;
-        }
-
-        private void PhoneSingleHistoryDeleting(object param)
-        {
-            SpeedDataViewModel singleHistorySelected = (SpeedDataViewModel)param;
-
-            this.HistoryPanel.SpeedDataCollection?.Remove(singleHistorySelected);
         }
 
         #endregion

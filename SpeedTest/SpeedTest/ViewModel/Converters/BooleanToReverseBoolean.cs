@@ -7,11 +7,11 @@ using Windows.UI.Xaml.Data;
 
 namespace SpeedTestUWP.ViewModel.Converters
 {
-    public class BooleanToOpacityConverter : IValueConverter
+    public class BooleanToReverseBoolean : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (bool)value ^ (parameter as string ?? string.Empty).Equals("Reverse") ? 1 : 0;
+            return (bool)value ^ (parameter as string ?? string.Empty).Equals("Reverse") ? true : false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

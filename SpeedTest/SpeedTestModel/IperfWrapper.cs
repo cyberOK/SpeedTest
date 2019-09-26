@@ -227,7 +227,7 @@ namespace SpeedTestModel
             }
         }
 
-        private async void IPerf_ConnectedDataUpdated(IPerfApp sender, iPerfConnectedReport args)
+        private void IPerf_ConnectedDataUpdated(IPerfApp sender, iPerfConnectedReport args)
         {
             switch (this.TestMode)
             {
@@ -236,15 +236,6 @@ namespace SpeedTestModel
                     ConnectedEventArgs connectedDataSample = new ConnectedEventArgs(args.RemoteIP, args.RemotePort, this.TestMode);
 
                     this.OnConnectedDataRecieved(connectedDataSample);
-
-                    //this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
-                    //this.latencySummary = 0;
-
-                    //await this.PerformOperation(async () =>
-                    //{
-                    //    this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
-                    //    await this.currentTask;
-                    //});
 
                     break;
 
@@ -369,6 +360,7 @@ namespace SpeedTestModel
 
             return accumulator / samplesCollection.Count();
         }
+
         private async Task PerformOperation(Func<Task> asyncOperation)
         {
             try

@@ -139,6 +139,7 @@
     <Compile Include="Triggers\Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="ViewModel\Converters\BooleanToColorConverter.cs" />
     <Compile Include="ViewModel\Converters\BooleanToOpacityConverter.cs" />
+    <Compile Include="ViewModel\Converters\BooleanToReverseBoolean.cs" />
     <Compile Include="ViewModel\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\Converters\DateToStringConverter.cs" />
     <Compile Include="ViewModel\Converters\RadioModeSelectedIntToBooltConverter.cs" />

@@ -266,7 +266,6 @@
                         <Setter Target="HistoryHeader.(Height)" Value="70"/>
                         <Setter Target="HistoryHeader.(Width)" Value="480"/>
                         <Setter Target="HistoryHeader.(Margin)" Value="0,0,0,10"/>
-
                     </VisualState.Setters>
                 </VisualState>
                 <!-- Phone version -->
@@ -340,6 +339,7 @@
                         <Setter Target="MainBottomBoardInformation.(Margin)" Value="20,0"/>
                         <Setter Target="providerName.(FontSize)" Value="20"/>
                         <Setter Target="serverName.(FontSize)" Value="20"/>
+                        <Setter Target="serverName.(TextAlignment)" Value="Right"/>
                         <Setter Target="serverLocation.(FontSize)" Value="20"/>
                         <Setter Target="ipAdress.(FontSize)" Value="20"/>
                         <Setter Target="changeServerButton.(Margin)" Value="0,10,0,5"/>
@@ -481,11 +481,7 @@
         <Grid x:Name="MainGrid">
             <RelativePanel>
 
-                <Ad:AdControl x:Name="Advertisement" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-                          ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
- 		                  AdUnitId="test"/>
-            
-            <!-- Main Panel Buttons -->
+                <!-- Main Panel Buttons -->
                 <StackPanel x:Name="SettingsPanelButtons" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
                     <Button x:Name="setingsButton" Style="{StaticResource SettingsPanelButton}" Content="&#xE713;" Margin="10"
                         Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}"/>
@@ -535,7 +531,7 @@
                 </Grid>
 
                 <!-- Bottom Board -->
-                <StackPanel x:Name="BottomBoard" VerticalAlignment="Bottom" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Above="Advertisement">
+                <StackPanel x:Name="BottomBoard" VerticalAlignment="Top" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Above="Advertisement">
 
                     <!-- Data Board -->
                     <Grid x:Name="TestDataBoard" HorizontalAlignment="Stretch" >
@@ -543,7 +539,7 @@
 
                             <!-- Ping Fields -->
                             <Grid x:Name="PingFieldsGrid" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
-                                 Opacity="{Binding DataBoard.IsPingFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}" >
+                                 Opacity="{Binding DataBoard.IsPingFieldsGridVisible, Converter={StaticResource BooleanToOpacityConverter},Source={StaticResource mainViewModel}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition/>
@@ -615,21 +611,27 @@
                     <!-- Server Information Board  -->
                     <RelativePanel x:Name="MainBottomBoardInformation" Grid.Column="1" Grid.Row="1">
                         <TextBlock x:Name="providerName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" TextTrimming="CharacterEllipsis"
-                               Text="{Binding ServerInformationBoard.CurrentServer.IPerf3Server, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True" />
+                                   Text="{Binding ServerInformationBoard.CurrentServer.IPerf3Server, Source={StaticResource mainViewModel}}" RelativePanel.AlignLeftWithPanel="True" />
                         <TextBlock x:Name="ipAdress" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.CurrentHostIpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
-                        <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" TextAlignment="Right" TextTrimming="CharacterEllipsis"
-                               Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="providerName"/>
+                                   Text="{Binding ServerInformationBoard.CurrentHostIpAdress, Source={StaticResource mainViewModel}}" RelativePanel.Below="providerName"/>
+                        <TextBlock x:Name="serverName" Style="{StaticResource TextBlockBottomBoard}" Foreground="DarkCyan" TextTrimming="CharacterEllipsis"
+                                   Text="{Binding ServerInformationBoard.CurrentServer.ProviderName, Source={StaticResource mainViewModel}}" RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="providerName"/>
                         <TextBlock x:Name="serverLocation" Style="{StaticResource TextBlockBottomBoard}"
-                               Text="{Binding ServerInformationBoard.CurrentServer.Location, Source={StaticResource mainViewModel}}"
-                               RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
+                                   Text="{Binding ServerInformationBoard.CurrentServer.Location, Source={StaticResource mainViewModel}}"
+                                   RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
                         <Button x:Name="changeServerButton" x:Uid="changeServerButton" Style="{StaticResource ContentDialogPrimaryButtonStyle}" Content="Change server" 
-                            RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"
-                            Command="{Binding ChangeServerButtonPressed}"/>
+                                RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True"  
+                                IsEnabled="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToReverseBoolean}, ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
+                                Opacity="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToOpacityConverter}, ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
+                                Command="{Binding ChangeServerButtonPressed}"/>
                     </RelativePanel>
 
                 </StackPanel>
-           
+
+                <Ad:AdControl x:Name="Advertisement" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                          ApplicationId="3f83fe91-d6be-434d-a0ae-7351c5a997f1"
+ 		                  AdUnitId="test"/>
+
             </RelativePanel>
         </Grid>
         
@@ -800,7 +802,7 @@
                                                 <VisualStateGroup>
                                                     <VisualState x:Name="Desktop">
                                                         <VisualState.StateTriggers>
-                                                            <AdaptiveTrigger MinWindowWidth="1000" MinWindowHeight="830"/>
+                                                            <AdaptiveTrigger MinWindowWidth="1040" MinWindowHeight="850"/>
                                                         </VisualState.StateTriggers>
                                                         <VisualState.Setters>
                                                             <Setter Target="HistoryItemGrid.(Height)" Value="50"/>
@@ -808,11 +810,12 @@
                                                             <Setter Target="SingleHistoryRemoveButton.(Width)" Value="50"/>
                                                             <Setter Target="SingleHistoryRemoveButton.(FontSize)" Value="20"/>
                                                             <Setter Target="PhoneGrid.(Visibility)" Value="Collapsed"/>
+                                                            <Setter Target="ServerTextBlock.(HorizontalAlignment)" Value="Center"/>
                                                         </VisualState.Setters>
                                                     </VisualState>
                                                     <VisualState x:Name="Middle">
                                                         <VisualState.StateTriggers>
-                                                            <AdaptiveTrigger MinWindowWidth="500"/>
+                                                            <AdaptiveTrigger MinWindowWidth="500" MinWindowHeight="560"/>
                                                         </VisualState.StateTriggers>
                                                         <VisualState.Setters>
                                                             <Setter Target="HistoryItemGrid.(Height)" Value="50"/>
@@ -820,7 +823,8 @@
                                                             <Setter Target="SingleHistoryRemoveButton.(Width)" Value="35"/>
                                                             <Setter Target="SingleHistoryRemoveButton.(FontSize)" Value="17"/>
                                                             <Setter Target="PhoneGrid.(Visibility)" Value="Collapsed"/>
-                                                         </VisualState.Setters>
+                                                            <Setter Target="ServerTextBlock.(HorizontalAlignment)" Value="Left"/>
+                                                        </VisualState.Setters>
                                                     </VisualState>
                                                     <VisualState x:Name="Phone">
                                                         <VisualState.StateTriggers>
@@ -915,6 +919,7 @@
                             </GridView.ItemTemplate>
                         </GridView>
                     </Grid>
+                    
                 </RelativePanel>
             </Grid>
             
