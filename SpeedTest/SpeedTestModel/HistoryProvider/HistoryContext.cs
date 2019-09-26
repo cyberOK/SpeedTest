@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SpeedTestModel.Iperf;
 
-namespace SpeedTestModel.HistoryProvider
+namespace SpeedTestModel.HistoryManager
 {
-    public class SpeedDataContext : DbContext
+    public class HistoryContext : DbContext
     {
-        public DbSet<SpeedData> SpeedDatas { get; set; }
+        public DbSet<SpeedData> History { get; set; }
 
-        public SpeedDataContext()
+        public HistoryContext()
         {
             Database.EnsureCreated();
         }

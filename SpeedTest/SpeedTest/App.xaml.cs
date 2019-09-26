@@ -21,8 +21,9 @@ using Windows.UI;
 using Windows.System.Profile;
 using Windows.UI.Xaml.Resources;
 using Microsoft.EntityFrameworkCore;
-using SpeedTestModel.HistoryProvider;
+using SpeedTestModel.HistoryManager;
 using SpeedTestUWP.ViewModel.Helpers;
+using SpeedTestModel.ServerIPerfProvider;
 
 namespace SpeedTestUWP
 {
@@ -43,7 +44,12 @@ namespace SpeedTestUWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (HistoryContext db = new HistoryContext())
+            {
+                db.Database.Migrate();
+            }
+
+            using (ServerIPerfContext db = new ServerIPerfContext())
             {
                 db.Database.Migrate();
             }

@@ -1,4 +1,5 @@
 ﻿using SpeedTestModel;
+using SpeedTestModel.IPerf;
 using SpeedTestUWP.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
     public class ServerInformationBoard : ObservableObject
     {
         private string currentHostIpAdress;
-        private ServerInformation currentServer;
+        private ServerIPerf currentServer;
 
         public string CurrentHostIpAdress
         {
@@ -20,7 +21,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
             set { Set(ref this.currentHostIpAdress, value); }
         }
 
-        public ServerInformation CurrentServer
+        public ServerIPerf CurrentServer
         {
             get { return currentServer; }
             set

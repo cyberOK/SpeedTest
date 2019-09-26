@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpeedTestModel.Iperf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +9,26 @@ namespace SpeedTestModel.SpeedTestEventArgs
 {
     public class ConnectedEventArgs : EventArgs
     {
-        private string _hostIp;
-        private int _hostPort;
-        private TestMode _testMode;
+        private string hostIp;
+        private int hostPort;
+        private TestMode testMode;
 
         public string HostIp
         {
-            get { return this._hostIp; }
-            private set { this._hostIp = value; }
+            get { return this.hostIp; }
+            private set { this.hostIp = value; }
         }
 
         public int HostPort
         {
-            get { return this._hostPort; }
-            private set { this._hostPort = value; }
+            get { return this.hostPort; }
+            private set { this.hostPort = value; }
         }
 
         public TestMode TestMode
         {
-            get { return this._testMode; }
-            private set { this._testMode = value; }
+            get { return this.testMode; }
+            private set { this.testMode = value; }
         }
 
         public ConnectedEventArgs(string hostIp, int hostPort, TestMode testMode)

@@ -1,47 +1,48 @@
-﻿using System;
+﻿using SpeedTestModel.Iperf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTestModel.HistoryProvider
+namespace SpeedTestModel.HistoryManager
 {
-    public class HistoryProvider
+    public class HistoryManager
     {
         public int Count()
         {
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (HistoryContext db = new HistoryContext())
             {
-                return db.SpeedDatas.Count();
+                return db.History.Count();
             }
         }
 
         public IList<SpeedData> GetHistoryList()
         {
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (HistoryContext db = new HistoryContext())
             {
-                return db.SpeedDatas.ToList();
+                return db.History.ToList();
             }
         }
 
         public async Task Save(SpeedData sample)
         {
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (HistoryContext db = new HistoryContext())
             {
-                await db.SpeedDatas.AddAsync(sample);
+                await db.History.AddAsync(sample);
                 await db.SaveChangesAsync();
             }
         }
 
         public async Task Delete()
         {
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (HistoryContext db = new HistoryContext())
             {
-                var histories = db.SpeedDatas;
+                var histories = db.History;
 
                 if (histories != null)
                 {
-                    db.SpeedDatas?.RemoveRange(histories);
+                    db.History?.RemoveRange(histories);
                     await db.SaveChangesAsync();
                 }
             }
@@ -49,13 +50,13 @@ namespace SpeedTestModel.HistoryProvider
 
         public async Task DeleteSingleSample(int id)
         {
-            using (SpeedDataContext db = new SpeedDataContext())
+            using (HistoryContext db = new HistoryContext())
             {
-                SpeedData deletingSample = await db.SpeedDatas.FindAsync(id);
+                SpeedData deletingSample = await db.History.FindAsync(id);
 
                 if (deletingSample != null)
                 {
-                    db.SpeedDatas?.Remove(deletingSample);
+                    db.History?.Remove(deletingSample);
                     await db.SaveChangesAsync();
                 }
             }

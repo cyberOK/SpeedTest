@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTestModel.HistoryProvider
+namespace SpeedTestModel.Iperf
 {
     public class SpeedData
     {

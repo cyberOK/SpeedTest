@@ -11,7 +11,7 @@ using Windows.Storage;
 using System.Globalization;
 using Windows.Foundation;
 
-namespace SpeedTestModel
+namespace SpeedTestModel.Iperf
 {
     public enum TestMode
     {

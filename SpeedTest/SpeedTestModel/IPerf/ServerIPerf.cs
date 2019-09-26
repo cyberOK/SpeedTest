@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedTestModel
+namespace SpeedTestModel.IPerf
 {
-    public class ServerInformation
+    public class ServerIPerf
     {
+        public int Id { get; set; }
         public bool IsCurrent { get; set; }
         public string IPerf3Server { get; set; }
         public string Location { get; set; }

@@ -1,4 +1,5 @@
 ﻿using IPerfLibrary;
+using SpeedTestModel.Iperf;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,8 +27,8 @@ namespace SpeedTestModel
         private int ping;
         private double downloadSpeed;
         private double uploadSpeed;
-        private List<double> downloadSamplesCollection;
-        private List<double> uploadSamplesCollection;
+        private readonly List<double> downloadSamplesCollection;
+        private readonly List<double> uploadSamplesCollection;
 
         public string HostName { get; private set; }
         public int Port { get; private set; }
