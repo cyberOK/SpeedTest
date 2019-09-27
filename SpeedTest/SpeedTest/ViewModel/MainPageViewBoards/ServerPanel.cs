@@ -32,7 +32,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
         public ServerPanel(AdvancedCollectionView serversCollection)
         {
             this.ServersCollection = serversCollection;
-            this.ServersCollection.SortDescriptions.Add(new SortDescription("ProviderName", SortDirection.Ascending));
+            this.ServersCollection?.SortDescriptions.Add(new SortDescription("ProviderName", SortDirection.Ascending));
         }
     }
 }

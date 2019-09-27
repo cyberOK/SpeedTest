@@ -276,7 +276,7 @@ namespace SpeedTestUWP.ViewModel
             this.IsPopupGridRaise = true;
             this.ServerPanel.IsServerPanelOpen = true;
 
-            // Rollback filtration
+            // Rollback filtration           
             this.ServerPanel.ServersCollection.Filter = null;
             this.ServerPanel.ServersCollection.RefreshFilter();
             this.serverPanel.IsNoresults = false;
@@ -321,8 +321,7 @@ namespace SpeedTestUWP.ViewModel
 
             string langCode = chosenLanguage.LanguageCode;
 
-            ApplicationLanguages.PrimaryLanguageOverride = langCode;
-
+            ApplicationLanguages.PrimaryLanguageOverride = langCode;           
             Frame mainPage = Window.Current.Content as Frame;
             mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }

@@ -993,6 +993,9 @@
                                 <Core:InvokeCommandAction Command="{Binding ServerSuggestBoxTextChanged, Source={StaticResource mainViewModel}}"
                                                           CommandParameter="{Binding ElementName=ServerSuggestBox, Path=Text}"/>
                             </Core:EventTriggerBehavior>
+                            <Core:EventTriggerBehavior EventName="GettingFocus">
+                                <Core:ChangePropertyAction PropertyName="Text" Value=""/>
+                            </Core:EventTriggerBehavior>
                         </Interactivity:Interaction.Behaviors>
                         
                     </AutoSuggestBox>
