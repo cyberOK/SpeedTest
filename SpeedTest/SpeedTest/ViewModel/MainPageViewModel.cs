@@ -699,7 +699,6 @@ namespace SpeedTestUWP.ViewModel
                         UploadSpeed = sd.UploadSpeed
                     });
                 }
-
                 this.id = this.HistoryPanel.SpeedDataCollection.Last().Id;
             }
         }

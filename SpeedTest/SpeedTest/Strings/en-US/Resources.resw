@@ -235,7 +235,7 @@
     <value>Upload</value>
   </data>
   <data name="DeleteDialog.Content" xml:space="preserve">
-    <value>Do you really want to delete the history? To Continue press 'Clear history', this may take a while.</value>
+    <value>Do you really want to delete the history? To Continue press "Clear history", this may take a while.</value>
   </data>
   <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
     <value>Clear history</value>

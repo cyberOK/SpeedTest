@@ -235,7 +235,7 @@
     <value>Выгрузка</value>
   </data>
   <data name="DeleteDialog.Content" xml:space="preserve">
-    <value>Вы действительно хотите очистить историю? Для продолжения нажмите `Очистить историю`, это может занять некоторое время.</value>
+    <value>Вы действительно хотите очистить историю? Для продолжения нажмите "Очистить историю", это может занять некоторое время.</value>
   </data>
   <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
     <value>Очистить историю</value>

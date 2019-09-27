@@ -523,7 +523,7 @@
                             Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
                     <TextBlock x:Name="TryConnectTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Text="{Binding Source={StaticResource Localizer}, Path=[TryConnectTextBlock/Content]}" 
+                               Text="{Binding Source={StaticResource Localizer}, Path=[TryConnectTextBlock/Text]}" 
                                Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />
 
                     <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -986,7 +986,7 @@
                     <!-- Search Bar -->
                     <AutoSuggestBox x:Name="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}" Margin="20,0" QueryIcon="Find" 
                                     RelativePanel.Below="ServersTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-                                    PlaceholderText="{Binding Source={StaticResource Localizer}, Path=[ServerSuggestBox/PlaceholderText]}">
+                                    PlaceholderText="{Binding Source={StaticResource Localizer}, Path=[ServerSuggestBox/PlaceholderText]}" >
                         
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="TextChanged">
