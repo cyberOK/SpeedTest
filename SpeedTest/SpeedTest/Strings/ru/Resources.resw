@@ -285,4 +285,13 @@
   <data name="NoresultsTextBlock.Text" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
+  <data name="BackgroundTestToggleSwitch.OffContent" xml:space="preserve">
+    <value>Выключено</value>
+  </data>
+  <data name="BackgroundTestToggleSwitch.OnContent" xml:space="preserve">
+    <value>Включено</value>
+  </data>
+  <data name="MicrosoftResearchBlock.Text" xml:space="preserve">
+    <value>МайкрософтРесерч</value>
+  </data>
 </root>

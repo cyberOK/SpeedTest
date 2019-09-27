@@ -29,6 +29,7 @@ using Windows.UI.StartScreen;
 using SpeedTestModel;
 using SpeedTestModel.Iperf;
 using SpeedTestModel.IPerf;
+using System.ComponentModel;
 
 namespace SpeedTestUWP.ViewModel
 {
@@ -176,8 +177,8 @@ namespace SpeedTestUWP.ViewModel
             this.ServerInformationBoard = new ServerInformationBoard();
             this.HistoryPanel = new HistoryPanel();
 
-            //this.ServerIPerfManager.SaveRange(this.ServerIPerfManager.BaseServerCollection());  // FIT DATABASE
-
+            // Set ViewModel from database
+            //this.ServerIPerfManager.SaveRange(this.ServerIPerfManager.BaseServerCollection());  // FIT DATABASE 
             List<ServerIPerf> serversIPerf = this.ServerIPerfManager.GetServersList();
             this.ServerPanel = new ServerPanel(new AdvancedCollectionView(serversIPerf, true));
             this.ServerPanel.ServersCollection.CurrentChanged += ServersCollectionView_CurrentChanged;
@@ -274,6 +275,11 @@ namespace SpeedTestUWP.ViewModel
         {
             this.IsPopupGridRaise = true;
             this.ServerPanel.IsServerPanelOpen = true;
+
+            // Rollback filtration
+            this.ServerPanel.ServersCollection.Filter = null;
+            this.ServerPanel.ServersCollection.RefreshFilter();
+            this.serverPanel.IsNoresults = false;
         }
 
         private void PhoneMainPanelCalling(object param)
@@ -316,7 +322,7 @@ namespace SpeedTestUWP.ViewModel
             string langCode = chosenLanguage.LanguageCode;
 
             ApplicationLanguages.PrimaryLanguageOverride = langCode;
-            
+
             Frame mainPage = Window.Current.Content as Frame;
             mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }
@@ -678,10 +684,11 @@ namespace SpeedTestUWP.ViewModel
         {
             int historyCount = this.HistoryManager.Count();
 
-            if (historyCount != 0)
+            if (historyCount != 0 && !this.HistoryPanel.SpeedDataCollection.Any())
             {
                 foreach (SpeedData sd in this.HistoryManager.GetHistoryList())
                 {
+                    
                     this.HistoryPanel.SpeedDataCollection.Add(new SpeedDataViewModel
                     {
                         Id = sd.Id,

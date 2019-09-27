@@ -291,4 +291,13 @@
   <data name="NoresultsTextBlock.Text" xml:space="preserve">
     <value>No results</value>
   </data>
+  <data name="BackgroundTestToggleSwitch.OffContent" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="BackgroundTestToggleSwitch.OnContent" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="MicrosoftResearchBlock.Text" xml:space="preserve">
+    <value>MicrosoftResearch</value>
+  </data>
 </root>
