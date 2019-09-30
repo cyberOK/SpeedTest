@@ -117,76 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutBlock.Text" xml:space="preserve">
+  <data name="AboutBlockText" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="AvailableServers.Text" xml:space="preserve">
     <value>Available servers:</value>
   </data>
-  <data name="changeServerButton.Content" xml:space="preserve">
+  <data name="changeServerButton/Content" xml:space="preserve">
     <value>Change server</value>
   </data>
-  <data name="DarkRadioButton.Content" xml:space="preserve">
+  <data name="DarkRadioButtonContent" xml:space="preserve">
     <value>Dark</value>
   </data>
-  <data name="DateTextBlock.Text" xml:space="preserve">
+  <data name="DateTextBlock" xml:space="preserve">
     <value>Date</value>
   </data>
   <data name="DownloadText.Text" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="DownloadTextBlock.Text" xml:space="preserve">
+  <data name="DownloadTextBlock" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="FeedBackLink.Content" xml:space="preserve">
+  <data name="FeedBackLinkContent" xml:space="preserve">
     <value>Feedback</value>
   </data>
-  <data name="HistoryBlock.Text" xml:space="preserve">
+  <data name="HistoryBlockText" xml:space="preserve">
     <value>History</value>
   </data>
-  <data name="LanguageBlock.Text" xml:space="preserve">
+  <data name="LanguageBlockText" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="LanguageComboBox.PlaceholderText" xml:space="preserve">
+  <data name="LanguageComboBoxPlaceholderText" xml:space="preserve">
     <value>Choose language</value>
   </data>
-  <data name="LightRadioButton.Content" xml:space="preserve">
+  <data name="LightRadioButtonContent" xml:space="preserve">
     <value>Light</value>
   </data>
   <data name="mbpsText.Text" xml:space="preserve">
     <value>(mbps)</value>
   </data>
-  <data name="MbpsTextBlock.Text" xml:space="preserve">
+  <data name="MbpsTextBlock" xml:space="preserve">
     <value>(Mbps)</value>
   </data>
   <data name="mbpsUploadText.Text" xml:space="preserve">
     <value>(mbps)</value>
   </data>
-  <data name="ModeBlock.Text" xml:space="preserve">
+  <data name="ModeBlockText" xml:space="preserve">
     <value>Mode</value>
   </data>
   <data name="msText.Text" xml:space="preserve">
     <value>(ms)</value>
   </data>
-  <data name="MsTextBlock.Text" xml:space="preserve">
+  <data name="MsTextBlock" xml:space="preserve">
     <value>(Ms)</value>
   </data>
-  <data name="PhoneDownloadMbpsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneDownloadMbpsTextBlock" xml:space="preserve">
     <value>(Mbps)</value>
   </data>
-  <data name="PhoneDownloadTextBlock.Text" xml:space="preserve">
+  <data name="PhoneDownloadTextBlock" xml:space="preserve">
     <value>Dowload</value>
   </data>
   <data name="PhoneHistoryTextBlock.Text" xml:space="preserve">
     <value>History</value>
   </data>
-  <data name="PhoneMsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneMsTextBlock" xml:space="preserve">
     <value>(Ms)</value>
   </data>
-  <data name="PhonePingTextBlock.Text" xml:space="preserve">
+  <data name="PhonePingTextBlock" xml:space="preserve">
     <value>Ping</value>
   </data>
-  <data name="PhoneServerTextBlock.Text" xml:space="preserve">
+  <data name="PhoneServerTextBlock" xml:space="preserve">
     <value>Server</value>
   </data>
   <data name="PhoneSetingsTextBlock.Text" xml:space="preserve">
@@ -195,31 +195,31 @@
   <data name="PhoneShareTextBlock.Text" xml:space="preserve">
     <value>Share</value>
   </data>
-  <data name="PhoneUploadMbpsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneUploadMbpsTextBlock" xml:space="preserve">
     <value>(Mbps)</value>
   </data>
-  <data name="PhoneUploadTextBlock.Text" xml:space="preserve">
+  <data name="PhoneUploadTextBlock" xml:space="preserve">
     <value>Upload</value>
   </data>
   <data name="PingText.Text" xml:space="preserve">
     <value>Ping</value>
   </data>
-  <data name="PingTextBlock.Text" xml:space="preserve">
+  <data name="PingTextBlock" xml:space="preserve">
     <value>Ping</value>
   </data>
-  <data name="RateLink.Content" xml:space="preserve">
+  <data name="RateLinkContent" xml:space="preserve">
     <value>Rate us</value>
   </data>
   <data name="ServerSuggestBox.PlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="ServerTextBlock.Text" xml:space="preserve">
+  <data name="ServerTextBlock" xml:space="preserve">
     <value>Server</value>
   </data>
-  <data name="SettingsBlock.Text" xml:space="preserve">
+  <data name="SettingsHeader" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="SingleHistoryDeletingButtonPhoneGrid.Content" xml:space="preserve">
+  <data name="SingleHistoryDeletingButtonPhoneGridContent" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="StartButton.Content" xml:space="preserve">
@@ -231,7 +231,7 @@
   <data name="UploadText.Text" xml:space="preserve">
     <value>Upload</value>
   </data>
-  <data name="UploadTextBlock.Text" xml:space="preserve">
+  <data name="UploadTextBlock" xml:space="preserve">
     <value>Upload</value>
   </data>
   <data name="DeleteDialog.Content" xml:space="preserve">
@@ -246,22 +246,22 @@
   <data name="DeleteDialog.Title" xml:space="preserve">
     <value>"Clear Application history?</value>
   </data>
-  <data name="DefaultRadioButton.Content" xml:space="preserve">
+  <data name="DefaultRadioButtonContent" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="AboutArticle.Text" xml:space="preserve">
+  <data name="AboutArticleText" xml:space="preserve">
     <value>Also, since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline,again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also,since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline, gain as the other examples have shown,you can now create a new style off of it to customize things on a per - item basis such as spacing. (This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also,since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline, gain as the other examples have shown,you can now create a new style off of it to customize things on a per - item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)again as the other examples have shown, you can now create a new style off of it to customize things on a per-item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)Also,since we explicitly separated out the style that tragets the ListBoxItem rather than putting it inline, gain as the other examples have shown,you can now create a new style off of it to customize things on a per - item basis such as spacing.(This will not work if you simply try to target ListBoxItem as the keyed style overrides generic control targets.)</value>
   </data>
-  <data name="FeedBackLink.NavigateUri" xml:space="preserve">
+  <data name="FeedBackLinkNavigateUri" xml:space="preserve">
     <value>https://docs.microsoft.com</value>
   </data>
-  <data name="RateLink.NavigateUri" xml:space="preserve">
+  <data name="RateLinkNavigateUri" xml:space="preserve">
     <value>https://docs.mongodb.com/ecosystem/drivers/csharp/</value>
   </data>
   <data name="MeasureSpeedValue" xml:space="preserve">
     <value> Mbps</value>
   </data>
-  <data name="BackgroundTestBlock.Text" xml:space="preserve">
+  <data name="BackgroundTestBlock" xml:space="preserve">
     <value>Test speed in background</value>
   </data>
   <data name="MeasurePingValue" xml:space="preserve">
@@ -291,13 +291,13 @@
   <data name="NoresultsTextBlock.Text" xml:space="preserve">
     <value>No results</value>
   </data>
-  <data name="BackgroundTestToggleSwitch.OffContent" xml:space="preserve">
+  <data name="BackgroundTestToggleSwitchOffContent" xml:space="preserve">
     <value>Disable</value>
   </data>
-  <data name="BackgroundTestToggleSwitch.OnContent" xml:space="preserve">
+  <data name="BackgroundTestToggleSwitchOnContent" xml:space="preserve">
     <value>Enable</value>
   </data>
-  <data name="MicrosoftResearchBlock.Text" xml:space="preserve">
+  <data name="MicrosoftResearchBlockText" xml:space="preserve">
     <value>MicrosoftResearch</value>
   </data>
   <data name="ToastDownloadText" xml:space="preserve">

@@ -57,6 +57,7 @@ namespace SpeedTestUWP.ViewModel
         public BackgroundHelper BackgroundTestManager { get; private set; }
         public HistoryManager HistoryManager { get; private set; }
         public ServerIPerfManager ServerIPerfManager { get; private set; }
+        public LocalizedStrings Localizer { get; private set; }
 
         #endregion
 
@@ -155,7 +156,8 @@ namespace SpeedTestUWP.ViewModel
 
         public MainPageViewModel()
         {
-            // Initialization Helpers
+            // Initialization Helpers 
+            this.Localizer = new LocalizedStrings();           
             this.ResourceManager = new ResourceLoader();
             this.BackgroundTestManager = new BackgroundHelper();
             this.HistoryManager = new HistoryManager();
@@ -321,11 +323,7 @@ namespace SpeedTestUWP.ViewModel
             Helpers.Language chosenLanguage = (Helpers.Language)param;
 
             string langCode = chosenLanguage.LanguageCode;
-
-            ApplicationLanguages.PrimaryLanguageOverride = langCode;            
-
-            Frame mainPage = Window.Current.Content as Frame;             
-            mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
+            this.Localizer.ChangeLanguage(langCode);
         }
 
         private void ModeChanged(object param)
@@ -726,7 +724,7 @@ namespace SpeedTestUWP.ViewModel
                 this.IsPhoneMainPanelOpen = false;
             }
         }
-
+         
         #endregion
     }
 }

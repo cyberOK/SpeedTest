@@ -117,76 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutBlock.Text" xml:space="preserve">
+  <data name="AboutBlockText" xml:space="preserve">
     <value>Немного о нас</value>
   </data>
   <data name="AvailableServers.Text" xml:space="preserve">
     <value>Доступные сервера:</value>
   </data>
-  <data name="changeServerButton.Content" xml:space="preserve">
+  <data name="changeServerButton/Content" xml:space="preserve">
     <value>Поменять сервер</value>
   </data>
-  <data name="DarkRadioButton.Content" xml:space="preserve">
+  <data name="DarkRadioButtonContent" xml:space="preserve">
     <value>Тёмная</value>
   </data>
-  <data name="DateTextBlock.Text" xml:space="preserve">
+  <data name="DateTextBlock" xml:space="preserve">
     <value>Дата</value>
   </data>
   <data name="DownloadText.Text" xml:space="preserve">
     <value>Загрузка</value>
   </data>
-  <data name="DownloadTextBlock.Text" xml:space="preserve">
+  <data name="DownloadTextBlock" xml:space="preserve">
     <value>Загрузка</value>
   </data>
-  <data name="FeedBackLink.Content" xml:space="preserve">
+  <data name="FeedBackLinkContent" xml:space="preserve">
     <value>Оставить отзыв</value>
   </data>
-  <data name="HistoryBlock.Text" xml:space="preserve">
+  <data name="HistoryBlockText" xml:space="preserve">
     <value>История</value>
   </data>
-  <data name="LanguageBlock.Text" xml:space="preserve">
+  <data name="LanguageBlockText" xml:space="preserve">
     <value>Язык</value>
   </data>
-  <data name="LanguageComboBox.PlaceholderText" xml:space="preserve">
+  <data name="LanguageComboBoxPlaceholderText" xml:space="preserve">
     <value>Выберите язык</value>
   </data>
-  <data name="LightRadioButton.Content" xml:space="preserve">
+  <data name="LightRadioButtonContent" xml:space="preserve">
     <value>Светлая</value>
   </data>
   <data name="mbpsText.Text" xml:space="preserve">
     <value>(мб/с)</value>
   </data>
-  <data name="MbpsTextBlock.Text" xml:space="preserve">
+  <data name="MbpsTextBlock" xml:space="preserve">
     <value>(Мб/с)</value>
   </data>
   <data name="mbpsUploadText.Text" xml:space="preserve">
     <value>(мб/с)</value>
   </data>
-  <data name="ModeBlock.Text" xml:space="preserve">
+  <data name="ModeBlockText" xml:space="preserve">
     <value>Режим</value>
   </data>
   <data name="msText.Text" xml:space="preserve">
     <value>(м/с)</value>
   </data>
-  <data name="MsTextBlock.Text" xml:space="preserve">
+  <data name="MsTextBlock" xml:space="preserve">
     <value>(М/с)</value>
   </data>
-  <data name="PhoneDownloadMbpsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneDownloadMbpsTextBlock" xml:space="preserve">
     <value>(Мб/с)</value>
   </data>
-  <data name="PhoneDownloadTextBlock.Text" xml:space="preserve">
+  <data name="PhoneDownloadTextBlock" xml:space="preserve">
     <value>Загрузка</value>
   </data>
   <data name="PhoneHistoryTextBlock.Text" xml:space="preserve">
     <value>История</value>
   </data>
-  <data name="PhoneMsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneMsTextBlock" xml:space="preserve">
     <value>(М/с)</value>
   </data>
-  <data name="PhonePingTextBlock.Text" xml:space="preserve">
+  <data name="PhonePingTextBlock" xml:space="preserve">
     <value>Пинг</value>
   </data>
-  <data name="PhoneServerTextBlock.Text" xml:space="preserve">
+  <data name="PhoneServerTextBlock" xml:space="preserve">
     <value>Сервер</value>
   </data>
   <data name="PhoneSetingsTextBlock.Text" xml:space="preserve">
@@ -195,31 +195,31 @@
   <data name="PhoneShareTextBlock.Text" xml:space="preserve">
     <value>Поделиться</value>
   </data>
-  <data name="PhoneUploadMbpsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneUploadMbpsTextBlock" xml:space="preserve">
     <value>(Мб/с)</value>
   </data>
-  <data name="PhoneUploadTextBlock.Text" xml:space="preserve">
+  <data name="PhoneUploadTextBlock" xml:space="preserve">
     <value>Выгрузка</value>
   </data>
   <data name="PingText.Text" xml:space="preserve">
     <value>Пинг</value>
   </data>
-  <data name="PingTextBlock.Text" xml:space="preserve">
+  <data name="PingTextBlock" xml:space="preserve">
     <value>Пинг</value>
   </data>
-  <data name="RateLink.Content" xml:space="preserve">
+  <data name="RateLinkContent" xml:space="preserve">
     <value>Оцените нас</value>
   </data>
   <data name="ServerSuggestBox.PlaceholderText" xml:space="preserve">
     <value>Поиск</value>
   </data>
-  <data name="ServerTextBlock.Text" xml:space="preserve">
+  <data name="ServerTextBlock" xml:space="preserve">
     <value>Сервер</value>
   </data>
-  <data name="SettingsBlock.Text" xml:space="preserve">
+  <data name="SettingsHeader" xml:space="preserve">
     <value>Настройки</value>
   </data>
-  <data name="SingleHistoryDeletingButtonPhoneGrid.Content" xml:space="preserve">
+  <data name="SingleHistoryDeletingButtonPhoneGridContent" xml:space="preserve">
     <value>Удалить</value>
   </data>
   <data name="StartButton.Content" xml:space="preserve">
@@ -231,7 +231,7 @@
   <data name="UploadText.Text" xml:space="preserve">
     <value>Выгрузка</value>
   </data>
-  <data name="UploadTextBlock.Text" xml:space="preserve">
+  <data name="UploadTextBlock" xml:space="preserve">
     <value>Выгрузка</value>
   </data>
   <data name="DeleteDialog.Content" xml:space="preserve">
@@ -246,16 +246,16 @@
   <data name="DeleteDialog.Title" xml:space="preserve">
     <value>Очистить историю приложения?</value>
   </data>
-  <data name="DefaultRadioButton.Content" xml:space="preserve">
+  <data name="DefaultRadioButtonContent" xml:space="preserve">
     <value>По умолчанию</value>
   </data>
-  <data name="AboutArticle.Text" xml:space="preserve">
+  <data name="AboutArticleText" xml:space="preserve">
     <value>Кроме того, поскольку мы явно отделили стиль, который отслеживает ListBoxItem, а не помещаем его в строку, опять же, как показали другие примеры, теперь вы можете создать новый стиль для него, чтобы настраивать элементы для каждого элемента, такие как интервал. (Это не будет работать, если вы просто попытаетесь настроить таргетинг на ListBoxItem, так как стиль с ключом переопределяет общие целевые элементы управления.) Кроме того, поскольку мы явно отделили стиль, который отслеживает ListBoxItem, а не помещаем его в строку, получите, как показали другие примеры, Теперь можно создать новый стиль для него, чтобы настроить вещи для каждого элемента, такие как интервал. (Это не будет работать, если вы просто попытаетесь настроить таргетинг на ListBoxItem, так как стиль ключа переопределяет общие цели управления.) Снова, как показали другие примеры, теперь вы можете создать новый стиль для него, чтобы настраивать вещи для каждого элемента, например as spacing. (Это не сработает, если вы просто попытаетесь настроить таргетинг на ListBoxItem, поскольку стиль с ключом переопределяет общие цели управления.) Кроме того, поскольку мы явно выделяем стиль, который отслеживает ListBoxItem, а не помещает его в строку, получим усиление, как в других примерах. показано, что теперь вы можете создать новый стиль для него, чтобы настроить вещи для каждого элемента, такие как интервалы (это не будет работать, если вы просто попытаетесь нацелиться на ListBoxItem, так как стиль с ключом переопределяет общие цели управления.) снова как другие примеры показали, что теперь вы можете создать новый стиль для него, чтобы настроить вещи для каждого элемента, такие как интервалы (это не будет работать, если вы просто попытаетесь нацелиться на ListBoxItem, так как стиль с ключом переопределяет общие цели управления.) Кроме того, так как мы явно Выделив стиль, который отслеживает ListBoxItem, а не помещая его в строку, получайте, как показали другие примеры, теперь вы можете создать новый стиль для него, чтобы настраивать элементы для каждого элемента, такие как интервалы (это не будет работать). если вы просто попытаетесь настроить таргетинг на ListBoxItem, поскольку стиль с ключами переопределяет общие цели управления.)</value>
   </data>
   <data name="MeasureSpeedValue" xml:space="preserve">
     <value> Мб/с</value>
   </data>
-  <data name="BackgroundTestBlock.Text" xml:space="preserve">
+  <data name="BackgroundTestBlock" xml:space="preserve">
     <value>Тест скорости в фоне</value>
   </data>
   <data name="MeasurePingValue" xml:space="preserve">
@@ -285,13 +285,13 @@
   <data name="NoresultsTextBlock.Text" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
-  <data name="BackgroundTestToggleSwitch.OffContent" xml:space="preserve">
+  <data name="BackgroundTestToggleSwitchOffContent" xml:space="preserve">
     <value>Выключено</value>
   </data>
-  <data name="BackgroundTestToggleSwitch.OnContent" xml:space="preserve">
+  <data name="BackgroundTestToggleSwitchOnContent" xml:space="preserve">
     <value>Включено</value>
   </data>
-  <data name="MicrosoftResearchBlock.Text" xml:space="preserve">
+  <data name="MicrosoftResearchBlockText" xml:space="preserve">
     <value>МайкрософтРесерч</value>
   </data>
   <data name="ToastDownloadText" xml:space="preserve">
