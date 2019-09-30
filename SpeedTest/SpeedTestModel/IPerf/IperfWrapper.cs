@@ -24,8 +24,9 @@ namespace SpeedTestModel.Iperf
         const int timeOut = 0;
         const int numberOfPingTests = 1000;
         const int numberOfValidPingTests = 10;
-        const int numberOfDownloadTests = 10, numberOfUploadTests = 10;
+        const int numberOfDownloadTests = 2, numberOfUploadTests = 2;
         const bool downloadMode = false, uploadMode = true;
+        private bool isTestEnded;
         private int latencySummary, latencyCallbackCount, ping;
         private TimeSpan interval;
         private TestMode TestMode;
@@ -81,6 +82,18 @@ namespace SpeedTestModel.Iperf
                 uploadSpeed = value;
             }
         }
+        public bool IsTestEnded
+        {
+            get
+            {
+                return this.isTestEnded;
+            }
+            private set
+            {
+                ApplicationData.Current.LocalSettings.Values["IsTestEnded"] = value;
+                this.isTestEnded = value;
+            }
+        }
 
         public IperfWrapper()
         {
@@ -97,7 +110,7 @@ namespace SpeedTestModel.Iperf
             this.iPerf.PingTestDataUpdated += IPerf_PingTestDataUpdated;
         }
 
-        public async void StartSpeedTest(string hostName, int port)
+        public async Task StartSpeedTest(string hostName, int port)
         {
             this.TestMode = TestMode.Download;
             this.HostName = hostName;
@@ -160,6 +173,8 @@ namespace SpeedTestModel.Iperf
             {
                 case TestMode.Download:
 
+                    ApplicationData.Current.LocalSettings.Values["ErrorOccur"] = true; // background test variable
+
                     ErrorsEventArgs errorsDownload = new ErrorsEventArgs(args.ErrorCode, this.TestMode);
 
                     this.OnGetErrorWhileTesting(errorsDownload);
@@ -206,11 +221,8 @@ namespace SpeedTestModel.Iperf
             {
                 case TestMode.Download:
 
-                    ConnectingEventArgs connectingDataSample = new ConnectingEventArgs(args.ConnectingHostname, args.ConnectingPort, this.TestMode);
-
-                    this.OnConnectingDataRecieved(connectingDataSample);
-
-                    this.latencyCallbackCount = 0; //  Initialize variables for new PingTest
+                    //  Set new PingTest
+                    this.latencyCallbackCount = 0; 
                     this.latencySummary = 0;
 
                     await this.PerformOperation(async () =>
@@ -218,6 +230,11 @@ namespace SpeedTestModel.Iperf
                         this.currentTask = this.iPerf.PingTestAsync(this.HostName, timeOut, numberOfPingTests);
                         await this.currentTask;
                     });
+
+                    // Set Connecting Args
+                    ConnectingEventArgs connectingDataSample = new ConnectingEventArgs(args.ConnectingHostname, args.ConnectingPort, this.TestMode);
+
+                    this.OnConnectingDataRecieved(connectingDataSample);
 
                     break;
 
@@ -247,7 +264,8 @@ namespace SpeedTestModel.Iperf
 
         private void IPerf_PingTestDataUpdated(IPerfApp sender, iPerfPingTestReport args)
         {
-            var ping = new TimeSpan(args.Latency).Milliseconds;
+            // Ping data collecting 
+            int ping = new TimeSpan(args.Latency).Milliseconds;
 
             if (ping != 0)
             {
@@ -255,13 +273,14 @@ namespace SpeedTestModel.Iperf
                 this.latencyCallbackCount++;
             }
 
+            // Set Average ping
             if (this.latencyCallbackCount == numberOfValidPingTests)
             {
                 this.currentTask.Cancel();
 
                 int currentPing = this.latencySummary / numberOfValidPingTests;
 
-                this.Ping = currentPing;
+                this.Ping = currentPing; // Set background variable
 
                 PingEventArgs pingSample = new PingEventArgs(currentPing);
 
@@ -278,7 +297,6 @@ namespace SpeedTestModel.Iperf
                     if (args.ReportSender.Length == 0) // Check ending of Dowload Test
                     {
                         // Parse receiving data
-
                         string[] downloadValue = args.BitrateBuf.Split(' '); ;
                         string downloadSpeed = downloadValue[0];
 
@@ -297,12 +315,13 @@ namespace SpeedTestModel.Iperf
 
                     else if (args.ReportSender == "receiver") // If Download Test ended starting Upload Test
                     {
-                        AverageDownloadDataEventArgs averageDownloadDataEventArgs = new AverageDownloadDataEventArgs(this.GetAverageSpeedValue(this.downloadSamplesCollection));
-
-                        this.OnAverageDownloadDataRecieved(averageDownloadDataEventArgs);
-
                         this.TestMode = TestMode.Upload;
+                        double averageDownloadSpeed = this.GetAverageSpeedValue(this.downloadSamplesCollection);
 
+                        this.DownloadSpeed = averageDownloadSpeed; // Set background variable
+                        AverageDownloadDataEventArgs averageDownloadDataEventArgs = new AverageDownloadDataEventArgs(averageDownloadSpeed);
+                        this.OnAverageDownloadDataRecieved(averageDownloadDataEventArgs);
+                                                
                         await this.iPerf.TestNTimesAsync(this.HostName, this.Port, numberOfUploadTests, interval, uploadMode); // Call Upload Test
                     }
 
@@ -313,7 +332,6 @@ namespace SpeedTestModel.Iperf
                     if (args.ReportSender.Length == 0) // Check ending of Upload Test
                     {
                         // Parse receiving data
-
                         string[] uploadValue = args.BitrateBuf.Split(' '); ;
                         string uploadSpeed = uploadValue[0];
 
@@ -324,7 +342,6 @@ namespace SpeedTestModel.Iperf
                                 this.uploadSamplesCollection.Add(uploadSpeedParse);
 
                                 UploadSpeedEventArgs uploadSpeedSample = new UploadSpeedEventArgs(uploadSpeedParse, false);
-
                                 this.OnUploadDataRecieved(uploadSpeedSample);
                             }
                         }
@@ -332,13 +349,18 @@ namespace SpeedTestModel.Iperf
 
                     else // if (args.ReportSender == "receiver") Upload Test ended
                     {
+                        this.TestMode = TestMode.Download;
+                        double averageUploadData = this.GetAverageSpeedValue(this.uploadSamplesCollection);
+
+                        // Set background variables
+                        this.UploadSpeed = averageUploadData;
+                        this.IsTestEnded = true;
+
                         UploadSpeedEventArgs testEndedSignal = new UploadSpeedEventArgs(0.0, true);
-                        AverageUploadDataEventArgs averageUploadDataEventArgs = new AverageUploadDataEventArgs(this.GetAverageSpeedValue(this.uploadSamplesCollection));
+                        AverageUploadDataEventArgs averageUploadDataEventArgs = new AverageUploadDataEventArgs(averageUploadData);
 
                         this.OnAverageUploadDataRecieved(averageUploadDataEventArgs);
                         this.OnUploadDataRecieved(testEndedSignal);                   // Signal that test ended
-
-                        this.TestMode = TestMode.Download;
                     }
 
                     break;

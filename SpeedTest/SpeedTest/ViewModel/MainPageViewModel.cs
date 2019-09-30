@@ -30,6 +30,7 @@ using SpeedTestModel;
 using SpeedTestModel.Iperf;
 using SpeedTestModel.IPerf;
 using System.ComponentModel;
+using Windows.ApplicationModel.Resources.Core;
 
 namespace SpeedTestUWP.ViewModel
 {
@@ -321,8 +322,9 @@ namespace SpeedTestUWP.ViewModel
 
             string langCode = chosenLanguage.LanguageCode;
 
-            ApplicationLanguages.PrimaryLanguageOverride = langCode;           
-            Frame mainPage = Window.Current.Content as Frame;
+            ApplicationLanguages.PrimaryLanguageOverride = langCode;            
+
+            Frame mainPage = Window.Current.Content as Frame;             
             mainPage.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }
 
@@ -457,6 +459,8 @@ namespace SpeedTestUWP.ViewModel
 
         private void StartSpeedTest()
         {
+            this.ArcBoard.IsTryConnect = true;
+
             string currentHostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
             int currentHostPort = this.ServerInformationBoard.CurrentServer.Port;
 
@@ -504,7 +508,7 @@ namespace SpeedTestUWP.ViewModel
                 {
                     case TestMode.Download:
 
-                        this.ArcBoard.IsTryConnect = true;
+                        this.ArcBoard.IsTryConnect = false;
                         this.ArcBoard.IsSpeedMeterBackgroundVisible = true;
 
                         break;
@@ -529,7 +533,6 @@ namespace SpeedTestUWP.ViewModel
                 {
                     case TestMode.Download:
 
-                        this.ArcBoard.IsTryConnect = false;
                         this.ServerInformationBoard.CurrentHostIpAdress = e.HostIp;
 
                         break;
@@ -618,13 +621,13 @@ namespace SpeedTestUWP.ViewModel
         private async void Model_AverageDowloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageDownloadDataEventArgs e)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
+            {                         
                 // Set View
                 this.DataBoard.DownloadSpeedData = ((int)(e.AverageDownloadSpeed)).ToString();
                 this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
 
                 // Set Current SpeedData Sample
-                this.HistoryPanel.CurrentSpeedDataSample.DownloadSpeed = e.AverageDownloadSpeed;
+                this.HistoryPanel.CurrentSpeedDataSample.DownloadSpeed = Math.Truncate(e.AverageDownloadSpeed * 100) / 100;
             });
         }
 
@@ -637,7 +640,7 @@ namespace SpeedTestUWP.ViewModel
                 this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
 
                 // Set Current SpeedData Sample
-                this.HistoryPanel.CurrentSpeedDataSample.UploadSpeed = e.AverageUploadSpeed;
+                this.HistoryPanel.CurrentSpeedDataSample.UploadSpeed = Math.Truncate(e.AverageUploadSpeed * 100) / 100;
 
                 // Add Speed Sample to History Collection
                 this.HistoryPanel.SpeedDataCollection.Add(this.HistoryPanel.CurrentSpeedDataSample);

@@ -12,13 +12,29 @@ using Windows.UI.Core;
 using Windows.Data.Xml.Dom;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Windows.UI.Notifications;
+using SpeedTestModel.Iperf;
 
 namespace RuntimeSpeedTest
 {
     public sealed class SpeedTestBackgroundTask : IBackgroundTask
     {
         private BackgroundTaskDeferral deferral;
+        private string space = " ";
 
+        public string CurrentHostName
+        {
+            get
+            {
+                return (string)ApplicationData.Current.LocalSettings.Values["HostName"];
+            }
+        }
+        public int CurrentHostPort
+        {
+            get
+            {
+                return (int)ApplicationData.Current.LocalSettings.Values["HostPort"];
+            }
+        }
         public bool IsBackgroundSpeedTestEnded
         {
             get
@@ -52,6 +68,29 @@ namespace RuntimeSpeedTest
                 ApplicationData.Current.LocalSettings.Values["IsBackgroundTestEnable"] = value;
             }
         }
+        public int Ping
+        {
+            get
+            {
+                return (int)ApplicationData.Current.LocalSettings.Values["Ping"];
+            }
+        }
+        public double DownloadSpeed
+        {
+            get
+            {
+                double truncateNumber = (double)ApplicationData.Current.LocalSettings.Values["DownloadSpeed"];
+                return Math.Truncate(truncateNumber * 100) / 100;
+            }
+        }
+        public double UploadSpeed
+        {
+            get
+            {
+                double truncateNumber = (double)ApplicationData.Current.LocalSettings.Values["UploadSpeed"];
+                return Math.Truncate(truncateNumber * 100) / 100;                
+            }
+        }
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -83,11 +122,9 @@ namespace RuntimeSpeedTest
 
         private async Task StartBackgroundSpeedTest()
         {
-            BackgroundSpeedTest backgroundSpeedTest = new BackgroundSpeedTest();
-            string currentHostName = (string)ApplicationData.Current.LocalSettings.Values["HostName"];
-            int currentHostPort = (int)ApplicationData.Current.LocalSettings.Values["HostPort"];
+            IperfWrapper backgroundSpeedTest = new IperfWrapper();
 
-            await backgroundSpeedTest.StartSpeedTest(currentHostName, currentHostPort);           
+            await backgroundSpeedTest.StartSpeedTest(this.CurrentHostName, this.CurrentHostPort);
         }
 
         private void LoopingUntilTestEndedOrErrorOccur()
@@ -104,24 +141,15 @@ namespace RuntimeSpeedTest
         {
             if (!this.IsErrorOccur)
             {
-                int ping = (int)ApplicationData.Current.LocalSettings.Values["Ping"];
-                double downloadSpeed = (double)ApplicationData.Current.LocalSettings.Values["DownloadSpeed"];
-                double uploadSpeed = (double)ApplicationData.Current.LocalSettings.Values["UploadSpeed"];
-
-                this.CreateNotification(ping, downloadSpeed, uploadSpeed);
+                this.CreateNotification(this.Ping, this.DownloadSpeed, this.UploadSpeed);
             }
-
             return;
         }
 
         private void CreateNotification(int ping, double downloadSpeed, double uploadSpeed)
         {        
-            // Truncate Speed Numbers
-            double downloadSpeedTruncate = this.TruncateSpeeedNumber(downloadSpeed);
-            double uploadSpeedTruncate = this.TruncateSpeeedNumber(uploadSpeed);
-
             //CreateSpeedTestToast
-            var toastNotification = this.CreateToastNotification(ping, downloadSpeedTruncate, uploadSpeedTruncate);
+            var toastNotification = this.CreateToastNotification(ping, downloadSpeed, uploadSpeed);
 
             // Notify with toast
             ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
@@ -166,19 +194,19 @@ namespace RuntimeSpeedTest
                     {
                         new AdaptiveText()
                         {
-                            Text = ping.ToString(),
+                            Text = ApplicationData.Current.LocalSettings.Values["ToastPingText"] + this.space + ping.ToString() + this.space + ApplicationData.Current.LocalSettings.Values["MeasurePingValue"],
                             HintMaxLines = 1
                         },
 
                         new AdaptiveText()
                         {
-                            Text = downloadSpeed.ToString(),
+                            Text = ApplicationData.Current.LocalSettings.Values["ToastDownloadText"] + this.space + downloadSpeed.ToString() + this.space + ApplicationData.Current.LocalSettings.Values["MeasureSpeedValue"],
                             HintMaxLines = 1
                         },
 
                         new AdaptiveText()
                         {
-                            Text = uploadSpeed.ToString(),
+                            Text = ApplicationData.Current.LocalSettings.Values["ToastUploadText"] + this.space + uploadSpeed.ToString() + this.space + ApplicationData.Current.LocalSettings.Values["MeasureSpeedValue"],
                             HintMaxLines = 1
                         }
                     }
@@ -186,11 +214,6 @@ namespace RuntimeSpeedTest
             };
 
             return visual;
-        }
-
-        private double TruncateSpeeedNumber(double truncateNumber)
-        {
-            return Math.Truncate(truncateNumber * 100) / 100;
         }
     }
 }

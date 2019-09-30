@@ -265,7 +265,7 @@
     <value>Test speed in background</value>
   </data>
   <data name="MeasurePingValue" xml:space="preserve">
-    <value> (Ms)</value>
+    <value> Ms</value>
   </data>
   <data name="TileDownloadText" xml:space="preserve">
     <value>Download: </value>
@@ -299,5 +299,14 @@
   </data>
   <data name="MicrosoftResearchBlock.Text" xml:space="preserve">
     <value>MicrosoftResearch</value>
+  </data>
+  <data name="ToastDownloadText" xml:space="preserve">
+    <value>Download:</value>
+  </data>
+  <data name="ToastPingText" xml:space="preserve">
+    <value>Ping:</value>
+  </data>
+  <data name="ToastUploadText" xml:space="preserve">
+    <value>Upload:</value>
   </data>
 </root>

@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Windows.ApplicationModel.Background;
-using SpeedTestModel;
 using Windows.Storage;
-using SpeedTestUWP.ViewModel.ViewBoards;
+using System;
+using Windows.ApplicationModel.Resources;
 
 namespace SpeedTestUWP.BackgroundSpeedTest
 {
     public class BackgroundHelper
     {
-        private string taskName = "BackgroundSpeedTest";
+        private string taskName = "IperfWrapper";
         private string taskEntryPoint = "RuntimeSpeedTest.SpeedTestBackgroundTask";
-        private ApplicationTrigger applicationTrigger;
+        private SystemTrigger networkStateChangeTrigger;
+        private ApplicationTrigger applicationTrigger;        // TODO: Delete after testing
+
 
         public bool IsBackgroundTestEnable
         {
@@ -30,39 +28,47 @@ namespace SpeedTestUWP.BackgroundSpeedTest
 
         public BackgroundHelper()
         {
-            this.applicationTrigger = new ApplicationTrigger();
+            this.applicationTrigger = new ApplicationTrigger();   // TODO: Delete after testing
+            this.networkStateChangeTrigger = new SystemTrigger(SystemTriggerType.NetworkStateChange, false);
             this.RegisteringBackgroundSpeedTest();
+            this.LocalizeToastText();
         }
 
         public async void StartBackgroundSpeedTest()
         {
             this.IsBackgroundTestEnable = true;
-
-            await this.applicationTrigger.RequestAsync(); // Need delete after testing
+            await this.applicationTrigger.RequestAsync();   // TODO: Delete after testing
         }
 
         public async void StopBackgroundSpeedTest()
         {
             this.IsBackgroundTestEnable = false;
-
-            await this.applicationTrigger.RequestAsync(); // Need delete after testing
         }
 
         public void RegisteringBackgroundSpeedTest()
         {
-            // if the task is already registered, there is no need to register it again
-
             if ( !(this.IsTaskRegistered(this.taskName)))
             {
                 var taskBuilder = new BackgroundTaskBuilder();
                 taskBuilder.Name = this.taskName;
                 taskBuilder.TaskEntryPoint = this.taskEntryPoint;
-                taskBuilder.SetTrigger(this.applicationTrigger);                                      // Need set systemTrigger after testing
+                taskBuilder.SetTrigger(this.applicationTrigger);
                 taskBuilder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
                 taskBuilder.Register();
 
                 this.IsBackgroundTestEnable = true;
             }            
+        }
+
+        private void LocalizeToastText()
+        {
+            ResourceLoader resources = new ResourceLoader();
+            
+            ApplicationData.Current.LocalSettings.Values["ToastPingText"] = resources.GetString("ToastPingText");
+            ApplicationData.Current.LocalSettings.Values["ToastDownloadText"] = resources.GetString("ToastDownloadText");
+            ApplicationData.Current.LocalSettings.Values["ToastUploadText"] = resources.GetString("ToastUploadText");
+            ApplicationData.Current.LocalSettings.Values["MeasurePingValue"] = resources.GetString("MeasurePingValue");
+            ApplicationData.Current.LocalSettings.Values["MeasureSpeedValue"] = resources.GetString("MeasureSpeedValue");
         }
 
         private bool IsTaskRegistered(string taskName) =>

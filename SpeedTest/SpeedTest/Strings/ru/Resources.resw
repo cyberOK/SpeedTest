@@ -259,7 +259,7 @@
     <value>Тест скорости в фоне</value>
   </data>
   <data name="MeasurePingValue" xml:space="preserve">
-    <value> (М/с)</value>
+    <value> М/с</value>
   </data>
   <data name="TileDownloadText" xml:space="preserve">
     <value>Загрузка: </value>
@@ -293,5 +293,14 @@
   </data>
   <data name="MicrosoftResearchBlock.Text" xml:space="preserve">
     <value>МайкрософтРесерч</value>
+  </data>
+  <data name="ToastDownloadText" xml:space="preserve">
+    <value>Загрузка:</value>
+  </data>
+  <data name="ToastPingText" xml:space="preserve">
+    <value>Пинг:</value>
+  </data>
+  <data name="ToastUploadText" xml:space="preserve">
+    <value>Выгрузка:</value>
   </data>
 </root>
