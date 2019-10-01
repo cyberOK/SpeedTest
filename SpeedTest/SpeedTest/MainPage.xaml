@@ -43,7 +43,7 @@
         </Core:EventTriggerBehavior>
     </Interactivity:Interaction.Behaviors>
 
-    <Grid RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}">
+    <Grid RequestedTheme="{Binding SettingsPanel.Theme, Source={StaticResource mainViewModel}}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="StateGroup">
@@ -467,15 +467,15 @@
         <Image x:Name="BackgroundPhoto" Source="Assets/white-abstract-style-background-vector.jpg" Stretch="Fill"/>
         <!-- Desktop Background -->
         <Grid x:Name="MainOpacityBackgroundGrid" 
-              RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+              RequestedTheme="{Binding SettingsPanel.Theme, Source={StaticResource mainViewModel}}"
               Background="{ThemeResource BackgroundOpacityBrushForPhoto}" />
         <!-- MiddleState(500 x 500) Background -->
         <Grid x:Name="MiddleStateBackgroundGrid" 
-              RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+              RequestedTheme="{Binding SettingsPanel.Theme, Source={StaticResource mainViewModel}}"
               Background="{ThemeResource SystemControlAcrylicWindowBrush}" />
         <!-- Phone Background -->
         <Grid x:Name="PhoneBackgroundGrid" 
-              RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+              RequestedTheme="{Binding SettingsPanel.Theme, Source={StaticResource mainViewModel}}"
               Background="{ThemeResource BackgroundPhone}" />
 
         <!-- Main Grid -->
@@ -519,12 +519,12 @@
                     
                     <!-- Start Button and SpeedDataNumbersTextBlock and TryConnectTextBlock-->
                     <Button x:Name="StartButton" Style="{StaticResource ButtonStyle}" Canvas.ZIndex="1" HorizontalAlignment="Center" 
-                            Content="{Binding Localizator[StartButtonContent]}" 
+                            Content="{Binding LocalizationManager[StartButtonContent]}" 
                             Visibility="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                             Command="{Binding StartButtonPressed, Source={StaticResource mainViewModel}}"/>
 
                     <TextBlock x:Name="TryConnectTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                               Text="{Binding Localizator[TryConnectTextBlock]}" 
+                               Text="{Binding LocalizationManager[TryConnectTextBlock]}" 
                                Visibility="{Binding ArcBoard.IsTryConnect, Source={StaticResource mainViewModel}}"  />
 
                     <TextBlock x:Name="SpeedDataNumbersTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -553,9 +553,9 @@
                                 </Grid.RowDefinitions>
                                
                                 <TextBlock x:Name="PingText" Grid.Column="0" VerticalAlignment="Bottom" Style="{StaticResource TextBlockTextDataBoardFeature}"
-                                           Text="{Binding Localizator[PingText]}" />
+                                           Text="{Binding LocalizationManager[PingText]}" />
                                 <TextBlock x:Name="msText" Grid.Column="0" Grid.Row="1"  Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top"
-                                           Text="{Binding Localizator[msText]}" />
+                                           Text="{Binding LocalizationManager[msText]}" />
                                 <Viewbox x:Name="ViewBox1" Grid.Column="1" Grid.RowSpan="2">
                                     <TextBlock x:Name="DataPingText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Text="{Binding DataBoard.PingData, Source={StaticResource mainViewModel}}"/>
@@ -575,9 +575,9 @@
                                 </Grid.RowDefinitions>
                                 
                                 <TextBlock x:Name="DownloadText" Grid.Column="0" Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                                           Text="{Binding Localizator[DownloadText]}" />
+                                           Text="{Binding LocalizationManager[DownloadText]}" />
                                 <TextBlock x:Name="mbpsText" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" HorizontalAlignment="Right"
-                                           Text="{Binding Localizator[mbpsText]}" />
+                                           Text="{Binding LocalizationManager[mbpsText]}" />
                                 <Viewbox  x:Name="ViewBox2" Grid.Column="1" Grid.RowSpan="2">
                                     <TextBlock x:Name="DownloadSpeedData" Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" 
                                        Text="{Binding DataBoard.DownloadSpeedData, Source={StaticResource mainViewModel}}" />
@@ -597,9 +597,9 @@
                                 </Grid.RowDefinitions>
                                 
                                 <TextBlock x:Name="UploadText" Grid.Column="0"  Style="{StaticResource TextBlockTextDataBoardFeature}" VerticalAlignment="Bottom" 
-                                           Text="{Binding Localizator[UploadText]}"/>
+                                           Text="{Binding LocalizationManager[UploadText]}"/>
                                 <TextBlock x:Name="mbpsUploadText" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockTextDataBoardMetrics}" VerticalAlignment="Top" 
-                                           Text="{Binding Localizator[mbpsText]}"/>
+                                           Text="{Binding LocalizationManager[mbpsText]}"/>
                                 <Viewbox  x:Name="ViewBox3" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right">
                                     <TextBlock x:Name="UploadDataText"  Style="{StaticResource TextBlockTextDataBoardDataNumbers}" VerticalAlignment="Center" HorizontalAlignment="Right"
                                            Text="{Binding DataBoard.UploadSpeedData, Source={StaticResource mainViewModel}}"/>
@@ -630,7 +630,7 @@
                                    RelativePanel.Below="serverName" RelativePanel.AlignRightWithPanel="True"/>
                         <Button x:Name="changeServerButton" Style="{StaticResource ContentDialogPrimaryButtonStyle}"  
                                 RelativePanel.Below="serverLocation" RelativePanel.AlignRightWithPanel="True" 
-                                Content="{Binding Localizator[changeServerButtonContent]}"
+                                Content="{Binding LocalizationManager[changeServerButtonContent]}"
                                 IsEnabled="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToReverseBoolean}, ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                                 Opacity="{Binding ArcBoard.IsStartButtonPressed, Converter={StaticResource BooleanToOpacityConverter}, ConverterParameter=Reverse, Source={StaticResource mainViewModel}}"
                                 Command="{Binding ChangeServerButtonPressed}"/>
@@ -660,7 +660,7 @@
                     <RelativePanel x:Name="SettingsTopBar" Background="{ThemeResource BackgroundPanelTitle}" IsHoldingEnabled="True"
                                    RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
                         <TextBlock x:Name="SettingsBlock" FontSize="30" Foreground="DarkCyan" Padding="20,10" RelativePanel.AlignLeftWithPanel="True"
-                                   Text="{Binding Localizator[SettingsHeader]}"/> 
+                                   Text="{Binding LocalizationManager[SettingsHeader]}"/> 
                         <Button x:Name="CloseSettingButton" Style="{StaticResource ButtonClose}" Content="&#xE711;" RelativePanel.AlignRightWithPanel="True"
                                 Command="{Binding SettingSplitViewClosing, Source={StaticResource mainViewModel}}"/>
                     </RelativePanel>
@@ -677,10 +677,10 @@
                                 
                                 <!-- Background Test Block -->
                                 <TextBlock x:Name="BackgroundTestBlock" FontSize="20" Padding="0,10"
-                                           Text="{Binding Localizator[BackgroundTestBlock]}"/> 
+                                           Text="{Binding LocalizationManager[BackgroundTestBlock]}"/> 
                                 <ToggleSwitch x:Name="BackgroundTestToggleSwitch" RelativePanel.Below="BackgroundTestBlock"
-                                              OnContent="{Binding Localizator[BackgroundTestToggleSwitchOnContent]}"
-                                              OffContent="{Binding Localizator[BackgroundTestToggleSwitchOffContent]}"
+                                              OnContent="{Binding LocalizationManager[BackgroundTestToggleSwitchOnContent]}"
+                                              OffContent="{Binding LocalizationManager[BackgroundTestToggleSwitchOffContent]}"
                                               IsOn="{Binding SettingsPanel.IsBackgroundTestEnable, Source={StaticResource mainViewModel}}">
 
                                     <Interactivity:Interaction.Behaviors>
@@ -694,12 +694,12 @@
                                 
                                 <!-- Language Block -->
                                 <TextBlock x:Name="LanguageBlock"  FontSize="20" Padding="0,10" RelativePanel.Below="BackgroundTestToggleSwitch"
-                                           Text="{Binding Localizator[LanguageBlockText]}"/>
+                                           Text="{Binding LocalizationManager[LanguageBlockText]}"/>
                                 <ComboBox x:Name="LanguageComboBox" Style="{StaticResource ComboBoxStyle1}" DisplayMemberPath="DisplayName"                                                                                   
                                           Margin="0,0,20,0" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" UseSystemFocusVisuals="True"
                                           RelativePanel.Below="LanguageBlock" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-                                          ItemsSource="{Binding SettingsPanel.Settings.Languages, Source={StaticResource mainViewModel}}" 
-                                          PlaceholderText="{Binding Localizator[LanguageComboBoxPlaceholderText]}">
+                                          ItemsSource="{Binding LocalizationManager.Languages, Source={StaticResource mainViewModel}}" 
+                                          PlaceholderText="{Binding LocalizationManager[LanguageComboBoxPlaceholderText]}">
                                     
                                     <Interactivity:Interaction.Behaviors>
                                         <Core:EventTriggerBehavior EventName="SelectionChanged">
@@ -712,45 +712,45 @@
                                 
                                 <!-- Mode Block -->
                                 <TextBlock x:Name="ModeBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" RelativePanel.Below="LanguageComboBox"                                           
-                                           Text="{Binding Localizator[ModeBlockText]}"/>
+                                           Text="{Binding LocalizationManager[ModeBlockText]}"/>
                                 <RadioButton  x:Name="DefaultRadioButton" GroupName="Theme" Width="150" RelativePanel.Below="ModeBlock" Tag="Default"
                                               Style="{StaticResource RadioButtonStyle1}"
-                                              Content="{Binding Localizator[DefaultRadioButtonContent]}"
+                                              Content="{Binding LocalizationManager[DefaultRadioButtonContent]}"
                                               Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DefaultRadioButton,Path=Tag}" 
-                                              IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 2}"/>
+                                              IsChecked="{Binding SettingsPanel.SelectedThemeMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 2}"/>
                                 <RadioButton  x:Name="LightRadioButton" GroupName="Theme" Width="150" RelativePanel.Below="DefaultRadioButton" Tag="Light"
                                               Style="{StaticResource RadioButtonStyle1}"
-                                              Content="{Binding Localizator[LightRadioButtonContent]}"
+                                              Content="{Binding LocalizationManager[LightRadioButtonContent]}"
                                               Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=LightRadioButton,Path=Tag}" 
-                                              IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
+                                              IsChecked="{Binding SettingsPanel.SelectedThemeMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 0}"/>
                                 <RadioButton  x:Name="DarkRadioButton" GroupName="Theme" Width="150" RelativePanel.Below="LightRadioButton" Tag="Dark"
                                               Style="{StaticResource RadioButtonStyle1}" 
-                                              Content="{Binding Localizator[DarkRadioButtonContent]}"
+                                              Content="{Binding LocalizationManager[DarkRadioButtonContent]}"
                                               Command="{Binding SelectedItemRadioButtonChanged}" CommandParameter="{Binding ElementName=DarkRadioButton,Path=Tag}" 
-                                              IsChecked="{Binding SettingsPanel.SelectedMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
-
+                                              IsChecked="{Binding SettingsPanel.SelectedThemeMode, Source={StaticResource mainViewModel}, Converter={StaticResource RadioModeSelectedIntToBooltConverter}, ConverterParameter = 1}"/>
+                                
                                 <!--About Block -->
                                 <TextBlock x:Name="AboutBlock" Style="{StaticResource TextBlockSettingsPanelTitle}" RelativePanel.Below="DarkRadioButton"
-                                           Text="{Binding Localizator[AboutBlockText]}"/>
-                                <TextBlock x:Name="ProgramNameBlock"  Style="{StaticResource TextBlockAboutProgram}" RelativePanel.Below="AboutBlock"
-                                           Text="{Binding SettingsPanel.Settings.ProgramName, Source={StaticResource mainViewModel}}"/>
-                                <TextBlock x:Name="VersionBlock"  Style="{StaticResource TextBlockAboutProgram}" RelativePanel.Below="ProgramNameBlock"
-                                           Text="{Binding SettingsPanel.Settings.Version, Source={StaticResource mainViewModel}}"/>
+                                           Text="{Binding LocalizationManager[AboutBlockText]}"/>
+                                <TextBlock x:Name="ProgramNameBlock" Style="{StaticResource TextBlockAboutProgram}" RelativePanel.Below="AboutBlock" 
+                                           Text="{Binding LocalizationManager[ProgramName]}"/>
+                                <TextBlock x:Name="VersionBlock" Style="{StaticResource TextBlockAboutProgram}" RelativePanel.Below="ProgramNameBlock"
+                                           Text="{Binding LocalizationManager[ProgramVersion]}"/>
                                 <TextBlock x:Name="MicrosoftResearchBlock" Style="{StaticResource TextBlockAboutProgram}" TextAlignment="Right" RelativePanel.Below="VersionBlock"
-                                           Text="{Binding Localizator[MicrosoftResearchBlockText]}"/>
+                                           Text="{Binding LocalizationManager[MicrosoftResearchBlockText]}"/>
                                 <RichTextBlock x:Name="AboutStoryBlock" Margin="0,30,20,30" RelativePanel.Below="MicrosoftResearchBlock">
                                     <Paragraph>
-                                        <Run Text="{Binding Localizator[AboutArticleText]}"/>
+                                        <Run Text="{Binding LocalizationManager[AboutArticleText]}"/>
                                     </Paragraph>
                                 </RichTextBlock>
                                 
                                 <!--FeedBack Block -->
                                 <HyperlinkButton x:Name="FeedBackLink" RelativePanel.Below="AboutStoryBlock" Style="{StaticResource HyperlinkButtonSettingsPanel}"
-                                                 Content="{Binding Localizator[FeedBackLinkContent]}"
-                                                 NavigateUri="{Binding Localizator[FeedBackLinkNavigateUri]}"/> 
+                                                 Content="{Binding LocalizationManager[FeedBackLinkContent]}"
+                                                 NavigateUri="{Binding LocalizationManager[FeedBackLinkNavigateUri]}"/> 
                                 <HyperlinkButton x:Name="RateLink" Style="{StaticResource HyperlinkButtonSettingsPanel}" Margin="0,0,0,30" RelativePanel.Below="FeedBackLink"
-                                                 Content="{Binding Localizator[RateLinkContent]}"
-                                                 NavigateUri="{Binding Localizator[RateLinkNavigateUri]}"/>
+                                                 Content="{Binding LocalizationManager[RateLinkContent]}"
+                                                 NavigateUri="{Binding LocalizationManager[RateLinkNavigateUri]}"/>
                             </RelativePanel>
                             
                         </ScrollViewer>
@@ -769,7 +769,7 @@
                                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                         
                         <TextBlock x:Name="HistoryBlock" Foreground="DarkCyan" RelativePanel.AlignLeftWithPanel="True"
-                                   Text="{Binding Localizator[HistoryBlockText]}"/>
+                                   Text="{Binding LocalizationManager[HistoryBlockText]}"/>
                         <Button x:Name="DeleteHistoryButton" Command="{Binding DeleteHistoryButtonPressed}" Background="Transparent" 
                                 Foreground="DarkCyan" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" RelativePanel.RightOf="HistoryBlock"/>
                         <Button x:Name="CloseHistoryButton" Command="{Binding CloseHistoryButtonPressed}" Background="Transparent"
@@ -793,20 +793,20 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="CommonStyleSetterTextBlock"/>
 
-                        <TextBlock Grid.Column="1" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding Localizator[ServerTextBlock]}"/>
-                        <TextBlock Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding Localizator[DateTextBlock]}"/>
-                        <TextBlock Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding Localizator[PingTextBlock]}"/>
-                        <TextBlock Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding Localizator[DownloadTextBlock]}"/>
-                        <TextBlock Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding Localizator[UploadTextBlock]}"/>
-                        <TextBlock Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}" Text="{Binding Localizator[MsTextBlock]}"/>
-                        <TextBlock Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}" Text="{Binding Localizator[MbpsTextBlock]}"/>
-                        <TextBlock Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}" Text="{Binding Localizator[MbpsTextBlock]}"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding LocalizationManager[ServerTextBlock]}"/>
+                        <TextBlock Grid.Column="2" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding LocalizationManager[DateTextBlock]}"/>
+                        <TextBlock Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding LocalizationManager[PingTextBlock]}"/>
+                        <TextBlock Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding LocalizationManager[DownloadTextBlock]}"/>
+                        <TextBlock Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewHeader}" Text="{Binding LocalizationManager[UploadTextBlock]}"/>
+                        <TextBlock Grid.Column="3" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}" Text="{Binding LocalizationManager[MsTextBlock]}"/>
+                        <TextBlock Grid.Column="4" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}" Text="{Binding LocalizationManager[MbpsTextBlock]}"/>
+                        <TextBlock Grid.Column="5" Style="{StaticResource TextBlockHistoryPanelGridViewHeaderMetrics}" Text="{Binding LocalizationManager[MbpsTextBlock]}"/>
                     </Grid>
                    
                     <!-- History List -->
                     <Grid x:Name="HistoryCollectionGrid" RelativePanel.Below="HistoryHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
                           RelativePanel.AlignBottomWithPanel="True">
-                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding HistoryPanel.SpeedDataCollection, Source={StaticResource mainViewModel}}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" 
+                        <GridView x:Name="HistoryGrid" ItemsSource="{Binding HistoryPanel.SpeedDataCollection}" ItemContainerStyle="{StaticResource GridViewItemContainerStyle1}" 
                                   ItemsPanel="{StaticResource MyItemsPanelTemplate}" IsItemClickEnabled="True" SelectionMode="Single" HorizontalContentAlignment="Stretch" ShowsScrollingPlaceholders="True">
 
                             <Interactivity:Interaction.Behaviors>
@@ -874,13 +874,18 @@
                                                     <RelativePanel x:Name="CellHeader" Background="{ThemeResource BackgroundPanelTitle}" 
                                                                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
 
-                                                        <TextBlock x:Name="DateTextBlockPhoneGrid" RelativePanel.AlignLeftWithPanel="True" Padding="20,10,0,10"
-                                                                   Text="{Binding Date, Converter={StaticResource DateToStringConverter}}"/>
-                                                        
-                                                        <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" Margin="0,0,10,0" Height="40" Background="Transparent"
-                                                                Foreground="DarkCyan"  RelativePanel.AlignRightWithPanel="True" CommandParameter="{Binding }"
-                                                                Content="{Binding Localizator[SingleHistoryDeletingButtonPhoneGridContent], Source={StaticResource mainViewModel}}"
-                                                                Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}"/>
+                                                        <TextBlock x:Name="DateTextBlockPhoneGrid" RelativePanel.AlignLeftWithPanel="True" Padding="20,10,0,10" 
+                                                                   Text="{Binding Date, Converter={StaticResource DateToStringConverter}}" />
+                                                        <Button x:Name="SingleHistoryDeletingButtonPhoneGrid" Margin="0,0,10,0" Height="40" Background="Transparent" Foreground="DarkCyan"
+                                                                RelativePanel.AlignRightWithPanel="True" 
+                                                                CommandParameter="{Binding }" 
+                                                                Command="{Binding SingleHistoryDeletedButtonPressed, Source={StaticResource mainViewModel}}">
+                                                            <TextBlock Text="{Binding LocalizationManager[SingleHistoryDeletingButtonPhoneGridContent]}" TextAlignment="Center">
+                                                                <TextBlock.DataContext>
+                                                                    <StaticResource ResourceKey="mainViewModel"/>
+                                                                </TextBlock.DataContext>
+                                                            </TextBlock>
+                                                        </Button>
 
                                                     </RelativePanel>
                                                     
@@ -890,21 +895,26 @@
                                                     
                                                     <!-- Main Content of ItemTemplate -->
                                                     <RelativePanel x:Name="CellContent" RelativePanel.Below="CellHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                                                        <TextBlock x:Name="PhoneServerTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.AlignLeftWithPanel="True"
-                                                                   Text="{Binding Localizator[PhoneServerTextBlock], Source={StaticResource mainViewModel}}"/>
-                                                        <TextBlock x:Name="PhonePingTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneServerTextBlock"
-                                                                   Text="{Binding Localizator[PhonePingTextBlock], Source={StaticResource mainViewModel}}"/>
-                                                        <TextBlock x:Name="PhoneMsTextBlock" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhonePingTextBlock" RelativePanel.Below="PhoneServerTextBlock"
-                                                                   Text="{Binding Localizator[PhoneMsTextBlock], Source={StaticResource mainViewModel}}"/>
-                                                        <TextBlock x:Name="PhoneDownloadTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhonePingTextBlock"
-                                                                   Text="{Binding Localizator[PhoneDownloadTextBlock], Source={StaticResource mainViewModel}}"/>
-                                                        <TextBlock x:Name="PhoneDownloadMbpsTextBlock" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhonePingTextBlock"
-                                                                   Text="{Binding Localizator[PhoneDownloadMbpsTextBlock], Source={StaticResource mainViewModel}}"/>
-                                                        <TextBlock x:Name="PhoneUploadTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneDownloadTextBlock"
-                                                                   Text="{Binding Localizator[PhoneUploadTextBlock], Source={StaticResource mainViewModel}}"/>
-                                                        <TextBlock x:Name="PhoneUploadMbpsTextBlock" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhoneDownloadTextBlock"
-                                                                   Text="{Binding Localizator[PhoneUploadMbpsTextBlock], Source={StaticResource mainViewModel}}"/>
-
+                                                        <RelativePanel RelativePanel.AlignLeftWithPanel="True">
+                                                            <RelativePanel.DataContext>
+                                                                <StaticResource ResourceKey="mainViewModel"/>
+                                                            </RelativePanel.DataContext>
+                                                            <TextBlock x:Name="PhoneServerTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.AlignLeftWithPanel="True" 
+                                                                       Text="{Binding LocalizationManager[PhoneServerTextBlock]}" />
+                                                            <TextBlock x:Name="PhonePingTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneServerTextBlock" 
+                                                                       Text="{Binding LocalizationManager[PhonePingTextBlock]}" />
+                                                            <TextBlock x:Name="PhoneMsTextBlock" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhonePingTextBlock" RelativePanel.Below="PhoneServerTextBlock" 
+                                                                       Text="{Binding LocalizationManager[PhoneMsTextBlock]}" />
+                                                            <TextBlock x:Name="PhoneDownloadTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhonePingTextBlock" 
+                                                                       Text="{Binding LocalizationManager[PhoneDownloadTextBlock]}" />
+                                                            <TextBlock x:Name="PhoneDownloadMbpsTextBlock" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhonePingTextBlock" 
+                                                                       Text="{Binding LocalizationManager[PhoneDownloadMbpsTextBlock]}" />
+                                                            <TextBlock x:Name="PhoneUploadTextBlock" Foreground="DarkCyan" Padding="20,10,0,10" RelativePanel.Below="PhoneDownloadTextBlock" 
+                                                                       Text="{Binding LocalizationManager[PhoneUploadTextBlock]}" />
+                                                            <TextBlock x:Name="PhoneUploadMbpsTextBlock" Foreground="Gray" Padding="20,10,0,10" RelativePanel.RightOf="PhoneDownloadTextBlock" RelativePanel.Below="PhoneDownloadTextBlock" 
+                                                                       Text="{Binding LocalizationManager[PhoneUploadMbpsTextBlock]}" />
+                                                        </RelativePanel>
+                                                        
                                                         <TextBlock x:Name="PhoneServerDataTextBlock" Text="{Binding Server}" Padding="20,10,20,10" RelativePanel.AlignRightWithPanel="True"/>
                                                         <TextBlock x:Name="PhonePingDataTextBlock" Text="{Binding Ping}" Padding="20,10,20,10" RelativePanel.Below="PhoneServerDataTextBlock" RelativePanel.AlignRightWithPanel="True"/>
                                                         <TextBlock x:Name="PhoneDownloadSpeedDataTextBlock" Text="{Binding DownloadSpeed}" Padding="20,10,20,10" RelativePanel.Below="PhonePingDataTextBlock" RelativePanel.AlignRightWithPanel="True"/>
@@ -979,7 +989,7 @@
                     <!-- Search Bar -->
                     <AutoSuggestBox x:Name="ServerSuggestBox" Style="{StaticResource AutoSuggestBoxStyle1}" Margin="20,0" QueryIcon="Find" 
                                     RelativePanel.Below="ServersTopBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
-                                    PlaceholderText="{Binding Localizator[ServerSuggestBoxPlaceholderText]}">
+                                    PlaceholderText="{Binding LocalizationManager[ServerSuggestBoxPlaceholderText]}">
                         
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="TextChanged">
@@ -995,7 +1005,7 @@
                     
                     <!-- AvailableServers Line -->
                     <TextBlock x:Name="AvailableServers" FontSize="20" Margin="35,10,0,10" RelativePanel.Below="ServerSuggestBox" 
-                               Text="{Binding Localizator[AvailableServersText]}"
+                               Text="{Binding LocalizationManager[AvailableServersText]}"
                                Visibility="{Binding ServerPanel.IsNoresults, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter},ConverterParameter=Reverse}"/>
 
                     <!-- Servers List -->
@@ -1032,7 +1042,7 @@
                                 Visibility="{Binding ServerPanel.IsNoresults, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}" >
                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB90;" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center"/>
                         <TextBlock x:Name="NoresultsTextBlock" FontSize="20" Margin="10,7,0,6" VerticalAlignment="Stretch"
-                                   Text="{Binding Localizator[NoresultsTextBlock]}"/>
+                                   Text="{Binding LocalizationManager[NoresultsTextBlock]}"/>
                     </StackPanel>
                     
                 </RelativePanel>
@@ -1041,7 +1051,7 @@
             <!-- Phone Main Panel Buttons -->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}"
                   Visibility="{Binding IsPhoneMainPanelOpen, Source={StaticResource mainViewModel}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                  RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}">
+                  RequestedTheme="{Binding SettingsPanel.Theme, Source={StaticResource mainViewModel}}">
                 
                 <RelativePanel x:Name="PhonePanel">
 
@@ -1060,21 +1070,21 @@
                                 Command="{Binding SettingsButtonPressed, Source={StaticResource mainViewModel}}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE713;" /> 
-                                <TextBlock Text="{Binding Localizator[PhoneSetingsTextBlock]}" Padding="20,0,0,0"/>
+                                <TextBlock Text="{Binding LocalizationManager[PhoneSetingsTextBlock]}" Padding="20,0,0,0"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="PhoneHistoryButton" Margin="10,0,0,0" FontSize="20" Background="Transparent"
                                 Command="{Binding HistoryButtonPressed, Source={StaticResource mainViewModel}}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE81C;"/>
-                                <TextBlock Text="{Binding Localizator[PhoneHistoryTextBlock]}" Padding="20,0,0,0"/>
+                                <TextBlock Text="{Binding LocalizationManager[PhoneHistoryTextBlock]}" Padding="20,0,0,0"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="PhoneShareButton" Margin="10,0,0,0" FontSize="20" RelativePanel.Above="PhoneSetingsButton" Background="Transparent"
                                 Command="{Binding BackButtonPressed, Source={StaticResource mainViewModel}}" Foreground="DarkCyan">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE72D;"/>
-                                <TextBlock Text="{Binding Localizator[PhoneShareTextBlock]}" Padding="20,0,0,0"/>
+                                <TextBlock Text="{Binding LocalizationManager[PhoneShareTextBlock]}" Padding="20,0,0,0"/>
                             </StackPanel>
                         </Button>
 

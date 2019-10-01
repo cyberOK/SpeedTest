@@ -11,7 +11,7 @@ namespace SpeedTestUWP.BackgroundSpeedTest
         private string taskName = "IperfWrapper";
         private string taskEntryPoint = "RuntimeSpeedTest.SpeedTestBackgroundTask";
         private SystemTrigger networkStateChangeTrigger;
-        private ApplicationTrigger applicationTrigger;        // TODO: Delete after testing
+        //private ApplicationTrigger applicationTrigger;        // TODO: Delete after testing
 
 
         public bool IsBackgroundTestEnable
@@ -28,16 +28,16 @@ namespace SpeedTestUWP.BackgroundSpeedTest
 
         public BackgroundHelper()
         {
-            this.applicationTrigger = new ApplicationTrigger();   // TODO: Delete after testing
+            //this.applicationTrigger = new ApplicationTrigger();   // TODO: Delete after testing
             this.networkStateChangeTrigger = new SystemTrigger(SystemTriggerType.NetworkStateChange, false);
             this.RegisteringBackgroundSpeedTest();
-            this.LocalizeToastText();
+
         }
 
         public async void StartBackgroundSpeedTest()
         {
             this.IsBackgroundTestEnable = true;
-            await this.applicationTrigger.RequestAsync();   // TODO: Delete after testing
+            //await this.applicationTrigger.RequestAsync();   // TODO: Delete after testing
         }
 
         public async void StopBackgroundSpeedTest()
@@ -51,24 +51,14 @@ namespace SpeedTestUWP.BackgroundSpeedTest
             {
                 var taskBuilder = new BackgroundTaskBuilder();
                 taskBuilder.Name = this.taskName;
-                taskBuilder.TaskEntryPoint = this.taskEntryPoint;
-                taskBuilder.SetTrigger(this.applicationTrigger);
+                taskBuilder.TaskEntryPoint = this.taskEntryPoint; 
+                taskBuilder.SetTrigger(this.networkStateChangeTrigger);
+                //taskBuilder.SetTrigger(this.applicationTrigger);   // TODO: Delete after testing
                 taskBuilder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
                 taskBuilder.Register();
 
                 this.IsBackgroundTestEnable = true;
             }            
-        }
-
-        private void LocalizeToastText()
-        {
-            ResourceLoader resources = new ResourceLoader();
-            
-            ApplicationData.Current.LocalSettings.Values["ToastPingText"] = resources.GetString("ToastPingText");
-            ApplicationData.Current.LocalSettings.Values["ToastDownloadText"] = resources.GetString("ToastDownloadText");
-            ApplicationData.Current.LocalSettings.Values["ToastUploadText"] = resources.GetString("ToastUploadText");
-            ApplicationData.Current.LocalSettings.Values["MeasurePingValue"] = resources.GetString("MeasurePingValue");
-            ApplicationData.Current.LocalSettings.Values["MeasureSpeedValue"] = resources.GetString("MeasureSpeedValue");
         }
 
         private bool IsTaskRegistered(string taskName) =>

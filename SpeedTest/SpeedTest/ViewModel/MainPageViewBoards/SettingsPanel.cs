@@ -1,42 +1,113 @@
 ﻿using SpeedTestUWP.ViewModel.Helpers;
-using SpeedTestUWP.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace SpeedTestUWP.ViewModel.ViewBoards
 {
     public class SettingsPanel : ObservableObject
     {
-        private bool _isSettingsPaneOpen;
-        private bool _isBackgroundTestEnable;
-        private AppSetting _settings;
-        private int _selectedMode;
+        private bool isSettingsPaneOpen;
+        private bool isBackgroundTestEnable = true;
+        private string theme;
+        private int selectedThemeMode;
 
         public bool IsSettingsPaneOpen
         {
-            get { return _isSettingsPaneOpen; }
-            set { Set(ref _isSettingsPaneOpen, value); }
+            get { return isSettingsPaneOpen; }
+            set { Set(ref isSettingsPaneOpen, value); }
         }
 
         public bool IsBackgroundTestEnable
         {
-            get { return _isBackgroundTestEnable; }
-            set { Set(ref _isBackgroundTestEnable, value); }
+            get { return isBackgroundTestEnable; }
+            set { Set(ref isBackgroundTestEnable, value); }
+        }
+        
+        public string Theme
+        {
+            get { return this.theme; }
+            set
+            {
+                ApplicationData.Current.LocalSettings.Values["AppChoosenTheme"] = value;
+
+                if (value == "Default")
+                {
+                    value = this.SetWindowsTheme();
+                }
+
+                Set(ref this.theme, value);
+            }
         }
 
-        public AppSetting Settings
+        public int SelectedThemeMode
         {
-            get { return this._settings; }
-            set { Set(ref _settings, value); }
+            get { return this.selectedThemeMode; }
+            set { Set(ref selectedThemeMode, value); }
         }
 
-        public int SelectedMode
+        public SettingsPanel()
         {
-            get { return this._selectedMode; }
-            set { Set(ref _selectedMode, value); }
+            this.GetUserTheme();
+        }
+
+        private string SetWindowsTheme()
+        {
+            Windows.UI.ViewManagement.UISettings DefaultTheme = new Windows.UI.ViewManagement.UISettings();
+            string uiTheme = DefaultTheme.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).ToString();
+
+            if (uiTheme == "#FF000000")
+            {
+                return "Dark";
+            }
+            else // (uiTheme == "#FFFFFFFF")
+            {
+                return "Light";
+            }
+        }
+
+        private void GetUserTheme()
+        {
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("AppChoosenTheme"))
+            {
+                this.SetUserChoosenTheme();
+            }
+
+            else
+            {
+                this.selectedThemeMode = 2; // Set Windows Default Theme if user dont pick
+                this.Theme = this.SetWindowsTheme();
+            }            
+        }
+
+        private void SetUserChoosenTheme()
+        {
+            switch ((string)ApplicationData.Current.LocalSettings.Values["AppChoosenTheme"])
+            {
+                case "Light":
+
+                    this.SelectedThemeMode = 0;
+                    this.Theme = "Light";
+
+                    break;
+
+                case "Dark":
+
+                    this.SelectedThemeMode = 1;
+                    this.Theme = "Dark";
+
+                    break;
+
+                default:
+
+                    this.SelectedThemeMode = 2;
+                    this.Theme = "Default";
+
+                    break;
+            }
         }
     }
 }

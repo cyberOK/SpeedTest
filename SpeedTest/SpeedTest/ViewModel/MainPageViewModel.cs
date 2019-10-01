@@ -57,7 +57,7 @@ namespace SpeedTestUWP.ViewModel
         public BackgroundHelper BackgroundTestManager { get; private set; }
         public HistoryManager HistoryManager { get; private set; }
         public ServerIPerfManager ServerIPerfManager { get; private set; }
-        public LocalizedStrings Localizator { get; private set; }
+        public LocalizationManager LocalizationManager { get; private set; }
 
         #endregion
 
@@ -123,7 +123,7 @@ namespace SpeedTestUWP.ViewModel
 
         // MainPage properties commands
         public SpeedTestCommand MainPageLoadedCommand { get; private set; }
-        
+
         // Mainboard properties commands
         public SpeedTestCommand StartButtonPressed { get; private set; }
         public SpeedTestCommand BackButtonPressed { get; private set; }
@@ -157,7 +157,7 @@ namespace SpeedTestUWP.ViewModel
         public MainPageViewModel()
         {
             // Initialization Helpers 
-            this.Localizator = new LocalizedStrings();           
+            this.LocalizationManager = new LocalizationManager();
             this.ResourceManager = new ResourceLoader();
             this.BackgroundTestManager = new BackgroundHelper();
             this.HistoryManager = new HistoryManager();
@@ -179,23 +179,15 @@ namespace SpeedTestUWP.ViewModel
             this.ArcBoard = new ArcBoard();
             this.ServerInformationBoard = new ServerInformationBoard();
             this.HistoryPanel = new HistoryPanel();
-
-            // Set ViewModel from database
+            this.SettingsPanel = new SettingsPanel();
             //this.ServerIPerfManager.SaveRange(this.ServerIPerfManager.BaseServerCollection());  // FIT DATABASE 
-            List<ServerIPerf> serversIPerf = this.ServerIPerfManager.GetServersList();
-            this.ServerPanel = new ServerPanel(new AdvancedCollectionView(serversIPerf, true));
+            List<ServerIPerf> serversIPerf = this.ServerIPerfManager.GetServersList(); // Get servers collection from database
+            this.ServerPanel = new ServerPanel(new AdvancedCollectionView(serversIPerf, true));  // Set ViewModel Collection of servers
             this.ServerPanel.ServersCollection.CurrentChanged += ServersCollectionView_CurrentChanged;
             this.ServerPanel.ServersCollection.CurrentItem = serversIPerf.FirstOrDefault(s => s.IsCurrent == true);
 
-            this.SettingsPanel = new SettingsPanel
-            {
-                Settings = new AppSetting(),
-                SelectedMode = 2,                 // Set Windows Default Theme when app start
-                IsBackgroundTestEnable = true     // Enable BackgroundSpeedTest when app start 
-            };
-
             // MainPage commands assigning
-            this.MainPageLoadedCommand = new SpeedTestCommand(new Action<object>(InitializePage));          
+            this.MainPageLoadedCommand = new SpeedTestCommand(new Action<object>(InitializePage));
             // Main panel commands assigning
             this.StartButtonPressed = new SpeedTestCommand(new Action<object>(StartSpeedTest));
             this.BackButtonPressed = new SpeedTestCommand(new Action<object>(ShareCalling));
@@ -207,7 +199,7 @@ namespace SpeedTestUWP.ViewModel
             this.BackgroundTestToggleSwitch = new SpeedTestCommand(new Action<object>(BackgroundTestToggle));
             this.SettingSplitViewClosing = new SpeedTestCommand(new Action<object>(SettingsClosing));
             this.LanguageComboBoxChanged = new SpeedTestCommand(new Action<object>(LanguageChange));
-            this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ModeChanged));
+            this.SelectedItemRadioButtonChanged = new SpeedTestCommand(new Action<object>(ThemeModeChanged));
             // History panel commands assigning
             this.DeleteHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CallDeleteHistoryDialog));
             this.CloseHistoryButtonPressed = new SpeedTestCommand(new Action<object>(CloseHistory));
@@ -228,7 +220,7 @@ namespace SpeedTestUWP.ViewModel
         {
             this.FirstStartAppSuggestingAddLiveTile();
             this.LoadTestsHistory();
-        }        
+        }
 
         #endregion
 
@@ -250,7 +242,7 @@ namespace SpeedTestUWP.ViewModel
 
             // Start Download Test
 
-            this.StartSpeedTest();         
+            this.StartSpeedTest();
         }
 
         private async void ShareCalling(object param)
@@ -302,7 +294,7 @@ namespace SpeedTestUWP.ViewModel
         #endregion
 
         #region Settings Actions for Delegates
-        
+
         private void BackgroundTestToggle(object param)
         {
             bool isBackgroundTestOn = (bool)param;
@@ -323,29 +315,30 @@ namespace SpeedTestUWP.ViewModel
             Helpers.Language chosenLanguage = (Helpers.Language)param;
 
             string langCode = chosenLanguage.LanguageCode;
-            this.Localizator.ChangeLanguage(langCode);
+
+            this.LocalizationManager.ChangeLanguage(langCode);
         }
 
-        private void ModeChanged(object param)
+        private void ThemeModeChanged(object param)
         {
-            string selectedMode = (string)param;
+            string selectedTheme = (string)param;
 
-            if (selectedMode == "Dark")
+            switch (selectedTheme)
             {
-                this.SettingsPanel.SelectedMode = 1;
-                this.SettingsPanel.Settings.Theme = "Dark";
-            }
+                case "Dark":
+                    this.SettingsPanel.SelectedThemeMode = 1;
+                    this.SettingsPanel.Theme = "Dark";
+                    break;
 
-            else if (selectedMode == "Light")
-            {
-                this.SettingsPanel.SelectedMode = 0;
-                this.SettingsPanel.Settings.Theme = "Light";
-            }
+                case "Light":
+                    this.SettingsPanel.SelectedThemeMode = 0;
+                    this.SettingsPanel.Theme = "Light";
+                    break;
 
-            else if (selectedMode == "Default")
-            {
-                this.SettingsPanel.SelectedMode = 2;
-                this.SettingsPanel.Settings.Theme = this.SettingsPanel.Settings.GetUserTheme();
+                case "Default":
+                    this.SettingsPanel.SelectedThemeMode = 2;
+                    this.SettingsPanel.Theme = "Default";
+                    break;
             }
         }
 
@@ -420,7 +413,7 @@ namespace SpeedTestUWP.ViewModel
         {
             string inputText = (string)param;
 
-            this.ServerPanel.ServersCollection.Filter = s => ((ServerIPerf)s).ProviderName.ToLower().Contains(inputText.ToLower()); 
+            this.ServerPanel.ServersCollection.Filter = s => ((ServerIPerf)s).ProviderName.ToLower().Contains(inputText.ToLower());
 
             if (this.ServerPanel.ServersCollection.Count == 0)
             {
@@ -521,7 +514,7 @@ namespace SpeedTestUWP.ViewModel
             });
         }
 
-        private async void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e) 
+        private async void Model_ConnectedDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ConnectedEventArgs e)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -583,7 +576,7 @@ namespace SpeedTestUWP.ViewModel
 
                 this.ArcBoard.DownloadSpeedArcValue = e.DownloadSpeed;
                 this.ArcBoard.SpeedDataNumbers = e.DownloadSpeed + " " + measureValue;
-            });                      
+            });
         }
 
         private async void Model_UploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.UploadSpeedEventArgs e)
@@ -619,7 +612,7 @@ namespace SpeedTestUWP.ViewModel
         private async void Model_AverageDowloadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageDownloadDataEventArgs e)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {                         
+            {
                 // Set View
                 this.DataBoard.DownloadSpeedData = ((int)(e.AverageDownloadSpeed)).ToString();
                 this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
@@ -656,7 +649,7 @@ namespace SpeedTestUWP.ViewModel
         private async void FirstStartAppSuggestingAddLiveTile()
         {
             //ApplicationData.Current.LocalSettings.Values.Remove("IsNotFirstStart"); // remove after testing
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey("IsNotFirstStart")) 
+            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey("IsNotFirstStart"))
             {
                 if (ApiInformation.IsTypePresent("Windows.UI.StartScreen.StartScreenManager"))
                 {
@@ -688,7 +681,7 @@ namespace SpeedTestUWP.ViewModel
             {
                 foreach (SpeedData sd in this.HistoryManager.GetHistoryList())
                 {
-                    
+
                     this.HistoryPanel.SpeedDataCollection.Add(new SpeedDataViewModel
                     {
                         Id = sd.Id,
@@ -724,7 +717,7 @@ namespace SpeedTestUWP.ViewModel
                 this.IsPhoneMainPanelOpen = false;
             }
         }
-         
+
         #endregion
     }
 }

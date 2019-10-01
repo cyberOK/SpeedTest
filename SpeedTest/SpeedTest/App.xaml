@@ -8,10 +8,7 @@
     xmlns:converter="using:SpeedTestUWP.ViewModel.Converters">
     <Application.Resources>
         <!-- View Model Class-->
-        <vm:MainPageViewModel x:Key="mainViewModel"/>
-
-        <!-- Localization manager -->
-        <helpers:LocalizedStrings x:Key="Localizer"/>
+        <vm:MainPageViewModel x:Key="mainViewModel" />
 
         <!-- Converters -->
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

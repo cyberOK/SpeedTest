@@ -145,8 +145,7 @@
     <Compile Include="ViewModel\Converters\RadioModeSelectedIntToBooltConverter.cs" />
     <Compile Include="ViewModel\BaseAbstractions\SpeedTestCommand.cs" />
     <Compile Include="ViewModel\BaseAbstractions\ObservableObject.cs" />
-    <Compile Include="ViewModel\Helpers\LocalizedStrings.cs" />
-    <Compile Include="ViewModel\Helpers\AppSetting.cs" />
+    <Compile Include="ViewModel\Helpers\LocalizationManager.cs" />
     <Compile Include="ViewModel\Helpers\SpeedDataViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewBoards\ArcBoard.cs" />

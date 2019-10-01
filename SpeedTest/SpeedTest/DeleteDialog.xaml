@@ -1,5 +1,4 @@
-﻿<ContentDialog 
-    
+﻿<ContentDialog    
     x:Uid="DeleteDialog"
     x:Class="SpeedTestUWP.DeleteDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,11 +8,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" 
     PrimaryButtonStyle="{StaticResource ContentDialogPrimaryButtonStyle}"
-    Title="{Binding Localizator[DeleteDialogTitle], Source={StaticResource mainViewModel}}" 
-    Content="{Binding Localizator[DeleteDialogContent], Source={StaticResource mainViewModel}}"
-    PrimaryButtonText="{Binding Localizator[DeleteDialogPrimaryButtonText], Source={StaticResource mainViewModel}}" 
-    SecondaryButtonText="{Binding Localizator[DeleteDialogSecondaryButtonText], Source={StaticResource mainViewModel}}"     
-    RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
+    Title="{Binding Localizator[DeleteDialogTitle]}" 
+    Content="{Binding Localizator[DeleteDialogContent]}"
+    PrimaryButtonText="{Binding Localizator[DeleteDialogPrimaryButtonText]}" 
+    SecondaryButtonText="{Binding Localizator[DeleteDialogSecondaryButtonText]}"     
+    RequestedTheme="{Binding SettingsPanel.Theme, Source={StaticResource mainViewModel}}"
     PrimaryButtonCommand="{Binding DeleteHistoryContentDialogButtonPressed, Source={StaticResource mainViewModel}}">
-
+    
+    <ContentDialog.DataContext>
+        <StaticResource ResourceKey="mainViewModel" />
+    </ContentDialog.DataContext>
+    
 </ContentDialog>

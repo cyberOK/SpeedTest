@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,7 +12,7 @@ using Windows.Storage;
 
 namespace SpeedTestUWP.ViewModel.Helpers
 {
-    public class LocalizedStrings : INotifyPropertyChanged
+    public class LocalizationManager : INotifyPropertyChanged
     {
         private ResourceContext resoureContext;
         private string basicLanguage = "en-US";
@@ -34,12 +35,14 @@ namespace SpeedTestUWP.ViewModel.Helpers
                 ApplicationData.Current.LocalSettings.Values["AppLanguage"] = value;
             }
         }
+        public ObservableCollection<Language> Languages { get; private set; }
         public string this[string key] => this.GetResource(key);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LocalizedStrings()
+        public LocalizationManager()
         {
+            this.LanguagesCollectionInitialization();
             this.LanguageInitialization();
         }
 
@@ -53,10 +56,11 @@ namespace SpeedTestUWP.ViewModel.Helpers
             this.resoureContext = ResourceContext.GetForCurrentView();
             this.resoureContext.Languages = new List<string> { language };
             this.AppLanguage = language;
+            this.LocalizeToastText();
             this.OnPropertyChanged("Item[]");
         }
 
-        public string GetResource(string stringResource)
+        private string GetResource(string stringResource)
         {
             try
             {
@@ -85,5 +89,29 @@ namespace SpeedTestUWP.ViewModel.Helpers
                 this.UpdateCulture(this.AppLanguage);
             }
         }
+
+        private void LanguagesCollectionInitialization()
+        {
+            this.Languages = new ObservableCollection<Language>
+            {
+                new Language { DisplayName = "English", LanguageCode = "en-US" },
+                new Language { DisplayName = "Русский", LanguageCode = "ru" }
+            };
+        }
+
+        private void LocalizeToastText()
+        {
+            ApplicationData.Current.LocalSettings.Values["ToastPingText"] = this.GetResource("ToastPingText");
+            ApplicationData.Current.LocalSettings.Values["ToastDownloadText"] = this.GetResource("ToastDownloadText");
+            ApplicationData.Current.LocalSettings.Values["ToastUploadText"] = this.GetResource("ToastUploadText");
+            ApplicationData.Current.LocalSettings.Values["MeasurePingValue"] = this.GetResource("MeasurePingValue");
+            ApplicationData.Current.LocalSettings.Values["MeasureSpeedValue"] = this.GetResource("MeasureSpeedValue");
+        }
+    }
+
+    public class Language
+    {
+        public string DisplayName { get; set; }
+        public string LanguageCode { get; set; }
     }
 }
