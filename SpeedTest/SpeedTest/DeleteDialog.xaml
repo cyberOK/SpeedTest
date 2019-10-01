@@ -1,4 +1,5 @@
-﻿<ContentDialog
+﻿<ContentDialog 
+    
     x:Uid="DeleteDialog"
     x:Class="SpeedTestUWP.DeleteDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,12 +7,12 @@
     xmlns:local="using:SpeedTestUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="Clear Application history?"
-    Content="Do you really want to delete the history? To Continue press 'Clear history', this may take a while."
-    PrimaryButtonText="Clear history" 
-    SecondaryButtonText="Cancel" 
+    mc:Ignorable="d" 
     PrimaryButtonStyle="{StaticResource ContentDialogPrimaryButtonStyle}"
+    Title="{Binding Localizator[DeleteDialogTitle], Source={StaticResource mainViewModel}}" 
+    Content="{Binding Localizator[DeleteDialogContent], Source={StaticResource mainViewModel}}"
+    PrimaryButtonText="{Binding Localizator[DeleteDialogPrimaryButtonText], Source={StaticResource mainViewModel}}" 
+    SecondaryButtonText="{Binding Localizator[DeleteDialogSecondaryButtonText], Source={StaticResource mainViewModel}}"     
     RequestedTheme="{Binding SettingsPanel.Settings.Theme, Source={StaticResource mainViewModel}}"
     PrimaryButtonCommand="{Binding DeleteHistoryContentDialogButtonPressed, Source={StaticResource mainViewModel}}">
 

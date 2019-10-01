@@ -120,10 +120,10 @@
   <data name="AboutBlockText" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="AvailableServers.Text" xml:space="preserve">
+  <data name="AvailableServersText" xml:space="preserve">
     <value>Available servers:</value>
   </data>
-  <data name="changeServerButton/Content" xml:space="preserve">
+  <data name="changeServerButtonContent" xml:space="preserve">
     <value>Change server</value>
   </data>
   <data name="DarkRadioButtonContent" xml:space="preserve">
@@ -132,7 +132,7 @@
   <data name="DateTextBlock" xml:space="preserve">
     <value>Date</value>
   </data>
-  <data name="DownloadText.Text" xml:space="preserve">
+  <data name="DownloadText" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="DownloadTextBlock" xml:space="preserve">
@@ -153,19 +153,16 @@
   <data name="LightRadioButtonContent" xml:space="preserve">
     <value>Light</value>
   </data>
-  <data name="mbpsText.Text" xml:space="preserve">
+  <data name="mbpsText" xml:space="preserve">
     <value>(mbps)</value>
   </data>
   <data name="MbpsTextBlock" xml:space="preserve">
     <value>(Mbps)</value>
   </data>
-  <data name="mbpsUploadText.Text" xml:space="preserve">
-    <value>(mbps)</value>
-  </data>
   <data name="ModeBlockText" xml:space="preserve">
     <value>Mode</value>
   </data>
-  <data name="msText.Text" xml:space="preserve">
+  <data name="msText" xml:space="preserve">
     <value>(ms)</value>
   </data>
   <data name="MsTextBlock" xml:space="preserve">
@@ -177,7 +174,7 @@
   <data name="PhoneDownloadTextBlock" xml:space="preserve">
     <value>Dowload</value>
   </data>
-  <data name="PhoneHistoryTextBlock.Text" xml:space="preserve">
+  <data name="PhoneHistoryTextBlock" xml:space="preserve">
     <value>History</value>
   </data>
   <data name="PhoneMsTextBlock" xml:space="preserve">
@@ -189,10 +186,10 @@
   <data name="PhoneServerTextBlock" xml:space="preserve">
     <value>Server</value>
   </data>
-  <data name="PhoneSetingsTextBlock.Text" xml:space="preserve">
+  <data name="PhoneSetingsTextBlock" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="PhoneShareTextBlock.Text" xml:space="preserve">
+  <data name="PhoneShareTextBlock" xml:space="preserve">
     <value>Share</value>
   </data>
   <data name="PhoneUploadMbpsTextBlock" xml:space="preserve">
@@ -201,7 +198,7 @@
   <data name="PhoneUploadTextBlock" xml:space="preserve">
     <value>Upload</value>
   </data>
-  <data name="PingText.Text" xml:space="preserve">
+  <data name="PingText" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="PingTextBlock" xml:space="preserve">
@@ -210,7 +207,7 @@
   <data name="RateLinkContent" xml:space="preserve">
     <value>Rate us</value>
   </data>
-  <data name="ServerSuggestBox.PlaceholderText" xml:space="preserve">
+  <data name="ServerSuggestBoxPlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="ServerTextBlock" xml:space="preserve">
@@ -222,10 +219,10 @@
   <data name="SingleHistoryDeletingButtonPhoneGridContent" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="StartButton.Content" xml:space="preserve">
+  <data name="StartButtonContent" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="TryConnectTextBlock.Text" xml:space="preserve">
+  <data name="TryConnectTextBlock" xml:space="preserve">
     <value>Connecting...</value>
   </data>
   <data name="UploadText.Text" xml:space="preserve">
@@ -234,16 +231,16 @@
   <data name="UploadTextBlock" xml:space="preserve">
     <value>Upload</value>
   </data>
-  <data name="DeleteDialog.Content" xml:space="preserve">
+  <data name="DeleteDialogContent" xml:space="preserve">
     <value>Do you really want to delete the history? To Continue press "Clear history", this may take a while.</value>
   </data>
-  <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
+  <data name="DeleteDialogPrimaryButtonText" xml:space="preserve">
     <value>Clear history</value>
   </data>
-  <data name="DeleteDialog.SecondaryButtonText" xml:space="preserve">
+  <data name="DeleteDialogSecondaryButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="DeleteDialog.Title" xml:space="preserve">
+  <data name="DeleteDialogTitle" xml:space="preserve">
     <value>"Clear Application history?</value>
   </data>
   <data name="DefaultRadioButtonContent" xml:space="preserve">
@@ -276,19 +273,7 @@
   <data name="TileUploadText" xml:space="preserve">
     <value>Upload: </value>
   </data>
-  <data name="SuggestCreateLiveTileDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Create LiveTile</value>
-  </data>
-  <data name="SuggestCreateLiveTileDialog.Content" xml:space="preserve">
-    <value>Do you want to create LiveTile where you can see a values from your last test?</value>
-  </data>
-  <data name="SuggestCreateLiveTileDialog.SecondaryButtonText" xml:space="preserve">
-    <value>Don't create LiveTile</value>
-  </data>
-  <data name="SuggestCreateLiveTileDialog.Title" xml:space="preserve">
-    <value>Welcome to SpeedTest!</value>
-  </data>
-  <data name="NoresultsTextBlock.Text" xml:space="preserve">
+  <data name="NoresultsTextBlock" xml:space="preserve">
     <value>No results</value>
   </data>
   <data name="BackgroundTestToggleSwitchOffContent" xml:space="preserve">

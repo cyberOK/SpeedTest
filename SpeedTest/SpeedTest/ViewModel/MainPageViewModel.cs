@@ -57,7 +57,7 @@ namespace SpeedTestUWP.ViewModel
         public BackgroundHelper BackgroundTestManager { get; private set; }
         public HistoryManager HistoryManager { get; private set; }
         public ServerIPerfManager ServerIPerfManager { get; private set; }
-        public LocalizedStrings Localizer { get; private set; }
+        public LocalizedStrings Localizator { get; private set; }
 
         #endregion
 
@@ -157,7 +157,7 @@ namespace SpeedTestUWP.ViewModel
         public MainPageViewModel()
         {
             // Initialization Helpers 
-            this.Localizer = new LocalizedStrings();           
+            this.Localizator = new LocalizedStrings();           
             this.ResourceManager = new ResourceLoader();
             this.BackgroundTestManager = new BackgroundHelper();
             this.HistoryManager = new HistoryManager();
@@ -323,7 +323,7 @@ namespace SpeedTestUWP.ViewModel
             Helpers.Language chosenLanguage = (Helpers.Language)param;
 
             string langCode = chosenLanguage.LanguageCode;
-            this.Localizer.ChangeLanguage(langCode);
+            this.Localizator.ChangeLanguage(langCode);
         }
 
         private void ModeChanged(object param)
