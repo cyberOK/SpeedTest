@@ -8,9 +8,9 @@ namespace SpeedTestUWP.BackgroundSpeedTest
 {
     public class BackgroundHelper
     {
-        private string taskName = "IperfWrapper";
-        private string taskEntryPoint = "RuntimeSpeedTest.SpeedTestBackgroundTask";
-        private SystemTrigger networkStateChangeTrigger;
+        private readonly string taskName = "IperfWrapper";
+        private readonly string taskEntryPoint = "RuntimeSpeedTest.SpeedTestBackgroundTask";
+        private readonly SystemTrigger networkStateChangeTrigger;
         //private ApplicationTrigger applicationTrigger;        // TODO: Delete after testing
 
 
@@ -34,24 +34,26 @@ namespace SpeedTestUWP.BackgroundSpeedTest
 
         }
 
-        public async void StartBackgroundSpeedTest()
+        public void StartBackgroundSpeedTest()
         {
             this.IsBackgroundTestEnable = true;
             //await this.applicationTrigger.RequestAsync();   // TODO: Delete after testing
         }
 
-        public async void StopBackgroundSpeedTest()
+        public void StopBackgroundSpeedTest()
         {
             this.IsBackgroundTestEnable = false;
         }
 
         public void RegisteringBackgroundSpeedTest()
         {
-            if ( !(this.IsTaskRegistered(this.taskName)))
+            if ( !(IsTaskRegistered(this.taskName)))
             {
-                var taskBuilder = new BackgroundTaskBuilder();
-                taskBuilder.Name = this.taskName;
-                taskBuilder.TaskEntryPoint = this.taskEntryPoint; 
+                var taskBuilder = new BackgroundTaskBuilder
+                {
+                    Name = this.taskName,
+                    TaskEntryPoint = this.taskEntryPoint
+                };
                 taskBuilder.SetTrigger(this.networkStateChangeTrigger);
                 //taskBuilder.SetTrigger(this.applicationTrigger);   // TODO: Delete after testing
                 taskBuilder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
@@ -61,8 +63,10 @@ namespace SpeedTestUWP.BackgroundSpeedTest
             }            
         }
 
-        private bool IsTaskRegistered(string taskName) =>
-            BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name.Equals(taskName));
+        private static bool IsTaskRegistered(string taskName)
+        {
+            return BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name.Equals(taskName, StringComparison.Ordinal));
+        }
 
         //private void UnregisterTask(string taskName, bool cancelTask) =>
         //    BackgroundTaskRegistration.AllTasks.First(x => x.Value.Name.Equals(taskName)).Value?.Unregister(cancelTask);

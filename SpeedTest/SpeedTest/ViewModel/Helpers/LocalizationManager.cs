@@ -15,7 +15,7 @@ namespace SpeedTestUWP.ViewModel.Helpers
     public class LocalizationManager : INotifyPropertyChanged
     {
         private ResourceContext resoureContext;
-        private string basicLanguage = "en-US";
+        private readonly string basicLanguage = "en-US";
 
         public string AppLanguage
         {

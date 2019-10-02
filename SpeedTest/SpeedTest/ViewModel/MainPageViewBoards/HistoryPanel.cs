@@ -32,7 +32,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
         public ObservableCollection<SpeedDataViewModel> SpeedDataCollection
         {
             get { return this.speedDataCollection; }
-            set { Set(ref speedDataCollection, value); }
+            private set { Set(ref speedDataCollection, value); }
         }
 
         public SpeedDataViewModel OldSelectedHistoryValue

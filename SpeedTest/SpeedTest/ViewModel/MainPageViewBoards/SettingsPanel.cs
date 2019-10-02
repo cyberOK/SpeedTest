@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 
 namespace SpeedTestUWP.ViewModel.ViewBoards
 {
@@ -38,7 +40,7 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
                 {
                     value = this.SetWindowsTheme();
                 }
-
+                TitleBarThemeChanging(value);
                 Set(ref this.theme, value);
             }
         }
@@ -54,21 +56,6 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
             this.GetUserTheme();
         }
 
-        private string SetWindowsTheme()
-        {
-            Windows.UI.ViewManagement.UISettings DefaultTheme = new Windows.UI.ViewManagement.UISettings();
-            string uiTheme = DefaultTheme.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).ToString();
-
-            if (uiTheme == "#FF000000")
-            {
-                return "Dark";
-            }
-            else // (uiTheme == "#FFFFFFFF")
-            {
-                return "Light";
-            }
-        }
-
         private void GetUserTheme()
         {
             if (ApplicationData.Current.LocalSettings.Values.ContainsKey("AppChoosenTheme"))
@@ -76,11 +63,11 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
                 this.SetUserChoosenTheme();
             }
 
-            else
+            else  // Set Windows Default Theme if user dont pick
             {
-                this.selectedThemeMode = 2; // Set Windows Default Theme if user dont pick
+                this.selectedThemeMode = 2; 
                 this.Theme = this.SetWindowsTheme();
-            }            
+            }
         }
 
         private void SetUserChoosenTheme()
@@ -107,6 +94,33 @@ namespace SpeedTestUWP.ViewModel.ViewBoards
                     this.Theme = "Default";
 
                     break;
+            }
+        }
+
+        private string SetWindowsTheme()
+        {
+            Windows.UI.ViewManagement.UISettings DefaultTheme = new Windows.UI.ViewManagement.UISettings();
+            string uiTheme = DefaultTheme.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).ToString();
+
+            if (uiTheme == "#FF000000")
+            {
+                return "Dark";
+            }
+            else // (uiTheme == "#FFFFFFFF")
+            {
+                return "Light";
+            }
+        }
+
+        private void TitleBarThemeChanging(string theme)
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            switch (theme)
+            {
+                case "Dark":
+                    titleBar.ButtonForegroundColor = Colors.White; break;
+                case "Light":
+                    titleBar.ButtonForegroundColor = Colors.Black; break;
             }
         }
     }

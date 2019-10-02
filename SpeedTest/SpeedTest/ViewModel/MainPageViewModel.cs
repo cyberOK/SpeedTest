@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using SpeedTestUWP.Tlles;
 using SpeedTestUWP.ViewModel.Helpers;
 using SpeedTestUWP.ViewModel.ViewBoards;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
-using Windows.Foundation;
-using Windows.Globalization;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Microsoft.Toolkit.Uwp.UI;
 using SpeedTestModel.HistoryManager;
 using SpeedTestModel.ServerIPerfProvider;
@@ -26,11 +15,9 @@ using Windows.Storage;
 using Windows.Foundation.Metadata;
 using Windows.ApplicationModel;
 using Windows.UI.StartScreen;
-using SpeedTestModel;
 using SpeedTestModel.Iperf;
 using SpeedTestModel.IPerf;
-using System.ComponentModel;
-using Windows.ApplicationModel.Resources.Core;
+using System.Globalization;
 
 namespace SpeedTestUWP.ViewModel
 {
@@ -216,7 +203,7 @@ namespace SpeedTestUWP.ViewModel
 
         #region MainPage Load Actions for Delegates
 
-        private async void InitializePage(object param)
+        private void InitializePage(object param)
         {
             this.FirstStartAppSuggestingAddLiveTile();
             this.LoadTestsHistory();
@@ -357,13 +344,13 @@ namespace SpeedTestUWP.ViewModel
             SpeedDataViewModel singleHistoryForDeleting = (SpeedDataViewModel)param;
 
             this.HistoryPanel.SpeedDataCollection?.Remove(singleHistoryForDeleting);
-            await this.HistoryManager.DeleteSingleSample(singleHistoryForDeleting.Id);
+            await HistoryManager.DeleteSingleSample(singleHistoryForDeleting.Id).ConfigureAwait(false);
         }
 
         private async void DeleteHistory(object param)
         {
             this.HistoryPanel.SpeedDataCollection.Clear();
-            await this.HistoryManager.Delete();
+            await HistoryManager.Delete().ConfigureAwait(false);
             this.id = 0;
         }
 
@@ -448,14 +435,14 @@ namespace SpeedTestUWP.ViewModel
 
         #region IPerfInstance Methods
 
-        private void StartSpeedTest()
+        private async void StartSpeedTest()
         {
             this.ArcBoard.IsTryConnect = true;
 
             string currentHostName = this.ServerInformationBoard.CurrentServer.IPerf3Server;
             int currentHostPort = this.ServerInformationBoard.CurrentServer.Port;
 
-            this.IPerfInstance.StartSpeedTest(currentHostName, currentHostPort);
+            await IPerfInstance.StartSpeedTest(currentHostName, currentHostPort).ConfigureAwait(false);
         }
 
         private async void Model_ErrorRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.ErrorsEventArgs e)
@@ -543,13 +530,12 @@ namespace SpeedTestUWP.ViewModel
 
                 // Set View
                 this.DataBoard.IsPingFieldsGridVisible = true;
-                this.DataBoard.PingData = ping.ToString();
-
+                this.DataBoard.PingData = string.Format(CultureInfo.CurrentCulture, "{0}", ping);
                 // Set Current SpeedData Sample
                 this.HistoryPanel.CurrentSpeedDataSample = new SpeedDataViewModel
                 {
                     Date = DateTime.Now,
-                    Ping = ping.ToString(),
+                    Ping = string.Format(CultureInfo.CurrentCulture, "{0}", ping),
                     Server = this.ServerInformationBoard.CurrentServer.IPerf3Server,
                     IsSelected = false,
                     Id = ++this.id
@@ -614,7 +600,7 @@ namespace SpeedTestUWP.ViewModel
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 // Set View
-                this.DataBoard.DownloadSpeedData = ((int)(e.AverageDownloadSpeed)).ToString();
+                this.DataBoard.DownloadSpeedData = string.Format(CultureInfo.CurrentCulture, "{0}", (int)e.AverageDownloadSpeed);
                 this.DataBoard.IsDownloadSpeedFieldsGridVisible = true;
 
                 // Set Current SpeedData Sample
@@ -624,10 +610,10 @@ namespace SpeedTestUWP.ViewModel
 
         private async void Model_AverageUploadDataRecieved(object sender, SpeedTestModel.SpeedTestEventArgs.AverageUploadDataEventArgs e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 // Set View
-                this.DataBoard.UploadSpeedData = ((int)(e.AverageUploadSpeed)).ToString();
+                this.DataBoard.UploadSpeedData = string.Format(CultureInfo.CurrentCulture, "{0}", (int)e.AverageUploadSpeed);
                 this.DataBoard.IsUploadSpeedFieldsGridVisible = true;
 
                 // Set Current SpeedData Sample
@@ -635,7 +621,7 @@ namespace SpeedTestUWP.ViewModel
 
                 // Add Speed Sample to History Collection
                 this.HistoryPanel.SpeedDataCollection.Add(this.HistoryPanel.CurrentSpeedDataSample);
-                this.HistoryManager.Save(this.SpeedDataConversion(this.HistoryPanel.CurrentSpeedDataSample));
+                await HistoryManager.Save(SpeedDataConversion(HistoryPanel.CurrentSpeedDataSample)).ConfigureAwait(false);
 
                 // Create LiveTile
                 TileSpeedTest.CreateTile(this.DataBoard.PingData, this.DataBoard.DownloadSpeedData, this.DataBoard.UploadSpeedData, this.ResourceManager);

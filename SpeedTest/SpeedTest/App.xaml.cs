@@ -104,9 +104,9 @@ namespace SpeedTestUWP
                 // App TitleBar Adjust
                 ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
                 formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-                formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;                
                 var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                coreTitleBar.ExtendViewIntoTitleBar = true;             
+                coreTitleBar.ExtendViewIntoTitleBar = true;                    
             }
         }
 

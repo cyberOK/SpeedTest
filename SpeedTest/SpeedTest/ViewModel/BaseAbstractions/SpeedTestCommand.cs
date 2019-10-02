@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using Windows.ApplicationModel.Resources;
 
 namespace SpeedTestUWP.ViewModel.Helpers
 {
@@ -19,6 +20,7 @@ namespace SpeedTestUWP.ViewModel.Helpers
         {
             this._execute = execute ?? throw new ArgumentException("execute");
             this._canExecute = canExecute;
+            //ResourceLoader.GetForCurrentView().GetString();
         }
 
         public bool CanExecute(object parameter) => this._canExecute == null ? true : this._canExecute();
